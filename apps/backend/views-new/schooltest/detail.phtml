@@ -1,0 +1,116 @@
+<?php
+$urlPage = "?id=".$id;
+
+?>
+<script>
+    $(document).ready(function(){
+        $('#delete').click(function(){
+            var str="<?php echo $this->url->get('office/delete-exam');?>";
+            var id= $("#document-id").val();
+            str=str.concat("?id=").concat(id);
+            $('#delete').attr("href",str);
+        });
+        $('button[name=search]').click(function () {
+            $('form[name=read_form]').prop('action', '<?php echo $this->url->get('/office/list-exam'); ?>');
+            $('form[name=read_form]').submit();
+        });
+        $('#create_article').on('click',function () {
+            history.back()
+        })
+
+    });
+</script>
+<script>
+    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("office/list-document");?>'>  Tài Liệu </a></li>");
+</script>
+
+<?php if(isset($msg_result))  {?>
+    <div class="clearfix"></div>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $msg_result['status']?>">
+        <?= $msg_result["message"]; ?>
+    </p>
+<?php } ?>
+
+<form class="searchForm" name="form-area" method="post" action="">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <div class="col-md-2 pull-right text-right">
+                        <a class="btn btn-info" href="<?php echo $this->url->get("/office/list-new-test"); ?>">Quay lại</a>
+                    </div>
+                    <div >
+                        <strong>Total</strong>
+                        <?php echo $list_item->total_items ?> records
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="">
+                        <table class="table table-striped table-bordered" >
+                            <thead class="table_header" >
+                            <tr class="headings" >
+                                <th style="text-align: left" width="50px"><label class="container_checkbox"><input type="checkbox" id="checkboxAll"><span class="checkmark_checkbox"></span></label></th>
+                                <th width="10px"  class="column-title">Số </th>
+                                <th  class="column-title">Câu hỏi </th>
+                                <th  class="column-title">Lời Giải </th>
+                                <th width="50px" class="column-title">Đáp Án </th>
+                                <th width="150px" class="column-title no-link last"><span class="nobr">Action</span></th>
+                            </tr>
+                            </thead>
+
+                            <tbody class="tb_body">
+                            <?php  foreach($list_item->items as $item) {
+                                /**
+                                 * @var \Learncom\Models\LearnTestFolder $item
+                                 */
+                                ?>
+                                <tr >
+                                    <td><label class="container_checkbox"><input class="check" name="item[]" value="<?php echo $item->getFolderId() ?>" type="checkbox"><span class="checkmark_checkbox"></span></label></td>
+                                    <td class=" "> <?= $item->getFolderStatus() ?></td>
+                                    <td class=" ">
+                                        <?php if(file_exists(__DIR__."/../../../..".$item->getFolderLink()) && $item->getFolderLink()!="" && $item->getFolderLink()!=null) {?>
+                                            <img style="width: 500px;height: 100px" src="<?=$this->url->getStatic($item->getFolderLink());?>" title="<?php echo "câu hỏi". $item->getFolderId(); ?>" alt="<?php echo "câu hỏi". $item->getFolderId(); ?>">
+                                        <?php }?>
+                                    </td>
+                                    <td class=" "> <?php if (file_exists(__DIR__."/../../../..".$item->getFolderLinkComment()) && $item->getFolderLinkComment()!="" && $item->getFolderLinkComment()!=null) { ?>
+                                            <img style="width: 500px;height: 100px" src="<?=$this->url->getStatic($item->getFolderLinkComment()); ?>" title="<?php echo "đáp án". $item->getFolderId(); ?>" alt="<?php echo "đáp án". $item->getFolderId(); ?>">
+                                        <?php } ?></td>
+                                    <td class=" "><?php if (isset($arrAnserwer[$item->getFolderStatus()])) {
+                                            echo $arrAnserwer[$item->getFolderStatus()];
+                                        } ?></td>
+
+                                    <td>
+                                        <a class="btn btn-primary btn-xs margin-0"   href="<?php echo $this->url->get("/office/edit-new-detail-test?id=".$item->getFolderId()."&testId=".$id); ?> ">Chỉnh sửa</a>
+                                    </td>
+                                </tr>
+                            <?php }?>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col-md-6 ">
+                            <label for="slcAction">With Selected:</label>
+                            <select class="form-control" id="slcAction" name="slcAction" style="display: inline-block;width: 40%">
+                                <option value="" selected >Please select</option>
+                                <option value="drop">Drop</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <?php if($list_item->total_pages > 1) {?>
+                                <nav class="paginate-footer">
+                                    <?php  if($urlPage != "?") $urlPage .= "&";
+                                    $urlPage .= "page=";
+                                    echo $this->my->renderPagination($urlPage, $list_item->current, $list_item->total_pages, 2);
+                                    ?>
+                                </nav>
+                            <?php }?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

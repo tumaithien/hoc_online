@@ -1,0 +1,66 @@
+
+<script>
+    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("office/list-new-test");?>'>List Document</a><span class='divider'>/</span></li><li><a href='<?php echo $this->url->get("office/create-new-test");?>'>Create Document</a></li>");
+</script>
+<?php
+if(!empty($messages['status']))
+{
+    ?>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $messages['status']?>">
+        <?php echo implode('<br>',$messages['mesage']); ?>
+    </p>
+<?php }	?>
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">Form Create
+                <h2 class="form_title"></h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br />
+                <form novalidate="novalidate" class="form-horizontal" id="create_form" action=""  enctype="multipart/form-data" method="post">
+                    <h4>NOTE:</h4>
+
+                    <div id="image_1"  class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="upload-files">Câu hỏi<em style="color:red;">*</em></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input  id="fileUpload" name="fileUpload" type="file" multiple="multiple"
+                                    accept="<?php
+                                    foreach($this->globalVariable->acceptUploadTypes as $k => $v)
+                                    {
+                                        echo $k.",";
+                                    } ?>"  />
+                        </div>
+                    </div>
+
+                    <div id="comment_1"  class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="upload-files">Lời Giải</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input id="fileUploadComment" name="fileUploadComment" type="file" multiple="multiple"
+                                   accept="<?php
+                                   foreach($this->globalVariable->acceptUploadTypes as $k => $v)
+                                   {
+                                       echo $k.",";
+                                   } ?>"  />
+                        </div>
+                    </div>
+                    <div  class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="focusedInput">Đáp Án </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input value="<?php echo isset($formData['test_answer']) ? $formData['test_answer'] : ""?>" maxlength="256" id="txtAnswer" name="txtAnswer" class="form-control focused"  type="text" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                            <button name="submit" type="submit" class="btn btn-success">Save change</button>
+                            <a class="btn btn-primary" href="<?php echo $this->url->get('/office/list-new-test');?>">Cancel</a>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

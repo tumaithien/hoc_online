@@ -1,0 +1,170 @@
+
+<script>
+    $(document).ready(function(){
+        $("#create_form").submit(function(){
+            var valid = true;
+            if($('input[name=name]').val() == '') {
+                $('.msg-name').text('Bạn cần nhập thông tin này');
+                $('#name').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-name').text('');
+                $('#name').removeClass("border-red");
+            }
+            if($('input[name=order]').val() == '') {
+                $('.msg-order').text('Bạn cần nhập thông tin này');
+                $('#order').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-order').text('');
+                $('#order').removeClass("border-red");
+            }
+
+            if($('select[name=slcType]').val() == '') {
+                $('.msg-type').text('Bạn cần nhập thông tin này');
+                $('#slcType').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-type').text('');
+                $('#slcType').removeClass("border-red");
+            }
+
+            if( ! valid ) event.preventDefault();
+            if( valid ) {
+                $('button[name=submit]').prop('disabled', true);
+            }
+        });
+    });
+
+</script>
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header well" data-original-title>
+            <h2><i class="icon-edit"></i> Form Edit Banner :(<em style="color:red; font-size:20px;">*</em> ) Required to be entered</h2>
+            <div class="box-icon"> <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a> <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a> <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a> </div>
+        </div>
+        <div class="box-content">
+            <form novalidate="novalidate" class="form-horizontal" id="create_form" action="" enctype="multipart/form-data"
+                  method="post">
+
+                <fieldset>
+                    <div class="control-group">
+                        <label class="control-label" for="selectError">Thuộc tính <em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <select  id="slcType" name="slcType" class="<?php echo isset($messages["banner_type"]) ? $messages["status"] : "";?>">
+                                <option value="">Chọn Thuộc tính</option>
+                                <option <?= $formData['banner_type'] == "top" ? "selected" : "" ?> value="top">Trên</option>
+                                <option <?= $formData['banner_type'] == "mid" ? "selected" : "" ?> value="mid">Giữa</option>
+                                <option <?= $formData['banner_type'] == "bot" ? "selected" : "" ?> value="bot">Dưới</option>
+                            </select>
+                            <div class="text-danger msg-type"><?php echo isset($messages["banner_type"]) ? $messages["banner_type"] : "";?></div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Name <em style="color:red;">*</em> </label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['name']) ? $formData['name'] : ""; ?>" id="name" name="name"
+                                   class="input-xlarge focused <?php echo isset($messages["name"]) ? $messages["status"] : "";?>" maxlength="256"  type="text" >
+                            <div class="text-danger msg-name"><?php echo isset($messages["name"]) ? $messages["name"] : "";?></div>
+
+                        </div>
+                    </div>
+                    <div id="image_1" class="control-group">
+                        <label class="control-label" for="upload-files">Image<em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <input id="fileUpload" name="fileUpload" type="file"
+                                   accept="<?php
+                                   foreach($this->globalVariable->acceptUploadTypes as $k => $v)
+                                   {
+                                       echo $k.",";
+                                   } ?>"  />
+                            <button type="button" class="file_image">Uploadfile / link</button>
+                            <div class="text-danger msg-image"><?php echo isset($messages["image"]) ? $messages["image"] : "";?></div>
+
+                        </div>
+                    </div>
+                    <div id="image_2" class="control-group hidden" >
+                        <label class="control-label" for="focusedInput">Image <em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <input maxlength="256" id="image" name="image" class="input-xlarge focused <?php echo isset($messages["image"]) ? $messages["status"] : "";?>"  type="text"
+                                   value="<?php echo isset($formData['image']) ? $formData['image'] : "";?>">
+                            <button type="button" class="file_image">Uploadfile / link</button>
+
+                            <div class="text-danger msg-image"><?php echo isset($messages["image"]) ? $messages["image"] : "";?></div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Order <em style="color:red;">*</em> </label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['order']) ? $formData['order'] : ""?>" id="order" name="order"
+                                   class="input-xlarge focused <?php echo isset($messages["order"]) ? $messages["status"] : "";?>"    maxlength="256"  type="text" >
+                            <div class="text-danger msg-order"><?php echo isset($messages["order"]) ? $messages["order"] : "";?></div>
+
+                        </div>
+                    </div>
+                    <?php $active=$formData['active'];;
+                    if($active=='Y'){
+                        ?>
+                        <script>
+                            $(function(){
+                                document.getElementById("check_active_Y").checked=true;
+                            });
+                        </script>
+                    <?php }else{?>
+                        <script>
+                            $(function(){
+                                document.getElementById("check_active_N").checked=true;
+                            });
+                        </script>
+                    <?php }?>
+                    <div class="control-group">
+                        <label class="control-label" for="optionsCheckbox2">Active <em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <label class="checkbox" >
+                                <input  name="check_active" type="radio" id="check_active_Y" value="Y" checked="checked" >
+                                Yes </label>
+                        </div>
+                        <div class="controls">
+                            <label class="checkbox" >
+                                <input   name="check_active" type="radio" id="check_active_N" value="N" >
+                                No </label>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="textarea2">Content</label>
+                        <div class="controls">
+                            <textarea id="txtContent" name ="content" ><?php echo isset($formData['content']) ? $formData['content'] : "" ?></textarea>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        window.onload = function () {
+                            var oFCKeditor2 = new FCKeditor('txtContent');
+                            oFCKeditor2.Height = '500';
+                            oFCKeditor2.Width = '650';
+                            oFCKeditor2.ToolbarSet = "Default";
+                            oFCKeditor2.Basepath = '../backend/fckeditor/';
+                            oFCKeditor2.ReplaceTextarea();
+                        }
+                    </script>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="submit_create">Save changes</button>
+                        <a id="edit_page" class="btn" href="<?php echo $this->url->get('dashboard/list-banner');?>"> Cancel </a> </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <!--/span-->
+</div>
+<!--/row-->
+<script>
+    $('.file_image').on('click',function () {
+        if ($('#image_1').hasClass('hidden')) {
+            $('#image_2').addClass('hidden');
+            $('#image_1').removeClass('hidden');
+        } else {
+            $('#image_1').addClass('hidden');
+            $('#image_2').removeClass('hidden');
+        }
+    });
+    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-banner");?>'>List Banner</a><span class='divider'>/</span></li><li><a href='<?php echo $this->url->get("dashboard/edit-banner");?>?id=<?php ?>'>Update Banner</a></li>");
+</script> 

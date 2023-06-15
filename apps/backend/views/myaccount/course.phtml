@@ -1,0 +1,43 @@
+<main>
+    <div class="login-wrap overflow-auto">
+        <div class="container py-25">
+            <div class="row">
+                <div class="col-lg-2 pr-0 pl-xs-0">
+                    <?php $this->partial('shared/left_account'); ?>
+                </div>
+                <div class="col-lg-10 bg-white pt-20 text-center">
+                    <h2>CÁC KHÓA HỌC ĐÃ ĐĂNG KÝ</h2>
+                    <div class="row ">
+                        <?php
+                        $total = count($arrClass)*count($arrSubject);
+                        if ($total <=3 ) {
+                            $col = 12/$total;
+                        } else {
+                            $col = 4;
+                        }
+                        foreach ($arrClass as $class) {
+                                foreach ($arrSubject as $subject) {
+                                    $arrScore = \Learncom\Repositories\Test::findScoreByClassAndSubject($class,$subject);
+                                    $arrTest = \Learncom\Repositories\Test::findByClassAndSubject($class,$subject);
+                            ?>
+                        <div class="col-lg-<?=$col?> mt-20">
+                            <div class="box-blog">
+                                <div class="img-blog">
+                                    <a href="list-score?classId=<?= $class?>&subjectId=<?=$subject?>" target="_self" title=""><img src="<?= \Learncom\Repositories\ClassSubject::getSubjectImage($subject)?>" alt="" title=""></a>
+                                </div>
+                                <div class="content-blog p-15">
+                                    <h3><a href="list-score?classId=<?= $class?>&subjectId=<?=$subject?>" target="_self" title="" class="text-main"><?= \Learncom\Repositories\ClassSubject::getNameByClassAndSubject($class,$subject)?></a></h3>
+                                    <div class="line-bottom-bolder-2 mb-10"></div>
+                                    <p class="text-14">Đã làm <?= count($arrScore)?> bài thi </p>
+                                    <p class="text-14">Chưa làm <?= count($arrTest)-count($arrScore)?> bài thi </p>
+                                    <a href="list-score?classId=<?= $class?>&subjectId=<?=$subject?>" target="_self" title="" class="d-block text-right text-main">Xem thêm</a>
+                                </div>
+                            </div>
+                        </div>
+                        <?php } }?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

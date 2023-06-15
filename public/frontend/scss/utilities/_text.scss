@@ -1,0 +1,298 @@
+.text-secondary {
+    color: $secondary-color !important;
+    &:hover,
+    &:focus,
+    &:active {
+        color: $secondary-dark !important;
+    }
+}
+
+a.text-secondary {
+    color: $secondary-color !important;
+    &:hover,
+    &:focus,
+    &:active {
+        color: $secondary-dark !important;
+    }
+}
+
+.text-white {
+    color: $white !important;
+}
+
+.text-black {
+    color: $dark-black;
+}
+
+.text-red {
+    color: $red !important;
+}
+
+.text-green {
+    color: $green !important;
+}
+
+.text-brown {
+    color: $brown !important;
+}
+
+.text-success {
+    color: $success !important;
+}
+
+.text-main {
+    color: $primary-color !important;
+}
+
+.text-gray {
+    color: $light-gray !important;
+}
+
+.text-date {
+    color: $dark-gray;
+}
+
+.text-gray-1 {
+    color: $light-gray-1 !important;
+}
+
+.text-gray-2 {
+    color: $gray-2 !important;
+}
+
+.text-base {
+    color: $text-base !important;
+}
+
+.text-accent {
+    color: $secondary-color !important;
+}
+
+.text-48 {
+    font-size: 48px !important;
+}
+
+.text-44 {
+    font-size: 44px !important;
+}
+
+.text-36 {
+    font-size: 36px !important;
+}
+
+.text-32 {
+    font-size: 32px !important;
+}
+
+.text-30 {
+    font-size: 30px !important;
+}
+
+.text-28 {
+    font-size: 28px !important;
+}
+
+.text-26 {
+    font-size: 26px !important;
+}
+
+.text-24 {
+    font-size: 24px !important;
+}
+
+.text-22 {
+    font-size: 22px !important;
+}
+
+.text-20 {
+    font-size: 20px !important;
+}
+
+.text-18 {
+    font-size: 18px !important;
+}
+
+.text-16 {
+    font-size: 16px !important;
+}
+
+.text-14 {
+    font-size: 14px !important;
+}
+
+.text-12 {
+    font-size: 12px !important;
+}
+
+.text-normal {
+    font-weight: normal !important;
+}
+
+.text-medium {
+    font-weight: 500 !important;
+}
+
+.text-medium-light {
+    font-weight: 400 !important;
+}
+
+@include media-breakpoint-down(md) {
+    .text-xs-left {
+        text-align: left !important;
+    }
+    .text-xs-center {
+        text-align: center !important;
+    }
+    .text-xs-right{
+        text-align: right !important;
+    }
+    .text-xs-white {
+        color: $white !important;
+    }
+    .text-xs-12 {
+        font-size: 12px !important;
+    }
+    .text-xs-14{
+        font-size: 14px !important;
+    }
+    .text-xs-16 {
+        font-size: 16px !important;
+    }
+    .text-xs-18 {
+        font-size: 18px !important;
+    }
+    .text-xs-20 {
+        font-size: 20px !important;
+    }
+    .text-xs-24 {
+        font-size: 24px !important;
+    }
+    .font-xs-weight-light{
+        font-weight: 400;
+    }
+    .text-xs-ellipsis {
+       @include textEllipsis();
+   }
+   .text-xs-red {
+        color:$red !important;
+    }
+    .text-xs-date{
+        color: $dark-gray;
+    }
+    .text-xs-gray-1{
+        color: $gray-1;
+    }
+    .text-xs-10{
+        font-size: 10px !important;
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    .text-lg-normal {
+        font-weight: normal !important;
+    }
+    .text-lg-white {
+        color: white !important;
+        &:hover {
+            color: white !important;
+        }
+    }
+    .text-lg-44 {
+        font-size: 44px !important;
+    }
+    .text-lg-42 {
+        font-size: 42px !important;
+    }
+    .text-lg-36 {
+        font-size: 36px !important;
+    }
+    .text-lg-32 {
+        font-size: 32px !important;
+    }
+    .text-lg-24 {
+        font-size: 24px !important;
+    }
+    .text-lg-22 {
+        font-size: 20px !important;
+    }
+    .text-lg-20 {
+        font-size: 20px !important;
+    }
+    .text-lg-18 {
+        font-size: 18px !important;
+    }
+    .text-lg-16 {
+        font-size: 16px !important;
+    }
+    .text-lg-12 {
+        font-size: 12px !important;
+    }
+}
+
+.text-bolder {
+    font-weight: 700;
+}
+
+.text-nowrap {
+    white-space: nowrap;
+}
+
+a.text-link {
+    &:hover {
+        color: $secondary-color;
+    }
+}
+h3.titlevg{
+    &:visited{
+        color: #969696;
+    }
+    &:hover{
+        color: #969696;
+    }
+}
+.text-ellipsis {
+    @include textEllipsis();
+}
+
+.text-line-through {
+    text-decoration: line-through;
+}
+
+.text-line-before {
+    padding-left: 8px;
+    border-left: 2px solid #1f69b2;
+}
+
+.title-main {
+    color: #206ECB;
+    text-align: center;
+    font-weight: 700;
+    font-size: 28px;
+    @include media-breakpoint-down(md) { 
+        font-size: 24px;
+    }
+}
+.text-red-orange{
+    color: #D73B02;
+}
+.text-grey-1{
+    color: $gray-1;
+}
+.text-blue-dark{
+    color: #475F7C;
+}
+.text-grey-2{
+    color: #9F9F9F;
+}
+a.text-main {
+    color: $primary-color !important;
+    &:hover, &:focus, &:active{
+        color: $secondary-color !important;
+    }
+}
+.text-orange{
+    color: $orange !important;
+}
+.text-blue-test{
+    color: #1C1CF6 !important;
+}

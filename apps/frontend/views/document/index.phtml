@@ -1,0 +1,146 @@
+<?php
+
+/**
+ * @var $parent_keyword;
+ * @var $type;
+ * @var $class_id;
+ * @var $subject_id;
+ * @var \Learncom\Models\LearnDocument[] $documents
+ * @var \Learncom\Models\LearnDocument[] $listDocuments
+ * @var \Learncom\Models\LearnChapter[] $chapters
+ */
+?>
+<main>
+    <div class="container-fluid">
+        <h2 class="text-main text-center text-bolder my-20">
+            <?php echo \Learncom\Repositories\ClassSubject::findFirstSubjectNameById($subject_id) . ' ' . \Learncom\Repositories\ClassSubject::findFirstClassNameById($class_id) ?>
+        </h2>
+        <?php
+        if (true) {
+            if ($chapter_id == 0) {
+                $chapter_id = $chapters[0]->chapter_id;
+            }
+        ?>
+            <div class="row mx-0 list-courses-wrap">
+                <div class="col-12 col-lg-4 col-xl-3 list-coutses">
+                    <div class="list-wrap box-shadow-1">
+                        <?php
+                        if (sizeof($chapters) > 0) {
+                            $lesson_link = "";
+                            foreach ($chapters as $chapter) {
+                                if (true) {
+                                    $aria_expanded = "";
+                                    $is_show = '';
+                                    if ($chapter->getChapterId() == $chapter_id) {
+                                        $aria_expanded = 'aria-expanded="true"';
+                                        $is_show = "show";
+                                    }
+
+                        ?>
+                                    <span id="tab1-<?php echo $chapter->getChapterId() ?>" class="item-style item-menu justify-content-start" data-toggle="collapse" data-target="#course-sub-<?php echo $chapter->getChapterId() ?>" <?= $aria_expanded ?>>
+                                        <?php echo $chapter->getChapterName() ?>
+                                    </span>
+                                    <?php
+                                    $listDocuments = [];
+                                    if (count($group_subject_id) > 0) {
+                                        foreach ($group_subject_id as $chapter_id) {
+                                            $listDocumentsTemp = \Learncom\Repositories\Document::findByClassAndSubjectAndChapterAndGroup($class_id, $subject_id, $chapter->getChapterId(), $chapter_id);
+                                            foreach ($listDocumentsTemp as $temp) {
+                                                if ($first_document->document_id == null) {
+                                                    $first_document = $temp;
+                                                }
+                                                array_push($listDocuments, json_encode($temp));
+                                            }
+                                        }
+                                        $listDocuments = array_unique($listDocuments);
+                                    } else {
+                                        $listDocuments = \Learncom\Repositories\Document::findByClassAndSubjectAndChapter($class_id, $subject_id, $chapter->getChapterId());
+                                    }
+                                    if (sizeof($listDocuments) > 0) {
+                                    ?>
+                                        <div class="collapse <?= $is_show ?>" id="course-sub-<?php echo $chapter->getChapterId() ?>">
+                                            <div class="sub-list">
+                                                <?php foreach ($listDocuments as $lesson) {
+                                                    if (is_string($lesson)) {
+                                                        $lesson = json_decode($lesson);
+                                                    }
+                                                    if ($document_id == 0) {
+                                                        $document_id = $lesson->document_id;
+                                                        
+                                                    }
+                                                    $class_style = "";
+                                                    if ($lesson->document_id == $document_id) {
+                                                        $lesson_link = $lesson->document_link;
+                                                        $class_style = "active";
+                                                    }
+                                                    $href_a = $base_url . "&chapterId=" . $chapter->chapter_id . "&documentId=" .  $lesson->document_id;
+                                                ?>
+                                                    <a id="<?= $chapter->chapter_id ?>-<?= $lesson->document_id ?>" href="<?= $href_a ?>" class="item-style <?= $class_style ?> justify-content-start" data-src-iframe="<?php echo $lesson->video_link ?>">
+                                                        <?php echo $lesson->document_name ?>
+                                                    </a>
+                                                <?php } ?>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                        <?php }
+                            }
+                        } ?>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-8 col-xl-9 courses-detail">
+                    <div class="video-iframe">
+                        <iframe src="<?= $lesson_link ?>" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
+
+    </div>
+</main>
+
+<script type="text/javascript">
+    commands.push(function() {
+        // var link = window.location.href;
+        // var href = link.split('#')[1];
+        // var chapter_id = href.split('-')[0];
+        // var document_id = href.split('-')[1];
+        // $("#tab1-" + chapter_id).click();
+        // $("#" + href).click();
+        // $src = "<?= $lesson_link ?>";
+        // try {
+        //     $(".courses-detail iframe").attr("src", src);
+        // } catch (err) {
+        //     console.log(err);
+        // }
+
+        $(function() {
+            $(".collapse").on("click", function(e) {
+                e.stopPropagation();
+            });
+            // $(".item-style:not(.item-menu)").on("click", function(e) {
+            //     $(".item-style.active").removeClass("active");
+            //     let parent = this.parentElement;
+            //     let src = "";
+            //     $(parent).find(".item-menu[aria-expanded='true']").click();
+            //     $(this).addClass("active");
+            //     src = this.dataset.srcIframe;
+            //     if (!src) return;
+            //     try {
+            //         $(".courses-detail iframe").attr("src", src);
+            //     } catch (err) {
+            //         console.log(err);
+            //     }
+            // });
+            $(".item-menu").on("click", function(e) {
+                $(".item-menu").each((ind, ele) => {
+                    if (ele !== this) {
+                        let target = $(ele).data("target");
+                        $(target).collapse("hide");
+                    }
+                });
+                let parent = this.parentElement;
+                $(parent).children(".item-style.active").removeClass('active');
+            })
+        });
+    })
+</script>

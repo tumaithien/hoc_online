@@ -1,0 +1,598 @@
+<?php
+/**
+ * @var \Learncom\Models\LearnTest $test_model
+ * @var \Learncom\Models\LearnTestFolder $folder
+ */
+$arrAnswer = json_decode($test_model->getTestAnswer(),true);
+
+?>
+
+<main>
+    <form method="post" id="subTest" enctype="multipart/form-data" action="/ket-thuc?testId=<?= $test_model->getTestId() ?>">
+    <div id="screen_start" class="padding-block p-20">
+        <div class="row list-courses-wrap list-courses-custom">
+            <div class="col-lg-12 col-12 mt-xs-15 bg-white p-20 rounded border-1-primary">
+                <div class="w-50 mx-auto px-lg-90">
+
+                    <h2 id="txtName" class="text-main text-center text-uppercase"><?= $test_model->getTestName() ?></h2>
+                    <hr>
+                    <p id="txtClass" class="d-flex justify-content-between">
+                        <span class="text-medium">Lớp:</span>  <span><?= \Learncom\Repositories\ClassSubject::getNameSubjectByIds($test_model->getTestSubjectId()) ." " ?> <?= \Learncom\Repositories\ClassSubject::getNameClassByIds($test_model->getTestClassId()) ?></span></p>
+                    <p id="txtGroup"  class="d-flex justify-content-between <?=$test_model->getTestGroupId()==0 ? "d-none" : "" ?>"><span class="text-medium">Khóa học:</span> <span><?= \Learncom\Repositories\Group::getNameById($test_model->getTestGroupId()) ?></span></p>
+                    <p id ="txtTime" class="d-flex justify-content-between"><span class="text-medium">Thời gian:</span> <span><?= $test_model->getTestTime() ?> phút</span></p>
+                    <p id ="txtTime" class="d-flex justify-content-between"><span class="text-medium">Số câu hỏi:</span> <span><?= $test_model->getTestNumberQuestion() ?> câu</span></p>
+                    <p id="txtDes" class="d-flex justify-content-between"><span class="text-medium">Lời nhắn giáo viên:</span> <span><?= $test_model->getTestDescription() ?></span></p>
+                    <p class="text-red">- Trong quá trình làm bài không được thu nhỏ màn hình</p>
+                    <p class="text-red">- Trong quá trình làm bài không được chuyển tab</p>
+                    <p class="text-red">- Mỗi lần thu nhỏ hoặc chuyển tab sẽ bị tính 1 lần vi phạm</p>
+                </div>
+                <div id="star_new_test" >
+                <?php if ($test_model->getTestActive() == "Y") { ?>
+                    <div class="doc-preview text-center">
+                        <button type="button" id="sbmStart"  class="btn btn-info text-14" >Bắt đầu làm bài</button>
+                    </div>
+                <?php } else { ?>
+                    <div class="doc-preview text-center text-red text-20 ">
+                        Bài Thi chưa được phép làm
+                    </div>
+                <?php } ?>
+                </div>
+                <div id="comeback" class="doc-preview text-center d-none">
+                    <button type="button"  class="btn btn-info text-14 btn-start" >Vui lòng để full màn hình</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="screen_index" class="padding-block p-20 d-none">
+        <div class="row list-courses-wrap list-courses-custom">
+            <div class="col-lg-9 h-100 mt-xs-15 bg-white border-1-primary rounded mb-xs-70 view-test">
+                <h2 id="txtName" class="text-main text-center text-uppercase"><?= $test_parent_model->getTestName() ?></h2>
+                <?php if (strlen($test_model->getTestLink()) > 0) { ?>
+                    <div class="video-iframe" style="height: calc(100% - 34px);">
+                        <iframe width="100%" height="100%" src="<?php echo $test_model->getTestLink() ?>" allow="autoplay"></iframe>
+                    </div>
+                <?php } else {
+                    $testArr = json_decode($test_model->getTestArray(),true);
+                    if ($test_model->getTestType() == "exam") {
+                        $test_parent_id = $test_model->getTestId();
+                    } else {
+                        if ($test_model->getTestParentId() == 0){
+                            $test_parent_id = $test_model->getTestId();
+                        } else {
+                            $test_parent_id = $test_model->getTestParentId();
+                        }
+                    }
+                    if (sizeof($testArr) > 0){
+                        ?>
+                        <div class="carousel main-banner slide text-center" id="carousel-home-banner" data-ride="carousel">
+                            <?php if (count($testArr) > 1) { ?>
+                                <ol id="tab_click" class="carousel-indicators">
+                                    <?php foreach ($testArr as $key => $test) {
+                                        $callBack = "call_back";
+                                        if (!isset($arrAnswer[$key])) {
+                                            $callBack = "";
+                                        }
+                                        $hidden = '';
+                                        if (isset($arrScore[$key]) && $arrScore[$key]) {
+                                            $hidden = 'd-none';
+                                        }
+                                        ?>
+                                        <?php
+                                        $color = "";
+                                        if ($test_model->getTestType() == "exam") {
+                                            $folder = \Learncom\Models\LearnTestFolder::findFirstByTestIdAndFolderStatus($test_parent_id,$test);
+                                            if ($folder && $folder->getFolderColor() && isset($arrColorReturn[$folder->getFolderColor()])){
+                                                $color =   $arrColorReturn[$folder->getFolderColor()];
+                                            } ?>
+                                    <?php } ?>
+                                        <li id="question_<?php echo ($key-1) ?>" style="background-color: <?= $color ?> !important;"  data-target="#carousel-home-banner" title="<?php echo ($key-1) ?>" data-slide-to="<?= isset($arrScore[$key]) ? "-1" : ($key-1) ?>" class="<?= $callBack." ".$hidden?> question indicator-item <?= ($key-1) == count($arrScore) ? ' active' : '' ?>"><?php echo $key?></li>
+                                    <?php } ?>
+                                </ol>
+                            <?php } ?>
+                            <div class="carousel-inner">
+                                <?php
+                                foreach ($testArr as $key => $test){
+
+                                    $folder = \Learncom\Models\LearnTestFolder::findFirstByTestIdAndFolderStatus($test_parent_id,$test);
+                                    ?>
+                                    <div class="carousel-item justify-content-center<?= ($key-1) == count($arrScore) ? ' active' : '' ?>">
+                                        <div class="row">
+                                            <div class="col-3 text-20 font-weight-bold pl-30 pl-xs-0 text-blue-test">Câu <?php echo $key ?> :</div>
+                                            <?php
+                                            if (isset($arrAnswer[$key])) {?>
+                                            <div class="check-answer-circle col-7 pull-right">
+                                                <label for="A_<?=$key?>" class="item-answer">
+                                                    <input type="radio" id="A_<?=$key?>" <?= isset($arrScore[$key]) && $arrScore[$key] == "A" ? "checked" : ""?> data-browse="<?=$key?>" class="is_choose choose_<?=$key ?>" value="A" name="question[<?=$key?>]">
+                                                    <span class="checkmark-circle">A</span>
+                                                </label>
+                                                <label for="B_<?=$key?>" class="item-answer">
+                                                    <input type="radio" id="B_<?=$key?>" <?= isset($arrScore[$key]) && $arrScore[$key] == "B" ? "checked" : ""?> data-browse="<?=$key?>" class="is_choose choose_<?=$key ?>" value="B" name="question[<?=$key?>]"">
+                                                    <span class="checkmark-circle">B</span>
+                                                </label>
+                                                <label for="C_<?=$key?>" class="item-answer">
+                                                    <input type="radio" id="C_<?=$key?>" <?= isset($arrScore[$key]) && $arrScore[$key] == "C" ? "checked" : ""?> data-browse="<?=$key?>" class="is_choose choose_<?=$key ?>" value="C" name="question[<?=$key?>]"">
+                                                    <span class="checkmark-circle">C</span>
+                                                </label>
+                                                <label for="D_<?=$key?>" class="item-answer">
+                                                    <input type="radio" id="D_<?=$key?>" <?= isset($arrScore[$key]) && $arrScore[$key] == "D" ? "checked" : ""?> data-browse="<?=$key?>" class="is_choose choose_<?=$key ?>" value="D" name="question[<?=$key?>]"">
+                                                    <span class="checkmark-circle text-center">D</span>
+                                                </label>
+                                            </div>
+                                             <?php } ?>
+                                        </div>
+
+                                        <?php
+                                        if ($folder && $folder->getFolderLink()){
+                                            ?>
+                                            <img src="<?=$folder->getFolderLink()?>" title="<?php echo $test_model->getTestName() ?>" alt="<?php echo $test_model->getTestName() ?>">
+                                            <?php
+                                            if($folder->getFolderColor() && isset($arrColorReturn[$folder->getFolderColor()])) {
+                                                ?>
+                                                <script>
+                                                    var color = "<?= $arrColorReturn[$folder->getFolderColor()] ?>";
+                                                    var key = "<?= (intval($key)-1)?>";
+                                                    $('#question_'+key).attr('style',"background-color:"+color+" !important");
+                                                </script>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </div>
+
+                                <?php } ?>
+                            </div>
+                        </div>
+                    <?php }} ?>
+            </div>
+            <div class="col-lg-3 h-100 pl-2 pr-0">
+                <div class="box-answer h-100 bg-white border-1-primary rounded p-10">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="text-orange d-flex align-items-center mb-0"><img src="<?php echo $this->url->getStatic('frontend/')?>images/icon-clock.svg" alt="" title="" class="mr-10"> <span class="time-remain text-26"><?=$time_test?>:00</span></p>
+                        <button type="button"  class="btn btn-info btn-submit-results text-14" id="btn-submit">Nộp bài</button>
+                    </div>
+                    <input hidden id="time_test" value="<?= $time_test?>">++
+                    <h4 class="text-red">Vi Phạm: <span style="" id="count_error"></span></h4>
+                    <hr class="border-primary">
+                        <div class="form-group uploadFile  <?= $hasNotChoose ? "" : "d-none" ?>">
+                            <label >Link Bài Làm Tự Luận: </label>
+                            <input id="uploadFile" multiple type="file" name="fileUpload[]" class=" form-control h-50px" placeholder="" value="">
+                        </div>
+                        <div class="title-answer">
+                            <span class="align-items-center d-flex">Đã trả lời <strong class="text-main ml-2"><span id="currentAnswer">0</span>/<?=$test_model->getTestNumberQuestion() ?></strong></span>
+                        </div>
+                        <?php if (strlen($test_model->getTestLink()) > 0) { ?>
+                            <div class="list-test">
+                                <div class="list-test_content">
+                                    <div class="tab-content tab-content-custom" id="pills-tabContent">
+                                        <?php
+                                        $arrAnswer = json_decode($test_model->getTestAnswer(),true);
+                                        $total_column = ceil(count($arrAnswer)/10);
+                                        for ($t = 1;$t <= $total_column; $t ++) {
+                                            ?>
+                                            <div class="tab-pane fade show <?= $t==1 ? "active" :"" ?>" id="pills-<?=$t?>" role="tabpanel" aria-labelledby="pills-tab-<?=$t?>">
+                                                <?php for ($i = ($t-1)*10 +1;$i<=($t)*10;$i++) {
+                                                    if($i > count($arrAnswer)) {
+                                                        break;
+                                                    }
+                                                    if (!isset($arrAnswer[$i])) {
+                                                        continue;
+                                                    }
+                                                    ?>
+                                                    <div class="check-answer-circle">
+                                        <span class="text-center">
+                                            <?=$i > 9 ? $i : '0'.$i?>.
+                                        </span>
+
+                                                        <label for="A_<?=$i?>" class="item-answer">
+                                                            <input type="radio" id="A_<?=$i?>" data-browse="<?=$i?>" class="is_choose" value="A" name="question[<?=$i?>]">
+                                                            <span class="checkmark-circle">A</span>
+                                                        </label>
+                                                        <label for="B_<?=$i?>" class="item-answer">
+                                                            <input type="radio" id="B_<?=$i?>" data-browse="<?=$i?>" class="is_choose" value="B" name="question[<?=$i?>]"">
+                                                            <span class="checkmark-circle">B</span>
+                                                        </label>
+                                                        <label for="C_<?=$i?>" class="item-answer">
+                                                            <input type="radio" id="C_<?=$i?>" data-browse="<?=$i?>" class="is_choose" value="C" name="question[<?=$i?>]"">
+                                                            <span class="checkmark-circle">C</span>
+                                                        </label>
+                                                        <label for="D_<?=$i?>" class="item-answer">
+                                                            <input type="radio" id="D_<?=$i?>" data-browse="<?=$i?>" class="is_choose" value="D" name="question[<?=$i?>]"">
+                                                            <span class="checkmark-circle text-center">D</span>
+                                                        </label>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+                                    <ul class="nav nav-pills justify-content-center" id="pills-tab" role="tablist">
+                                        <?php  for ($t = 1;$t <= $total_column; $t ++) { ?>
+                                            <li class="nav-item">
+                                                <a class="nav-link <?= $t==1 ? "active" : "" ?>" id="pills-tab-<?=$t?>" data-toggle="pill" href="#pills-<?=$t?>" role="tab" aria-controls="pills-<?=$t?>" aria-selected="true"><?=$t?></a>
+                                            </li>
+                                        <?php } ?>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        <?php } ?>
+                        <div id="alert-for-student" style="overflow-y: auto;height: 600px">
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</main>
+<script type="text/javascript">
+    commands.push(function(){
+        var time_test = $('#time_test').val();
+        var is_start = "<?= count($arrScore) ?>";
+        function getTime() {
+            var today = new Date();
+            var minutes = today.getMinutes();
+            var hours = today.getHours();
+            var second = today.getSeconds();
+            if (minutes <10) {
+                var minutes = "0"+minutes;
+            }
+            if (hours <10) {
+                var hours = "0"+hours;
+            }
+            if (second <10) {
+                var second = "0"+second;
+            }
+            var time = hours+":"+minutes+":"+second+" - ";
+            return time;
+        }
+        function alertTime() {
+            
+        }
+        function start() {
+            if ($("#question_0").hasClass("call_back")) {
+                setTimeout(function(){
+                    $("#question_0").attr('data-slide-to',-1);
+                    $("#question_0").addClass('current');
+                },1000);
+                $('#tab_click').addClass("d-none");
+            }
+        }
+        var is_full_screen;
+        var student_error = 0;
+        function go_full_screen(){
+            var elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen();
+            } else if (elem.mozRequestFullScreen) {
+                elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen();
+            }
+        }
+
+        $('.carousel').carousel({
+            touch: true,
+            interval: false
+        });
+        window.onload = function() {
+            var reloading = sessionStorage.getItem("reloading");
+            if (reloading) {
+                sessionStorage.removeItem("reloading");
+                $('#subTest').submit();
+            } else {
+                sessionStorage.setItem("reloading", "true");
+            }
+
+        };
+        function countDown(minutes, callBack = function(mn, sc, isOver) {}) {
+            let x = minutes;
+            let seconds = 0;
+            let isOver = false;
+            function  process() {
+                if (seconds == 0) {
+                    $.ajax({
+                        url: "<?php echo $this->url->get('/check-time'); ?>",
+                        type: "POST",
+                        async: false,
+                        dataType: "JSON",
+                        data: {},
+                        success: function (data){
+                            if (data.minutes != undefined && data.seconds != undefined) {
+                                x = data.minutes;
+                                seconds = data.seconds;
+                            } else {
+                                if(!seconds) {
+                                    seconds = 59;
+                                    x--;
+                                } else {
+                                    seconds--;
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    if(!seconds) {
+                        seconds = 59;
+                        x--;
+                    } else {
+                        seconds--;
+                    }
+                }
+                if (x== 0 && seconds == 10) {
+                    
+                }
+                if(x==0 && seconds == 0) isOver = true;
+                callBack(x, seconds, isOver);
+                return isOver;
+            }
+            function runTimeout() {
+                setTimeout(() => {
+                    process();
+                if(isOver) return;
+                runTimeout();
+            }, 1000);
+            }
+            runTimeout();
+        }
+
+        function updateCounter(mn, sc, isOver) {
+            let timeRemain = document.querySelector(".time-remain");
+            let txtMN = mn < 10 ? "0" + mn : mn;
+            let txtSC = sc < 10 ? "0" + sc : sc;
+            timeRemain.innerHTML = txtMN + " : " + txtSC;
+            if(isOver) {
+                sessionStorage.removeItem("reloading");
+                $('#subTest').submit();
+            }
+        }
+
+        $('#sbmStart').on('click', function () {
+            countDown(time_test, updateCounter);
+            $('#star_new_test').addClass('d-none');
+            $('#comeback').removeClass('d-none');
+            $('#screen_start').addClass('d-none');
+            $('#screen_index').removeClass('d-none');
+            go_full_screen();
+           if (is_start == "0") {
+            $('#alert-for-student').prepend("---------------<br><p class='text-green'>"+getTime()+"BẮT ĐẦU LÀM BÀI"+"</p>");
+           } else {
+            $('#alert-for-student').prepend("---------------<br><p class='text-red'>"+getTime()+"TRỞ LẠI BÀI LÀM SAU KHI RỚT MẠNG."+"</p>");
+            $('#alert-for-student').prepend("---------------<br><p class=''>"+getTime()+"Học sinh làm tiếp từ câu: "+(parseInt(is_start)+1)+"</p>");
+           }
+            start();
+        });
+        $('.btn-start').on('click',function () {
+            $('#screen_start').addClass('d-none');
+            $('#screen_index').removeClass('d-none');
+            go_full_screen();
+        });
+
+        $('#btn-submit').on('click',function () {
+            if (confirm('Bạn có chắc chắn muốn kết thúc bài thi?')) {
+                sessionStorage.removeItem("reloading");
+                $('#subTest').submit();
+            }
+        });
+        $('.check-answer-circle input[type="radio"]').on('click', function () {
+            let element = $(this);
+            let arrId = element.attr('id').split("_");
+            let currentId = arrId[1];
+            $('.indicator-item').each(function(index, element) {
+                let $e = $(element);
+                let id = $e.attr('data-slide-to');
+                if (Number(currentId) == (Number(id)+1)) {
+                    $e.addClass('current');
+                }
+            });
+            element.parents('.check-answer-circle').addClass('checked');
+            let count = 0;
+            $('.check-answer-circle').each(function(index, element) {
+                let $e = $(element);
+                if ($e.hasClass('checked')){
+                    count++
+                }
+            });
+            $('#currentAnswer').text(count);
+        });
+        var action;
+        var getQuestion = 1;
+
+        $('.question').on('click', function (event) {
+            action = 1;
+            var side_to =  parseInt($(this).attr('title'));
+            if ($(this).hasClass("call_back")) {
+                setTimeout(function(){
+                    $(".question").parent().find("li[title='"+side_to+"']").attr('data-slide-to',-1);
+                    $(".question").parent().find("li[title='"+side_to+"']").addClass('current');
+                },1000);
+            }
+            var message = "Chuyển câu: "+(parseInt($(this).attr('title'))+1);
+            if ($(this).hasClass("call_back") && $(this).attr('data-slide-to') != -1 ) {
+                $.ajax({
+                    url: "<?= $this->url->get('/edit-data?id='.$test_model->getTestId()."&time_start=".$time_start); ?>",
+                    type: "POST",
+                    async: false,
+                    dataType: "JSON",
+                    data: {
+                        'action' : action,
+                        'message' : message
+                    },
+                    success: function (data){
+
+                    }
+                });
+                $('#tab_click').addClass("d-none");
+            }
+            getQuestion = parseInt($(this).attr('title'))+1;
+        });
+        $('.is_choose').on('change', function () {
+            $('#tab_click').removeClass("d-none");
+            var dapan = $(this).val();
+            var cauhoi = $(this).attr('data-browse');
+            var message = "Câu "+cauhoi+": chọn "+dapan;
+            var action = 2;
+            $('#alert-for-student').prepend("<p>"+getTime()+message+"<p>");
+            $.ajax({
+                url: "<?php echo $this->url->get('/edit-data?id='.$test_model->getTestId()."&time_start=".$time_start); ?>",
+                type: "POST",
+                async: false,
+                dataType: "JSON",
+                data: {
+                    'action' : action,
+                    'message' : message,
+                    'cauhoi' : cauhoi,
+                    'dapan': dapan
+                },
+                success: function (data){
+
+                }
+            });
+        });
+        (function() {
+            var hidden = "hidden";
+            if (hidden in document) {
+                document.addEventListener("visibilitychange", onchange);
+            }
+            else if ((hidden = "mozHidden") in document) {
+                document.addEventListener("mozvisibilitychange", onchange);
+            }
+            else if ((hidden = "webkitHidden") in document) {
+                document.addEventListener("webkitvisibilitychange", onchange);
+            }
+            else if ((hidden = "msHidden") in document) {
+                document.addEventListener("msvisibilitychange", onchange);
+            }
+            else if ("onfocusin" in document) {
+                document.onfocusin = document.onfocusout = onchange;
+            }
+            else
+            {
+                window.onpageshow = window.onpagehide
+                    = window.onfocus = window.onblur = onchange;
+            }
+
+
+            function onchange (evt) {
+                if(document.visibilityState !== 'visible') {
+                    var message = "học sinh rời tab";
+                    $('#alert-for-student').prepend("<p class='text-red'>"+getTime()+"Cảnh báo: rời tab"+"</p>");
+                    student_error++;
+                    $('#count_error').html(student_error);
+                    action = 3;
+                } else {
+                    var message = "học sinh trở lại tab";
+                    action = 4;
+                }
+                $.ajax({
+                    url: "<?php echo $this->url->get('/edit-data?id='.$test_model->getTestId()."&time_start=".$time_start); ?>",
+                    type: "POST",
+                    async: false,
+                    dataType: "JSON",
+                    data: {
+                        'action' : action,
+                        'message' : message
+                    },
+                    success: function (data){
+
+                    }
+                });
+            }
+
+            if( document[hidden] !== undefined )
+                onchange({type: document[hidden] ? "blur" : "focus"});
+        })();
+
+        if (document.addEventListener)
+        {
+            document.addEventListener('fullscreenchange', exitHandler);
+            document.addEventListener('mozfullscreenchange', exitHandler);
+            document.addEventListener('MSFullscreenChange', exitHandler);
+            document.addEventListener('webkitfullscreenchange', exitHandler);
+        }
+        var totalUpload = 0;
+        var totalSubmit = 0;
+        var upload_test = false;
+        var submit = false;
+        $('.uploadFile').on('click', function () {
+            upload_test = true;
+            totalUpload++;
+        });
+        $('#btn-submit').on('click',function () {
+            submit = true;
+            totalSubmit++;
+        });
+        function exitHandler()
+        {
+            if (document.fullscreenElement) {
+                is_full_screen = true;
+            }
+            else {
+                is_full_screen = false;
+            }
+            if (!is_full_screen) {
+                $('#screen_start').removeClass("d-none");
+                $('#screen_index').addClass("d-none");
+                <?php /*
+                $('#screen_start').removeClass("d-none");
+                $('#screen_index').addClass("d-none");
+                var message = "học sinh tắt chế độ full màn hình";
+                $('#alert-for-student').prepend("<p class='text-red'>"+getTime()+"Cảnh báo: thu nhỏ màn hình"+"</p>");
+                student_error++;
+                $('#count_error').html(student_error);
+                action = 5;
+                 */ ?>
+                if (upload_test == true) {
+                    if (totalUpload >1) {
+                        var message = "học sinh tắt chế độ full màn hình nộp tự luận " + totalUpload + " lần";
+                        $('#alert-for-student').prepend("<p class='text-red'>"+getTime()+"Cảnh báo: Nộp tự luận "+ totalUpload + " lần" +"</p>");
+                        student_error++;
+                        $('#count_error').html(student_error);
+                        action = 5;
+                    } else {
+                        var  message = "học sinh tắt chế độ full màn hình để nộp tự luận";
+                        action = 6;
+                    }
+                    upload_test = false;
+                } else if (submit) {
+                    if (totalSubmit >1) {
+                        var message = "học sinh tắt chế độ full màn hình nộp bài" + totalSubmit + " lần";
+                        $('#alert-for-student').prepend("<p class='text-red'>"+getTime()+"Cảnh báo: Nộp bài "+ totalSubmit + " lần" +"</p>");
+                        student_error++;
+                        $('#count_error').html(student_error);
+                        action = 5;
+                    } else {
+                        var  message = "học sinh tắt chế độ full màn hình để nộp bài";
+                        action = 6;
+                    }
+                    submit = false;
+                } else {
+                    var message = "học sinh tắt chế độ full màn hình";
+                    $('#alert-for-student').prepend("<p class='text-red'>"+getTime()+"Cảnh báo: thu nhỏ màn hình"+"</p>");
+                    student_error++;
+                    $('#count_error').html(student_error);
+                    action = 5;
+                }
+
+
+            } else {
+                $('#screen_start').addClass("d-none");
+                $('#screen_index').removeClass("d-none");
+                var  message = "học sinh mở chế độ full màn hình";
+                action = 6;
+            }
+            $.ajax({
+                url: "<?php echo $this->url->get('/edit-data?id='.$test_model->getTestId()."&time_start=".$time_start); ?>",
+                type: "POST",
+                async: false,
+                dataType: "JSON",
+                data: {
+                    'action' : action,
+                    'message' : message
+                },
+                success: function (data){
+
+                }
+            });
+        }
+
+    });
+</script>

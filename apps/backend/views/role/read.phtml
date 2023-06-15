@@ -1,0 +1,139 @@
+<script>
+    $(document).ready(function(){
+        $("#search").click(function(){
+            $("#read_form").prop("action","<?php echo $this->url->get("dashboard/list-role");?>");
+            $("#read_form").prop("method","post");
+            $("#read_form").submit();
+        });
+        $('#delete').click(function(){
+            var str="<?php echo $this->url->get('dashboard/delete-role');?>";
+            var id=$("#role_id").val();
+            str=str.concat("?id=").concat(id);
+            $('#delete').attr("href",str);
+        });
+    });
+</script>
+<script>
+    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-role");?>'>List Role</a></li>");
+</script>
+<?php
+if(!empty($message_form))
+{
+    ?>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $message_form['type'];?>">
+        <?php echo $message_form['content']; ?>
+    </p>
+    <?php $this->session->destroy();
+     }	?>
+<form name="read_form" id="read_form" method="POST">
+
+    <div class="box-content">
+
+        <table class="table table-striped table-bordered bootstrap-datatable">
+            <thead>
+            <tr>
+                <th style="text-align:center;">Id</th>
+                <th style="text-align:left;">Name</th>
+                <th style="text-align:center">Status</th>
+                <th style="text-align:center;width: 150px">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php $list_role=$this->dispatcher->getParam("list_role");
+            $total=$this->dispatcher->getParam("all_record");
+            foreach($list_role as $role){
+                ?>
+                <script>
+                    $(function(){
+                        $('#delete<?php echo $role->role_id;?>').click(function (e) {
+                            e.preventDefault();
+                            $('#warn').modal('show');
+                            var id=$("#<?php echo $role->role_id;?>").text();
+                            $("#role_id").val(id);
+                            var str="Are you sure to remove role ID = ".concat(id);
+                            $("#message").text(str);
+                        });
+                    });
+                </script>
+                <tr>
+                    <td style="text-align:center;"id="<?php echo $role->role_id;?>"><?php echo $role->role_id; ?></td>
+                    <td style="text-align:left;"><?php echo $role->role_name;?></td>
+                    <td style="text-align:center;"><?php echo $role->role_active?></td>
+                    <td style="text-align:center;" class="center">
+                        <a id="edit_account" class="btn btn-info" href="<?php echo $this->url->get("dashboard/edit-role");?>?id=<?php echo $role->role_id;?>">
+                            <i class="icon-edit icon-white"></i>
+                            Edit
+                        </a>
+                        <a id="delete<?php echo $role->role_id;?>" class="btn btn-danger delete_account" href="#">										<i class="icon-trash icon-white"></i>
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            <?php }?>
+            </tbody>
+        </table>
+        <div class="pagination pagination-centered">
+            <ul>
+                <?php $crr_page=$this->dispatcher->getParam("current_page");
+                $total_page = $this->dispatcher->getParam("total_page");
+                ?>
+
+                <?php if ($crr_page != 1){?>
+                    <li><a id="prev"  href="<?php echo $this->url->get('dashboard/list-role')?>?page=<?php echo $crr_page-1;?>&txtSearchKeyword=<?php echo $keyword;?>">Prev</a></li>
+                <?php }?>
+                <?php
+                $n=floor($total_page/10);
+                $b=$total_page%10;
+                $flag=0;
+                $limit=0;
+                if($crr_page >=1){
+                    $flag=floor($crr_page/10);
+                    if($flag<$n){
+                        $limit=($flag*10)+10;
+                    }else{
+                        $limit=($flag*10)+$b;
+                    }
+                }
+                if($crr_page < $limit){
+                    $start=0;
+                    if($flag==0)
+                        $start=$flag*10+1;
+                    else
+                        $start=$flag*10;
+                    for($i=$start;$i <=$limit;$i++){
+                        if($i==$crr_page){
+                            ?>
+                            <li><a style="color:#333" id="number_page"  href="<?php echo $this->url->get('dashboard/list-role')?>?page=<?php echo $i ?>&txtSearchKeyword=<?php echo $keyword;?>"><?php echo $i ?></a></li>
+                        <?php }else{?>
+                            <li><a id="number_page" href="<?php echo $this->url->get('dashboard/list-role')?>?page=<?php echo $i ?>&txtSearchKeyword=<?php echo $keyword;?>"><?php echo $i ?></a></li>
+                        <?php }?>
+                    <?php }?>
+                <?php }?>
+                <?php if ($crr_page<$total_page){?>
+                    <li><a id="next"  href="<?php echo $this->url->get('dashboard/list-role')?>?page=<?php echo $crr_page+1;?>&txtSearchKeyword=<?php echo $keyword;?>">Next</a></li>
+                <?php }?>
+            </ul>
+        </div>
+        <p style="text-align:left;font-size:16px;color:red"><strong style="">Total : <?php echo $total?></strong> Roles</p>
+
+    </div>
+</form>
+
+<!--FORM DELETE A role-->
+
+<form>
+    <div class="modal hide fade" id="warn">
+        <div class="modal-header">
+            <input type="hidden" id="role_id" name="role_id" />
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3>Warning !</h3>
+        </div>
+        <div class="modal-body">
+            <p id="message"></p>
+        </div>
+        <div class="modal-footer">
+            <a href="" class="btn" data-dismiss="modal">Close</a>
+            <a id="delete" name="delete" href="" class="btn btn-primary">Yes</a>
+        </div>
+    </div>
+</form>

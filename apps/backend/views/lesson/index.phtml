@@ -1,0 +1,97 @@
+<?php
+/**
+ * @var $parent_keyword;
+ * @var $type;
+ * @var $class_id;
+ * @var $subject_id;
+ * @var \Learncom\Models\LearnVideo[] $lessons
+ * @var \Learncom\Models\LearnVideo[] $listLessons
+ * @var \Learncom\Models\LearnChapter[] $chapters
+ */
+?>
+<main>
+    <div class="container-fluid">
+        <h2 class="text-main text-center text-bolder my-20">
+            <?php echo \Learncom\Repositories\ClassSubject::findFirstSubjectNameById($subject_id).' '. \Learncom\Repositories\ClassSubject::findFirstClassNameById($class_id)?>
+        </h2>
+        <!--<div class="my-10 text-right">
+            <button class="btn-style-1 box-shadow-1 w-200px">
+                Tải tài liệu
+            </button>
+        </div>-->
+        <?php
+            if (count($lessons) > 0) {
+        ?>
+            <div class="row mx-0 list-courses-wrap">
+                    <div class="col-12 col-lg-4 col-xl-3 list-coutses">
+                        <div class="list-wrap box-shadow-1">
+                            <?php
+                                $chapters = \Learncom\Repositories\Chapter::findByClassAndSubject($class_id,$subject_id);
+                                if (sizeof($chapters) > 0){
+                                    foreach ($chapters as $chapter){
+                            ?>
+                                <span class="item-style item-menu justify-content-start" data-toggle="collapse" data-target="#course-sub-<?php echo $chapter->getChapterId() ?>" <?php echo ($chapter->getChapterId() == $lessons[0]->getVideoChapterId()) ? 'aria-expanded="true"' : '' ?>>
+                                    <?php echo $chapter->getChapterName() ?>
+                                </span>
+                                    <?php
+                                        $listLessons = \Learncom\Repositories\Video::findByClassAndSubjectAndTypeAndChapter($class_id,$subject_id,$type,$chapter->getChapterId());
+                                        if (sizeof($listLessons) > 0){
+                                    ?>
+                                        <div class="collapse<?php echo ($chapter->getChapterId() == $lessons[0]->getVideoChapterId()) ? ' show' : '' ?>" id="course-sub-<?php echo $chapter->getChapterId() ?>">
+                                            <div class="sub-list">
+                                        <?php foreach ($listLessons as $lesson){ ?>
+                                            <span class="item-style<?php echo ($lesson->getVideoId() == $lessons[0]->getVideoId()) ? ' active' : '' ?> justify-content-start" data-src-iframe="<?php echo $lesson->getVideoLink() ?>">
+                                                <?php echo $lesson->getVideoName() ?>
+                                            </span>
+                                        <?php } ?>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                            <?php }} ?>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-8 col-xl-9 courses-detail">
+                        <div class="video-iframe">
+                            <iframe src="<?php echo $lessons[0]->getVideoLink() ?>" allowfullscreen></iframe>
+                        </div>
+                        <!-- <div class="docs-iframe">
+                            <iframe src="https://docs.google.com/document/d/1y4Wpu9qWdF9aP19-cFItYVcMB3ArozxwGvBtT-aAnuM/edit" allowfullscreen></iframe>
+                        </div> -->
+                    </div>
+                </div>
+        <?php } ?>
+
+    </div>
+</main>
+
+<script type="text/javascript">
+    commands.push(function () {
+        $(function() {
+            $(".collapse").on("click", function(e){
+                e.stopPropagation();
+            });
+            $(".item-style:not(.item-menu)").on("click", function(e){
+                $(".item-style.active").removeClass("active");
+                let parent = this.parentElement;
+                let src = "";
+                // console.log("parent", parent)
+                $(parent).find(".item-menu[aria-expanded='true']").click();
+                $(this).addClass("active");
+                // replace src
+                src = this.dataset.srcIframe;
+                if(!src) return;
+                $(".courses-detail iframe").attr("src", src);
+            });
+            $(".item-menu").on("click", function(e){
+                $(".item-menu").each((ind, ele) => {
+                    if(ele !== this) {
+                        let target = $(ele).data("target");
+                        $(target).collapse("hide");
+                    }
+                });
+                let parent = this.parentElement;
+                $(parent).children(".item-style.active").removeClass('active');
+            })
+        });
+    })
+</script>

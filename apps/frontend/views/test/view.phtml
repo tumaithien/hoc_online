@@ -1,0 +1,128 @@
+<?php
+/**
+ * @var \Learncom\Models\LearnTest $test_model
+ * @var \Learncom\Models\LearnTestFolder $folder
+ */
+?>
+
+<main>
+    <div class="padding-block p-20">
+        <div class="row list-courses-wrap list-courses-custom">
+            <div class="col-lg-2 list-coutses">
+                <?php $this->partial('shared/left_test'); ?>
+            </div>
+            <div class="col-lg-8 h-100 mt-xs-15 bg-white border-1-primary rounded mb-xs-70">
+                <h2 id="txtName" class="text-main text-center text-uppercase"><?= $test_parent_model->getTestName() ?></h2>
+                <?php if (strlen($test_model->getTestLink()) > 0) { ?>
+                    <div class="video-iframe" style="height: calc(100% - 34px);">
+                        <iframe width="100%" height="100%" src="<?php echo strlen($test_model->getTestLinkComment()) > 0 ? $test_model->getTestLinkComment() : $test_model->getTestLink() ?>" allow="autoplay"></iframe>
+                    </div>
+                <?php } else {
+                    $testArr = json_decode($test_model->getTestArray(),true);
+                    if (sizeof($testArr) > 0){
+                        ?>
+                        <div class="carousel main-banner slide" id="carousel-home-banner" data-ride="carousel">
+                            <?php if (count($testArr) > 1) { ?>
+                                <ol class="carousel-indicators">
+                                    <?php foreach ($testArr as $key => $banner) {?>
+                                        <li data-target="#carousel-home-banner" data-slide-to="<?php echo ($key-1) ?>" class="<?= ($key-1) == 0 ? 'active' : '' ?>"><?php echo $key?></li>
+                                    <?php } ?>
+                                </ol>
+                            <?php } ?>
+                            <div class="carousel-inner">
+                                <?php
+                                foreach ($testArr as $key => $test){
+                                    $folder = \Learncom\Models\LearnTestFolder::findFirstByTestIdAndFolderStatus($test_parent_id,$test);
+                                    if ($folder){
+                                        ?>
+                                        <div class="carousel-item<?= ($key-1) == 0 ? ' active' : '' ?>">
+                                            <div style="max-height: 600px; overflow-y: auto">
+                                                <p class="text-20 font-weight-bold pl-80 mt-20 text-blue-test">Câu <?php echo $key ?> :</p>
+                                                <img src="<?php echo $this->url->getStatic($folder->getFolderLink()) ?>" title="<?php echo $test_model->getTestName() ?>" alt="<?php echo $test_model->getTestName() ?>">
+                                                <hr>
+                                                <h4 class="text-blue-dark pl-80">Đáp của bạn: <?= isset($arrTestScore[$key]) ? $arrTestScore[$key] : "" ?></h4>
+                                                <h4 class="text-red pl-80">Đáp án đúng: <?= isset($arrTestAnswer[$test]) ? $arrTestAnswer[$test]: "" ?></h4>
+                                                <p class="text-20 font-weight-bold pl-80">Lời giải :</p>
+                                                <img src="<?php echo $this->url->getStatic($folder->getFolderLinkComment()) ?>" title="<?php echo $test_model->getTestName() ?>" alt="<?php echo $test_model->getTestName() ?>">
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                                    <?php } ?>
+                            </div>
+                        </div>
+                    <?php }} ?>
+            </div>
+            <?php if (strlen($test_model->getTestLink()) > 0) { ?>
+                <div class="col-lg-2 h-100 bg-white rounded">
+                    <div class="list-test overflow-y-auto mt-20 h-100 pb-20">
+                        <div class="list-test_content">
+                            <div class="row">
+                                <?php
+                                $total_row = ceil(count($arrTestAnswer)/3);
+                                for($t=1;$t<=3;$t++) {
+                                    ?>
+                                    <div class="col-lg-12">
+                                        <?php for ($i = ($t-1)*$total_row +1; $i <= $t*$total_row; $i++) {
+                                            if (isset($arrTestAnswer[$i])) {
+                                                ?>
+                                                <div class="check-answer-circle">
+                                                    <?=$i < 10 ? '0'.$i : $i?>.
+                                                    <?php foreach (['A','B','C','D'] as $item) {
+                                                        $status = "";
+                                                        if ($arrTestAnswer[$i] == $item) {
+                                                            $status .= ' active';
+                                                        }
+                                                        if (isset($arrTestScore[$i]) && $arrTestScore[$i] == $item) {
+                                                            $status .= " check_right";
+                                                        }
+                                                        ?>
+                                                        <label for="test-a" class="item-answer">
+                                                            <span  class="checkmark-circle <?= $status?>"><?= $item ?></span>
+                                                        </label>
+
+                                                    <?php } ?>
+                                                </div>
+                                            <?php } } ?>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            <?php } ?>
+            <?php if ($score_model->getScoreDataNotChoose()) { ?>
+                <div>
+                    <img src="<?=$score_model->getScoreDataNotChoose()?>" alt="bài tự luận">
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+</main>
+<script type="text/javascript">
+    commands.push(function(){
+        $('.carousel').carousel({
+            touch: true,
+            interval: false
+        });
+        window.onload = function() {
+            var reloading = sessionStorage.getItem("reloading");
+            if (reloading) {
+                sessionStorage.removeItem("reloading");
+                $('#subTest').submit();
+            } else {
+                sessionStorage.setItem("reloading", "true");
+            }
+
+        };
+
+        $('#btn-submit').on('click',function () {
+            if (confirm('Bạn có chắc chắn muốn kết thúc bài thi?')) {
+                sessionStorage.removeItem("reloading");
+                $('#subTest').submit();
+            }
+        })
+    })
+</script>

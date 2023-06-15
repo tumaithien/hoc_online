@@ -1,0 +1,240 @@
+<?php
+$urlPage = '?id='.$id;
+
+?>
+<?php if(isset($msg_result['status']))  {?>
+    <div class="clearfix"></div>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $msg_result['status']?>">
+        <?= $msg_result["message"]; ?>
+    </p>
+<?php } ?>
+<form class="searchForm" name="read_form" id="read_form" method="post" action="">
+    <?php $keyword = $this->dispatcher->getParam("txtSearchKeyword");
+    ?>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <div class="row ">
+                        <div class="col-md-1">
+                            <h2 class="">Keyword</h2>
+                        </div>
+                        <div class="col-md-4">
+                            <input maxlength="255" class="form-control" type="text" name="txtSearchKeyword" placeholder="ID, Name" value="<?php echo isset($keyword) ? $keyword : ""; ?>">
+                        </div>
+                        <div class="col-md-1">
+                            <h2 class="">Lớp </h2>
+                        </div>
+                        <div class="col-md-3">
+                            <select  class="form-control" name="slcClass" id="slcClass">
+                                <option value="">Tất cả lớp</option>
+                                <?php
+                                echo isset($select_school_class) ? $select_school_class : "";
+                                ?>
+                            </select>
+                        </div>
+                        <div class="col-md-1">
+                            <button id="sbmCSV" type="button" name="excel" class="btn btn-success">Xuất Excel</button>
+                        </div>
+                    </div>
+                    <div >
+                        <strong>Total</strong>
+                        <?php echo $list_item->total_items ?> records
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered bootstrap-datatable">
+                            <thead>
+                            <tr>
+                                <th style="text-center" width="50px"><label class="container_checkbox"><input type="checkbox" id="checkboxAll"><span class="checkmark_checkbox"></span></label></th>
+                                <th style="text-align:center; width: 15%">Tên Học sinh</th>
+                                <th style="text-align:center; width: 10%">Khối</th>
+                                <th style="text-align:center; width: 10%">Lớp Học</th>
+                                <th style="text-align:center; width: 70px">Điểm Trắc Nghiệm</th>
+                                <th style="text-align:center; width: 70px">Điểm Tự luận</th>
+                                <th style="text-align:center; width: 50px">Tổng Điểm</th>
+                                <th style="text-align:center; width: 50px"> Số Lần Vi Phạm</th>
+                                <th style="text-align:center; width: 50px">Thời gian hoàn thành</th>
+                                <th style="text-align:center; width: 10%">Thời gian Làm bài</th>
+                                <th style="text-align:center; width: 25%">Chi tiêt bài làm</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            $USER = new \Learncom\Repositories\User();
+                            foreach($list_item->items as  $score){
+                                ?>
+
+                                <tr>
+                                    <td><label class="container_checkbox"><input class="check" name="item[]" value="<?= $score['score_id'];?>" type="checkbox"><span class="checkmark_checkbox"></span></label></td>
+                                    <td  style="text-align:left;" id="<?= $score['score_id'];?>" data-browse="<?= $score['score_id'];?>" class="center">
+                                        <?php echo $USER->getNameByID($score['score_user_id']); ?>
+                                    </td>
+
+                                    <td  style="text-align:left;">
+                                        <?= \Learncom\Repositories\ClassSubject::getNameByClassAndSubject($test_model->getTestClassId(),$test_model->getTestSubjectId())?>
+                                    </td>
+                                    <td  style="text-align:left;">
+                                        <?= $USER->getSchooClassNameByID($score['score_user_id'])?>
+                                    </td>
+                                    <td  style="text-align:left;">
+                                        <input name="txtScoreIsChose<?= $score['score_id'] ?>" id="txtScoreIsChose<?= $score['score_id'] ?>" class="point" data-browse="<?= $score['score_id'] ?>"  value="<?= $score['score_score_choose']; ?>">
+                                    </td>
+                                    <td  style="text-align:left;">
+                                        <input name="txtScoreNotChose<?= $score['score_id'] ?>" id="txtScoreNotChose<?= $score['score_id'] ?>"  class="point" data-browse="<?= $score['score_id'] ?>" value="<?= (floatval($score['score_score']) - floatval($score['score_score_choose'])); ?>">
+                                    </td>
+                                    <td  style="text-align:left;">
+                                        <p id="totalScore<?= $score['score_id'] ?>"><?= $score['score_score']; ?></p>
+                                        <input hidden id="txtScore<?= $score['score_id'] ?>"  name="txtScore<?= $score['score_id'] ?>" value="<?= $score['score_score']; ?>">
+                                    </td>
+                                    <td  style="text-align:left;<?= $score['score_total_error'] > 0 ? "background-color:#f9e2d2" : ""?>">
+                                        <?= $score['score_total_error'] ?>
+                                    </td>
+                                    <td  style="text-align:left;">
+                                        <?= $score['score_time'] ?>
+                                    </td>
+                                    <td  style="text-align:left;">
+                                        <?= $this->my->formatDateTime($score['score_insert_time']); ?>
+                                    </td>
+                                    <td  style="text-align:center;" class="center">
+                                        <button id="sbmSave<?= $score['score_id'] ?>" name="sbmSave" value="<?php echo $score['score_id'];?>" class="btn btn-danger" href="">Lưu Điểm</button>
+                                        <a id="edit_account" class="btn btn-info" href="<?php echo $this->url->get('/office/new-view-score');?>?id=<?= $score['score_test_id']?>&user-id=<?=$score['score_user_id']?>">
+                                            <i class="icon-edit icon-white"></i>
+                                            Bai lam
+                                        </a>
+                                        <a id="log" class="btn btn-danger" href="<?php echo $this->url->get('/office/new-detail-score');?>?id=<?= $score['score_test_id']?>&user-id=<?=$score['score_user_id']?>">Quá trình</a>
+                                    </td>
+
+                                </tr>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col-md-6 ">
+                            <label for="slcAction">With Selected:</label>
+                            <select class="form-control" id="slcAction" name="slcAction" style="display: inline-block;width: 40%">
+                                <option value="" selected >Please select</option>
+                                <option value="drop">Drop</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <?php if($list_item->total_pages > 1) {?>
+                                <nav class="paginate-footer">
+                                    <?php  if($urlPage != "?") $urlPage .= "&";
+                                    $urlPage .= "page=";
+                                    echo $this->my->renderPagination($urlPage, $list_item->current, $list_item->total_pages, 2);
+                                    ?>
+                                </nav>
+                            <?php }?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function() {
+        $('#slcClass').on('change',function () {
+            $('form[name=read_form]').prop('action','<?php echo $this->url->get('/office/new-list-score?id='.$id."&slcClass="); ?>'+ $('#slcClass').val());
+            $('form[name=read_form]').submit();
+        });
+        $('.delete-all').click(function(){
+            $('form[name=read_form]').prop('action','<?php echo $this->url->get('/office/new-delete-score?id='.$id."&slcClass="); ?>'+ $('#slcClass').val());
+            $('form[name=read_form]').submit();
+        });
+        $(".point").on('change',function () {
+            var id = $(this).attr('data-browse');
+            var score = parseFloat($('#txtScoreIsChose'+id).val()) +  parseFloat($('#txtScoreNotChose'+id).val());
+            $('#totalScore'+id).html(score);
+            $('#txtScore'+id).val(score);
+            if (parseFloat($('#txtScoreIsChose'+id).val()) > 10) {
+                $('#txtScoreIsChose'+id).addClass("border-red");
+                $('#sbmSave'+id).attr('disabled',true);
+            } else {
+                $('#txtScoreIsChose'+id).removeClass("border-red");
+                $('#sbmSave'+id).attr('disabled',false);
+            }
+            if (parseFloat($('#txtScoreNotChose'+id).val()) > 10) {
+                $('#txtScoreNotChose'+id).addClass("border-red");
+                $('#sbmSave'+id).attr('disabled',true);
+            }else {
+                $('#txtScoreNotChose'+id).removeClass("border-red");
+                $('#sbmSave'+id).attr('disabled',false);
+            }
+            if (parseFloat($('#txtScore'+id).val()) > 10) {
+                $('#txtScore'+id).parent().addClass("border-red");
+                $('#sbmSave'+id).attr('disabled',true);
+            }else {
+                $('#txtScore'+id).parent().removeClass("border-red");
+                $('#sbmSave'+id).attr('disabled',false);
+            }
+        });
+        var userData;
+        $('#sbmCSV').on('click', function () {
+            var id = "<?= $test_id ?>";
+            $.ajax({
+                url: "<?php echo $this->url->get('/office/new-list-score?id='.$id."&slcClass="); ?>"+ $('#slcClass').val(),
+                async: false,
+                type: "POST",
+                dataType: "JSON",
+                data: {'id': id,
+                },
+                success: function(data){
+                    userData = data;
+                    downloadCSV({ filename: "user data.csv" });
+                }
+            });
+        });
+        convertArrayOfObjectsToCSV = args => {
+            const data = args.data;
+            if (!data || !data.length) return;
+
+            const columnDelimiter = args.columnDelimiter || ',';
+            const lineDelimiter = args.lineDelimiter || '\n';
+
+            const keys = Object.keys(data[0]);
+
+            let result = '';
+            result += keys.join(columnDelimiter);
+            result += lineDelimiter;
+
+            data.forEach(item => {
+                ctr = 0;
+            keys.forEach(key => {
+                if (ctr > 0) result += columnDelimiter;
+            result += item[key];
+            ctr++;
+        });
+            result += lineDelimiter;
+        });
+
+            return result;
+        }
+        downloadCSV = args => {
+            let csv = convertArrayOfObjectsToCSV({
+                data: userData
+            });
+            if (!csv) return;
+
+            const filename = args.filename || 'export.csv';
+
+            if (!csv.match(/^data:text\/csv/i)) {
+                csv = 'data:text/csv;charset=utf-8,\uFEFF' + csv;
+            }
+
+            const data = encodeURI(csv);
+
+            const link = document.createElement('a');
+            link.setAttribute('href', data);
+            link.setAttribute('download', filename);
+            link.click();
+        }
+    });
+</script>

@@ -1,0 +1,112 @@
+<?php
+/**
+ * @var $parent_keyword;
+ * @var $type;
+ * @var $class_id;
+ * @var $subject_id;
+ * @var \Learncom\Models\LearnDocument[] $documents
+ * @var \Learncom\Models\LearnDocument[] $listDocuments
+ * @var \Learncom\Models\LearnChapter[] $chapters
+ */
+$subject_parents_id = 0;
+$subject = \Learncom\Repositories\ClassSubject::findFirstBySubjectId($subject_id);
+if ($subject){
+    $subject_parents_id = $subject->getSubjectParentId();
+}
+?>
+<main>
+    <div class="container-fluid">
+        <h2 class="text-main text-center text-bolder my-20">
+            <?php echo \Learncom\Repositories\ClassSubject::findFirstSubjectNameById($subject_id).' '. \Learncom\Repositories\ClassSubject::findFirstClassNameById($class_id)?>
+        </h2>
+        <!--<div class="my-10 text-right">
+            <button class="btn-style-1 box-shadow-1 w-200px">
+                Tải tài liệu
+            </button>
+        </div>-->
+        <?php
+            if (count($documents) > 0) {
+        ?>
+            <div class="row mx-0 list-courses-wrap">
+                    <div class="col-12 col-lg-2 list-coutses">
+                        <div class="list-wrap box-shadow-1">
+                            <?php
+                                if ($subject_parents_id != 0){
+                                    $chapters = \Learncom\Repositories\Chapter::findByClassAndSubject($class_id,$subject_parents_id);
+                                } else {
+                                    $chapters = \Learncom\Repositories\Chapter::findByClassAndSubject($class_id,$subject_id);
+                                }
+                                if (sizeof($chapters) > 0){
+                                    foreach ($chapters as $chapter){
+                            ?>
+                                <span class="item-style item-menu justify-content-start" data-toggle="collapse" data-target="#course-sub-<?php echo $chapter->getChapterId() ?>" <?php echo ($chapter->getChapterId() == $documents[0]->getDocumentChapterId()) ? 'aria-expanded="true"' : '' ?>>
+                                    <?php echo $chapter->getChapterName() ?>
+                                </span>
+                                    <?php
+                                        $listDocuments = \Learncom\Repositories\Document::findByClassAndSubjectAndChapter($class_id,$subject_id,$chapter->getChapterId());
+                                        if (sizeof($listDocuments) > 0){
+                                    ?>
+                                        <div class="collapse<?php echo ($chapter->getChapterId() == $documents[0]->getDocumentChapterId()) ? ' show' : '' ?>" id="course-sub-<?php echo $chapter->getChapterId() ?>">
+                                            <div class="sub-list">
+                                        <?php foreach ($listDocuments as $lesson){ ?>
+                                            <span class="item-style<?php echo ($lesson->getDocumentId() == $documents[0]->getDocumentId()) ? ' active' : '' ?> justify-content-start" data-src-iframe="<?php echo $lesson->getDocumentLink() ?>" data-public="<?php echo $lesson->getDocumentIsPublic() ?>">
+                                                <?php echo $lesson->getDocumentName() ?>
+                                            </span>
+                                        <?php } ?>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                            <?php }} ?>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-10 courses-detail">
+                        <div class="video-iframe">
+                            <iframe src="<?php echo $documents[0]->getDocumentLink() ?>" <?php echo $documents[0]->getDocumentIsPublic() == "N" ? 'sandbox="allow-top-navigation-by-user-activation allow-orientation-lock allow-modals allow-pointer-lock allow-presentation allow-same-origin allow-forms allow-top-navigation allow-scripts"' : '' ?>></iframe>
+                        </div>
+                        <!-- <div class="docs-iframe">
+                            <iframe src="https://docs.google.com/document/d/1y4Wpu9qWdF9aP19-cFItYVcMB3ArozxwGvBtT-aAnuM/edit" allowfullscreen></iframe>
+                        </div> -->
+                    </div>
+                </div>
+        <?php } ?>
+
+    </div>
+</main>
+
+<script type="text/javascript">
+    commands.push(function () {
+        $(function() {
+            $(".collapse").on("click", function(e){
+                e.stopPropagation();
+            });
+            $(".item-style:not(.item-menu)").on("click", function(e){
+                $(".item-style.active").removeClass("active");
+                let parent = this.parentElement;
+                let src, publicDoc, sandbox;
+                // console.log("parent", parent)
+                $(parent).find(".item-menu[aria-expanded='true']").click();
+                $(this).addClass("active");
+                // replace src
+                src = this.dataset.srcIframe;
+                publicDoc = this.dataset.public;
+                if (publicDoc === "N"){
+                    $(".courses-detail iframe").attr("sandbox","allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-same-origin allow-scripts allow-top-navigation allow-top-navigation-by-user-activation");
+                } else {
+                    $(".courses-detail iframe").removeAttr("sandbox");
+                }
+                if(!src) return;
+                $(".courses-detail iframe").attr("src", src);
+            });
+            $(".item-menu").on("click", function(e){
+                $(".item-menu").each((ind, ele) => {
+                    if(ele !== this) {
+                        let target = $(ele).data("target");
+                        $(target).collapse("hide");
+                    }
+                });
+                let parent = this.parentElement;
+                $(parent).children(".item-style.active").removeClass('active');
+            })
+        });
+    })
+</script>

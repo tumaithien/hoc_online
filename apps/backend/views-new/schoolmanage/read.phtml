@@ -1,0 +1,296 @@
+<?php
+$student = "learncom\Models\LearnUser";
+$test = "learncom\Models\LearnTest";
+$score = "learncom\Models\LearnScore";
+?>
+<main>
+    <div class="row mx-0">
+        <div class="col-lg-9">
+            <div class="x_panel">
+              <div class="padding-block bg-white p-20">
+            <h2><?=$test_model->getTestName() ?></h2>
+            <div class="header-follow-student">
+                <ul class="nav nav-pills nav-custom-list-follow" id="pills-tab" role="tablist">
+                    <li class="nav-item" >
+                        <a class="nav-link tab-1" title="1" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Chưa làm</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link tab-1" title="2" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Đang làm</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link tab-1" title="3" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Đã nộp</a>
+                    </li>
+                </ul>
+                <div class="form-group">
+                    <div class="col-md-6 col-sm-6 col-xs-12 form-check">
+                        <label class="container_radio"><input type="radio" name="radSpecial"
+                                                              value="Y" <?php echo (isset($formData["test_active"]) && $formData["test_active"] == "Y") ? "checked" : ''; ?>>Đặc biệt<span
+                                    class="checkmark"></span></label>
+                        <label class="container_radio"><input type="radio" name="radSpecial"
+                                                              value="N" <?php echo (isset($formData["test_active"]) && $formData["test_active"] == "N") ? "checked" : ''; ?>>Tất cả<span
+                                    class="checkmark"></span></label>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <div class="row mx-0">
+                        <div class="col-lg-12">
+                            <div class="box-tab-list-student">
+                                <div class="title-list-student">
+                                    <span>Họ và Tên</span>
+                                    <span>Ip</span>
+                                    <span>Thiết bị</span>
+                                </div>
+                                <div id="test_no" class="nav flex-column nav-pills">
+                                    <?php
+                                    foreach ($list_no as $user) {
+                                        ?>
+                                    <a class="nav-link">
+                                        <span class="info-student"><?= $user->$student->user_name ?></span>
+                                        <span class="info-student"><?= $user->$score->score_user_ip ?></span>
+                                        <span class="info-student"><?=$user->$score->score_user_device?></span>
+                                    </a>
+                                    <?php }?>
+                                    <?php
+                                    foreach ($list_no_2 as $user) {
+                                        ?>
+                                        <a class="nav-link">
+                                            <span class="info-student"><?= $user->user_name ?></span>
+                                            <span class="info-student"></span>
+                                            <span class="info-student"></span>
+                                        </a>
+                                    <?php }?>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                            <div class="box-tab-list-student">
+                                <div class="title-list-student">
+                                    <span>Họ và Tên</span>
+                                    <span>IP</span>
+                                    <span>Thiết bị</span>
+                                    <span>Vi phạm</span>
+                                    <span>Điểm TN</span>
+                                    <span>Hành động</span>
+                                </div>
+                                <div id="test_pending" class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                    <?php
+                                    if (count($list_pending) > 0) {
+
+                                    foreach ($list_pending as $user) {
+                                        $arrAction = json_decode($user->$score->score_log,true);
+                                        $last_action = end($arrAction);
+                                        $arrActionNew = explode(',',$last_action);
+                                        ?>
+                                    <a class="nav-link tab-2" title="<?=$user->$student->user_id?>" id="hoc-sinh-<?=$user->$student->user_id?>-tab" data-toggle="pill" href="#hoc-sinh-<?=$user->$student->user_id?>" role="tab" aria-controls="hoc-sinh-<?=$user->$student->user_id?>" aria-selected="true">
+                                        <span class="info-student"><?=$user->$student->user_name?></span>
+                                        <span class="info-student"><?=$user->$score->score_user_ip?></span>
+                                        <span class="info-student"><?=$user->$score->score_user_device?></span>
+                                        <span class="info-student"><?=$user->$score->score_total_error?></span>
+                                        <span class="info-student"><?=$user->$score->score_score_choose?></span>
+                                        <span class="info-student"><img src="<?= \Learncom\Repositories\SchooManage::arrIcon[$arrActionNew[1]] ? \Learncom\Repositories\SchooManage::arrIcon[$arrActionNew[1]] : "" ?>" style="padding-right:10px" alt="" class="mr-10 p-10"><?=$this->my->formatDateTimeTest($arrActionNew[0]).": ".$arrActionNew[2]?></span>
+                                    </a>
+                                    <?php } } ?>
+                                </div>
+                            </div>
+
+                </div>
+                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                    <div class="row mx-0" style="max-height: 700px; ">
+                        <div class="col-lg-12">
+                            <div class="box-tab-list-student">
+                                <div class="title-list-student">
+                                    <span>Họ và Tên</span>
+                                    <span>Thời gian hoàn thành</span>
+                                    <span style="flex: 0 0 30%">Điểm trắc nghiệm</span>
+                                    <span>Số lần vi phạm</span>
+                                </div>
+                                <div id="test_success" class="nav flex-column nav-pills">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+             </div>
+        </div>
+
+        <div class="col-lg-3 border rounded">
+            <div id="test_alert" class="x_panel">
+
+            <?php foreach ($list_pending as $user) {
+                $arrAction = json_decode($user->$score->score_log,true);
+                $arrAction = array_reverse($arrAction);
+                ?>
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade active" id="hoc-sinh-<?=$user->$student->user_id?>" role="tabpanel" aria-labelledby="hoc-sinh-<?=$user->$student->user_id?>-tab">
+                        <div class="list-screen-follow-student">
+                            <h2><?=$user->$student->user_name?></h2>
+                            <div class="history-follow-student">
+                                <?php
+                                $total = 0;
+                                foreach ($arrAction as $action) {
+                                    $arrActionNew = explode(',',$action);
+                                    $total++;
+                                    if($total > 10) {
+                                        break;
+                                    }
+                                    ?>
+                                    <span class="item-history-follow-student">
+                                              <img src="https://d1q96dymhl7bnj.cloudfront.net/uploads/play-solid-1635345422.svg" alt="" class="mr-10">
+                                        <?=$this->my->formatDateTimeTest($arrActionNew[0]).": ". $arrActionNew[2] ?>
+                                            </span>
+                                <?php } ?>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            <?php  } ?>
+        </div>
+        </div>
+        <input hidden id="tab-2" value="">
+    </div>
+</main>
+<script>
+    var tab_1_active = 0;
+    $(document).ready(function() {
+
+        $('.tab-1').on('click', function () {
+            tab_1_active = $(this).attr('title');
+        });
+        $('.tab-2').on('click', function () {
+            $('#tab-2').val($(this).attr('title'));
+            $('.tab-2').removeClass("active");
+            $(this).addClass("active");
+        });
+        setInterval(function(){
+            var is_special = $('input[name^=radSpecial]:checked').map(function(idx, elem) {
+                return $(elem).val();
+            }).get();
+            $.ajax({
+                url: "<?php echo $this->url->get("/office/student-new-action?id=".$school_class_id."&testId=".$test_id)?>",
+                async: false,
+                type: "POST",
+                dataType: "JSON",
+                data: {
+                    'tab_2_active': $('#tab-2').val(),
+                    'is_special' : is_special,
+                    'tab_1_active' : tab_1_active
+                },
+                success: function(data){
+                    $('#test_no').html(data.list_no);
+                    $('#test_pending').html(data.html_list_pending);
+                    $('#test_success').html(data.html_list_success);
+                    $('#test_alert').html(data.html_list_alert);
+                    $('.tab-2').on('click', function () {
+                        $('#tab-2').val($(this).attr('title'));
+                        $('.tab-2').removeClass("active");
+                        $(this).addClass("active");
+                    });
+                }
+            });
+        }, 1000);
+    });
+</script>
+<style>
+    .title-list-student{
+        display: flex;
+        padding: 8px 16px;
+
+    }
+    .title-list-student span{
+        flex: 0 0 10%;
+        text-align: left;
+        font-weight: 600;
+    }
+    .title-list-student span:nth-child(2){
+        flex: 0 0 20%;
+    }
+
+    .title-list-student span:first-child{
+        flex: 0 0 20%;
+    }
+    .title-list-student span:last-child{
+        flex: 0 0 30%;
+        text-align: left;
+    }
+    .box-tab-list-student .nav-pills{
+        overflow-y: auto;
+        max-height: 700px;
+        flex-wrap: nowrap;
+        overflow-x: hidden;
+    }
+    .box-tab-list-student .nav-pills .nav-link{
+        display: flex;
+        margin-bottom: 10px;
+        padding: 8px 0;
+    }
+    .box-tab-list-student .nav-pills .nav-link:hover{
+        background-color: #e8f2f7;
+    }
+    .box-tab-list-student .nav-pills .nav-link.active{
+        color: black;
+        background-color: #81d2fb;
+    }
+    .box-tab-list-student .nav-pills .nav-link.danger{
+        background-color: red;
+        color: white;
+    }
+    .box-tab-list-student .nav-pills .nav-link .info-student{
+        text-align: left;
+        flex: 0 0 10%;
+    }
+    .box-tab-list-student .nav-pills .nav-link .info-student:first-child{
+        flex: 0 0 20%;
+    }
+    .box-tab-list-student .nav-pills .nav-link .info-student:nth-child(2){
+        flex: 0 0 20%;
+    }
+    .box-tab-list-student .nav-pills .nav-link .info-student:last-child{
+        flex: 0 0 30%;
+        text-align: left;
+    }
+    .history-follow-student{
+        overflow-y: auto;
+    }
+    .history-follow-student .item-history-follow-student{
+        display: flex;
+        align-items: center;
+        border: 1px solid #ECECEC;
+        padding: 6px;
+        margin-bottom: 5px;
+        border-radius: 4px;
+    }
+    .history-follow-student .item-history-follow-student:last-child{
+        margin-bottom: 0;
+    }
+    .header-follow-student{
+        padding: 15px 0;
+        border-bottom: 1px solid #ECECEC;
+        margin-bottom: 10px;
+    }
+    .nav-custom-list-follow .nav-link{
+        margin-right: 5px;
+        background-color: #f4f3f3;
+        color:#1F69B2;
+    }
+    .nav-custom-list-follow .nav-link:hover{
+        background-color: #d3d3d2;
+    }
+    .nav-custom-list-follow .nav-link.active{
+        background-color: #1F69B2;
+        color: white;
+    }
+
+</style>

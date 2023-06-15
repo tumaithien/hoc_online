@@ -1,0 +1,4 @@
+<?php include("model.phtml"); ?>
+<script>
+    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-role");?>'>List Role</a><span class='divider'>/</span><li><a href='<?php echo $this->url->get("dashboard/edit-role?id=".$formData['id'])?>'>Update Role</a></li>");
+</script>

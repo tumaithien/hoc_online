@@ -1,0 +1,67 @@
+.form-group{
+  label{
+  }
+  .form-control {
+    min-height: 40px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    outline: none;
+    &:focus {
+      box-shadow: none;
+    }
+    &.bg-white {
+      color: $text-base !important;
+      &::placeholder {
+        color: $text-base !important;
+      }
+      &:focus {
+        background-color: #fff !important;
+      }
+    }
+    option{
+      color: $text-base;
+    }
+  }
+  &.text-base {
+    select option {
+      color: $text-base;
+    }
+  }
+  @include media-breakpoint-down(md) {
+    .form-control{
+      min-height: 44px;
+    }
+  }
+}
+
+.form-large.form-group {
+  .form-control {
+    min-height: 48px;
+  }
+}
+.form-info-user, .form-change-pass{
+  width: 100%;
+  .form-item>label{
+    flex: 0 0 180px;
+  }
+  @include media-breakpoint-down(md){
+    width: 100%;
+    .form-item>label{
+      flex: 0 0 0px !important;
+    }
+  }
+}
+label {
+  font-weight: 500;
+}
+@media screen and (max-width: 1150px){
+  .form-info-user{
+    .form-item>label{
+      flex: 0 0 90px;
+    }
+    .title-birthday{
+      margin-right: 10px !important;
+    }
+  }
+}

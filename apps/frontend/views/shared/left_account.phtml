@@ -1,0 +1,6 @@
+
+<div class="nav nav-tabs nav-custom" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link <?= $type == 'changeProfile' ? "active" : "" ?>"  href="<?php echo $this->url->get("/account/change-profile"); ?>" role="tab" aria-controls="nav-profile" aria-selected="true">Thông tin user</a>
+    <a class="nav-item nav-link <?= $type == 'changePass' ? "active" : "" ?>"  href="<?php echo $this->url->get("/account/change-pass"); ?>" role="tab" aria-controls="nav-change-pass" aria-selected="false">Đổi mật khẩu</a>
+    <a class="nav-item nav-link <?= $type == 'course' ? "active" : "" ?>" href="<?php echo $this->url->get("/account/list-course"); ?>"   role="tab" aria-controls="nav-course" aria-selected="false">Khóa học</a>
+</div>

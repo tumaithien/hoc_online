@@ -1,0 +1,136 @@
+
+<script>
+
+    $(document).ready(function(){
+        $('#show_hide').on('click',function () {
+            if ($('.show_hide').hasClass('hidden')) {
+                $('.show_hide').removeClass('hidden')
+            } else  {
+                $('.show_hide').addClass('hidden')
+            }
+        });
+        $("#create_form").submit(function(){
+            var valid = true;
+            if($('input[name=txtName]').val() == '') {
+                $('.msg-name').text('Bạn cần nhập thông tin này');
+                $('#txtName').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-name').text('');
+                $('#txtName').removeClass("border-red");
+            }
+            if($('input[name=txtOrder]').val() == '') {
+                $('.msg-order').text('Bạn cần nhập thông tin này');
+                $('#txtOrder').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-order').text('');
+                $('#txtOrder').removeClass("border-red");
+            }
+
+            if( ! valid ) event.preventDefault();
+            if( valid ) {
+                $('button[name=submit]').prop('disabled', true);
+            }
+        });
+    });
+
+</script>
+<script>
+    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-menu");?>'>List Menu</a><span class='divider'>/</span></li><li><a href='<?php echo $this->url->get("dashboard/create-menu");?>'>Create Menu</a></li>");
+</script>
+<?php
+if(!empty($formData['message']))
+{
+    ?>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $formData['typeMessage']?>">
+        <?php echo $formData['message']; ?>
+    </p>
+<?php }	?>
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header well" data-original-title>
+            <h2><i class="icon-edit"></i><?= isset($formData['mode']) ? $formData['mode'] : "" ?>  Menu :</h2>
+            <div class="box-icon"> <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a> <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a> <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a> </div>
+        </div>
+        <div class="box-content">
+            <form novalidate="novalidate" class="form-horizontal" id="create_form" action="" method="post">
+                <fieldset>
+                    <div class="control-group">
+                        <label class="control-label" for="selectError">Thuộc Tính <em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <select  id="slcType" name="slcType" class="<?php echo isset($messages["menu_type"]) ? $messages["status"] : "";?>">
+                                <option value="">Chọn thộc tính</option>
+                                <?= isset($select_type) ? $select_type : "" ?>
+                            </select>
+                            <div class="text-danger msg-type"><?php echo isset($messages["menu_type"]) ? $messages["menu_type"] : "";?></div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="focusedInput">Name <em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['menu_name']) ? $formData['menu_name'] : ""?>" maxlength="256" id="txtName" name="txtName" class="input-xlarge focused"  type="text" >
+                            <div class="text-danger msg-name"><?php echo isset($messages["menu_name"]) ? $messages["menu_name"] : "";?></div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Order <em style="color:red;">*</em> </label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['menu_order']) ? $formData['menu_order'] : "" ?>" id="txtOrder" name="txtOrder" class="input-xlarge focused"    maxlength="10"  type="text" >
+                            <div class="text-danger msg-order"><?php echo isset($messages["menu_order"]) ? $messages["menu_order"] : "";?></div>
+
+                        </div>
+                    </div>
+                    <div class="control-group ">
+                        <label class="control-label">Các Khóa Không Hiện</label>
+                        <div class="controls col-md-6 col-sm-6 col-xs-12 ">
+                            <div class="toggles ">
+                                <div class="toggle-item">
+                                    <div id="show_hide" class=" ">
+                                        <p>Ẩn / Hiện</p>
+                                    </div>
+                                    <div class="toggle-content show_hide hidden" >
+                                        <?php foreach ($arrClass as $class) {
+                                                foreach ($arrSubject as $subject) {
+                                                    $value = $class->getClassId()."-".$subject->getSubjectId();
+                                            ?>
+                                            <div class="col-md-3 country_block">
+                                                <label class="container_checkbox" >
+                                                    <input <?= in_array($value,$arrIncluded) ? "checked" : ""?>
+                                                            type="checkbox" class=" check "
+                                                            name="dataIncluded[]"
+                                                            id="<?= $value ?>"
+                                                            value="<?= $value ?>">
+                                                    <?php echo $subject->getSubjectName() . " " .$class->getClassName() ?>
+                                                    <span class="checkmark_checkbox"></span>
+                                                </label>
+                                            </div>
+                                        <?php } ?>
+                                        <br>
+                                       <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Active </label>
+                        <div class=" controls">
+                            <label class="checkbox"><input  type="radio" name="radActive"
+                                                           value="Y" <?php echo (isset($formData["menu_active"]) && $formData["menu_active"] == "Y") ? "checked" : ''; ?>>Yes<span
+                                        class="check_active"></span></label>
+                            <label class="checkbox"><input  type="radio" name="radActive"
+                                                           value="N" <?php echo (isset($formData["menu_active"]) && $formData["menu_active"] == "N") ? "checked" : ''; ?>>No<span
+                                        class="check_active"></span></label>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="submit_create">Save changes</button>
+                        <a id="edit_page" class="btn" href="<?php echo $this->url->get('dashboard/list-menu');?>"> Cancel </a> </div>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

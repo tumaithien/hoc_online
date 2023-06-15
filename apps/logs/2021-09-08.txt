@@ -1,0 +1,1 @@
+Time:    10:49:20<br>Agent user: Browser: Google Chrome 93.0.4577.63 on windows----Ip:192.168.0.104<br>User Name: Đặng Ngọc Anh<br>Action:   Banner action delete ID =2<br>=====================================================================<br>

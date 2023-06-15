@@ -1,0 +1,15 @@
+# Created by https://www.toptal.com/developers/gitignore/api/laravel
+# Edit at https://www.toptal.com/developers/gitignore?templates=laravel
+
+node_modules/
+upload/
+public/excel/*
+public/excel
+
+public/Khode/*
+public/Khode
+public/loigiaikhode/*
+public/loigiaikhode
+public/test
+public/upload
+config/config.php

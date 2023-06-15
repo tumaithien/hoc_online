@@ -1,0 +1,126 @@
+
+<script>
+
+    $(document).ready(function(){
+        $("#create_form").submit(function(){
+            var valid = true;
+            if($('input[name=txtName]').val() == '') {
+                $('.msg-name').text('Bạn cần nhập thông tin này');
+                $('#txtName').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-name').text('');
+                $('#txtName').removeClass("border-red");
+            }
+            if($('input[name=txtOrder]').val() == '') {
+                $('.msg-order').text('Bạn cần nhập thông tin này');
+                $('#txtOrder').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-order').text('');
+                $('#txtOrder').removeClass("border-red");
+            }
+            if($('input[name=txtTime]').val() == '') {
+                $('.msg-time').text('Bạn cần nhập thông tin này');
+                $('#txtTime').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-time').text('');
+                $('#txtTime').removeClass("border-red");
+            }
+            if($('input[name=txtNumberQuestion]').val() == '') {
+                $('.msg-number-question').text('Bạn cần nhập thông tin này');
+                $('#txtNumberQuestion').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-number-question').text('');
+                $('#txtNumberQuestion').removeClass("border-red");
+            }
+            if($('select[name=slcClass]').val() == '') {
+                $('.msg-class').text('Bạn cần nhập thông tin này');
+                $('#slcClass').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-class').text('');
+                $('#slcClass').removeClass("border-red");
+            }
+            if($('select[name=slcSubject]').val() == '') {
+                $('.msg-subject').text('Bạn cần nhập thông tin này');
+                $('#slcSubject').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-subject').text('');
+                $('#slcSubject').removeClass("border-red");
+            }
+            if( ! valid ) event.preventDefault();
+            if( valid ) {
+                $('button[name=submit]').prop('disabled', true);
+            }
+        });
+    });
+
+</script>
+<script>
+    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-test");?>'>List Document</a><span class='divider'>/</span></li><li><a href='<?php echo $this->url->get("dashboard/create-test");?>'>Create Document</a></li>");
+</script>
+<?php
+if(!empty($formData['message']))
+{
+    ?>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $formData['typeMessage']?>">
+        <?php echo $formData['message']; ?>
+    </p>
+<?php }	?>
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header well" data-original-title>
+            <h2><i class="icon-edit"></i><?= isset($formData['mode']) ? $formData['mode'] : "" ?> Đề Thi :</h2>
+            <div class="box-icon"> <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a> <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a> <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a> </div>
+        </div>
+        <div class="box-content">
+            <form novalidate="novalidate" class="form-horizontal" id="create_form" action=""  enctype="multipart/form-data" method="post">
+                <h4>Note</h4>
+                -Nếu cập nhật hình ảnh hoặc số đề cần đảo của đề thi thì toàn bộ đề đã đảo sẽ bị thay đổi (Hạn chế)
+                <br>
+                -Khi tạo đề thi nên upload hình ảnh của đề thi và lời giải một lúc, không upload riêng lời giải sau
+                <br>
+                -Nếu số hình ảnh của đề thi lớn hơn lời giải và đáp án, mặc định là số câu lơn hơn đó là tự luận
+                <fieldset>
+                    <div class="control-group">
+                        <div class="control-group">
+                            <label class="control-label" for="slcClass">Lớp <em style="color:red;">*</em></label>
+                            <div class="controls">
+                                <select  id="slcClass" name="slcClass" class="class-subject <?php echo isset($messages["test_class_id"]) ? $messages["status"] : "";?>">
+                                    <?= isset($select_class) ? $select_class : "" ?>
+                                </select>
+                                <div class="text-danger msg-class"><?php echo isset($messages["test_class_id"]) ? $messages["test_class_id"] : "";?></div>
+
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="slcSubject">Môn học <em style="color:red;">*</em></label>
+                            <div class="controls">
+                                <select  id="slcSubject" name="slcSubject" class="class-subject <?php echo isset($messages["test_subject_id"]) ? $messages["status"] : "";?>">
+                                    <option value="">Chọn Môn học</option>
+                                    <?= isset($select_subject) ? $select_subject : "" ?>
+                                </select>
+                                <div class="text-danger msg-subject"><?php echo isset($messages["test_subject_id"]) ? $messages["test_subject_id"] : "";?></div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="continued" class="btn btn-primary" >continued</button>
+                        <a id="edit_page" class="btn" href="<?php echo $this->url->get('dashboard/list-test');?>"> Cancel </a> </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $('#continued').on('click',function () {
+        var subject_id = $('#slcSubject').val();
+        var class_id = $('#slcClass').val();
+        location.replace("<?php echo $this->url->get('/dashboard/create-test-exam?slcSubject=');?>"+subject_id+"&slcClass="+class_id);
+    })
+</script>

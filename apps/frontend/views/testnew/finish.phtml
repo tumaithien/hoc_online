@@ -1,0 +1,48 @@
+<main>
+    <div class="padding-block bg-white p-20">
+        <div class="row list-courses-wrap list-courses-custom">
+            <div class="col-lg-12 col-12 mt-xs-15">
+                <div>
+                    <h2 class="text-main text-center text-uppercase"><?= $test_model->getTestName() ?></h2>
+                    <hr>
+                    <div class="w-50 mx-auto px-lg-90">
+
+                        <h4 id="txtDes" class="d-flex justify-content-between text-blue-dark"><span class="text-medium">Bạn đã hoàn thành bài thi</span></h4>
+                        <hr>
+                        <p id="txtClass" class="d-flex justify-content-between">
+                            <span class="text-medium">Lớp:</span>  <span><?= \Learncom\Repositories\ClassSubject::getNameSubjectByIds($test_model->getTestSubjectId()) ." " ?> <?= \Learncom\Repositories\ClassSubject::getNameClassByIds($test_model->getTestClassId()) ?></span></p>
+                        <p id="txtGroup"  class="d-flex justify-content-between <?=$test_model->getTestGroupId()==0 ? "d-none" : "" ?>"><span class="text-medium">Khóa học:</span> <span><?= \Learncom\Repositories\Group::getNameById($test_model->getTestGroupId()) ?></span></p>
+                        <p id ="txtTime" class="d-flex justify-content-between"><span class="text-medium">Thời gian:</span> <span><?= $test_model->getTestTime() ?> phút</span></p>
+                        <p id ="txtTime" class="d-flex justify-content-between"><span class="text-medium">Số câu hỏi:</span> <span><?= $test_model->getTestNumberQuestion() ?> câu</span></p>
+                    </div>
+                </div>
+                <div class="doc-preview bg-gray-1 p-20 rounded">
+                    <?php if ($test_model->getTestPublicScore() == "Y") { ?>
+                    <h2 class="text-center">Tổng số câu trả lời đúng(trắc nghiệm)</h2>
+                    <p class="text-center text-48 text-main"><?= $total_success ?>/<?= $total_choose ?></p>
+                    <p class="text-center">Điểm: <span class="text-red"><?= $total_score ?></span></p>
+                    <?php } ?>
+                    <div class="doc-preview text-center">
+                        <?php  if ($test_model->getTestIsPublicAnswer() == "Y") { ?>
+                        <a href="/dap-an?id=<?=$test_model->getTestId() ?>" class="btn btn-info text-14" id="btn-submit">Xem chi tiết đáp án</a>
+                        <?php } ?>
+                        <br class="d-lg-none d-block">
+                        <?php if ($test_model->getTestOnlyOne() == "N") { ?>
+                        <a href="/bat-dau?id=<?=$test_model->getTestId() ?>" class="btn btn-info text-14 mt-xs-10" id="btn-submit">Làm lại bài kiểm tra</a>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    commands.push(function(){
+        window.onload = function() {
+            var reloading = sessionStorage.getItem("reloading");
+            if (reloading) {
+                sessionStorage.removeItem("reloading");
+            }
+        };
+    })
+</script>

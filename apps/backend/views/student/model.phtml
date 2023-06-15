@@ -1,0 +1,279 @@
+
+<script>
+
+    $(document).ready(function(){
+        $("#submit_create").on('click', function(){
+            var valid = true;
+            if($('input[name=txtName]').val() == '') {
+                $('.msg-name').text('Bạn cần nhập thông tin này');
+                $('#txtName').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-name').text('');
+                $('#txtName').removeClass("border-red");
+            }
+
+            if($('input[name=txtCode]').val() == '') {
+                $('.msg-code').text('Bạn cần nhập thông tin này');
+                $('#txtCode').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-code').text('');
+                $('#txtCode').removeClass("border-red");
+            }
+            if($('input[name=txtEmail]').val() == '') {
+                $('.msg-email').text('Bạn cần nhập thông tin này');
+                $('#txtEmail').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-email').text('');
+                $('#txtEmail').removeClass("border-red");
+            }
+            if($('input[name=txtPassword]').val() == '') {
+                $('.msg-password').text('Bạn cần nhập thông tin này');
+                $('#txtPassword').addClass("border-red");
+                valid = false;
+            } else if ($('input[name=txtPassword]').val() < 6) {
+                $('.msg-password').text('Mật Khẩu phải lớn hơn 6 ký tự');
+                $('#txtPassword').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-password').text('');
+                $('#txtPassword').removeClass("border-red");
+            }
+            if($('input[name=txtRePassword]').val() == '') {
+                $('.msg-re-password').text('Bạn cần nhập thông tin này.');
+                $('#txtRePassword').addClass("border-red");
+                valid = false;
+            } else if ($('input[name=txtRePassword]').val() < 6) {
+                $('.msg-re-password').text('Mật Khẩu phải lớn hơn 6 ký tự');
+                $('#txtRePassword').addClass("border-red");
+                valid = false;
+            }  else if ($('input[name=txtRePassword]').val() != $('input[name=txtPassword]').val()) {
+                $('.msg-re-password').text('Mật Khẩu xác nhận không trùng khớp');
+                $('#txtRePassword').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-re-password').text('');
+                $('#txtRePassword').removeClass("border-red");
+            }
+
+
+            if(!valid) event.preventDefault();
+            if(valid) {
+                $('#submit_create').prop('disabled', true);
+                $('#create_form').submit();
+            }
+        });
+    });
+
+</script>
+<script>
+    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-student");?>'>List Document</a><span class='divider'>/</span></li><li><a href='<?php echo $this->url->get("dashboard/create-student");?>'>Create Document</a></li>");
+</script>
+<?php
+if(!empty($formData['message']))
+{
+    ?>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $formData['typeMessage']?>">
+        <?php echo $formData['message']; ?>
+    </p>
+<?php }	?>
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header well" data-original-title>
+            <h2><i class="icon-edit"></i><?= isset($formData['mode']) ? $formData['mode'] : "" ?> Học sinh :</h2>
+            <div class="box-icon"> <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a> <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a> <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a> </div>
+        </div>
+        <div class="box-content">
+            <form novalidate="novalidate" class="form-horizontal" id="create_form" action="" method="post">
+                <fieldset>
+                    <div class="control-group">
+
+                        <div class="control-group">
+                            <label class="control-label" for="focusedInput">ID <em style="color:red;">*</em></label>
+                            <div class="controls">
+                                <input value="<?php echo isset($formData['user_code']) ? $formData['user_code'] : ""?>" maxlength="256"
+                                       id="txtCode" name="txtCode" class="input-xlarge focused <?php echo isset($messages["user_code"]) ? $messages["status"] : "";?>"  type="text" >
+                                <div class="text-danger msg-code"><?php echo isset($messages["user_code"]) ? $messages["user_code"] : "";?></div>
+
+                            </div>
+                        </div>
+                        <label class="control-label" for="focusedInput">Tên <em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['user_name']) ? $formData['user_name'] : ""?>"
+                                   maxlength="256" id="txtName" name="txtName" class="input-xlarge focused <?php echo isset($messages["user_name"]) ? $messages["status"] : "";?>"  type="text" >
+                            <div class="text-danger msg-name"><?php echo isset($messages["user_name"]) ? $messages["user_name"] : "";?></div>
+
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="focusedInput">Email <em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['user_email']) ? $formData['user_email'] : ""?>" maxlength="256"
+                                   id="txtEmail" name="txtEmail" class="input-xlarge focused <?php echo isset($messages["user_email"]) ? $messages["status"] : "";?>"  type="text" >
+                            <div class="text-danger msg-email"><?php echo isset($messages["user_email"]) ? $messages["user_email"] : "";?></div>
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="focusedInput">Password <em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['user_password']) ? $formData['user_password'] : ""?>" maxlength="256"
+                                   id="txtPassword" name="txtPassword"  class="input-xlarge focused <?php echo isset($messages["user_password"]) ? $messages["status"] : "";?>"  type="password" >
+                            <div class="text-danger msg-password"><?php echo isset($messages["user_password"]) ? $messages["user_password"] : "";?></div>
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="focusedInput">Confirm Password <em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['user_re_password']) ? $formData['user_re_password'] : ""?>" maxlength="256"
+                                   id="txtRePassword" name="txtRePassword" class="input-xlarge focused <?php echo isset($messages["user_re_password"]) ? $messages["status"] : "";?>"  type="password" >
+                            <div class="text-danger msg-re-password"><?php echo isset($messages["user_re_password"]) ? $messages["user_re_password"] : "";?></div>
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="focusedInput">Ip </label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['user_ip']) ? $formData['user_ip'] : ""?>" maxlength="256"
+                                   id="txtIp" name="txtIp" class="input-xlarge focused "  type="text" >
+
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="selectError">Lớp </label>
+                        <div class="controls">
+                            <?= isset($select_class) ? $select_class : "" ?>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="selectError">Môn Học </label>
+                        <div class="controls">
+                            <?= isset($select_subject) ? $select_subject : "" ?>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="selectError">Nhóm Đặc biệt</label>
+
+                        <div class="controls">
+                            <div id="show_hide_subject" class="search_group_subject ">
+                                <p>Ẩn / Hiện</p>
+                            </div>
+                            <div class=" hidden show_hide_subject">
+                                <?= isset($select_group) ? $select_group : "" ?>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Khóa Không Đăng Ký</label>
+                        <div class="controls">
+                            <div id="show_hide" class="search_group ">
+                                <p>Ẩn / Hiện</p>
+                            </div>
+                            <div class="show_hide hidden">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Active </label>
+                        <div class=" controls">
+                            <label class="checkbox"><input  type="radio" name="radActive"
+                                                                  value="Y" <?php echo (isset($formData["user_active"]) && $formData["user_active"] == "Y") ? "checked" : ''; ?>>Yes<span
+                                        class="check_active"></span></label>
+                            <label class="checkbox"><input  type="radio" name="radActive"
+                                                                  value="N" <?php echo (isset($formData["user_active"]) && $formData["user_active"] == "N") ? "checked" : ''; ?>>No<span
+                                        class="check_active"></span></label>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="textarea2">Mô tả </label>
+                        <div class="controls">
+                            <textarea style="width: 550px;height: 250px" id="txtDescription" name ="txtDescription" ><?= isset($formData['user_description']) ? $formData['user_description'] : "" ?></textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-primary" id="submit_create">Save changes</button>
+                        <a id="edit_page" class="btn" href="<?php echo $this->url->get('dashboard/list-student');?>"> Cancel </a> </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $( document ).ready(function() {
+        var classIds;
+        var subjectIds;
+        var groupCheckedIds;
+        var start =  "<?= isset($start) ? $start : ''?>";
+        function getvalue() {
+            classIds = $('input[name^=slcClass]:checked').map(function(idx, elem) {
+                return $(elem).val();
+            }).get();
+            subjectIds = $('input[name^=slcSubject]:checked').map(function(idx, elem) {
+                return $(elem).val();
+            }).get();
+            if (start) {
+                groupCheckedIds = "<?= isset($formData['user_group_excluded_ids']) ? $formData['user_group_excluded_ids'] : ''?>";
+            } else {
+                groupCheckedIds = $('input[name^=slcGroup]:checked').map(function(idx, elem) {
+                    return $(elem).val();
+                }).get().toString();
+            }
+        }
+        $('.check_group').on('click',function () {
+            console.log($('.check_group').prop('checked'))
+        });
+        $('.check_subject').on('click',function () {
+            getvalue();
+        });
+        $('#show_hide').on('click',function () {
+            if ($('.show_hide').hasClass('hidden')) {
+                $('.show_hide').removeClass('hidden');
+            } else {
+                $('.show_hide').addClass('hidden')
+            }
+        });
+        $('#show_hide_subject').on('click',function () {
+            if ($('.show_hide_subject').hasClass('hidden')) {
+                $('.show_hide_subject').removeClass('hidden');
+            } else {
+                $('.show_hide_subject').addClass('hidden')
+            }
+        });
+        $('.search_group').on('click',function () {
+            getvalue();
+            $.ajax({
+                url: "<?php echo $this->url->get("/dashboard/get-group-student")?>",
+                async: false,
+                type: "POST",
+                dataType: "JSON",
+                data: {'classIds': classIds.toString(),
+                    'subjectIds' : subjectIds.toString(),
+                    'dataGroupChecked' : groupCheckedIds,
+                },
+                success: function(data){
+                    start = false;
+                    if (data != "") {
+                        $('.show_hide').html(data);
+                    } else {
+                        $('.show_hide').html("<h4 class='test-danger'>Vui lòng chọn lớp và môn</h4>");
+                    }
+                }
+            });
+        });
+        $('.parent').on('click',function () {
+            var parent = $(this).attr('data-browse');
+            if ($(this).prop('checked') == true) {
+                $('.'+parent).prop('checked',true);
+            } else  {
+                $('.'+parent).prop('checked',false);
+            }
+
+        })
+    });
+</script>

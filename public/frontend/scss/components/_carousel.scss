@@ -1,0 +1,36 @@
+.carousel-inner{
+    margin-top:70px;
+}
+.carousel-indicators{
+    margin-bottom:0;
+    top: -55px;
+    bottom: auto;
+    overflow-x: auto;
+    justify-content: flex-start;
+    @include media-breakpoint-down(md){
+        margin: 0;
+        overflow-x: auto;
+    }
+    li{
+        text-indent:0;
+        background-color: #233785;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        height:30px;
+        width:30px;
+        color: #FFFFFF;
+        flex:none;
+        @include media-breakpoint-down(md){
+            flex:none;
+        }
+    }
+    .current{
+        opacity: 1;
+    }
+}
+.view-test{
+    .carousel-item-next, .carousel-item-prev, .carousel-item.active{
+        margin-top: 20px;
+    }
+}

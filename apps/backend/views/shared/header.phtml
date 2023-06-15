@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Admin page</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="World Payment Corp">
+    <meta name="author" content="World Payment Corp">
+    <!-- The styles -->
+    <?php /*?>
+    <link href="<?php echo $this->url->getStatic('backend/css/')?>app.css?v=<?php echo time(); ?>" rel="stylesheet">
+<?php */ ?>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link id="bs-css" href="<?php echo $this->url->getStatic('backend/template/'); ?>css/bootstrap-cerulean.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            padding-bottom: 40px;
+        }
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+    </style>
+    <link rel="stylesheet" href="<?php echo $this->url->getStatic("/backend/js/select2/select2.min.css"); ?>">
+    <link href="<?php echo $this->url->getStatic('backend/template/'); ?>css/styles.css?v2" rel="stylesheet">
+    <link href="<?php echo $this->url->getStatic('backend/template/'); ?>css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="<?php echo $this->url->getStatic('backend/template/'); ?>css/charisma-app.css?v2" rel="stylesheet">
+    <link href="<?php echo $this->url->getStatic('backend/template/'); ?>css/jquery-ui-1.8.21.custom.css" rel="stylesheet">
+    <link href='<?php echo $this->url->getStatic('backend/template/'); ?>css/fullcalendar.css' rel='stylesheet'>
+    <link href='<?php echo $this->url->getStatic('backend/template/'); ?>css/fullcalendar.print.css' rel='stylesheet'  media='print'>
+    <link href='<?php echo $this->url->getStatic('backend/template/'); ?>css/chosen.css' rel='stylesheet'>
+    <link href='<?php echo $this->url->getStatic('backend/template/'); ?>css/uniform.default.css' rel='stylesheet'>
+    <link href='<?php echo $this->url->getStatic('backend/template/'); ?>css/colorbox.css' rel='stylesheet'>
+    <link href='<?php echo $this->url->getStatic('backend/template/'); ?>css/jquery.cleditor.css' rel='stylesheet'>
+    <link href='<?php echo $this->url->getStatic('backend/template/'); ?>css/jquery.noty.css' rel='stylesheet'>
+    <link href='<?php echo $this->url->getStatic('backend/template/'); ?>css/noty_theme_default.css' rel='stylesheet'>
+    <link href='<?php echo $this->url->getStatic('backend/template/'); ?>css/elfinder.min.css' rel='stylesheet'>
+    <link href='<?php echo $this->url->getStatic('backend/template/'); ?>css/elfinder.theme.css' rel='stylesheet'>
+    <link href='<?php echo $this->url->getStatic('backend/template/'); ?>css/jquery.iphone.toggle.css' rel='stylesheet'>
+    <link href='<?php echo $this->url->getStatic('backend/template/'); ?>css/opa-icons.css' rel='stylesheet'>
+    <link href='<?php echo $this->url->getStatic('backend/template/'); ?>css/uploadify.css' rel='stylesheet'>
+    <link href='<?php echo $this->url->getStatic('backend/template/'); ?>css/bootstrap-datetimepicker.min.css' rel='stylesheet' media='screen'>
+    <script src="<?php echo $this->url->getStatic('backend/fckeditor/fckeditor.js'); ?>"></script>
+
+    <![endif]-->
+    <!-- The fav icon -->
+    <link rel="shortcut icon" href="<?php echo $this->url->getStatic('favicon.ico?v=3'); ?>">
+
+    <!-- jQuery -->
+    <script src="<?php echo $this->url->getStatic('backend/template/'); ?>js/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+    var cloudSourceURL = '<?php echo $this->url->getStatic('backend/template/');?>';
+</script>
+<!-- topbar starts -->
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="container-fluid text-right" >
+            <a style="float:left;" href="<?php echo $this->url->get('dashboard');?>"> <img width="auto" height="50" alt="Học Online " src="<?php echo $this->url->getStatic('frontend/')?>images/logo.png?v=<?php echo time(); ?>" /></a>
+
+            <div class="top-nav nav-collapse">
+                <ul class="nav">
+                    <li><a href="https://www.chibao.edu.vn/">Visit Site</a></li>
+                </ul>
+                <ul class="nav">
+                    <li><a href="/office">Quản lý Thi Cử</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+            <!-- user dropdown starts -->
+            <div class="btn-group pull-right" >
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                    <?php $auth = $this->session->get('auth');?>
+                    <i class="icon-user"></i><span class="hidden-phone"> <?php echo $auth['role'];?></span>
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="<?php echo $this->url->get("dashboard/list-user"); ?>">Profile</a></li>
+                    <li class="divider"></li>
+                    <li><a href='<?php echo $this->url->get("dashboard/login?action=logout"); ?>'>Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- topbar ends -->
+<div class="container-fluid">
+    <div class="row-fluid">

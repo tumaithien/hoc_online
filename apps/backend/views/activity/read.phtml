@@ -1,0 +1,224 @@
+<script>
+    $(document).ready(function(){
+        $("#search").click(function(){
+            $("#read_form").prop("action","<?php echo $this->url->get("dashboard/list-activity");?>");
+            $("#read_form").prop("method","post");
+            $("#read_form").submit();
+        });
+        $('#yes').click(function(){
+            var str="<?php echo $this->url->get('dashboard/delete-activity');?>";
+            var id=$("#activity_id").val();
+            str=str.concat("?id=").concat(id);
+            $('#yes').attr("href",str);
+        });
+    });</script>
+<script>
+    $(function(){
+        $("#txtFromDate").datetimepicker({
+            format: "mm/dd/yyyy hh:ii"
+        });
+    });
+</script>
+<script>
+    $(function(){
+        $("#txtToDate").datetimepicker({
+            format: "mm/dd/yyyy hh:ii"
+        });
+    });
+</script>
+<script>
+    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-activity");?>'>List Activities</a></li>");
+</script>
+<?php
+if($this->request->get("type")!=NULL||$this->request->get("message")!=NULL)
+{
+    ?>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $this->request->get("type")?>">
+        <?php echo $this->request->get("message"); ?>
+    </p>
+<?php }	?>
+<form name="read_form" id="read_form">
+    <div>
+        <table>
+            <?php
+            $sea=$this->dispatcher->getParam("txtSearch");
+            $txtFromDate = $this->dispatcher->getParam("txtFromDate");
+            $txtToDate = $this->dispatcher->getParam("txtToDate");
+            $Controller = $this->dispatcher->getParam("Controller");
+            $Action = $this->dispatcher->getParam("Action");
+            $arr_dir =$this->dispatcher->getParam("arrDir");
+            ?>
+            <th>  <input style="width: 160px;" placeholder="Keyword (ID, location, IP)" value="<?php echo $sea?>" name="txtSearch" id="txtSearch" type="text"/></th>
+
+            <th style="padding-left: 20px;">
+                <select style="width: 160px; border-radius: 4px;border-color: #cccccc;" name="Controller" id="Controller" onchange="loadAction();$('#Action').prop('selectedIndex',0);">
+                    <option value="">All Controller</option>
+                    <?php
+                    $strRole="";
+                    for($i=0;$i<count($arr_dir);$i++) {
+                        foreach ($arr_dir[$i] as $arr_child=>$child) {
+                            ?>
+
+                            <option value="<?php echo $arr_child; ?>"
+                                <?php
+                                if ($Controller == $arr_child) echo "selected ";
+                                ?>
+                            ><?php echo ucfirst($arr_child); ?></option>
+                            <?php
+                        }
+                    }
+                    ?>
+                </select></th>
+            <th>
+                <select style="width: 160px; border-radius: 4px;border-color: #cccccc;" name="Action" id="Action" onfocus="loadAction();">
+                    <option value="">All Action</option>
+                    <?php if($Action){?>
+                        <option value="<?php echo $Action; ?>" selected><?php echo ucfirst($Action); ?></option>
+                    <?php } ?>
+                </select></th>
+
+            <th style="padding-left: 20px;">
+                <input style="width: 160px;" placeholder="From Date" value="<?php echo $txtFromDate;?>" name="txtFromDate" id="txtFromDate" type="text"  /></th>
+            <th>
+                <input style="width: 160px;" placeholder="To Date" value="<?php echo $txtToDate ;?>" name="txtToDate" id="txtToDate" type="text"   />
+            </th>
+            <th style="padding-left: 20px;"> <input type="button" name="search" id="search" value="Search" class="btn btn-primary"/></th>
+        </table>
+    </div>
+    <div class="box-content">
+        <table class="table table-striped table-bordered bootstrap-datatable">
+            <thead>
+            <tr>
+                <th style="text-align:center;">Date</th>
+                <th style="text-align:center;">Controller Name</th>
+                <th style="text-align:center;">Action Name</th>
+                <th style="text-align:center;">Action ID</th>
+                <th style="text-align:center;">User</th>
+                <th style="text-align:center;">IP</th>
+                <th style="text-align:center;">Location</th>
+                <th style="text-align:center;">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php $list_activity=$this->dispatcher->getParam("list_activity");
+            $userRepo = $this->dispatcher->getParam("userRepo");
+            foreach($list_activity as $act){
+                ?>
+                <tr><?php /*echo $this->my->formatactivityID($act->act_create_date, $act->activity_id); */?>
+                    <td  style="text-align:center;" class="center"><?php echo date('M/d/Y - H:i:s',$act->act_create_date); ?></td>
+                    <td  style="text-align:center;" class="center"><?php echo $act->act_controller;?></td>
+                    <td  style="text-align:center;" class="center"><?php echo $act->act_action;?></td>
+                    <td  style="text-align:center;" class="center"><?php
+                        if($act->act_controller=="contactus"){
+                            echo $this->my->formatContactID($act->act_create_date,$act->act_action_id);
+                        }else
+                        {
+                            echo $act->act_action_id;
+                        }
+
+                        ?></td>
+                    <td class="center"><?php
+                        $user = $userRepo->findByID($act->act_user_id);
+                        if($act->act_user_id)
+                            echo "ID #".$act->act_user_id."<br/>Username: ".$act->user_name."<br/>Email: ".$act->user_email;
+                        ?></td>
+                    <td  style="text-align:center;" class="center"><?php echo $act->act_ip;?></td>
+                    <td  style="text-align:center;" class="center"><?php echo $act->act_location;?></td>
+                    <td  style="text-align:center;" class="center">
+                        <a id="edit_account" class="btn btn-info" href="<?php echo $this->url->get('dashboard/view-activity');?>&?id=<?php echo $act->act_id; ?>">
+                            <i class="icon-edit icon-white"></i>
+                            View
+                        </a>
+                    </td>
+                </tr>
+            <?php }?>
+            </tbody>
+        </table>
+        <div class="pagination pagination-centered">
+            <ul>
+                <?php $crr_activity=$this->dispatcher->getParam("current_activity");
+                $total_activity = $this->dispatcher->getParam("total_activity");
+                ?>
+
+                <?php if ($crr_activity != 1){?>
+                    <li><a id="prev"  href="<?php echo $this->url->get('dashboard/list-activity')?>?activity=<?php echo $crr_activity-1;?>&txtSearch=<?php echo $sea?>&Controller=<?php echo $Controller?>&Action=<?php echo $Action?>&txtFromDate=<?php echo $txtFromDate?>&txtToDate=<?php echo $txtToDate?>">Prev</a></li>
+                <?php }?>
+                <?php
+                $n=floor($total_activity/10);
+                $b=$total_activity%10;
+                $flag=0;
+                $limit=0;
+                if($crr_activity >=1){
+                    $flag=floor($crr_activity/10);
+                    if($flag<$n){
+                        $limit=($flag*10)+10;
+                    }else{
+                        $limit=($flag*10)+$b;
+                    }
+                }
+                if($crr_activity < $limit){
+                    $start=0;
+                    if($flag==0)
+                        $start=$flag*10+1;
+                    else
+                        $start=$flag*10;
+                    for($i=$start;$i <=$limit;$i++){
+                        if($i==$crr_activity){
+                            ?>
+                            <li><a style="color:#333" id="number_page"  href="<?php echo $this->url->get('dashboard/list-activity')?>?activity=<?php echo $i ;?>&txtSearch=<?php echo $sea?>&Controller=<?php echo $Controller?>&Action=<?php echo $Action?>&txtFromDate=<?php echo $txtFromDate?>&txtToDate=<?php echo $txtToDate?>"><?php echo $i ?></a></li>
+                        <?php }else{?>
+                            <li><a id="number_page" href="<?php echo $this->url->get('dashboard/list-activity')?>?activity=<?php echo $i ;?>&txtSearch=<?php echo $sea?>&Controller=<?php echo $Controller?>&Action=<?php echo $Action?>&txtFromDate=<?php echo $txtFromDate?>&txtToDate=<?php echo $txtToDate?>"><?php echo $i ?></a></li>
+                        <?php }?>
+                    <?php }?>
+                <?php }?>
+                <?php if ($crr_activity<$total_activity){?>
+                    <li><a id="next"  href="<?php echo $this->url->get('dashboard/list-activity')?>?activity=<?php echo $crr_activity+1;?>&txtSearch=<?php echo $sea?>&Controller=<?php echo $Controller?>&Action=<?php echo $Action?>&txtFromDate=<?php echo $txtFromDate?>&txtToDate=<?php echo $txtToDate?>">Next</a></li>
+                <?php }?>
+            </ul>
+        </div>
+        <p style="text-align:left;font-size:16px;color:red"><strong style="">Total : <?php echo $this->dispatcher->getParam("all_records");?></strong> Activities</p>
+    </div>
+</form>
+<form>
+    <div class="modal hide fade" id="warn">
+        <div class="modal-header">
+            <input type="hidden" id="activity_id" name="activity_id" />
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3>Warning !</h3>
+        </div>
+        <div class="modal-body">
+            <p id="mess"></p>
+        </div>
+        <div class="modal-footer">
+            <a href="" class="btn" data-dismiss="modal">Close</a>
+            <a id="yes" name="yes" href="" class="btn btn-primary">Yes</a>
+        </div>
+    </div>
+</form>
+<script>
+    function loadAction(){
+        try
+        {
+            var control = $("#Controller").prop("value");
+            var optionAction = "<option value=''>All Action</option>";
+//            if(control !== null){controller = arrController;}else{controller = control;}
+            <?php
+            $selected = "selected";
+            for($i=0;$i<count($arr_dir);$i++) {
+            foreach ($arr_dir[$i] as $arr_child=>$child) {
+            ?>
+            if(control==="<?php echo $arr_child; ?>")
+            {
+                <?php for($j=0;$j<count($child);$j++){
+                ?>
+                optionAction += "<option value='<?php echo $child[$j]; ?>'<?php if ($Action == $child[$j]) echo $selected; ?>><?php echo ucfirst($child[$j]); ?></option>";
+                <?php } ?>
+            }
+            <?php
+            }
+            } ?>
+            $('#Action').html(optionAction);
+        }catch(e){}
+
+    }
+</script>

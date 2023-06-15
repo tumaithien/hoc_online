@@ -1,0 +1,117 @@
+.w-85px {
+    width: 85px !important;
+}
+.w-400 {
+    width: 400px !important;
+}
+.w-300 {
+    width: 300px !important;
+}
+.w-100px {
+    width: 100px !important;
+}
+.w-105 {
+    width: 105px !important;
+}
+.w-fit {
+    width: fit-content !important;
+}
+.min-w-auto {
+    min-width: auto !important;
+}
+.max-w-100 {
+    max-width: 100%;
+}
+.h-30 {
+    height: 30px !important;
+}
+.h-40 {
+    height: 40px !important;
+}
+.h-44{
+    height: 44px !important;
+}
+.h-50px{
+    height: 50px !important;
+}
+.h-120 {
+    height: 120px !important;
+}
+.h-180 {
+    height: 180px !important;
+}
+.h-248 {
+    height: 248px !important;
+}
+.h-640px{
+    height: 640px !important;
+}
+.min-h-auto {
+    min-height: auto !important;
+}
+.pl-95{
+    padding-left: 95px !important;
+}
+.padding-block {
+    padding: 30px 0;
+}
+.border-red{
+    border: 1px solid #F53941;
+}
+.text-danger{
+    color: #F53941
+}
+.line-bottom-bolder{
+    background: #233785;
+    width: 50px;
+    height: 4px;
+    border-radius: 3px;
+    text-align: center;
+}
+.line-bottom-bolder-2{
+    background: #233785;
+    width: 20px;
+    height: 1px;
+    border-radius: 3px;
+    text-align: center;
+    transition: all .2s;
+}
+.bor-b-primary {
+    border-bottom: 1px solid $primary-color;
+}
+.bor-primary {
+    border: 1px solid $primary-color !important;
+}
+.box-shadow-1 {
+    box-shadow: 0px 0px 6px -3px rgb(0 0 0 / 50%), 0px 0px 13px -5px rgb(48 63 26 / 50%);
+}
+@include media-breakpoint-down(md){
+    .d-xs-block{
+        display: block;
+    }
+    .flex-xs-column{
+        flex-direction: column;
+    }
+    .w-xs-100{
+        width: 100% !important;
+    }
+    .pr-xs-0{
+        padding-right: 0 !important;
+    }
+    .pl-xs-0{
+        padding-left: 0 !important;
+    }
+    .mb-xs-50{
+        margin-bottom: 50px !important;
+    }
+}
+input, input:before, input:after {
+    -webkit-user-select: initial;
+    -khtml-user-select: initial;
+    -moz-user-select: initial;
+    -ms-user-select: initial;
+    user-select: initial;
+}
+.overflow-y-auto{
+    overflow-y: auto !important;
+}

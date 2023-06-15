@@ -1,0 +1,50 @@
+<main>
+    <div class="login-wrap overflow-auto">
+        <div class="container py-25">
+            <div class="row">
+                <div class="col-lg-2 pr-0 pl-xs-0">
+                    <?php $this->partial('shared/left_account'); ?>
+                </div>
+                <div class="col-lg-10 bg-white pt-20 text-center">
+                    <h2>KẾT QUẢ CÁC BÀI KIỂM TRA </h2>
+                    <table class="table table-custom">
+                        <thead>
+                        <tr>
+                            <th width="30%">
+                                Tên Bài Thi
+                            </th>
+                            <th width="10%">
+                                Số Câu
+                            </th>
+                            <th width="12%">
+                                Thời Gian
+                            </th>
+                            <th width="10%">
+                                Điểm
+                            </th>
+                            <th>
+                                Ngày Làm Bài
+                            </th>
+                            <th>
+                                Chi Tiết
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($arrScore as $score) { ?>
+                            <tr>
+                                <td data-title="Tên Bài Thi"><?=$score['test_name']?></td>
+                                <td data-title="Số câu"><?=$score['test_number_question']?></td>
+                                <td data-title="Thời gian"><?=$score['test_time']?></td>
+                                <td data-title="Điểm"><?=$score['score_score']?></td>
+                                <td data-title="Ngày làm bài"><?= $this->my->formatDatetime($score['score_insert_time'])?></td>
+                                <td data-title="Chi tiết"><a href="<?= $this->url->get('/view-test')?>?id=<?= $score['test_id'] ?>">Xem</a></td>
+                            </tr>
+                        <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

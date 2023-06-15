@@ -1,0 +1,80 @@
+.bg-primary {
+    background-color: $primary-color!important;
+}
+
+.bg-red-blur {
+    background-color: rgba($red, 0.05) !important;
+}
+.bg-main-1 {
+    background: $main-1 !important;
+}
+.bg-transparent {
+    background-color: transparent !important;
+}
+
+.bg-light-gray {
+    background-color: $light-gray !important;
+}
+
+.bg-black {
+    background-color: black !important;
+}
+
+.bg-black-blur-10 {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.bg-white {
+    background-color: white !important;
+}
+
+.bg-white-85 {
+    background-color: rgba(255, 255, 255, 0.85);
+}
+.bg-light-dark{
+    background-color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.bg-gray-1 {
+    background-color: $gray-1!important;
+}
+
+.bg-gray-2 {
+    background-color: $bg1 !important;
+}
+.bg-gray-3 {
+    background-color: $background-body !important;
+}
+.bg-no-repeat {
+    background: no-repeat !important;
+}
+
+.bg-bottom-blue {
+    background-repeat: no-repeat;
+    background-position: bottom center;
+}
+
+.bg-blue-blur-80 {
+    background-image: linear-gradient(0deg, rgba(5, 32, 61, 0.8), rgba(5, 32, 61, 0.8));
+}
+
+.bg-secondary {
+    background-color: $secondary-color!important;
+}
+
+
+
+@include media-breakpoint-down(md) {
+    .bg-xs-white {
+        background-color: $white!important;
+    }
+    .bg-xs-gray-1 {
+        background-color: $gray-1!important;
+    }
+    .bg-xs-primary {
+      background-color: $primary-color!important;
+    }
+    .bg-xs-secondary{
+        background-color: rgb(243, 119, 33, 0.05) !important;
+    }
+}

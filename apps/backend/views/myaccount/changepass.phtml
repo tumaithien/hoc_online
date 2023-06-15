@@ -1,0 +1,108 @@
+<main>
+    <div class="login-wrap overflow-auto">
+        <div class="container py-25">
+            <div class="row">
+                <div class="col-lg-2 pr-0 pl-xs-0">
+                    <?php $this->partial('shared/left_account'); ?>
+                </div>
+                <div class="col-lg-10 bg-white pt-20">
+                    <?php if (count($msg_result) > 0)  {?>
+                        <p class="alert alert-<?=$msg_result['status']?> text-center"> <?=$msg_result['message']?></p>
+                    <?php } ?>
+                    <div class="pt-30 px-20 px-xs-15 text-center">
+                        <h2>ĐỔI MẬT KHẨU</h2>
+                        <div class="form-info-user">
+                            <form id="formChangePass" action="" method="POST">
+                                <div class="form-item d-flex align-items-lg-baseline flex-xs-column w-100">
+                                    <label>Mật khẩu hiện tại<span class="text-danger">*</span></label>
+                                    <div class="form-group hide-show-pass w-400 w-xs-100">
+                                        <input id="txtPass" name="txtPass" type="password" maxlength="30" class="form-control <?= isset($messages['user_pass']) ? $messages['status'] : "" ?>">
+                                        <div class="img-eye"></div>
+                                        <p class="text-danger mb-0 mt-10 text-14 w-100 msg-pass"><?= isset($messages['user_pass']) ? $messages['user_pass'] : "" ?></p>
+                                    </div>
+                                </div>
+                                <div class="form-item d-flex align-items-lg-baseline flex-xs-column w-100">
+                                    <label>Mật khẩu mới<span class="text-danger">*</span></label>
+                                    <div class="form-group hide-show-pass w-400 w-xs-100">
+                                        <input id="txtNewPass" name="txtNewPass" type="password" maxlength="30" class="form-control <?= isset($messages['user_new_pass']) ? $messages['status'] : "" ?>">
+                                        <div class="img-eye"></div>
+                                        <p class="text-danger mb-0 mt-10 text-14 w-100 msg-new-pass"><?= isset($messages['user_new_pass']) ? $messages['user_new_pass'] : "" ?></p>
+                                    </div>
+                                </div>
+                                <div class="form-item d-flex align-items-lg-baseline flex-xs-column w-100">
+                                    <label>Xác nhận mật khẩu mới<span class="text-danger">*</span></label>
+                                    <div class="form-group hide-show-pass w-400 w-xs-100">
+                                        <input id="txtConfirmPass" name="txtConfirmPass" type="password" maxlength="30" class="form-control <?= isset($messages['user_confirm_pass']) ? $messages['status'] : "" ?>">
+                                        <div class="img-eye"></div>
+                                        <p class="text-danger mb-0 mt-10 text-14 w-100 msg-confirm-pass"><?= isset($messages['user_confirm_pass']) ? $messages['user_confirm_pass'] : "" ?></p>
+                                    </div>
+                                </div>
+
+                                <div class="form-item mb-20 d-flex justtify-content-xs-between">
+                                    <label for="" class="mb-0 hidden-xs"></label>
+                                    <button type="button" id="sbmPass" class="btn btn-main">Cập nhật</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    commands.push(function () {
+        $(document).ready(function () {
+            $("#sbmPass").on('click',function () {
+                var valid = true;
+                if ($('input[name=txtPass]').val() == '') {
+                    $('.msg-pass').text('Bạn cần nhập thông tin này');
+                    $('#txtPass').addClass("border-danger");
+                    valid = false;
+                } else if ($('input[name=txtPass]').val().length < 6) {
+                    $('.msg-pass').text('Mật khẩu phải dài hơn 6 ký tự');
+                    $('#txtPass').addClass("border-danger");
+                    valid = false;
+                } else {
+                    $('.msg-pass').text('');
+                    $('#txtPass').removeClass("border-danger");
+                }
+
+                if ($('input[name=txtNewPass]').val() == '') {
+                    $('.msg-new-pass').text('Bạn cần nhập thông tin này');
+                    $('#txtNewPass').addClass("border-danger");
+                    valid = false;
+                } else if ($('input[name=txtNewPass]').val().length < 6) {
+                    $('.msg-new-pass').text('Mật khẩu phải dài hơn 6 ký tự');
+                    $('#txtNewPass').addClass("border-danger");
+                    valid = false;
+                } else {
+                    $('.msg-new-pass').text('');
+                    $('#txtNewPass').removeClass("border-danger");
+                }
+
+                if ($('input[name=txtConfirmPass]').val() == '') {
+                    $('.msg-confirm-pass').text('Bạn cần nhập thông tin này');
+                    $('#txtConfirmPass').addClass("border-danger");
+                    valid = false;
+                } else if ($('input[name=txtConfirmPass]').val().length < 6) {
+                    $('.msg-confirm-pass').text('Mật khẩu phải dài hơn 6 ký tự');
+                    $('#txtConfirmPass').addClass("border-danger");
+                } else if ($('input[name=txtConfirmPass]').val() != $('input[name=txtNewPass]').val()) {
+                    ('.msg-confirm-pass').text('Mật khẩu xác nhận không trùng khớp');
+                    $('#txtConfirmPass').addClass("border-danger");
+                    valid = false;
+                } else {
+                    $('.msg-confirm-pass').text('');
+                    $('#txtConfirmPass').removeClass("border-danger");
+                }
+                if (valid) {
+                    $('#sbmPass').prop('disabled', true);
+                    $('#formChangePass').submit();
+                }
+            });
+        });
+    })
+
+</script>

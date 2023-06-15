@@ -1,0 +1,187 @@
+
+<script>
+
+    $(document).ready(function(){
+        $("#submit_create").on('click', function(){
+            var valid = true;
+            if($('input[name=txtName]').val() == '') {
+                $('.msg-name').text('Bạn cần nhập thông tin này');
+                $('#txtName').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-name').text('');
+                $('#txtName').removeClass("border-red");
+            }
+
+            if($('input[name=txtCode]').val() == '') {
+                $('.msg-code').text('Bạn cần nhập thông tin này');
+                $('#txtCode').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-code').text('');
+                $('#txtCode').removeClass("border-red");
+            }
+
+            if($('input[name=txtPassword]').val() == '') {
+                $('.msg-password').text('Bạn cần nhập thông tin này');
+                $('#txtPassword').addClass("border-red");
+                valid = false;
+            } else if ($('input[name=txtPassword]').val() < 6) {
+                $('.msg-password').text('Mật Khẩu phải lớn hơn 6 ký tự');
+                $('#txtPassword').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-password').text('');
+                $('#txtPassword').removeClass("border-red");
+            }
+            if($('input[name=txtRePassword]').val() == '') {
+                $('.msg-re-password').text('Bạn cần nhập thông tin này.');
+                $('#txtRePassword').addClass("border-red");
+                valid = false;
+            } else if ($('input[name=txtRePassword]').val() < 6) {
+                $('.msg-re-password').text('Mật Khẩu phải lớn hơn 6 ký tự');
+                $('#txtRePassword').addClass("border-red");
+                valid = false;
+            }  else if ($('input[name=txtRePassword]').val() != $('input[name=txtPassword]').val()) {
+                $('.msg-re-password').text('Mật Khẩu xác nhận không trùng khớp');
+                $('#txtRePassword').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-re-password').text('');
+                $('#txtRePassword').removeClass("border-red");
+            }
+            if(!valid) event.preventDefault();
+            if(valid) {
+                $('#submit_create').prop('disabled', true);
+                $('#create_form').submit();
+            }
+        });
+    });
+
+</script>
+<?php
+if(!empty($formData['message']))
+{
+    ?>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $formData['typeMessage']?>">
+        <?php echo $formData['message']; ?>
+    </p>
+<?php }	?>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">Form Create
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br/>
+                <form class="form-horizontal form-label-left" id="create_form" action="" method="post">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="slcType">Lớp <span
+                                class="text-danger">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <select id="slcSchoolClass" name="slcSchoolClass"
+                                    class="form-control <?php echo isset($messages["user_school_class_id"]) ? $messages["status"] : ""; ?>">
+                                <option value="">Chọn lớp...</option>
+                                <?= isset($select_school_class) ? $select_school_class : ""
+                                ?>
+                            </select>
+                            <span class="text-danger msg-class"><?php echo isset($messages["user_school_class_id"]) ? $messages["user_school_class_id"] : "" ?></span>
+                        </div>
+                    </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 col-md-3 col-sm-3 col-xs-12" for="focusedInput">ID <em style="color:red;">*</em></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input value="<?php echo isset($formData['user_code']) ? $formData['user_code'] : ""?>" maxlength="256"
+                                       id="txtCode" name="txtCode" class="form-control <?php echo isset($messages["user_code"]) ? $messages["status"] : "";?>"  type="text" >
+                                <div class="text-danger msg-code"><?php echo isset($messages["user_code"]) ? $messages["user_code"] : "";?></div>
+
+                            </div>
+                        </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="focusedInput">Tên <em style="color:red;">*</em></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input value="<?php echo isset($formData['user_name']) ? $formData['user_name'] : ""?>"
+                                   maxlength="256" id="txtName" name="txtName" class="form-control  <?php echo isset($messages["user_name"]) ? $messages["status"] : "";?>"  type="text" >
+                            <div class="text-danger msg-name"><?php echo isset($messages["user_name"]) ? $messages["user_name"] : "";?></div>
+
+                        </div>
+                    </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="focusedInput">Email <em style="color:red;">*</em></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input value="<?php echo isset($formData['user_email']) ? $formData['user_email'] : ""?>" maxlength="256"
+                                       id="txtEmail" name="txtEmail" class="form-control <?php echo isset($messages["user_email"]) ? $messages["status"] : "";?>"  type="text" >
+                                <div class="text-danger msg-email"><?php echo isset($messages["user_email"]) ? $messages["user_email"] : "";?></div>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="focusedInput">Password <em style="color:red;">*</em></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input value="<?php echo isset($formData['user_password']) ? $formData['user_password'] : ""?>" maxlength="256"
+                                       id="txtPassword" name="txtPassword"  class="form-control <?php echo isset($messages["user_password"]) ? $messages["status"] : "";?>"  type="password" >
+                                <div class="text-danger msg-password"><?php echo isset($messages["user_password"]) ? $messages["user_password"] : "";?></div>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="focusedInput">Confirm Password <em style="color:red;">*</em></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input value="<?php echo isset($formData['user_re_password']) ? $formData['user_re_password'] : ""?>" maxlength="256"
+                                       id="txtRePassword" name="txtRePassword" class="form-control <?php echo isset($messages["user_re_password"]) ? $messages["status"] : "";?>"  type="password" >
+                                <div class="text-danger msg-re-password"><?php echo isset($messages["user_re_password"]) ? $messages["user_re_password"] : "";?></div>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="focusedInput">Ip </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input value="<?php echo isset($formData['user_ip']) ? $formData['user_ip'] : ""?>" maxlength="256"
+                                       id="txtIp" name="txtIp" class="form-control "  type="text" >
+
+                            </div>
+                        </div>
+                    <div class="form-group">
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Cá biệt </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-check">
+                            <label class="container_radio"><input type="radio" name="radSpecial"
+                                                                  value="Y" <?php echo (isset($formData["user_special"]) && $formData["user_special"] == "Y") ? "checked" : ''; ?>>Yes<span
+                                        class="checkmark"></span></label>
+                            <label class="container_radio"><input type="radio" name="radSpecial"
+                                                                  value="N" <?php echo (isset($formData["user_special"]) && $formData["user_special"] == "N") ? "checked" : ''; ?>>No<span
+                                        class="checkmark"></span></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Active </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-check">
+                            <label class="container_radio"><input type="radio" name="radActive"
+                                                                  value="Y" <?php echo (isset($formData["user_active"]) && $formData["user_active"] == "Y") ? "checked" : ''; ?>>Yes<span
+                                    class="checkmark"></span></label>
+                            <label class="container_radio"><input type="radio" name="radActive"
+                                                                  value="N" <?php echo (isset($formData["user_active"]) && $formData["user_active"] == "N") ? "checked" : ''; ?>>No<span
+                                    class="checkmark"></span></label>
+                        </div>
+                    </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea2">Mô tả </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <textarea style="width: 550px;height: 250px" id="txtDescription" name ="txtDescription" ><?= isset($formData['user_description']) ? $formData['user_description'] : "" ?></textarea>
+                            </div>
+                        </div>
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                            <button name="sbmType" type="submit" class="btn btn-success">Save change</button>
+                            <a class="btn btn-primary"
+                               href="<?php echo $this->url->get("/office/list-new-student"); ?>">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

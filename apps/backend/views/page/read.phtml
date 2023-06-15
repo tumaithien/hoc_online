@@ -1,0 +1,153 @@
+<?php use \OneIbc\Models\OccType as OccType;
+	  use  \Phalcon\Mvc\Model\Resultset;
+	  use \Phalcon\Mvc\Model\Query\Builder;
+?>
+<script>
+	$(document).ready(function(){
+	    $("#edit_page").click(function(){
+			$("#read_form").prop("action","<?php echo $this->url->get("dashboard/edit-page");?>");
+			$("#read_form").prop("method","post");
+			$("#read_form").submit();
+		});
+		$('#yes').click(function(){
+			var str="<?php echo $this->url->get('dashboard/delete-page');?>";
+			var id=$("#page_id").val();
+            str=str.concat("?id=").concat(id);
+			$('#yes').attr("href",str);
+			});
+        $("#search").click(function(){
+            $("#read_form").prop("action","<?php echo $this->url->get("dashboard/list-page");?>");
+            $("#read_form").prop("method","post");
+            $("#read_form").submit();
+        });
+	});
+</script>
+<?php $sea=$this->dispatcher->getParam("txtSearch");
+if($this->request->get("type")!=NULL||$this->request->get("message")!=NULL)
+{
+    ?>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $this->request->get("type")?>">
+        <?php echo $this->request->get("message"); ?>
+    </p>
+<?php }	?>
+<form name="read_form" id="read_form">
+    <div>
+        <table>
+            <th>  <input placeholder="Keyword" value="<?php echo $sea?>" name="txtSearch" id="txtSearch" type="text"/></th>
+
+            <th> <input type="button" name="search" id="search" value="Search" class="btn btn-primary"/></th>
+            <th><a  class="btn btn-primary" href="<?php echo $this->url->get('dashboard/create-page');?>">Add New</a>
+            </th>
+        </table>
+    </div>
+<div class="box-content">
+        <input type="hidden" name="ar_type" id="ar_type" value="<?php echo $this->dispatcher->getParam("ar_type");?>"/>
+						<table class="table table-striped table-bordered bootstrap-datatable">
+						  <thead>
+							  <tr>
+                              	  <th style="text-align:center;">Id</th>
+								  <th style="text-align:center;">Name</th>
+								  <th style="text-align:center;width: 316px;">Title</th>
+                                  <th style="text-align:center;width: 262px;">Keyword</th>
+								  <th style="text-align:center;">Action</th>
+							  </tr>
+						  </thead>   
+						  <tbody>
+                                  <?php $list_page=$this->dispatcher->getParam("list_page");
+								  	foreach($list_page as $page){
+								  ?>
+							<tr>
+                            <script>
+                         	$(function(){
+								$('#delete<?php echo $page->getPageId();?>').live("click",function(e){
+										e.preventDefault();
+										$('#warn').modal('show');
+										var id=$("#<?php echo $page->getPageId();?>").text();
+										$("#page_id").val(id);
+										var str="Are you sure to remove ID = ".concat(id).concat(" of ").concat("Page");
+										$("#mess").text(str);
+										
+										});
+								});						 
+                             </script>
+								<td style="text-align:center;" id="<?php echo $page->getPageId();?>" class="center"><?php echo $page->getPageId();?></td>
+								<td  style="text-align:center;"class="center"><?php echo $page->getPageName();?></td>
+                                <td  style="text-align:center;"class="center"><?php echo $page->getPageTitle();?></td>
+                                <td style="text-align:center;" class="center"><?php echo $page->getPageKeyword();?></td>
+								<td style="text-align:center;" class="center">
+									<a id="edit_page" class="btn btn-info" href="<?php echo $this->url->get('dashboard/edit-page');?>?id=<?php echo $page->getPageId(); ?>">
+										<i class="icon-edit icon-white"></i>  
+										Edit                                            
+									</a>
+									<a id="delete<?php echo $page->getPageId();?>" class="btn btn-danger" href="">
+										<i class="icon-trash icon-white"></i> 
+										Delete
+									</a>
+								</td>
+							</tr>
+							<?php }?>
+						  </tbody>
+					  </table>    
+                            <div class="pagination pagination-centered">
+						  <ul>
+                          <?php $crr_page=$this->dispatcher->getParam("current_page");
+						  		 $total_page = $this->dispatcher->getParam("total_page");
+						  ?>
+                       
+                          <?php if ($crr_page != 1){?>
+							<li><a id="prev"  href="<?php echo $this->url->get('dashboard/list-page')?>?page=<?php echo $crr_page-1;?>">Prev</a></li>
+                            <?php }?>
+							<?php
+							$n=floor($total_page/10);
+							$b=$total_page%10;
+							$flag=0;
+							$limit=0;
+							if($crr_page >=1){
+								$flag=floor($crr_page/10);
+								if($flag<$n){
+									$limit=($flag*10)+10;
+								}else{
+									$limit=($flag*10)+$b;
+								}
+							}
+							if($crr_page < $limit){
+								$start=0;
+								if($flag==0)
+									$start=$flag*10+1;
+								else
+									$start=$flag*10;
+								for($i=$start;$i <=$limit;$i++){
+										if($i==$crr_page){
+							?>
+                             <li><a style="color:#333" id="number_page"  href="<?php echo $this->url->get('dashboard/list-page')?>?page=<?php echo $i ;?>"><?php echo $i ?></a></li>
+                             <?php }else{?>
+                             <li><a id="number_page" href="<?php echo $this->url->get('dashboard/list-page')?>?page=<?php echo $i ;?>"><?php echo $i ?></a></li>
+                            	 		<?php }?>
+                            	 <?php }?>
+                             <?php }?>
+                             <?php if ($crr_page<$total_page){?>
+							<li><a id="next"  href="<?php echo $this->url->get('dashboard/list-page')?>?page=<?php echo $crr_page+1;?>">Next</a></li>
+                            <?php }?>
+						  </ul>
+						</div> 
+</div>
+</form>
+<form>
+<div class="modal hide fade" id="warn">
+	<div class="modal-header">
+<input type="hidden" id="page_id" name="page_id" />
+<button type="button" class="close" data-dismiss="modal">×</button>
+				<h3>Warning !</h3>
+	</div>
+	<div class="modal-body">
+				<p id="mess"></p>
+	</div>
+	<div class="modal-footer">
+				<a href="" class="btn" data-dismiss="modal">Close</a>
+				<a id="yes" name="yes" href="" class="btn btn-primary">Yes</a>
+	</div>
+</div>
+</form>
+<script>
+$(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-page");?>'>List Page</a></li>");
+</script>

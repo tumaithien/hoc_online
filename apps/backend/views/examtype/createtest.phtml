@@ -1,0 +1,269 @@
+
+<script>
+
+    $(document).ready(function(){
+        $("#create_form").submit(function(){
+            var valid = true;
+            if($('input[name=txtNumberQuestion]').val() == '') {
+                $('.msg-number-question').text('Bạn cần nhập thông tin này');
+                $('#txtNumberQuestion').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-number-question').text('');
+                $('#txtNumberQuestion').removeClass("border-red");
+            }
+            if($('select[name=slcClass]').val() == '') {
+                $('.msg-class').text('Bạn cần nhập thông tin này');
+                $('#slcClass').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-class').text('');
+                $('#slcClass').removeClass("border-red");
+            }
+            if($('select[name=slcSubject]').val() == '') {
+                $('.msg-subject').text('Bạn cần nhập thông tin này');
+                $('#slcSubject').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-subject').text('');
+                $('#slcSubject').removeClass("border-red");
+            }
+            if($('select[name=slcExamSubject]').val() == '') {
+                $('.msg-exam-subject').text('Bạn cần nhập thông tin này');
+                $('#slcExamSubject').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-exam-subject').text('');
+                $('#slcExamSubject').removeClass("border-red");
+            }
+            if($('select[name=slcChapter]').val() == '') {
+                $('.msg-chapter').text('Bạn cần nhập thông tin này');
+                $('#slcChapter').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-chapter').text('');
+                $('#slcChapter').removeClass("border-red");
+            }
+            if($('select[name=slcLesson]').val() == '') {
+                $('.msg-lesson').text('Bạn cần nhập thông tin này');
+                $('#slcLesson').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-lesson').text('');
+                $('#slcLesson').removeClass("border-red");
+            }
+            if($('select[name=slcType]').val() == '') {
+                $('.msg-type').text('Bạn cần nhập thông tin này');
+                $('#slcType').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-type').text('');
+                $('#slcType').removeClass("border-red");
+            }
+            if( ! valid ) event.preventDefault();
+            if( valid ) {
+                $('button[name=submit]').prop('disabled', true);
+            }
+        });
+    });
+
+</script>
+<script>
+    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-test");?>'>List Document</a><span class='divider'>/</span></li><li><a href='<?php echo $this->url->get("dashboard/create-test");?>'>Create Document</a></li>");
+</script>
+<?php
+if(!empty($msg_result['status']))
+{
+    ?>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $msg_result['status']?>">
+        <?php echo $msg_result['message']; ?>
+    </p>
+<?php }	?>
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header well" data-original-title>
+            <h2><i class="icon-edit"></i><?= isset($formData['mode']) ? $formData['mode'] : "" ?> TẠO CÂU HỎI TRONG KHO ĐỀ</h2>
+            <div class="box-icon"> <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a> <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a> <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a> </div>
+        </div>
+        <div class="box-content">
+            <form novalidate="novalidate" class="form-horizontal" id="create_form" action=""  enctype="multipart/form-data" method="post">
+                <h4>NOTE:</h4>
+                <p>-Đổi với đề trắc nghiệm: hình ảnh lời giải và câu hỏi phải có tên file giống nhau. Ví dụ: Câu hỏi: img001.PNG thì lời giải phải là: img001.PNG</p>
+                <p>-Đối với đề tự luận: Không cần nhập đáp án và lời giải</p>
+                <p>-Kiểm tra kỹ câu hỏi đã đủ đáp án chưa. Vì không thể thêm đáp án sau, chỉ có thể xóa câu hỏi rồi tạo lại</p>
+                <fieldset>
+                        <div class="control-group">
+                            <label class="control-label" for="slcClass">Lớp <em style="color:red;">*</em></label>
+                            <div class="controls">
+                                <select  id="slcClass" name="slcClass" class="class-subject <?php echo isset($messages["group_class_id"]) ? $messages["status"] : "";?>">
+                                    <?= isset($select_class) ? $select_class : "" ?>
+                                </select>
+                                <div class="text-danger msg-class"><?php echo isset($messages["group_class_id"]) ? $messages["group_class_id"] : "";?></div>
+
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="slcSubject">Môn học <em style="color:red;">*</em></label>
+                            <div class="controls">
+                                <select  id="slcSubject" name="slcSubject" class="class-subject <?php echo isset($messages["group_subject_id"]) ? $messages["status"] : "";?>">
+                                    <option value="">Chọn Môn học</option>
+                                    <?= isset($select_subject) ? $select_subject : "" ?>
+                                </select>
+                                <div class="text-danger msg-subject"><?php echo isset($messages["group_subject_id"]) ? $messages["group_subject_id"] : "";?></div>
+                            </div>
+                        </div>
+                    <div class="control-group">
+                        <label class="control-label" for="slcSubject">Chuyên đề <em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <select  id="slcExamSubject" name="slcExamSubject" class=" <?php echo isset($messages["group_subject_id"]) ? $messages["status"] : "";?>">
+                            </select>
+                            <div class="text-danger msg-exam-subject"><?php echo isset($messages["group_subject_id"]) ? $messages["group_subject_id"] : "";?></div>
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label  class="control-label" for="selectError">Chương </label>
+                        <div class="controls">
+                            <select   id="slcChapter" name="slcChapter" class="<?php echo isset($messages["group_chapter_id"]) ? $messages["status"] : "";?>">
+                            </select>
+                            <div class="text-danger msg-chapter"><?php echo isset($messages["group_subject_id"]) ? $messages["group_subject_id"] : "";?></div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="selectError">Bài </label>
+                        <div class="controls">
+                            <select  id="slcLesson" name="slcLesson" class=" <?php echo isset($messages["group_lesson_id"]) ? $messages["status"] : "";?>">
+                            </select>
+                            <div class="text-danger msg-lesson"><?php echo isset($messages["group_lesson_id"]) ? $messages["group_lesson_id"] : "";?></div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="selectError">Loại câu hỏi </label>
+                        <div class="controls">
+                            <select  id="slcType" name="slcType" class="<?php echo isset($messages["group_type_id"]) ? $messages["status"] : "";?>">
+                                <option value="">Chọn Loại</option>
+                                <?= isset($select_type) ? $select_type : "" ?>
+                            </select>
+                            <div class="text-danger msg-type"><?php echo isset($messages["group_type_id"]) ? $messages["group_type_id"] : "";?></div>
+                        </div>
+                    </div>
+                    <div id="image_1" class="control-group">
+                        <label class="control-label" for="upload-files">Image<em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <input  id="fileUpload" name="fileUpload[]" type="file" multiple="multiple"
+                                    accept="<?php
+                                    foreach($this->globalVariable->acceptUploadTypes as $k => $v)
+                                    {
+                                        echo $k.",";
+                                    } ?>"  />
+                        </div>
+                    </div>
+
+                    <div id="comment_1" class="control-group">
+                        <label class="control-label" for="upload-files">Lời giải</label>
+                        <div class="controls">
+                            <input id="fileUploadComment" name="fileUploadComment[]" type="file" multiple="multiple"
+                                   accept="<?php
+                                   foreach($this->globalVariable->acceptUploadTypes as $k => $v)
+                                   {
+                                       echo $k.",";
+                                   } ?>"  />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Số Câu Hỏi <em style="color:red;">*</em> </label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['group_number_question']) ? $formData['group_number_question'] : "" ?>"
+                                   id="txtNumberQuestion" name="txtNumberQuestion" class="input-xlarge focused  <?= isset($messages["group_number_question"]) ? $messages["status"] : "";?>" maxlength="10"  type="text" >
+                            <div class="text-danger msg-number-question"><?= isset($messages["group_number_question"]) ? $messages["group_number_question"] : "";?></div>
+
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="txtContent">Đáp Án </label>
+                        <div class="controls">
+                            <textarea class=" <?= isset($messages["group_answer_decode"]) ? $messages["status"] : "";?>" placeholder="1:A,2:B,3:C,4:A" style="width: 500px;height: 200px" id="txtAnswer" name="txtAnswer"><?php echo isset($formData['group_answer_decode']) ? $formData['group_answer_decode'] : "" ?></textarea>
+                            <div class="text-danger"><?php echo isset($messages["group_answer_decode"]) ? $messages["group_answer_decode"] : "";?></div>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        window.onload = function () {
+                            var oFCKeditor2 = new FCKeditor('txtAnswer');
+                            oFCKeditor2.Height = '500';
+                            oFCKeditor2.Width = '650';
+                            oFCKeditor2.ToolbarSet = "Default";
+                            oFCKeditor2.Basepath = '../backend/fckeditor/';
+                            oFCKeditor2.ReplaceTextarea();
+                        }
+                    </script>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="submit_create">Save changes</button>
+                        <a id="edit_page" class="btn" href="<?php echo $this->url->get('dashboard/list-exam');?>"> Cancel </a> </div>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $('.class-subject').on('change',function () {
+        var subject_id = $('#slcSubject').val();
+        var exam_subject_id = '<?= isset($formData['group_exam_subject_id']) ? $formData['group_exam_subject_id'] : 0 ?>';
+        $.ajax({
+            url: "<?php echo $this->url->get("/dashboard/get-exam-subject")?>",
+            async: false,
+            type: "POST",
+            dataType: "JSON",
+            data: {'subject_id': subject_id,
+                'exam_subject_id' : exam_subject_id
+            },
+            success: function(data){
+                $('#slcExamSubject').html('<option value="">Chon Chuyên đề</option>'+data.html);
+                $('#slcSubject').val(data.subject_id);
+            }
+        });
+    }).trigger('change');
+    $('#slcExamSubject').on('change',function () {
+        var subject_id = $('#slcSubject').val();
+        var class_id = $('#slcClass').val();
+        var exam_subject_id = $('#slcExamSubject').val();
+        var chapter_id ='<?= isset($formData['group_chapter_id']) ? $formData['group_chapter_id'] : 0 ?>';
+        $.ajax({
+            url: "<?php echo $this->url->get("/dashboard/get-exam-chapter")?>",
+            async: false,
+            type: "POST",
+            dataType: "JSON",
+            data: {'subject_id': subject_id,
+                'exam_subject_id' : exam_subject_id,
+                'chapter_id' : chapter_id,
+                'class_id' : class_id
+            },
+            success: function(data){
+                $('#slcChapter').html('<option value="">Chọn Chương</option>'+data.html);
+            }
+        });
+    }).trigger('change');
+    $('#slcChapter').on('change',function () {
+        var subject_id = $('#slcSubject').val();
+        var class_id = $('#slcClass').val();
+        var exam_subject_id = $('#slcExamSubject').val();
+        var chapter_id = $('#slcChapter').val();
+        var lesson_id = '<?= isset($formData['group_lesson_id']) ? $formData['group_lesson_id'] : 0 ?>';
+        $.ajax({
+            url: "<?php echo $this->url->get("/dashboard/get-exam-lesson")?>",
+            async: false,
+            type: "POST",
+            dataType: "JSON",
+            data: {'subject_id': subject_id,
+                'exam_subject_id' : exam_subject_id,
+                'chapter_id' : chapter_id,
+                'class_id' : class_id,
+                'lesson_id' : lesson_id
+            },
+            success: function(data){
+                $('#slcLesson').html('<option value="">Chọn Bài</option>'+data.html);
+            }
+        });
+    }).trigger('change');
+</script>

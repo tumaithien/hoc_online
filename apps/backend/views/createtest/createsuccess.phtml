@@ -1,0 +1,16 @@
+<main>
+    <div class="login-wrap overflow-auto">
+        <div class="container pt-xs-60 pt-40 pb-xs-70">
+            <div class="form-log-emal">
+                <h1 class="title-main <?= $msg_result['status'] ?>"><?=$msg_result['message'] ?></h1>
+                <div class="p-40 p-xs-20 mt-30 bg-white fit-center max-w-100 rounded-lg">
+                    <p class="text-right"><a href="/dashboard" class="btn btn-info">Quay về trang chủ</a></p>
+                    <?php if($msg_result['status'] == "success") {
+                        foreach ($arrTestId as $id) {?>
+                    <p class="text-right"><a href="/dashboard/detail-test-exam?id=<?= $id ?>" class="btn btn-info">Xem Chi Tiết đề thi ID số : <?= $id ?></a></p>
+                    <?php } } ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

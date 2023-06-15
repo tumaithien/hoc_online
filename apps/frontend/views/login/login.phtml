@@ -1,0 +1,69 @@
+<main>
+    <div class="pt-xs-100 login-wrap overflow-auto">
+        <div class="container pt-xs-60 pt-40 pb-xs-70">
+            <div class="form-log-emal">
+                <h1 class="title-main">Đăng nhập</h1>
+                <div class="p-40 p-xs-20 mt-30 bg-white fit-center max-w-100 rounded-lg">
+                    <form class="w-400 max-w-100 mx-auto" method="POST" name="formLogin" enctype="multipart/form-data" action="">
+                        <label>ID đăng nhập <span class="text-danger">*</span></label>
+                        <div class="form-group">
+                            <input type="text" name="txtEmail" class="form-control h-50px" placeholder="ID đăng nhập" value="<?php echo isset($formData['user_code']) ? $formData['user_code'] : '' ?>">
+                            <span class="text-danger msg-email"><?php echo isset($message['email']) ? $message['email'] : ""; ?></span>
+                        </div>
+                        <label>Mật khẩu <span class="text-danger">*</span></label>
+                        <div class="form-group hide-show-pass">
+                            <input type="password" name="txtPassword" class="form-control h-50px">
+                            <div class="img-eye"></div>
+                        </div>
+                        <span class="text-danger msg-password"><?php echo isset($message['password']) ? $message['password'] : ""; ?></span>
+
+                        <div class="mt-20">
+                            <button type="button" name="btnLogin" class="btn btn-main w-100 h-50px">
+                                Đăng nhập
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    commands.push(function () {
+        $(document).ready(function () {
+        $('button[name=btnLogin]').click(function (event) {
+            var valid = true;
+            if ($('input[name=txtEmail]').val() == '') {
+                valid = false;
+                $('.msg-email').text('Vui lòng nhập account');
+                $('input[name=txtEmail]').parent().addClass("has-error");
+            }
+            else {
+                $('.msg-email').text('');
+                $('input[name=txtEmail]').parent().removeClass("has-error");
+            }
+            if($('input[name=txtPassword]').val() == ''){
+                valid = false;
+                $('input[name=txtPassword]').parent().addClass("has-error");
+                $('.msg-password').text('Vui lòng nhập mật khẩu');
+            } else {
+                $('.msg-password').text('');
+                $('input[name=txtPassword]').parent().removeClass("has-error");
+            }
+            if(!valid){
+                event.preventDefault();
+            } else {
+                $('#l-loading').show();
+                $('button[name=btnLogin]').prop('disabled', true);
+                $('form[name=formLogin]').submit()
+            }
+        });
+        function emailValid(email) {
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email);
+        }
+    })
+    });
+</script>
+</body>
+</html>

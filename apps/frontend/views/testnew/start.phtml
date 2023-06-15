@@ -1,0 +1,96 @@
+<?php
+/**
+ * @var \Learncom\Models\LearnTest $test_model
+ */
+$test_string = "learncom\Models\LearnTest";
+$score_string = "learncom\Models\LearnScore";
+
+?>
+<main>
+    <div class="padding-block p-20">
+        <div class="row list-courses-wrap list-courses-custom">
+            <div class="w-50 mx-auto px-lg-90">
+
+                <hr>
+                <p class="text-red">- Trong quá trình làm bài không được thu nhỏ màn hình</p>
+                <p class="text-red">- Trong quá trình làm bài không được chuyển tab</p>
+                <p class="text-red">- Mỗi lần thu nhỏ hoặc chuyển tab sẽ bị tính 1 lần vi phạm</p>
+                <hr>
+
+                <?php
+                $t = 0;
+                foreach ($arrTest as $test) {
+                    $continew = false;
+                    ?>
+                    <?php foreach ($arrScore as $score) {
+                        if (($score->$test_string->getTestId() == $test->getTestId() || $score->$test_string->getTestParentId() == $test->getTestId()
+                        || $score->$test_string->getTestId() == $test->getTestParentId()) && $test->getTestOnlyOne() == "Y") {
+                            $continew = true;
+                        }
+                        ?>
+                        <?php }
+
+                        if ($continew) {
+                            continue;
+                        }
+                    $t ++;
+                    if ($t == 1) {
+                        ?>
+                        <h3 class="text-blue-dark">BÀI THI :</h3>
+<?php } ?>
+
+
+                        <p id ="txtTime" class="d-flex justify-content-between"><span class="text-medium">Bài Kiểm Tra: <?= $test->getTestName()?></span>
+                        <span>
+                            <?php if ($test->getTestStatus() =="P") { ?>
+                            <a type="button" class="btn btn-outline-primary" href="bat-dau?id=<?=$test->getTestId() ?>">Bắt đầu làm</a>
+                            <?php } else { ?>
+                            <a type="button" class="btn btn-outline-primary" href="dap-an?id=<?=$test->getTestId() ?>">Xem đáp án</a>
+                            <?php } ?>
+                        </span>
+
+                    </p>
+<hr>
+                <?php } ?>
+                <?php if ($t == 0) { ?>
+                    <h3 class="text-green">HIỆN TẠI KHÔNG CÓ BÀI THI</h3>
+                    <hr>
+
+                <?php } ?>
+                <?php if (count($arrScore) > 0) { ?>
+                <h3 class="text-blue-dark">BÀI ĐÃ LÀM :</h3>
+                <hr>
+                <?php
+                foreach ($arrScore as $score) {
+                    ?>
+                    <p id ="txtTime" class="d-flex justify-content-between">
+                        <a href="ket-thuc?testId=<?=$score->$test_string->getTestId() ?>">
+                            <span class="text-medium"><?= $this->my->formatDateTime($score->$score_string->getScoreInsertTime()) ?> - Đáp án bài: <?= $score->$test_string->getTestName()?>
+                            </span>
+                        </a>
+
+                        <span class="pr-10">
+                          <?php if ($score->$test_string->test_is_public_answer == "Y")  {?>
+                            <a type="button" class="btn btn-outline-primary " href="dap-an?id=<?=$score->$test_string->getTestId() ?>">Xem Đáp Án</a>
+                                                <?php } ?>
+                        </span>
+                    </p>
+
+
+                    <hr>
+                <?php } ?>
+                <?php } ?>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    commands.push(function(){
+        window.onload = function() {
+            var reloading = sessionStorage.getItem("reloading");
+            if (reloading) {
+                sessionStorage.removeItem("reloading");
+            }
+        };
+    })
+</script>

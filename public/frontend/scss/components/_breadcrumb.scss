@@ -1,0 +1,23 @@
+.title-content{
+    color:#074085;
+    padding-left: 8px;
+    border-left: 4px solid #074085;
+    font-size: 18px;
+    margin-bottom: 0;
+    @include media-breakpoint-down(md){
+        margin-left: 15px;
+    }
+}
+.breadcrumb-cus{
+    .breadcrumb-item{
+        color: #074085;
+        &.active{
+            color: $dark-gray;
+        }
+    }
+    @include media-breakpoint-down(md){
+        .breadcrumb-item{
+            font-size: 14px;
+        }
+    }
+}

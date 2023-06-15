@@ -1,0 +1,107 @@
+<script>
+    $(document).ready(function(){
+        $('#delete').click(function(){
+            var str="<?php echo $this->url->get('dashboard/delete-exam-type');?>";
+                var id= $("#type_id").val();
+            str=str.concat("?id=").concat(id);
+            $('#delete').attr("href",str);
+        });
+    });
+</script>
+<script>
+    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-exam-type");?>'>  lớp </a></li>");
+</script>
+
+<?php if(isset($msg_result))  {?>
+    <div class="clearfix"></div>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $msg_result['status']?>">
+        <?= $msg_result["message"]; ?>
+    </p>
+<?php } ?>
+<a href="<?php echo $this->url->get('dashboard/create-exam-type')?>" name="create_article" id="create_article" class="btn btn-primary pull-right">Add New</a>
+<form name="read_form" id="read_form"  >
+    <div class="box-content">
+        <table class="table table-striped table-bordered bootstrap-datatable">
+            <thead>
+            <tr>
+                <th style="text-align:center;width: 50px">ID</th>
+                <th style="text-align:center;">Name</th>
+                <th style="text-align:center;width: 50px">order</th>
+                <th style="text-align:center;width: 300px">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+
+            foreach($list_item->items as $item){
+                $arrClass = \Learncom\Models\LearnClass::find();
+                $arrSubject = \Learncom\Models\LearnSubject::find();
+                $arrTemp = [];
+                ?>
+                <script>
+                    $(function(){
+                        $('#delete<?= $item->getTypeId()?>').live("click",function(e){
+                            e.preventDefault();
+                            $('#warn').modal('show');
+                            var id=$("#<?= $item->getTypeId();?>").text();
+                            $("#type_id").val(id);
+                            var str="Are you sure to remove Phân loại ID = ".concat(id);
+                            $("#message").text(str);
+
+                        });
+                    });
+                </script>
+                <tr>
+
+                    <td style="text-align:center;" class="center" id="<?php echo $item->getTypeId(); ?>"><?php echo $item->getTypeId(); ?></td>
+                    <td  style="text-align:left;" class="center">
+                        <?php echo $item->getTypeName(); ?>
+                    </td>
+                    <td  style="text-align:left;">
+                        <?php echo $item->getTypeOrder(); ?>
+                    </td>
+
+                    <td  style="text-align:center;"class="center">
+                        <a id="edit_account" class="btn btn-info" href="<?php echo $this->url->get('dashboard/edit-exam-type');?>?id=<?php echo $item->getTypeId(); ?>">
+                            <i class="icon-edit icon-white"></i>
+                            Chỉnh Sửa
+                        </a>
+                        <a id="delete<?php echo $item->getTypeId();?>" class="btn btn-danger" href="">delelte</a>
+                    </td>
+
+                </tr>
+            <?php }?>
+            </tbody>
+        </table>
+
+        <div class="row">
+            <div class="col-md-6 ">
+                <div style="float:left">
+                    <p style="text-align:left;font-size:16px;color:red"><strong style="">Total : <?= $list_item->total_items;?></strong> Class</p>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+
+<!--FORM DELETE A ARTICLE-->
+
+<form>
+    <div class="modal hide fade" id="warn">
+        <div class="modal-header">
+            <input type="hidden" id="type_id" name="type_id" />
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3>Warning !</h3>
+        </div>
+        <div class="modal-body">
+            <p id="message"></p>
+        </div>
+        <div class="modal-footer">
+            <a href="" class="btn" data-dismiss="modal">Close</a>
+            <a id="delete" name="delete" href="" class="btn btn-primary">Yes</a>
+        </div>
+    </div>
+</form>

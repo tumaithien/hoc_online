@@ -1,0 +1,115 @@
+<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.8/jquery.validate.min.js"></script>
+<script>
+    $(function(){
+        $("#form_message").validate({
+            rules :{
+                select_type:"required",
+                name:"required",
+                order:{required:true,number:true}
+            },
+            submitHandler: function(form){
+                form.submit();
+            }
+        });
+    });
+    $(document).ready(function(){
+        $("#check_all").click(function(){
+            $('span').addClass("checked");
+            $('input:checkbox').prop('checked',true);
+        });
+        $("#uncheck").click(function(){
+            $('span').removeClass("checked");
+            $('input:checkbox').prop('checked',false);
+        });
+    });
+</script>
+<?php
+if(!empty($formData['type'])||!empty($formData['message']))
+{
+    ?>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $formData['type']?>">
+        <?php echo $formData['message']; ?>
+    </p>
+<?php }	?>
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header well" data-original-title>
+            <h2><i class="icon-edit"></i> Form Role :(<em style="color:red; font-size:20px;">*</em> ) Required to be entered</h2>
+
+        </div>
+        <div class="box-content">
+            <form id="form_message" name="form_message" novalidate="novalidate" class="form-horizontal" method="post"   class="form-horizontal">
+                <fieldset>
+                    <div class="control-group">
+                        <label class="control-label" for="focusedInput">Name <em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <input value ="<?php echo $formData['name']; ?>" maxlength="256" id="name" name="name" class="input-xxlarge focused"  type="text" >
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="optionsCheckbox2">Active</label>
+
+                        <div class="controls">
+                            <label class="checkbox" >
+                                <input  name="check_active" type="radio" id="check_active_Y"
+                                       value="Y" <?php echo $formData['active']=='Y'?'checked="checked"':'';?> >
+                                Yes </label>
+                        </div>
+                        <div class="controls">
+                            <label class="checkbox" >
+                                <input   name="check_active" type="radio" id="check_active_N" value="N"
+                                    <?php echo $formData['active']=='N'?'checked="checked"':'';?>>
+                                No </label>
+                        </div>
+
+                    </div>
+                        <div class="control-group">
+                            <label class="control-label" for="textarea2">Dashboard</label>
+                            <div class="controls">
+                            <?php
+                        echo \Learncom\Repositories\Role::getString(4,$arr_dir,$formData['actions'],"backend");
+                        ?>
+                            </div>
+                        </div>
+                    <div style="clear:left"></div>
+                    <div id="div_button" style="text-align:center" class="form-actions">
+                        <button type="button" class="btn btn-primary" id="uncheck">Uncheck</button>
+                        <button type="button" class="btn btn-primary" id="check_all">Check All</button>
+                        <button type="submit" class="btn btn-primary" id="submit_create">Update Role</button>
+                        <a id="edit_page" class="btn" href="<?php echo $this->url->get('dashboard/list-role');?>">Cancel</a>
+                    </div>
+                </fieldset>
+                <input type="hidden" id="id" name="id" value="<?php echo $formData['id'];?>"/>
+            </form>
+        </div>
+        </div>
+    </div>
+
+</div>
+<script src="<?php echo $this->url->getStatic('shared/js/knockout-3.2.0.js'); ?>" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#select_type").on("change",function(e){
+            var self = $(this);
+            var cur = self.find("option:selected");
+            var name = cur.text();
+            //alert(name);
+            formVM.type(name);
+        });
+
+        function AppViewModel() {
+            this.type = ko.observable('');
+        }
+
+        // Activates knockout.js
+        var formVM = new AppViewModel();
+        ko.applyBindings(formVM);
+        //      get view
+        var self = $("#select_type");
+        var cur = self.find("option:selected");
+        var name = cur.text();
+        if(name !="") {
+            formVM.type(name);
+        }
+    });
+</script>

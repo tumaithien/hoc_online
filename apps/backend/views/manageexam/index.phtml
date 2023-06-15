@@ -1,0 +1,274 @@
+<?php
+$urlPage = "?";
+
+$slcCountry = $this->dispatcher->getParam("slcClass");
+if (strlen($this->dispatcher->getParam("slcClass")) > 0) {
+    if ($urlPage != "?") $urlPage .= "&";
+    $urlPage .= http_build_query(array("slcClass" => $this->dispatcher->getParam("slcClass")));
+}
+if (strlen($this->dispatcher->getParam("slcSubject")) > 0) {
+    if ($urlPage != "?") $urlPage .= "&";
+    $urlPage .= http_build_query(array("slcSubject" => $this->dispatcher->getParam("slcSubject")));
+}
+$type_id = $this->dispatcher->getParam("slcType");
+if (strlen($this->dispatcher->getParam("slcType")) > 0) {
+    if ($urlPage != "?") $urlPage .= "&";
+    $urlPage .= http_build_query(array("slcType" => $this->dispatcher->getParam("slcType")));
+}
+$exam_subject_id = $this->dispatcher->getParam("slcExamSubject");
+if (strlen($this->dispatcher->getParam("slcExamSubject")) > 0) {
+    if ($urlPage != "?") $urlPage .= "&";
+    $urlPage .= http_build_query(array("slcExamSubject" => $this->dispatcher->getParam("slcExamSubject")));
+}
+$chapter_id = $this->dispatcher->getParam("slcChapter");
+if (strlen($this->dispatcher->getParam("slcChapter")) > 0) {
+    if ($urlPage != "?") $urlPage .= "&";
+    $urlPage .= http_build_query(array("slcChapter" => $this->dispatcher->getParam("slcChapter")));
+}
+$lesson_id = $this->dispatcher->getParam("slcLesson");
+if (strlen($this->dispatcher->getParam("slcLesson")) > 0) {
+    if ($urlPage != "?") $urlPage .= "&";
+    $urlPage .= http_build_query(array("slcLesson" => $this->dispatcher->getParam("slcLesson")));
+}
+
+?>
+<script>
+    $(document).ready(function(){
+        $('#delete').click(function(){
+            var str="<?php echo $this->url->get('dashboard/delete-exam');?>";
+            var id= $("#document-id").val();
+            str=str.concat("?id=").concat(id);
+            $('#delete').attr("href",str);
+        });
+        $('button[name=search]').click(function () {
+            $('form[name=read_form]').prop('action', '<?php echo $this->url->get('/dashboard/list-exam'); ?>');
+            $('form[name=read_form]').submit();
+        });
+        $('#addNew').on('click',function () {
+            var subject_id = $('#slcSubject').val();
+            var class_id = $('#slcClass').val();
+            var exam_subject_id = $('#slcExamSubject').val();
+            var chapter_id = $('#slcChapter').val();
+            var lesson_id = $('#slcLesson').val();
+            var type_id = $('#slcType').val();
+            location.replace("<?php echo $this->url->get('/dashboard/create-exam?slcSubject=');?>"+subject_id+"&slcClass="+class_id+"&slcExamSubject="+exam_subject_id+"&slcChapter="+chapter_id+"&slcLesson="+lesson_id+"&slcType="+type_id);
+        });
+        $('.class-subject').on('change',function () {
+            var subject_id = $('#slcSubject').val();
+            var exam_subject_id = '<?= $exam_subject_id ? $exam_subject_id : 0 ?>';
+            $.ajax({
+                url: "<?php echo $this->url->get("/dashboard/get-exam-subject")?>",
+                async: false,
+                type: "POST",
+                dataType: "JSON",
+                data: {'subject_id': subject_id,
+                    'exam_subject_id' : exam_subject_id
+                },
+                success: function(data){
+                    $('#slcExamSubject').html('<option value="">Tất cả Chuyên đề</option>'+data.html);
+                    $('#slcSubject').val(data.subject_id);
+                }
+            });
+        }).trigger('change');
+        $('#slcExamSubject').on('change',function () {
+            var subject_id = $('#slcSubject').val();
+            var class_id = $('#slcClass').val();
+            var exam_subject_id = $('#slcExamSubject').val();
+            var chapter_id ='<?= $chapter_id ? $chapter_id : 0 ?>';
+            $.ajax({
+                url: "<?php echo $this->url->get("/dashboard/get-exam-chapter")?>",
+                async: false,
+                type: "POST",
+                dataType: "JSON",
+                data: {'subject_id': subject_id,
+                    'exam_subject_id' : exam_subject_id,
+                    'chapter_id' : chapter_id,
+                    'class_id' : class_id
+                },
+                success: function(data){
+                    $('#slcChapter').html('<option value="">Tất cả Chương</option>'+data.html);
+                }
+            });
+        }).trigger('change');
+        $('#slcChapter').on('change',function () {
+            var subject_id = $('#slcSubject').val();
+            var class_id = $('#slcClass').val();
+            var exam_subject_id = $('#slcExamSubject').val();
+            var chapter_id = $('#slcChapter').val();
+            var lesson_id = '<?= $lesson_id ? $lesson_id : 0 ?>';
+            $.ajax({
+                url: "<?php echo $this->url->get("/dashboard/get-exam-lesson")?>",
+                async: false,
+                type: "POST",
+                dataType: "JSON",
+                data: {'subject_id': subject_id,
+                    'exam_subject_id' : exam_subject_id,
+                    'chapter_id' : chapter_id,
+                    'class_id' : class_id,
+                    'lesson_id' : lesson_id
+                },
+                success: function(data){
+                    $('#slcLesson').html('<option value="">Tất cả Bài</option>'+data.html);
+                }
+            });
+        }).trigger('change');
+    });
+</script>
+<script>
+    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-document");?>'>  Kho câu hỏi </a></li>");
+</script>
+
+<?php if(isset($msg_result))  {?>
+    <div class="clearfix"></div>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $msg_result['status']?>">
+        <?= $msg_result["message"]; ?>
+    </p>
+<?php } ?>
+<form name="read_form" id="read_form"  >
+    <div>
+        <table>
+            <?php
+            $keyword=$this->dispatcher->getParam("key_word");
+            ?>
+
+            <tr>
+                <th>
+                    <select  id="slcClass" name="slcClass" class="class-subject">
+                        <option value="">Tất cả lớp học</option>
+                        <?php echo isset($select_class) ? $select_class : ""?>
+                    </select><th>
+                <th>
+                <th>
+                    <select  id="slcSubject" name="slcSubject" class="class-subject">
+                        <option value="">Tất cả môn học</option>
+                        <?php echo isset($select_subject) ? $select_subject : ""?>
+                    </select><th>
+                <th>
+                <th>
+                    <select  id="slcType" name="slcType" class="">
+                        <option value="">Tất cả Nhóm</option>
+                        <?php echo isset($select_type) ? $select_type : ""?>
+                    </select><th>
+                <th>
+                <th>
+                    <button type="button" name="search" id="search" value="Search" class="btn btn-primary">Search</button>
+                </th>
+                <th><a id="addNew" name="create_article" class="btn btn-primary"/>Tạo Câu hỏi</th>
+            </tr>
+        </table>
+        <table> <th>
+                <select  id="slcExamSubject" name="slcExamSubject" class="">
+                </select><th>
+            <th>
+            <th>
+                <select  id="slcChapter" name="slcChapter" >
+                </select>
+            <th>
+            <th>
+                <select  id="slcLesson" name="slcLesson" >
+                </select>
+            <th></table>
+    </div>
+    <div class="box-content">
+        <table class="table table-striped table-bordered bootstrap-datatable">
+            <thead>
+            <tr>
+                <th style="text-align:center;">Câu hỏi</th>
+                <th style="text-align:center;">Lời Giải</th>
+                <th style="text-align:center;">Đáp Án</th>
+                <th style="text-align:center;">Lớp</th>
+                <th style="text-align:center;">Chuyên đề</th>
+                <th style="text-align:center;">Chương</th>
+                <th style="text-align:center;">Bài</th>
+                <th style="text-align:center;">Nhóm</th>
+                <th style="text-align:center;width: 80px">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+
+            foreach($list_item->items as $item){
+                $exam = "learncom\Models\LearnExam";
+                $group = "learncom\Models\LearnExamGroup";
+                ?>
+                <script>
+                    $(function(){
+                        $('#delete<?= $item->$exam->exam_id?>').live("click",function(e){
+                            e.preventDefault();
+                            $('#warn').modal('show');
+                            var id=$("#<?= $item->$exam->exam_id?>").attr('data-browse');
+                            $("#document-id").val(id);
+                            var str="Bạn có muốn xóa Câu hỏi ID = ".concat(id);
+                            $("#message").text(str);
+
+                        });
+                    });
+                </script>
+                <tr>
+
+                    <td style="text-align:center;" class="center" id="<?php echo  $item->$exam->exam_id; ?>" data-browse="<?php echo  $item->$exam->exam_id; ?>">
+                        <?php if (file_exists(__DIR__."/../../../..".$item->$exam->exam_link_test) && $item->$exam->exam_link_test!="" && $item->$exam->exam_link_test!=null) { ?>
+                        <img style="width: 600px;height: 100px" src="<?= $item->$exam->exam_link_test ?>">
+                        <?php } ?>
+                    </td>
+                    <td style="text-align:center;" class="center" id="answer<?php echo  $item->$exam->exam_id; ?>">
+                        <?php if (file_exists(__DIR__."/../../../..".$item->$exam->exam_link_answer) && $item->$exam->exam_link_answer!="" && $item->$exam->exam_link_answer!=null) { ?>
+                        <img style="width: 600px;height: 100px" src="<?= $item->$exam->exam_link_answer ?>">
+                        <?php } ?>
+                    </td>
+                    <td style="text-align:center;" class="center" ><?= $item->$exam->exam_answer ?></td>
+                    <td style="text-align:center;" class="center" ><?= \Learncom\Repositories\ClassSubject::getNameByClassAndSubject($item->$group->group_class_id,$item->$group->group_subject_id) ?></td>
+                    <td style="text-align:center;" class="center" ><?= \Learncom\Repositories\ExamSubject::getNameById($item->$group->group_exam_subject_id) ?></td>
+                    <td style="text-align:center;" class="center" ><?= \Learncom\Repositories\ExamChapter::getNameById($item->$group->group_chapter_id) ?></td>
+                    <td style="text-align:center;" class="center" ><?= \Learncom\Repositories\ExamLesson::getNameById($item->$group->group_lesson_id) ?></td>
+                    <td style="text-align:center;" class="center" ><?= \Learncom\Repositories\ExamType::getNameById($item->$group->group_type_id) ?></td>
+                    <td  style="text-align:center;"class="center">
+                        <a id="delete<?= $item->$exam->exam_id?>" class="btn btn-danger" href="">delelte</a>
+                    </td>
+
+                </tr>
+            <?php }?>
+            </tbody>
+        </table>
+
+        <div class="row">
+            <div class="col-md-6 ">
+                <div style="float:left">
+                    <p style="text-align:left;font-size:16px;color:red"><strong style="">Total : <?= $list_item->total_items;?></strong> Tài liệu</p>
+
+                </div>
+            </div>
+            <div class="col-md-6 t pull-right">
+                <?php if ($list_item->total_pages > 1) { ?>
+                    <nav class="pagination pagination-centered">
+                        <?php if ($urlPage != "?") $urlPage .= "&";
+                        $urlPage .= "page=";
+                        echo $this->my->renderPagination($urlPage, $list_item->current, $list_item->total_pages, 2);
+                        ?>
+                    </nav>
+                <?php } ?>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+
+<!--FORM DELETE A ARTICLE-->
+
+<form>
+    <div class="modal hide fade" id="warn">
+        <div class="modal-header">
+            <input type="hidden" id="document-id" name="document-id" />
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3>Warning !</h3>
+        </div>
+        <div class="modal-body">
+            <p id="message"></p>
+        </div>
+        <div class="modal-footer">
+            <a href="" class="btn" data-dismiss="modal">Close</a>
+            <a id="delete" name="delete" href="" class="btn btn-primary">Yes</a>
+        </div>
+    </div>
+</form>

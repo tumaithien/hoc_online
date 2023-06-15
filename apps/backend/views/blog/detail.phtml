@@ -1,0 +1,41 @@
+<?php
+/**
+ * @var $parent_keyword;
+ * @var \Learncom\Models\LearnArticle[] $related_articles
+ * @var \Learncom\Models\LearnArticle $article
+ */
+?>
+<nav aria-label="breadcrumb" class="breadcrumb-cus">
+    <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="<?php echo $this->url->get('/'); ?>">Trang chủ</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a href="<?php echo $this->url->get('/'.$parent_keyword); ?>">Blog</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><?php echo isset($menu_bread) ? $menu_bread : ''?></li>
+    </ol>
+</nav>
+<main>
+    <div class="padding-block bg-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7">
+                    <h2 class="text-main text-30 font-weight-bold"><?php echo isset($menu_bread) ? $menu_bread : ''; ?></h2>
+                    <?php echo $article->getArticleContent() ?>
+                </div>
+                <div class="col-lg-5">
+                    <?php if(count($related_articles) > 0) { ?>
+                        <h2 class="text-main text-20">CÁC TIN TỨC LIÊN QUAN</h2>
+                        <div class="line-bottom-bolder mb-10"></div>
+                        <?php foreach ($related_articles as $item) { ?>
+                            <div class="d-flex mb-20">
+                                <div class="round-img-120">
+                                    <a href="<?php echo $this->url->get('/'.$parent_keyword.'/'.$item->getArticleKeyword()) ?>"><img src="<?php echo $item->getArticleIcon() ?>" alt="" title=""></a>
+                                </div>
+                                <div class="ml-20">
+                                    <h3 class="text-16"><a href="<?php echo $this->url->get('/'.$parent_keyword.'/'.$item->getArticleKeyword()) ?>" target="_self" title="<?php echo htmlentities($item->getArticleName()) ?>"><?php echo $item->getArticleName() ?></a></h3>
+                                </div>
+                            </div>
+                    <?php }} ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

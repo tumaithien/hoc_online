@@ -1,0 +1,87 @@
+<script type="text/javascript">
+    $(function () {
+        var uploadFiles = $("#upload-files");
+        var msg = $("#order-form-message");
+        $("#upload-form").submit(function(event){
+            var message = {
+                "type": "error",
+                "message": ""
+            };
+            var valid = true;
+            if (uploadFiles.prop("value") == "") {
+                valid = false;
+                message['message'] = "Select file to upload!";
+            }
+            msg.removeClass(function (index, className) {
+                return (className.match (/(^|\s)alert-\S+/g) || []).join(' ');
+            });
+            msg.addClass("alert-"+message['type']);
+            if (valid) {
+                message['message'] = "<img src='<?php echo $this->url->getStatic('backend/img/waiting.gif'); ?>' alt='Processing...' />Please be patient while our system is processing!";
+            } else {
+                event.preventDefault();
+            }
+            msg.html(message['message']);
+            msg.show();
+        });
+    });
+</script>
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header well" data-original-title>
+            <h2><i class="icon-edit"></i> Form Upload File To S3</h2>
+            <div class="box-icon">
+                <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+                <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+                <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+            </div>
+        </div>
+        <div class="box-content">
+            <form class="form-horizontal" id="upload-form"
+                action="<?php echo $this->url->get("dashboard/cloud-upload");?>" method="post"
+                enctype="multipart/form-data">
+                <div class="control-group"></div>
+                <div class="control-group">
+                    <label class="control-label" for="upload-files">Upload Files<em style="color:red;">*</em></label>
+                    <div class="controls">
+                        <input id="fileUpload" name="fileUpload" type="file"
+                            accept="<?php
+                                foreach($this->globalVariable->acceptUploadTypes as $k => $v)
+                                {
+                                    echo $k.",";
+                                } ?>" multiple="multiple" />
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                    </div>
+                </div>
+                <div id="order-form-message"
+                    class="alert <?php echo isset($message['type'])?"alert-".$message['type']:""; ?>"
+                    style="display:<?php echo isset($message)?"block":"none"?>; margin:0px 62px 10px 62px;">
+                    <?php echo isset($message['message'])?$message['message']:""; ?>
+                </div>
+                <?php if (!empty($uploadFiles)) { ?>
+                    <div style="margin:0px 62px;">
+                        <?php
+                        foreach($uploadFiles as $file)
+                        {
+                            ?>
+                            <div class="alert alert-success" style="margin-bottom: 10px;">
+
+                                <?php if(isset($this->globalVariable->contentTypeImages[$file['file_type']])) { ?>
+                                    <img src="<?php echo $file['file_url']; ?>" width="40" height="30" />
+                                <?php } else { ?>
+                                    <img src="<?php echo $this->url->getStatic('backend/img/icon-file.png') ?>" width="40" height="30" />
+                                <?php } ?>
+                                <a href="<?php echo $file['file_url']; ?>" target="_blank">
+                                    <?php echo $file['file_url']; ?>
+                                </a>
+                            </div>
+                            <?php } ?>
+                    </div>
+                <?php } ?>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/cloud-upload");?>'>Upload file</a></li>");
+</script>

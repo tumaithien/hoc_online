@@ -1,0 +1,85 @@
+
+<?php if(isset($msg_result))  {?>
+    <div class="clearfix"></div>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $msg_result['status']?>">
+        <?= $msg_result["message"]; ?>
+    </p>
+<?php } ?>
+<form name="read_form" id="read_form"  >
+    <div class="box-content">
+        <h3>Danh sách các lớp</h3>
+        <table class="table table-striped table-bordered bootstrap-datatable">
+            <thead>
+            <tr>
+                <th style="text-align:center; width: 30%">Lớp</th>
+                <th style="text-align:center; width: 10%">Sĩ số</th>
+                <th style="text-align:center; width: 10%">Tổng bài Kiểm tra</th>
+                <th style="text-align:center; width: 15%">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+
+            foreach($arrClass as  $class){
+                foreach ($arrSucject as $subject) {
+                    $subjectParent = \Learncom\Repositories\ClassSubject::getSubjectByParentId($subject->getSubjectId());
+
+                    $arrUser =\Learncom\Repositories\User::findByClassAndSubject($class->getClassId(),$subject->getSubjectId());
+                    $arrTest = \Learncom\Repositories\Test::findByClassAndSubject($class->getClassId(),$subject->getSubjectId());
+                    $total_test = count($arrTest);
+                    foreach ($subjectParent as $subject_parent) {
+                        $arrTestParent = \Learncom\Repositories\Test::findByClassAndSubject($class->getClassId(), $subject_parent->getSubjectId());
+                        $total_test += count($arrTestParent);
+                    }
+                ?>
+                <tr>
+                    <td  style="text-align:left;" class="center">
+                        <?php echo $subject->getSubjectName() ." ". $class->getClassName() ; ?>
+                    </td>
+
+                    <td  style="text-align:left;">
+                        <?php echo count($arrUser); ?>
+                    </td>
+                    <td  style="text-align:left;">
+                        <?php echo $total_test ?>
+                    </td>
+                    <td  style="text-align:center;"class="center">
+                        <a id="edit_account" class="btn btn-info" href="<?php echo $this->url->get('dashboard/view-summary');?>?classId=<?= $class->getClassId(); ?>&subjectId=<?=$subject->getSubjectId()?>">
+                            <i class="icon-edit icon-white"></i>
+                            Danh sách HS
+                        </a>
+                        <a id="edit_account" class="btn btn-success" href="<?php echo $this->url->get('dashboard/test-summary');?>?classId=<?= $class->getClassId(); ?>&subjectId=<?=$subject->getSubjectId()?>">
+                            <i class="icon-edit icon-blue"></i>
+                            Các bài Ktra
+                        </a>
+                    </td>
+
+                </tr>
+
+            <?php
+                 } }?>
+            </tbody>
+        </table>
+
+    </div>
+</form>
+
+
+<!--FORM DELETE A ARTICLE-->
+
+<form>
+    <div class="modal hide fade" id="warn">
+        <div class="modal-header">
+            <input type="hidden" id="class_id" name="class_id" />
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3>Warning !</h3>
+        </div>
+        <div class="modal-body">
+            <p id="message"></p>
+        </div>
+        <div class="modal-footer">
+            <a href="" class="btn" data-dismiss="modal">Close</a>
+            <a id="delete" name="delete" href="" class="btn btn-primary">Yes</a>
+        </div>
+    </div>
+</form>

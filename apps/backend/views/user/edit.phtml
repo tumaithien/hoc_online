@@ -1,0 +1,139 @@
+
+<script>
+    $(function() {
+        $("#create_form").validate({
+            rules: {
+                user_name: "required",
+                pass_word: "required",
+                tel: "required",
+                address: "required",
+                email: {required: true, email: true},
+                select_role: {required: true}
+            },
+            messages: {
+                user_name: "Please enter for field Name",
+                pass_word: "Please enter for field Password",
+                tel: "Please enter for field Tel",
+                address: "Please enter for field Address",
+                select_role: "Please select an item"
+            },
+            submitHandler: function (form) {
+                form.submit();
+            }
+        });
+        $("#reset_form").validate({
+            rules: {
+                password: "required"
+
+            }
+        });
+    });
+
+</script>
+<script>
+    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-user");?>'>List User</a><span class='divider'>/</span></li><li><a href='<?php echo $this->url->get("dashboard/edit-user");?>?id=<?php echo $formData['id'];?>'>Update User</a></li>");
+</script>
+<?php
+if(!empty($formData['type'])||!empty($formData['message']) || $this->request->get("message")!=NULL)
+{
+    ?>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $formData['type']?>">
+        <?php echo $formData['message']; ?>
+        <?php echo $this->request->get("message"); ?>
+    </p>
+<?php }	?>
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header well" data-original-title>
+            <h2><i class="icon-edit"></i> Form Update User Account</h2>
+            <div class="box-icon">
+                <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+                <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+                <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+            </div>
+        </div>
+        <div class="box-content">
+            <form class="form-horizontal" id="create_form" action="<?php echo $this->url->get("dashboard/edit-user?id=".$formData['id']);?>" method="post">
+
+                <fieldset>
+                    <input type="hidden" id="id" name="id" value="<?php echo $formData['id'];?>" />
+                    <div class="control-group">
+                        <label class="control-label" for="focusedInput">Username<em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <input value="<?php echo $formData['user_name'];?>" maxlength="256" id="user_name" name="user_name" class="input-xlarge"  type="text" >
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="disabledInput">Email<em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <input id="email" name="email" class="input-xlarge disabled" maxlength="256"  type="text" value="<?php echo $formData['email'];?>"   >
+                        </div>
+                    </div>
+
+                    <?php $role = $formData['role'];
+                    $list_role= Learncom\Models\LearnRole::find();
+                    ?>
+                    <div class="control-group">
+                        <label class="control-label" for="selectError">Role User<em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <select  id="select_role" name="select_role" data-rel="chosen">
+                                <?php foreach($list_role as $rl){
+                                    if($role==$rl->getRoleName()){
+                                        echo '<option selected="selected" id="option_'.$rl->getRoleName().'" value="'.$rl->getRoleName().'">'.$rl->getRoleName().'</option>';
+                                    }else{
+                                        echo '<option id="option_'.$rl->getRoleName().'" value="'.$rl->getRoleName().'">'.$rl->getRoleName().'</option>';
+                                    }
+                                }?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <a id="edit_page" class="btn" href="<?php echo $this->url->get('dashboard/list-user');?>">
+                            Cancel
+                        </a>
+                    </div>
+                </fieldset>
+
+            </form>
+
+        </div>
+    </div><!--/span-->
+
+</div><!--/row-->
+
+<!--EDIT PASS FORM-->
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header well" data-original-title>
+            <h2><i class="icon-edit"></i> Password User Account</h2>
+            <div class="box-icon">
+                <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+                <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+                <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+            </div>
+        </div>
+        <div class="box-content">
+            <form class="form-horizontal" id="reset_form" action="<?php echo $this->url->get("dashboard/reset-pass");?>" method="get">
+
+                <fieldset>
+                    <input id="email" name="email" class="input-xlarge disabled" maxlength="256"  type="hidden" value="<?php echo $formData['email']?>">
+                    <input type="hidden" id="id" name="id" value="<?php echo $formData['id']?>" />
+                    <div class="control-group">
+                        <label class="control-label" for="focusedInput">Password</label>
+                        <div class="controls">
+                            <input maxlength="256" id="password" name="password" class="input-xlarge focused"  type="password">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Reset Password</button>
+                    </div>
+                </fieldset>
+
+            </form>
+
+        </div>
+    </div><!--/span-->
+
+</div><!--/row-->

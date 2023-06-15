@@ -1,0 +1,12 @@
+.icon-hover-primary{
+    &:hover, &:focus, &:active{
+        img{
+            filter: invert(96%) sepia(93%) saturate(1220%) hue-rotate(191deg) brightness(96%) contrast(85%)
+        }
+    }
+    &.active{
+        img{
+            filter: invert(96%) sepia(93%) saturate(1220%) hue-rotate(191deg) brightness(96%) contrast(85%)
+        }
+    }
+}

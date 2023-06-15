@@ -1,0 +1,71 @@
+.table-custom{
+        width: calc(100% - 1px);
+        thead{
+            padding: 15px 20px;
+            background-color: #475F7C;
+            color: $white;
+            width: 100%;
+            th{
+                padding: 15px 20px;
+                &:first-child{
+                    border-top-left-radius: 6px;
+                }
+                &:last-child{
+                    border-top-right-radius: 6px;
+                }
+            }
+        }
+        tbody{
+            tr{
+                border-bottom: 1px solid #E3E3E3;
+                border-left: 1px solid #E3E3E3;
+                border-right: 1px solid #E3E3E3;
+                td{
+                    padding: 15px 20px;
+                }
+                &:nth-child(even){
+                    background-color: rgba(71,95,124,.1);
+                }
+                @include media-breakpoint-down(md){
+                    display: flex;
+                    flex-direction: column;
+                    position: relative;
+                    overflow: hidden;
+                    &:last-child{
+                        border-radius: 0 0 6px 6px;
+                    }
+                    &:first-child{
+                        border-radius: 6px 6px 0 0;
+                        border-top: 1px solid #E3E3E3;
+                    }
+                    td{
+                        width: 100%;
+                        padding: 10px 15px 10px 50%;
+                        &::before{
+                            content: attr(data-title);
+                            color: #9F9F9F;
+                            font-weight: 600;
+                            position: absolute;
+                            left: 15px;
+                        }
+                    }
+                    .td-image-custom{
+                        padding-left: 15px !important;
+                        &::before{
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+    @include media-breakpoint-down(md){
+        thead{
+            display: none;
+        }
+
+    }
+  }
+  .border-table{
+      border-radius: 6px;
+      overflow: hidden;
+  }

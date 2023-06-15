@@ -1,0 +1,78 @@
+
+<script>
+
+    $(document).ready(function(){
+        $("#create_form").submit(function(){
+            var valid = true;
+            if($('input[name=txtName]').val() == '') {
+                $('.msg-name').text('Bạn cần nhập thông tin này');
+                $('#txtName').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-name').text('');
+                $('#txtName').removeClass("border-red");
+            }
+            if($('input[name=txtOrder]').val() == '') {
+                $('.msg-order').text('Bạn cần nhập thông tin này');
+                $('#txtOrder').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-order').text('');
+                $('#txtOrder').removeClass("border-red");
+            }
+
+            if( ! valid ) event.preventDefault();
+            if( valid ) {
+                $('button[name=submit]').prop('disabled', true);
+            }
+        });
+    });
+
+</script>
+<script>
+    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-exam-type");?>'>List Class</a><span class='divider'>/</span></li><li><a href='<?php echo $this->url->get("dashboard/create-exam-type");?>'>Create Class</a></li>");
+</script>
+<?php
+if(!empty($formData['message']))
+{
+    ?>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $formData['typeMessage']?>">
+        <?php echo $formData['message']; ?>
+    </p>
+<?php }	?>
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header well" data-original-title>
+            <h2><i class="icon-edit"></i><?= isset($formData['mode']) ? $formData['mode'] : "" ?>  Phân loại :</h2>
+            <div class="box-icon"> <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a> <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a> <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a> </div>
+        </div>
+        <div class="box-content">
+            <form novalidate="novalidate" class="form-horizontal" id="create_form" action="" method="post">
+                <fieldset>
+                    <div class="control-group">
+                        <label class="control-label" for="focusedInput">Name <em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['type_name']) ? $formData['type_name'] : ""?>" maxlength="256" id="txtName" name="txtName" class="input-xlarge focused"  type="text" >
+                            <div class="text-danger msg-name"><?php echo isset($messages["type_name"]) ? $messages["type_name"] : "";?></div>
+
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Order <em style="color:red;">*</em> </label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['type_order']) ? $formData['type_order'] : "" ?>" id="txtOrder" name="txtOrder" class="input-xlarge focused"    maxlength="10"  type="text" >
+                            <div class="text-danger msg-order"><?php echo isset($messages["type_order"]) ? $messages["type_order"] : "";?></div>
+
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="submit_create">Save changes</button>
+                        <a id="edit_page" class="btn" href="<?php echo $this->url->get('dashboard/list-exam-type');?>"> Cancel </a> </div>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

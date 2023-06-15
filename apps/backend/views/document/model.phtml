@@ -1,0 +1,191 @@
+
+<script>
+
+    $(document).ready(function(){
+        $("#create_form").submit(function(){
+            var valid = true;
+            if($('input[name=txtName]').val() == '') {
+                $('.msg-name').text('Bạn cần nhập thông tin này');
+                $('#txtName').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-name').text('');
+                $('#txtName').removeClass("border-red");
+            }
+            if($('input[name=txtOrder]').val() == '') {
+                $('.msg-order').text('Bạn cần nhập thông tin này');
+                $('#txtOrder').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-order').text('');
+                $('#txtOrder').removeClass("border-red");
+            }
+            if($('input[name=txtLink]').val() == '') {
+                $('.msg-link').text('Bạn cần nhập thông tin này');
+                $('#txtLink').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-link').text('');
+                $('#txtLink').removeClass("border-red");
+            }
+            if($('select[name=slcClass]').val() == '') {
+                $('.msg-class').text('Bạn cần nhập thông tin này');
+                $('#slcClass').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-class').text('');
+                $('#slcClass').removeClass("border-red");
+            }
+            if($('select[name=slcSubject]').val() == '') {
+                $('.msg-subject').text('Bạn cần nhập thông tin này');
+                $('#slcSubject').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-subject').text('');
+                $('#slcSubject').removeClass("border-red");
+            }
+
+            if( ! valid ) event.preventDefault();
+            if( valid ) {
+                $('button[name=submit]').prop('disabled', true);
+            }
+        });
+    });
+
+</script>
+<script>
+    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-document");?>'>List Document</a><span class='divider'>/</span></li><li><a href='<?php echo $this->url->get("dashboard/create-document");?>'>Create Document</a></li>");
+</script>
+<?php
+if(!empty($formData['message']))
+{
+    ?>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $formData['typeMessage']?>">
+        <?php echo $formData['message']; ?>
+    </p>
+<?php }	?>
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header well" data-original-title>
+            <h2><i class="icon-edit"></i><?= isset($formData['mode']) ? $formData['mode'] : "" ?> Tài liệu :</h2>
+            <div class="box-icon"> <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a> <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a> <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a> </div>
+        </div>
+        <div class="box-content">
+            <form novalidate="novalidate" class="form-horizontal" id="create_form" action="" method="post">
+                <fieldset>
+                    <div class="control-group">
+                        <div class="control-group">
+                            <label class="control-label" for="slcClass">Lớp <em style="color:red;">*</em></label>
+                            <div class="controls">
+                                <select  id="slcClass" name="slcClass" class="class-subject <?php echo isset($messages["document_class_id"]) ? $messages["status"] : "";?>">
+                                    <?= isset($select_class) ? $select_class : "" ?>
+                                </select>
+                                <div class="text-danger msg-class"><?php echo isset($messages["document_class_id"]) ? $messages["document_class_id"] : "";?></div>
+
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="slcSubject">Môn học <em style="color:red;">*</em></label>
+                            <div class="controls">
+                                <select  id="slcSubject" name="slcSubject" class="class-subject <?php echo isset($messages["document_subject_id"]) ? $messages["status"] : "";?>">
+                                    <option value="">Chọn Môn học</option>
+                                    <?= isset($select_subject) ? $select_subject : "" ?>
+                                </select>
+                                <div class="text-danger msg-subject"><?php echo isset($messages["document_subject_id"]) ? $messages["document_subject_id"] : "";?></div>
+
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="selectError">Chương </label>
+                            <div class="controls">
+                                <select  id="slcChapter" name="slcChapter" class="<?php echo isset($messages["document_chapter_id"]) ? $messages["status"] : "";?>">
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <label class="control-label" for="focusedInput">Tên <em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['document_name']) ? $formData['document_name'] : ""?>"
+                                   maxlength="256" id="txtName" name="txtName" class="input-xlarge focused <?php echo isset($messages["document_name"]) ? $messages["status"] : "";?>"  type="text" >
+                            <div class="text-danger msg-name"><?php echo isset($messages["document_name"]) ? $messages["document_name"] : "";?></div>
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="selectError">Nhóm </label>
+                        <div class="controls">
+                            <?= isset($select_group) ? $select_group : "" ?>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="focusedInput">Link <em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['document_link']) ? $formData['document_link'] : ""?>" maxlength="256"
+                                   id="txtLink" name="txtLink" class="input-xlarge focused <?php echo isset($messages["document_link"]) ? $messages["status"] : "";?>"  type="text" >
+                            <div class="text-danger msg-link"><?php echo isset($messages["document_link"]) ? $messages["document_link"] : "";?></div>
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Order <em style="color:red;">*</em> </label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['document_order']) ? $formData['document_order'] : "" ?>"
+                                   id="txtOrder" name="txtOrder" class="input-xlarge focused  <?= isset($messages["document_order"]) ? $messages["status"] : "";?>"    maxlength="10"  type="text" >
+                            <div class="text-danger msg-order"><?php echo isset($messages["document_order"]) ? $messages["document_order"] : "";?></div>
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Cho phép download </label>
+                        <div class=" controls">
+                            <label class="checkbox"><input type="radio" name="radIsPublic"
+                                                           value="Y" <?php echo (isset($formData["document_is_public"]) && $formData["document_is_public"] == "Y") ? "checked" : ''; ?>>Yes<span
+                                        class="check_active"></span></label>
+                            <label class="checkbox"><input  type="radio" name="radIsPublic"
+                                                           value="N" <?php echo (isset($formData["document_is_public"]) && $formData["document_is_public"] == "N") ? "checked" : ''; ?>>No<span
+                                        class="check_active"></span></label>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Active </label>
+                        <div class=" controls">
+                            <label class="checkbox"><input  type="radio" name="radActive"
+                                                                  value="Y" <?php echo (isset($formData["document_active"]) && $formData["document_active"] == "Y") ? "checked" : ''; ?>>Yes<span
+                                        class="check_active"></span></label>
+                            <label class="checkbox"><input  type="radio" name="radActive"
+                                                                  value="N" <?php echo (isset($formData["document_active"]) && $formData["document_active"] == "N") ? "checked" : ''; ?>>No<span
+                                        class="check_active"></span></label>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="submit_create">Save changes</button>
+                        <a id="edit_page" class="btn" href="<?php echo $this->url->get('dashboard/list-document');?>"> Cancel </a> </div>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $('.class-subject').on('change',function () {
+        var subject_id = $('#slcSubject').val();
+        var class_id = $('#slcClass').val();
+        var chapter_id = '<?= isset($formData['document_chapter_id']) ? $formData['document_chapter_id'] : 0 ?>';
+        $.ajax({
+            url: "<?php echo $this->url->get("/dashboard/get-chapter")?>",
+            async: false,
+            type: "POST",
+            dataType: "JSON",
+            data: {'subject_id': subject_id,
+                'class_id' : class_id,
+                'chapter_id' : chapter_id,
+            },
+            success: function(data){
+                $('#slcChapter').html('<option value="">Tất cả Chương</option>'+data);
+
+            }
+        });
+    }).trigger('change');
+
+</script>

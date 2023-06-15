@@ -1,0 +1,23 @@
+.dropdown-custom{
+    .dropdown-menu{
+        font-size: 14px;
+        padding: 0;
+        border: 0;
+        box-shadow: 0 1px 12px 0 rgba(30, 30, 30, 0.05), 0 0 12px 0 rgba(26, 25, 01, 0.1);
+        max-height: 145px;
+        overflow-y: auto;
+        overflow: auto;
+        .dropdown-item{
+            padding-top: 10px;
+            padding-bottom: 10px;
+            &:hover{
+                background-color: rgba(106, 158, 221, .2) !important;
+                color: #074085;
+            }
+        }
+    }
+    .dropdown-toggle::after{
+        border-top: 0.4em solid;
+        vertical-align: 0;
+    }
+}

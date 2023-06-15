@@ -1,0 +1,102 @@
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+ <script>
+       		$(function(){
+				$("#create_form").validate({
+					rules :{
+						pagename:"required",
+						title:"required",
+						metakeyword:"required",
+						metadiscription:"required",
+						keyword:"required",
+						},
+					messages :{
+						pagename:"Please enter for field Name",
+						title:"Please enter for field Title",
+						metakeyword:"Please enter for field Meta Keyword",
+						metadiscription:"Please enter for field Meta Description",
+						keyword:"Please enter for field Keyword",
+						},
+						submitHandler: function(form){
+							form.submit();
+							}
+					});
+					
+				});
+ </script>
+
+<div class="row-fluid sortable">
+    <?php
+    if(!empty($formData['type'])||!empty($formData['message']) || $this->request->get("message")!=NULL)
+    {
+        ?>
+        <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $formData['type']?>">
+            <?php echo $formData['message']; ?>
+            <?php echo $this->request->get("message"); ?>
+        </p>
+    <?php }	?>
+				<div class="box span12">
+					<div class="box-header well" data-original-title>
+						<h2><i class="icon-edit"></i> Form Create Page :(<em style="color:red; font-size:20px;">*</em> ) Required to be entered</h2>
+						<div class="box-icon">
+							<a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+							<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+						</div>
+					</div>
+
+					<div class="box-content">
+						<form novalidate="novalidate" class="form-horizontal" id="create_form" action="<?php echo $this->url->get("dashboard/edit-page?id=".$formData['id']);?>"
+                        method="POST">
+							<fieldset>
+                             <input type="hidden" id="id_page" name="id_page" value="<?php echo $formData['id'];?>"  />
+							  <div class="control-group">
+								<label class="control-label" for="focusedInput">Name <em style="color:red;">*</em></label>
+								<div class="controls">
+								  <input value="<?php echo $formData['page_name'];?>" maxlength="256" id="pagename" name="pagename" class="input-xlarge focused" style="width: 900px"  type="text" >
+                                  
+								</div>
+							  </div>
+							
+                              <div class="control-group">
+								<label class="control-label">Title <em style="color:red;">*</em> </label>
+								<div class="controls">
+								  <input value="<?php echo $formData['page_title'];?>" id="title" name="title" class="input-xlarge focused"    maxlength="256" style="width: 900px" type="text" >
+								</div>
+							  </div>
+                              
+                              <div class="control-group">
+								<label class="control-label">Keyword <em style="color:red;">*</em></label>
+								<div class="controls">
+								  <input value="<?php echo $formData['page_keyword'];?>" name="keyword"   id="keyword" class="input-xlarge focused" style="width: 900px" type="text" readonly >
+                                   
+								</div>
+                              </div>
+                              
+                                <div class="control-group">
+								<label class="control-label">Meta Description <em style="color:red;">*</em></label>
+								<div class="controls">
+								  <input value="<?php echo $formData['page_metadiscription'];?>" id="metadiscription" name="metadiscription" class="input-xlarge focused" maxlength="256" style="width: 900px"  type="text" >
+								</div>
+							  </div>
+                              
+                              <div class="control-group">
+								<label class="control-label">Meta Keyword <em style="color:red;">*</em></label>
+								<div class="controls">
+								  <input value="<?php echo $formData['page_metakeyword'];?>" id="metakeyword" name="metakeyword" class="input-xlarge focused" maxlength="256" style="width: 900px" type="text" >
+								</div>
+							  </div
+                             
+							 ><div class="form-actions">
+								<button type="submit" class="btn btn-primary" id="submit_create">Save changes</button>
+								<a href="<?php echo $this->url->get("dashboard/list-page");?>" class="btn">Cancel</a>
+							  </div>
+							</fieldset>
+						  </form>
+					
+					</div>
+				</div><!--/span-->
+			
+			</div><!--/row-->
+<script>
+$(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-page");?>'>List Page</a><span class='divider'>/</span></li><li><a href='<?php echo $this->url->get("dashboard/edit-page");?>?id=<?php echo $formData['id'];?>'>Edit Page</a></li>");
+</script>

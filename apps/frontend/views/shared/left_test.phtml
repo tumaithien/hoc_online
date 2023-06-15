@@ -1,0 +1,56 @@
+<div class="list-wrap">
+    <?php
+    foreach ($arrGroup as $group) {
+
+        ?>
+        <span class="item-style item-menu <?= $group->getGroupId() == $group_id ? 'active' : "" ?>" data-toggle="collapse" data-target="#course-sub-1">
+        <?= $group->getGroupName() ?>
+    </span>
+            <div class="collapse <?= $group->getGroupId() == $group_id ? 'show' : "" ?>" id="course-sub-1">
+        <div class="sub-list">
+        <?php
+        $arrTest = \Learncom\Repositories\Test::findByGroupId($group->getGroupId());
+        foreach ($arrTest as $test) {
+            $arrParentId = \Learncom\Repositories\Test::getArrTestParentId($test->getTestId(),$test->getTestParentId());
+            ?>
+                    <a href="/start-test?classId=<?= $class_id?>&subjectId=<?= $subject_id?>&testId=<?=$test->getTestId() ?>">
+                <span class="item-style <?= in_array($test_id,$arrParentId) ? 'active' : "" ?>">
+                    <?= $test->getTestName() ?>
+                </span>
+                    </a>
+
+        <?php }?>
+        </div>
+            </div>
+    <?php }
+    foreach ($arrTestNoGroup as $test_item) {
+        $arrParentId = \Learncom\Repositories\Test::getArrTestParentId($test_item->getTestId(),$test_item->getTestParentId());
+    ?>
+    <a href="/start-test?classId=<?= $class_id?>&subjectId=<?= $subject_id?>&testId=<?=$test_item->getTestId() ?>">
+                <span class="item-style no-transition<?= in_array($test_id,$arrParentId) ? ' active' : "" ?>">
+                    <?= $test_item->getTestName() ?>
+                </span>
+    </a>
+
+    <?php }?>
+</div>
+<script type="text/javascript">
+    commands.push(function () {
+        $(".item-style:not(.item-menu)").on("click", function(e){
+            $(".item-style.active").removeClass("active");
+            let parent = this.parentElement;
+            $(parent).find(".item-menu[aria-expanded='true']").click();
+            $(this).addClass("active");
+        });
+        $(".item-menu").on("click", function(e){
+            $(".item-menu").each((ind, ele) => {
+                if(ele !== this) {
+                let target = $(ele).data("target");
+                $(target).collapse("hide");
+                }
+            });
+            let parent = this.parentElement;
+            $(parent).children(".item-style.active").removeClass('active');
+        });
+    });
+</script>

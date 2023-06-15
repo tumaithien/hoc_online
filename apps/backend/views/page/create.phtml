@@ -1,0 +1,135 @@
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+ <script>
+       		$(function(){
+				$("#create_form").validate({
+					rules :{
+						pagename:"required",
+						title:"required",
+						metakeyword:"required",
+						metadiscription:"required",
+						keyword:"required",
+						},
+					messages :{
+						pagename:"Please enter for field Name",
+						title:"Please enter for field Title",
+						metakeyword:"Please enter for field Meta Keyword",
+						metadiscription:"Please enter for field Meta Description",
+						keyword:"Please enter for field Keyword",
+						},
+						submitHandler: function(form){
+							form.submit();
+							}
+					});
+					
+				});
+            $(document).ready(function(){
+                $("#name").blur(function(){
+                    if($("#name").val()!=null||$("#name").val()!=""){
+                        var title, slug;
+                        //Lấy text từ thẻ input title
+                        title = $("#name").val();
+                        //Đổi chữ hoa thành chữ thường
+                        slug = title.toLowerCase();
+                        //Đổi khoảng trắng thành ký tự gạch ngang
+                        slug = slug.replace(/ /gi, "-");
+                        //Đổi nhiều ký tự gạch ngang liên tiếp thành 1 ký tự gạch ngang
+                        //Xóa các ký tự gạch ngang ở đầu và cuối
+                        slug = '@' + slug + '@';
+                        slug = slug.replace(/\@\-|\-\@|\@/gi, '');
+
+                        //In slug ra textbox có id “slug”
+                        slug = slug.replace(/[^a-z0-9 -]/gi, '-');
+                        $("#keyword").val(string_to_slug(title));
+                        $("#title").val(title);
+                        $("#metakeyword").val(title);
+                        $("#metadiscription").val(title);
+                    }
+                });
+            });
+            function string_to_slug (str) {
+                str = str.replace(/^\s+|\s+$/g, ''); // trim
+                str = str.replace(/\`|\~|\!|\@|\#|\||\$|\%|\^|\&|\*|\(|\)|\+|\=|\,|\.|\/|\?|\>|\<|\'|\"|\“|\:|\;|_/gi, '');
+                str = str.replace(/đ/gi,'d');
+                // xóa phần dự - ở đầu
+                str = str.replace(/^-+/g, '');
+                // xóa phần dư - ở cuối
+                str = str.replace(/-+$/g, '');
+                str = str.toLowerCase();
+                // remove accents, swap ñ for n, etc
+                var from = "àáảạãäâấậầẩẫắăắằẳẵặéèẻẽẹêếềểễệiíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵñç·/_,:;";
+                var to   = "aaaaaaaaaaaaaaaaaaaeeeeeeeeeeeiiiiiiooooooooooooooooouuuuuuuuuuuyyyyync------";
+                for (var i=0, l=from.length ; i<l ; i++) {
+                    str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+                }
+                str = str.replace(/([^0-9a-z-\s])/g, '') // remove invalid chars
+                    .replace(/\s+/g, '-') // collapse whitespace and replace by -
+                    .replace(/-+/g, '-'); // collapse dashes
+                return str;
+            }
+ </script>
+
+<div class="row-fluid sortable">
+				<div class="box span12">
+					<div class="box-header well" data-original-title>
+						<h2><i class="icon-edit"></i> Form Create Page :(<em style="color:red; font-size:20px;">*</em> ) Required to be entered</h2>
+						<div class="box-icon">
+							<a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+							<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+						</div>
+					</div>
+					<div class="box-content">
+						<form novalidate="novalidate" class="form-horizontal" id="create_form" action="<?php echo $this->url->get("dashboard/create-page");?>"
+                        method="POST">
+							<fieldset>
+                            <input maxlength="256" id="id_page" name="id_page" class="input-xlarge focused"  type="hidden" >
+							  <div class="control-group">
+								<label class="control-label" for="focusedInput">Name <em style="color:red;">*</em></label>
+								<div class="controls">
+								  <input maxlength="256" id="name" name="name" class="input-xlarge focused"  style="width: 900px"  type="text" >
+                                  </span>
+								</div>
+							  </div>
+							
+                              <div class="control-group">
+								<label class="control-label">Title <em style="color:red;">*</em> </label>
+								<div class="controls">
+								  <input id="title" name="title" class="input-xlarge focused"    maxlength="256"  style="width: 900px"  type="text" ></span>
+								</div>
+							  </div>
+                              <div class="control-group">
+								<label class="control-label">Keyword <em style="color:red;">*</em></label>
+								<div class="controls">
+								  <input name="keyword"   id="keyword" class="input-xlarge focused" style="width: 900px"  type="text" >
+                                   </span>
+								</div>
+                                </div>
+                                <div class="control-group">
+								<label class="control-label">Meta Description <em style="color:red;">*</em></label>
+								<div class="controls">
+								  <input     id="metadiscription" name="metadiscription" class="input-xlarge focused " maxlength="256" style="width: 900px"  type="text" >
+								</span>
+                                </div>
+							  </div>
+                              <div class="control-group">
+								<label class="control-label">Meta Keyword <em style="color:red;">*</em></label>
+								<div class="controls">
+								  <input   id="metakeyword" name="metakeyword" class="input-xlarge focused" maxlength="256" style="width: 900px"  type="text" >
+                                  </span>
+                                </div>
+							  </div>
+							 <div class="form-actions">
+								<button type="submit" class="btn btn-primary" id="submit_create">Save changes</button>
+								<a href="<?php echo $this->url->get("dashboard/list-page");?>" class="btn">Cancel</a>
+							  </div>
+							</fieldset>
+                            
+						  </form>
+					
+					</div>
+				</div><!--/span-->
+			
+			</div><!--/row-->
+<script>
+$(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-page");?>'>List Page</a><span class='divider'>/</span></li><li><a href='<?php echo $this->url->get("dashboard/create-page");?>'>Create New Page</a></li>");
+</script>

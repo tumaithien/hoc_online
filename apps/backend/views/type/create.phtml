@@ -1,0 +1,176 @@
+
+ <script>
+       		$(function(){
+				$("#create_form").validate({
+					rules :{
+						name:"required",
+						title:"required",
+						metakeyword:"required",
+						metadescription:"required",
+                       // content :"required",
+                        order:{required:true,number:true},
+						keyword:"required"
+						},
+					messages :{
+						name:"Please enter for field Name",
+						title:"Please enter for field Title",
+						metakeyword:"Please enter for field Meta Keyword",
+						metadescription:"Please enter for field Meta Description",
+                       // content : "Please enter for filed Content",
+						keyword:"Please enter for field Keyword"
+						},
+						submitHandler: function(form){
+							form.submit();
+							}
+					});
+					
+				});
+            $(document).ready(function(){
+                $("#name").blur(function(){
+                    if($("#name").val()!=null||$("#name").val()!=""){
+                        var title, slug;
+                        //Lấy text từ thẻ input title
+                        title = $("#name").val();
+                        //Đổi chữ hoa thành chữ thường
+                        slug = title.toLowerCase();
+                        //Đổi khoảng trắng thành ký tự gạch ngang
+                        slug = slug.replace(/ /gi, "-");
+                        //Đổi nhiều ký tự gạch ngang liên tiếp thành 1 ký tự gạch ngang
+                        //Xóa các ký tự gạch ngang ở đầu và cuối
+                        slug = '@' + slug + '@';
+                        slug = slug.replace(/\@\-|\-\@|\@/gi, '');
+
+                        //In slug ra textbox có id “slug”
+                        slug = slug.replace(/[^a-z0-9 -]/gi, '-');
+                        $("#keyword").val(string_to_slug(title));
+                        $("#title").val(title);
+                        $("#metakeyword").val(title);
+                        $("#metadescription").val(title);
+                    }
+                });
+            });
+            function string_to_slug (str) {
+                str = str.replace(/^\s+|\s+$/g, ''); // trim
+                str = str.replace(/\`|\~|\!|\@|\#|\||\$|\%|\^|\&|\*|\(|\)|\+|\=|\,|\.|\/|\?|\>|\<|\'|\"|\“|\:|\;|_/gi, '');
+                str = str.replace(/đ/gi,'d');
+                // xóa phần dự - ở đầu
+                str = str.replace(/^-+/g, '');
+                // xóa phần dư - ở cuối
+                str = str.replace(/-+$/g, '');
+                str = str.toLowerCase();
+                // remove accents, swap ñ for n, etc
+                var from = "àáảạãäâấậầẩẫắăắằẳẵặéèẻẽẹêếềểễệiíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵñç·/_,:;";
+                var to   = "aaaaaaaaaaaaaaaaaaaeeeeeeeeeeeiiiiiiooooooooooooooooouuuuuuuuuuuyyyyync------";
+                for (var i=0, l=from.length ; i<l ; i++) {
+                    str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+                }
+                str = str.replace(/([^0-9a-z-\s])/g, '') // remove invalid chars
+                    .replace(/\s+/g, '-') // collapse whitespace and replace by -
+                    .replace(/-+/g, '-'); // collapse dashes
+                return str;
+            }
+
+
+</script>
+
+ <?php
+ if(!empty($formData['type'])||!empty($formData['message']))
+ {
+     ?>
+     <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $formData['type']?>">
+         <?php echo $formData['message']; ?>
+     </p>
+ <?php }	?>
+<div class="row-fluid sortable">
+        <div class="box span12">
+            <div class="box-header well" data-original-title>
+                <h2><i class="icon-edit"></i> Form Create Type :(<em style="color:red; font-size:20px;">*</em> ) Required to be entered</h2>
+
+            </div>
+            <div class="box-content">
+                <form novalidate="novalidate" class="form-horizontal" id="create_form" action="<?php echo $this->url->get("dashboard/create-type");?>"
+                method="post">
+
+                    <fieldset>
+                        <?php
+                        $typeClass= new Learncom\Repositories\Type();
+                        $type_parent=$typeClass->getCombo(0,'',$formData['select_type']);
+                        ?>
+                        <div class="control-group">
+                            <label class="control-label" for="selectError">Type Parent</label>
+                            <div class="controls">
+                                <select  id="select_type" name="select_type">
+                                    <option value="">SELECT A TYPE.............</option>
+                                    <?php echo $type_parent;?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                        <label class="control-label" for="focusedInput">Name <em style="color:red;">*</em></label>
+                        <div class="controls">
+                          <input  value ="<?php echo $formData['name']; ?>" maxlength="256" id="name" name="name" class="input-xxlarge focused"  type="text" >
+                          </span>
+                        </div>
+                      </div>
+                      <div class="control-group">
+                        <label class="control-label">Title <em style="color:red;">*</em> </label>
+                        <div class="controls">
+                            <input  value ="<?php echo $formData['title']; ?>" id="title" name="title" class="input-xxlarge focused"    maxlength="256"  type="text" >
+                        </div>
+                      </div>
+                        <div class="control-group">
+                            <label class="control-label">Keyword <em style="color:red;">*</em></label>
+                            <div class="controls">
+                                <input   value ="<?php echo $formData['keyword']; ?>"  id="keyword" name="keyword" class="input-xxlarge focused" maxlength="256" type="text" >
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Meta Keyword <em style="color:red;">*</em></label>
+                            <div class="controls">
+                                <input    value ="<?php echo $formData['metakeyword']; ?>" id="metakeyword" name="metakeyword" class="input-xxlarge focused" maxlength="256" type="text" >
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Meta Description <em style="color:red;">*</em></label>
+                            <div class="controls">
+                                <input   value ="<?php echo $formData['metadescription']; ?>" id="metadescription" name="metadescription" class="input-xxlarge focused" maxlength="256"  type="text" >
+                            </div>
+                        </div>
+                      <div class="control-group">
+                        <label class="control-label" for="optionsCheckbox2">Active</label>
+
+                          <div class="controls">
+                              <label class="checkbox" >
+                                  <input name="check_active" type="radio" id="check_active_Y"
+                                         value="Y" <?php echo $formData['check_active']=='Y'?'checked="checked"':'';?> >
+                                  Yes </label>
+                          </div>
+                          <div class="controls">
+                              <label class="checkbox" >
+                                  <input   name="check_active" type="radio" id="check_active_N" value="N"
+                                      <?php echo $formData['check_active']=='N'?'checked="checked"':'';?>>
+                                  No </label>
+                          </div>
+                      </div>
+                        <div class="control-group">
+                            <label class="control-label" for="focusedInput">Order <em style="color:red">*</em></label>
+                            <div class="controls">
+                                <input value ="<?php echo $formData['order']; ?>" maxlength="256" id="order" name="order" class="input-xxlarge focused"  type="text" >
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="submit_create">Save changes</button>
+                        <a id="edit_page" class="btn" href="<?php echo $this->url->get('dashboard/list-type');?>">
+                                Cancel
+                        </a>
+                      </div>
+                    </fieldset>
+                  </form>
+            </div>
+        </div><!--/span-->
+			
+</div><!--/row-->
+
+<script>
+$(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-type");?>'>List Type</a><span class='divider'>/</span></li><li><a href='<?php echo $this->url->get("dashboard/create-type");?>'>Create New Type</a></li>");
+</script>

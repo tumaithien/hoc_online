@@ -1,0 +1,396 @@
+
+<script>
+
+    $(document).ready(function(){
+        $("#create_form").submit(function(){
+            var valid = true;
+            if($('input[name=txtName]').val() == '') {
+                $('.msg-name').text('Bạn cần nhập thông tin này');
+                $('#txtName').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-name').text('');
+                $('#txtName').removeClass("border-red");
+            }
+            if($('input[name=txtOrder]').val() == '') {
+                $('.msg-order').text('Bạn cần nhập thông tin này');
+                $('#txtOrder').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-order').text('');
+                $('#txtOrder').removeClass("border-red");
+            }
+            if($('input[name=txtTime]').val() == '') {
+                $('.msg-time').text('Bạn cần nhập thông tin này');
+                $('#txtTime').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-time').text('');
+                $('#txtTime').removeClass("border-red");
+            }
+            if($('input[name=txtNumberQuestion]').val() == '') {
+                $('.msg-number-question').text('Bạn cần nhập thông tin này');
+                $('#txtNumberQuestion').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-number-question').text('');
+                $('#txtNumberQuestion').removeClass("border-red");
+            }
+            if($('select[name=slcClass]').val() == '') {
+                $('.msg-class').text('Bạn cần nhập thông tin này');
+                $('#slcClass').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-class').text('');
+                $('#slcClass').removeClass("border-red");
+            }
+            if($('select[name=slcType]').val() == '') {
+                $('.msg-type').text('Bạn cần nhập thông tin này');
+                $('#slcType').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-type').text('');
+                $('#slcType').removeClass("border-red");
+            }
+            if($('select[name=slcSubject]').val() == '') {
+                $('.msg-subject').text('Bạn cần nhập thông tin này');
+                $('#slcSubject').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-subject').text('');
+                $('#slcSubject').removeClass("border-red");
+            }
+            var total = 0;
+             $('input[name^=txtTestSubject]').map(function(idx, elem) {
+                if (parseInt($(elem).val()) > parseInt($(elem).attr('data-browse'))) {
+                    $(elem).parent().find("div").html("Không được lớn hơn số câu trong kho ("+ parseInt($(elem).attr('data-browse'))+")");
+                    valid = false;
+                } else  {
+                    $(elem).parent().find("div").html("");
+                    total +=parseInt($(elem).val());
+                }
+            }).get();
+            $('input[name^=txtTestChapter]').map(function(idx, elem) {
+                if (parseInt($(elem).val()) > parseInt($(elem).attr('data-browse'))) {
+                    $(elem).parent().find("div").html("Không được lớn hơn số câu trong kho ("+ parseInt($(elem).attr('data-browse'))+")");
+                    valid = false;
+                } else  {
+                    $(elem).parent().find("div").html("");
+                    total +=parseInt($(elem).val());
+                }
+            }).get();
+            $('input[name^=txtTestLesson]').map(function(idx, elem) {
+                if (parseInt($(elem).val()) > parseInt($(elem).attr('data-browse'))) {
+                    $(elem).parent().find("div").html("Không được lớn hơn số câu trong kho ("+ parseInt($(elem).attr('data-browse'))+")");
+                    valid = false;
+                } else  {
+                    $(elem).parent().find("div").html("");
+                    total +=parseInt($(elem).val());
+                }
+            }).get();
+            if (parseInt($('input[name=txtNumberQuestion]').val()) != total) {
+                $('.msg-number-question').text('Tổng số câu hỏi không bằng tổng số câu hỏi các mục. ');
+                $('#txtNumberQuestion').addClass("border-red");
+            } else {
+                $('.msg-number-question').text('');
+                $('#txtNumberQuestion').removeClass("border-red");
+            }
+            if( ! valid ) event.preventDefault();
+            if( valid ) {
+                $('button[name=submit]').prop('disabled', true);
+            }
+        });
+    });
+
+</script>
+<script>
+    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-test");?>'>List Document</a><span class='divider'>/</span></li><li><a href='<?php echo $this->url->get("dashboard/create-test");?>'>Create Document</a></li>");
+</script>
+<?php
+if(!empty($formData['message']))
+{
+    ?>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $formData['typeMessage']?>">
+        <?php echo $formData['message']; ?>
+    </p>
+<?php }	?>
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header well" data-original-title>
+            <h2><i class="icon-edit"></i><?= isset($formData['mode']) ? $formData['mode'] : "" ?> Đề Thi :</h2>
+            <div class="box-icon"> <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a> <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a> <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a> </div>
+        </div>
+        <div class="box-content">
+            <form novalidate="novalidate" class="form-horizontal" id="create_form" action=""  enctype="multipart/form-data" method="post">
+                <h4>Note</h4>
+                -Nếu cập nhật hình ảnh hoặc số đề cần đảo của đề thi thì toàn bộ đề đã đảo sẽ bị thay đổi (Hạn chế)
+                <br>
+                -Khi tạo đề thi nên upload hình ảnh của đề thi và lời giải một lúc, không upload riêng lời giải sau
+                <br>
+                -Nếu số hình ảnh của đề thi lớn hơn lời giải và đáp án, mặc định là số câu lơn hơn đó là tự luận
+                <fieldset>
+                    <div class="control-group">
+                        <label class="control-label">Tổng Số Đề Thi <em style="color:red;">*</em> </label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['test_number_exam_test']) ? $formData['test_number_exam_test'] : "" ?>"
+                                   id="txtNumberExamTest" name="txtNumberExamTest" class="input-xlarge focused  <?= isset($messages["test_number_exam_test"]) ? $messages["status"] : "";?>"    maxlength="10"  type="text" >
+                            <div class="text-danger msg-number-question"><?php echo isset($messages["test_number_exam_test"]) ? $messages["test_number_exam_test"] : "";?></div>
+
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Tổng Số Câu Hỏi <em style="color:red;">*</em> </label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['test_number_question']) ? $formData['test_number_question'] : "" ?>"
+                                   id="txtNumberQuestion" name="txtNumberQuestion" class="input-xlarge focused  <?= isset($messages["test_number_question"]) ? $messages["status"] : "";?>"    maxlength="10"  type="text" >
+                            <div class="text-danger msg-number-question"><?php echo isset($messages["test_number_question"]) ? $messages["test_number_question"] : "";?></div>
+
+                        </div>
+                    </div>
+                    <table></table>
+                    <table  class="table table-bordered" style="table-layout: fixed">
+                        <tr>
+                            <th></th>
+                            <?php foreach ($arrType as $type) {
+
+                            /**
+                             * @var \Learncom\Models\LearnExamType $type
+                             */
+                            ?>
+                                <th width="<?= 50/count($arrType) ?>%"> <?= $type->getTypeName() ?></th>
+                            <?php } ?>
+                        </tr>
+                        <?php foreach ($arrExamSubject as $exam_subject) {
+                            $subject_id = $exam_subject->getSubjectId();
+                            ?>
+                            <tr  class="target_subject" data-browse="<?=$subject_id?>">
+                                <th class="click-open-subject"  data-browse="<?=$subject_id?>"><a class="cursor" href="javascript:void(0)"><strong><?=$exam_subject->getSubjectName() ?></strong></a></th>
+                                <?php foreach ($arrType as $type) {
+                                    $type_id = $type->getTypeId();
+                                    $total = 0;
+                                    $arrGroup = \Learncom\Repositories\ExamGroup::findByExamSubjectAndType($subject_id,$type_id);
+                                    foreach ($arrGroup as $group) {
+                                        $total += count(explode(',',$group->getGroupDataTest()));
+                                    }
+                                    ?>
+                                    <th><input class="test_subject" id="txtTestSubject_<?=$subject_id?>_<?=$type_id ?>" data-browse="<?=$total ?>" multiple name="txtTestSubject[<?=$type_id?>][<?=$subject_id?>]" width="30%">
+                                    <span class="test-danger">/<?= $total ?></span>
+                                        <div class="text-danger msg-subject-<?=$subject_id?>_<?=$type_id ?>"></div>
+                                    </th>
+                                <?php } ?>
+                            </tr>
+
+                            <?php
+
+                            $arrChapter = \Learncom\Models\LearnExamChapter::find("chapter_subject_id = $subject_id");
+                            foreach ($arrChapter as $chapter) {
+                                $chapter_id = $chapter->getChapterId();
+                            ?>
+                                <tr style="color: dimgrey" class="hidden target_subject_<?=$subject_id?> target_chapter" data-browse="<?=$chapter_id?>">
+                                    <th class="click-open-chapter" data-browse="<?=$chapter_id?>"><a class="cursor" href="javascript:void(0)"><?="&nbsp&nbsp&nbsp&nbsp-".$chapter->getChapterName() ?></a></th>
+                                    <?php foreach ($arrType as $type) {
+                                        $type_id = $type->getTypeId();
+                                        $total = 0;
+                                        $arrGroup = \Learncom\Repositories\ExamGroup::findByChapterAndType($chapter_id,$type_id);
+                                        foreach ($arrGroup as $group) {
+                                            $total += count(explode(',',$group->getGroupDataTest()));
+                                        }
+                                        ?>
+                                        <th><input class="test_chapter" multiple id="txtTestChapter_<?=$chapter_id?>_<?=$type_id ?>" data-browse="<?=$total ?>" name="txtTestChapter[<?=$type_id?>][<?=$chapter_id?>]" width="30%">
+                                            <span class="test-danger">/<?= $total ?></span>
+                                            <div class="text-danger msg-chapter-<?=$chapter_id?>_<?=$type_id ?>"></div>
+                                        </th>
+                                    <?php } ?>
+                                </tr>
+                            <?php
+                            $arrLesson = \Learncom\Models\LearnExamLesson::find("lesson_chapter_id = $chapter_id");
+                            foreach ($arrLesson as $lesson) {
+                                $lesson_id = $lesson->getLessonId();
+                                ?>
+                                <tr  style="color: grey"  class="hidden target_chapter_<?= $chapter_id ?>">
+                                    <th><a class="cursor" href="javascript:void(0)"><?="&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp+".$lesson->getLessonName() ?></a></th>
+                                    <?php foreach ($arrType as $type) {
+                                        $type_id = $type->getTypeId();
+                                        $total = 0;
+                                        $arrGroup = \Learncom\Repositories\ExamGroup::findByLessonAndType($lesson_id,$type_id);
+                                        foreach ($arrGroup as $group) {
+                                            $total += count(explode(',',$group->getGroupDataTest()));
+                                        }
+                                        ?>
+                                        <th><input class="test_lesson" multiple  id="txtTestLesson_<?=$lesson_id?>_<?=$type_id ?>" data-browse="<?=$total ?>" name="txtTestLesson[<?=$type_id?>][<?=$lesson_id?>]" width="30%">
+                                            <span class="test-danger">/<?= $total ?></span>
+                                            <div class="text-danger msg-lesson-<?=$lesson_id?>_<?=$type_id ?>"></div>
+                                        </th>
+                                    <?php } ?>
+                                </tr>
+                            <?php  }?>
+                            <?php  }?>
+                        <?php } ?>
+                    </table>
+                    <div class="control-group">
+                        <div class="control-group">
+                            <label class="control-label" for="selectError"> Thuộc </label>
+                            <div class="controls">
+                                <select  id="slcType" name="slcType" class="<?php echo isset($messages["test_type"]) ? $messages["status"] : "";?>">
+                                    <option value=""> Vui lòng chọn </option>
+                                    <option value="old"> Dashboard </option>
+                                    <option value="new"> Office </option>
+                                </select>
+                                *Nếu tạo đề thi cho trường học thì chọn office, ngược lại chọn dashboard.
+
+                                <div class="text-danger msg-type"><?php echo isset($messages["test_type"]) ? $messages["test_type"] : "";?></div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="selectError">Khóa </label>
+                            <div class="controls">
+                                <select  id="slcGroup" name="slcGroup" class="<?php echo isset($messages["test_group_id"]) ? $messages["status"] : "";?>">
+                                    <option value=""> Chọn Khóa </option>
+                                    <?= isset($select_group) ? $select_group : "" ?>
+                                </select>
+                                <div class="text-danger msg-subject"><?php echo isset($messages["test_group_id"]) ? $messages["test_group_id"] : "";?></div>
+                            </div>
+                        </div>
+                        <label class="control-label" for="focusedInput">Tên <em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['test_name']) ? $formData['test_name'] : ""?>"
+                                   maxlength="256" id="txtName" name="txtName" class="input-xlarge focused <?php echo isset($messages["test_name"]) ? $messages["status"] : "";?>"  type="text" >
+                            <div class="text-danger msg-name"><?php echo isset($messages["test_name"]) ? $messages["test_name"] : "";?></div>
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Số Điểm cho trắc nghiệm <em style="color:red;">*</em> </label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['test_score_choose']) ? $formData['test_score_choose'] : "" ?>"
+                                   id="txtScroreChoose" name="txtScroreChoose"
+                                   class="input-xlarge focused  <?= isset($messages["test_score_choose"]) ? $messages["status"] : "";?>"    maxlength="10"  type="text" >
+                            *Nếu tất cả là trắc nghiệm thì số điểm cho trắc nghiệm là : 10, ngược lại, nếu tự luận: 0
+                            <div class="text-danger msg-number-question"><?php echo isset($messages["test_score_choose"]) ? $messages["test_score_choose"] : "";?></div>
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Số Đề Thi <em style="color:red;">*</em> </label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['test_number_exam']) ? $formData['test_number_exam'] : "" ?>"
+                                   id="txtNumberOf" name="txtNumberOf" class="input-xlarge focused  <?= isset($messages["test_number_exam"]) ? $messages["status"] : "";?>"    maxlength="10"  type="text" >
+                            <div class="text-danger msg-number-question"><?php echo isset($messages["test_number_exam"]) ? $messages["test_number_exam"] : "";?></div>
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Thơi Gian Thi (phút) <em style="color:red;">*</em> </label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['test_time']) ? $formData['test_time'] : "" ?>"
+                                   id="txtTime" name="txtTime" class="input-xlarge focused  <?= isset($messages["test_time"]) ? $messages["status"] : "";?>"    maxlength="10"  type="text" >
+                            <div class="text-danger msg-time"><?php echo isset($messages["test_time"]) ? $messages["test_time"] : "";?></div>
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Order <em style="color:red;">*</em> </label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['test_order']) ? $formData['test_order'] : "" ?>"
+                                   id="txtOrder" name="txtOrder" class="input-xlarge focused  <?= isset($messages["test_order"]) ? $messages["status"] : "";?>"    maxlength="10"  type="text" >
+                            <div class="text-danger msg-order"><?php echo isset($messages["test_order"]) ? $messages["test_order"] : "";?></div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Số Lần Thi </label>
+                        <div class=" controls">
+                            <label class="checkbox"><input  type="radio" name="radOnlyOne"
+                                                            value="Y" <?php echo (isset($formData["test_only_one"]) && $formData["test_only_one"] == "Y") ? "checked" : ''; ?>>một lần<span
+                                    class="check_active"></span></label>
+                            <label class="checkbox"><input  type="radio" name="radOnlyOne"
+                                                            value="N" <?php echo (isset($formData["test_only_one"]) && $formData["test_only_one"] == "N") ? "checked" : ''; ?>>Không giới hạn<span
+                                    class="check_active"></span></label>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Xem Đáp Án </label>
+                        <div class=" controls">
+                            <label class="checkbox"><input  type="radio" name="radIsPublicAnswer"
+                                                            value="Y" <?php echo (isset($formData["test_is_public_answer"]) && $formData["test_is_public_answer"] == "Y") ? "checked" : ''; ?>>Yes<span
+                                    class="check_active"></span></label>
+                            <label class="checkbox"><input  type="radio" name="radIsPublicAnswer"
+                                                            value="N" <?php echo (isset($formData["test_is_public_answer"]) && $formData["test_is_public_answer"] == "N") ? "checked" : ''; ?>>No<span
+                                    class="check_active"></span></label>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Xem Điểm Thi </label>
+                        <div class=" controls">
+                            <label class="checkbox"><input  type="radio" name="radIsPublicScore"
+                                                            value="Y" <?php echo (isset($formData["test_public_score"]) && $formData["test_public_score"] == "Y") ? "checked" : ''; ?>>Yes<span
+                                    class="check_active"></span></label>
+                            <label class="checkbox"><input  type="radio" name="radIsPublicScore"
+                                                            value="N" <?php echo (isset($formData["test_public_score"]) && $formData["test_public_score"] == "N") ? "checked" : ''; ?>>No<span
+                                    class="check_active"></span></label>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Active </label>
+                        <div class=" controls">
+                            <label class="checkbox"><input  type="radio" name="radActive"
+                                                            value="Y" <?php echo (isset($formData["test_active"]) && $formData["test_active"] == "Y") ? "checked" : ''; ?>>Yes<span
+                                    class="check_active"></span></label>
+                            <label class="checkbox"><input  type="radio" name="radActive"
+                                                            value="N" <?php echo (isset($formData["test_active"]) && $formData["test_active"] == "N") ? "checked" : ''; ?>>No<span
+                                    class="check_active"></span></label>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="txtContent">Lời Nhắc nhở </label>
+                        <div class="controls">
+                            <textarea class=" <?= isset($messages["test_description"]) ? $messages["status"] : "";?>" style="width: 500px;height: 200px" id="txtDescription" name="txtDescription"><?php echo isset($formData['test_description']) ? $formData['test_description'] : "" ?></textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="submit_create">Save changes</button>
+                        <a id="edit_page" class="btn" href="<?php echo $this->url->get('dashboard/list-test');?>"> Cancel </a> </div>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $('.file_image').on('click',function () {
+        if ($('#image_1').hasClass('hidden')) {
+            $('#image_2').addClass('hidden');
+            $('#image_1').removeClass('hidden');
+        } else {
+            $('#image_1').addClass('hidden');
+            $('#image_2').removeClass('hidden');
+        }
+    });
+    $('.file_image_comment').on('click',function () {
+        if ($('#comment_1').hasClass('hidden')) {
+            $('#comment_2').addClass('hidden');
+            $('#comment_1').removeClass('hidden');
+        } else {
+            $('#comment_1').addClass('hidden');
+            $('#comment_2').removeClass('hidden');
+        }
+    });
+    $('.click-open-subject').on('click', function () {
+        var subject_id = $(this).attr('data-browse');
+        if ($(".target_subject_"+subject_id).hasClass('hidden')) {
+            $(".target_subject_"+subject_id).removeClass('hidden disabled');
+        } else {
+            $(".target_subject_"+subject_id).addClass('hidden disabled');
+            $(".target_chapter_"+subject_id).addClass('hidden disabled')
+        }
+    });
+    $('.click-open-chapter').on('click', function () {
+        var subject_id = $(this).attr('data-browse');
+        if ($(".target_chapter_"+subject_id).hasClass('hidden')) {
+            $(".target_chapter_"+subject_id).removeClass('hidden disabled')
+        } else {
+            $(".target_chapter_"+subject_id).addClass('hidden disabled')
+        }
+    });
+    $('.cursor').css( 'cursor', 'hand' );
+</script>

@@ -1,0 +1,206 @@
+main{
+    min-height: calc(100vh - 745px);
+}
+.bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(35, 55, 133, 0.58);
+    z-index: -1;
+}
+.w-200px {
+    width: 200px;
+}
+.btn-style-1 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 10px 10px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    border: none;
+    outline: none;
+    user-select: none;
+    position: relative;
+    z-index: 1;
+    background: #fff;
+    transition: all 0.3s;
+    border-radius: 4px;
+    overflow: hidden;
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: unset;
+        right: 0;
+        width: 0;
+        height: 100%;
+        background: $primary-color;
+        z-index: -1;
+        transition: all 0.3s;
+    }
+    &:hover,
+    &:active {
+        color: #fff;
+        &::before {
+            left: 0;
+            right: unset;
+            width: 100%;
+        }
+    }
+}
+.item-style {
+    display: flex;
+    align-items: center;
+    text-align: left;
+    min-height: 42px;
+    padding: 10px 10px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    outline: none;
+    user-select: none;
+    position: relative;
+    z-index: 1;
+    background: #fff;
+    transition: all 0.3s;
+    overflow: hidden;
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: unset;
+        right: 0;
+        width: 0;
+        height: 100%;
+        background: $primary-color;
+        z-index: -1;
+        transition: all 0.3s;
+    }
+    &.no-transition{
+        &::before{
+            transition: none;
+        }
+    }
+    // &:hover,
+    &.active {
+        color: #fff;
+        &::before {
+            left: 0;
+            right: unset;
+            width: 100%;
+        }
+    }
+}
+.list-courses-wrap {
+    display: flex;
+    height: 650px;
+    overflow: hidden;
+    padding-left: 15px;
+    padding-right: 15px;
+    .list-coutses {
+        padding-left: 0;
+        padding-right: 8px;
+        height: 100%;
+        overflow-x: hidden;
+        .list-wrap {
+            border: 1px solid $primary-color;
+            border-radius: 4px;
+            overflow: hidden;
+            overflow-y: auto;
+            height: 100%;
+            background: #fff;
+            &::-webkit-scrollbar {
+                width: 6px;
+            }   
+            &::-webkit-scrollbar-track {
+                background: #bfbfbf;
+            }
+            &::-webkit-scrollbar-thumb {
+                background: #8c8c8c;
+                border-radius: 8px;
+            }
+        }
+        .sub-list {
+            padding-left: 10px;
+            background: rgba(254,239,154,0.5);
+            &>.item-style{
+                justify-content: flex-start;
+                text-align: left;
+                &::before{
+                    background-color: #FEEF9A;
+                }
+            }
+        }
+    }
+    .courses-detail {
+        margin: 0 auto;
+        padding-right: 0;
+        padding-left: 8px;
+        .video-iframe,
+        .docs-iframe {
+            border: 1px solid $primary-color;
+            border-radius: 4px;
+            overflow: hidden;
+            height: 100%;
+        }
+        iframe {
+            display: block;
+            width: 100%;
+            height: 100%;
+            outline: none;
+            border: none;
+        }
+    }
+    .item-style[aria-expanded="true"] {
+         color: #fff;
+         &::before {
+             left: 0;
+             right: unset;
+             width: 100%;
+         }
+    }
+    .item-style ~ .item-style {
+        border-top: 1px solid $primary-color;
+    }
+    .item-style:last-child {
+        border-bottom: 1px solid $primary-color;
+    }
+}
+@media screen and (max-width: 992px) {
+    .list-courses-wrap {
+        padding-right: unset;
+        padding-left: unset;
+        height: auto !important;
+        .list-coutses {
+            padding-left: 0;
+            padding-right: 0;
+            height: 200px;
+            overflow-y: auto;
+            order: 0;
+            margin: 20px 0;
+            .list-wrap {
+                overflow-y: auto;
+            }
+        }
+        .courses-detail {
+            margin: unset;
+            padding-left: 0;
+            padding-right: 0;
+            // height: 50vw;
+            .video-iframe {
+                height: 50vw;
+            }
+            .docs-iframe {
+                height: 60vh;
+            }
+        }
+    }
+}
+

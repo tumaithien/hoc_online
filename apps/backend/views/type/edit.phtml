@@ -1,0 +1,120 @@
+<?php $type=$this->dispatcher->getParam("type");?>
+ <script>
+     $(function(){
+         $("#edit_form").validate({
+             rules :{
+                 order:{required:true,number:true}
+             }
+         });
+     });
+
+</script>
+<?php
+if(!empty($formData['type'])||!empty($formData['message']))
+{
+    ?>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $formData['type']?>">
+        <?php echo $formData['message']; ?>
+    </p>
+<?php }	?>
+<div class="row-fluid sortable">
+				<div class="box span12">
+					<div class="box-header well" data-original-title>
+						<h2><i class="icon-edit"></i> Form Update Type :(<em style="color:red; font-size:20px;">*</em> ) Required to be entered</h2>
+						<div class="box-icon">
+							<a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+							<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+						</div>
+					</div>
+					<div class="box-content">
+						<form novalidate="novalidate" class="form-horizontal" id="edit_form" action="<?php echo $this->url->get("dashboard/edit-type?id=".$formData['id']);?>"
+                        method="post">
+							<fieldset>
+                            <input type="hidden" value="<?php echo $formData['id'];?>" id="id" name="id"/>
+                           
+                                <?php
+							   $type_current =$formData['select_type'];
+                                $typeClass= new Learncom\Repositories\Type();
+								$type_parent=$typeClass->getCombo(0,"",$type_current);
+							?>
+							  <div class="control-group">
+								<label class="control-label" for="selectError">Type </label>
+								<div class="controls">
+								  <select  id="select_type" name="select_type">
+                                  	<option value="0">SELECT A TYPE.............</option>
+                                    <?php echo $type_parent;?>
+								  </select>
+								</div>
+							  </div>
+                                <div class="control-group">
+                                    <label class="control-label">Order <em style="color:red;">*</em> </label>
+                                    <div class="controls">
+                                        <input value="<?php echo $formData['order'];?>" id="order" name="order" class="input-xlarge focused"    maxlength="256"  type="text" >
+                                    </div>
+                                </div>
+							  <div class="control-group">
+								<label class="control-label" for="focusedInput">Name <em style="color:red;">*</em></label>
+								<div class="controls">
+								  <input value="<?php echo $formData['name'];?>" maxlength="256" id="name" name="name" class="input-xlarge focused"  type="text" >
+								</div>
+							  </div>
+                              <div class="control-group">
+								<label class="control-label">Title <em style="color:red;">*</em> </label>
+								<div class="controls">
+								  <input value="<?php echo $formData['title'];?>" id="title" name="title" class="input-xlarge focused"    maxlength="256"  type="text" >
+								</div>
+							  </div>
+                              <div class="control-group">
+								<label class="control-label">Meta Keyword <em style="color:red;">*</em></label>
+								<div class="controls">
+								  <input value="<?php echo $formData['metakeyword'];?>"   id="metakeyword" name="metakeyword" class="input-xlarge focused" maxlength="256" type="text" >
+								</div>
+							  </div>
+                              <div class="control-group">
+								<label class="control-label">Meta Description <em style="color:red;">*</em></label>
+								<div class="controls">
+								  <input value="<?php echo $formData['metadescription'];?>"   id="metadescription" name="metadescription" class="input-xlarge focused" maxlength="256"  type="text" >
+								</div>
+							  </div>
+                              <div class="control-group">
+								<label class="control-label">Keyword <em style="color:red;">*</em></label>
+								<div class="controls">
+								  <input readonly value="<?php echo $formData['keyword'];?>"  id="keyword" name="keyword" class="input-xlarge focused" maxlength="256" type="text" >
+								</div>
+							  </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="optionsCheckbox2">Active</label>
+
+                                    <div class="controls">
+
+                                        <label class="checkbox">
+                                            <input name="check_active" type="radio" id="check_active_Y" value="Y"
+                                                <?php echo $formData['check_active']=='Y'?'checked="checked"':""; ?> >
+                                            Yes
+                                        </label>
+                                    </div>
+                                    <div class="controls">
+                                        <label class="checkbox">
+                                            <input   name="check_active" type="radio" id="check_active_N" value="N"
+                                                <?php echo $formData['check_active']=='N'?'checked="checked"':""; ?>  >
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+							 <div class="form-actions">
+								<button type="submit" class="btn btn-primary" id="submit_create" name="save">Save changes</button>
+								<a id="edit_page" class="btn" href="<?php echo $this->url->get('dashboard/list-type');?>">
+										Cancel                                           
+								</a>							 
+                             </div>
+							</fieldset>
+						  </form>
+					
+					</div>
+				</div><!--/span-->
+			
+			</div><!--/row-->
+<script>
+$(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-type");?>'>List Type</a><span class='divider'>/</span></li><li><a href='<?php echo $this->url->get("dashboard/edit-type?id=".$formData['id']);?>'>Update Type</a></li>");
+</script>

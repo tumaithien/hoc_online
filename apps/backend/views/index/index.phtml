@@ -1,0 +1,65 @@
+<?php
+$user = \Learncom\Models\LearnUser::find([
+    'user_active = "Y" AND user_role = "user"',
+    'order' => "user_insert_time DESC"
+]);
+$arrClass = \Learncom\Models\LearnClass::find();
+$arrSucject = \Learncom\Models\LearnSubject::find("subject_parent_id = 0");
+$width = 90/count($arrClass);
+
+?>
+<div class="sortable row-fluid top-block"> Tổng cộng có <?= count($user) ?> học sinh</div>
+<div class="sortable row-fluid">
+    <?php foreach ($arrClass as $class) {
+        $arrUser = \Learncom\Models\LearnUser::find([
+            'user_active = "Y" AND user_role = "user" AND FIND_IN_SET(:class:,user_class_ids)',
+            'bind' => ['class' => $class->getClassId()],
+            'order' => "user_insert_time DESC"
+        ]);
+        ?>
+    <a style="width:<?=$width?>%" data-rel="tooltip" title="<?php echo count($arrUser);?> new members." class="well span3 top-block" href="<?php echo $this->url->get("dashboard/list-class");?>">
+        <span class="icon32 icon-red icon-user"></span>
+        <div><?= $class->getClassName() ?></div>
+        <div><?php echo count($arrUser);?></div>
+        <span class="notification"><?php echo count($arrUser);?></span>
+    </a>
+    <?php } ?>
+</div>
+<div class="row-fluid sortable">
+    <?php
+    foreach ($arrClass as $class) { ?>
+    <div style="width:<?= $width ?>%" class="box span4">
+        <?php foreach ($arrSucject as $subject) {
+            $arrUser = \Learncom\Models\LearnUser::find([
+                'user_active = "Y" AND user_role = "user" AND FIND_IN_SET(:class:,user_class_ids) AND FIND_IN_SET(:subject:,user_subject_ids)',
+                'bind' => ['class' => $class->getClassId(),'subject' => $subject->getSubjectId()],
+                'order' => "user_insert_time DESC",
+                'limit' => 5
+            ]);
+            if (count($arrUser) == 0 ) {
+                continue;
+            }
+            ?>
+        <div class="box-header well" data-original-title>
+            <h2><i class="icon-user"></i>Môn <?= $subject->getSubjectName() ?> : <?php echo count($arrUser);?> học sinh</h2>
+        </div>
+        <div class="box-content">
+            <div class="box-content">
+                <ul class="dashboard-list">
+                    <?php foreach($arrUser as $u){
+                        ?>
+                        <li>
+                            <strong>Name:</strong> <a href="<?php echo $this->url->get("dashboard/edit-student");?>?id=<?php echo $u->getUserId();?>"><?php echo $u->getUserName(); ?>
+                            </a><br>
+                            <strong>Email:</strong> <a href="<?php echo $this->url->get("dashboard/edit-student");?>?id=<?php echo $u->getUserId();?>"><?php echo $u->getUserEmail(); ?>
+                            </a><br>
+                        </li>
+                    <?php }?>
+                </ul>
+            </div>
+        </div>
+        <?php } ?>
+    </div>
+    <?php }  ?>
+    </div>
+</div>

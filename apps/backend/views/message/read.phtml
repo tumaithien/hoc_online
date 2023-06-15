@@ -1,0 +1,209 @@
+<script>
+	$(document).ready(function(){
+		$("#create_message").click(function(){
+			$("#read_form").prop("action","<?php echo $this->url->get("dashboard/create-message");?>");
+			$("#read_form").prop("method","post");
+			$("#read_form").submit();
+			
+		});
+		$("#search").click(function(){
+			$("#read_form").prop("action","<?php echo $this->url->get("dashboard/list-message");?>");
+			$("#read_form").prop("method","post");
+			$("#read_form").submit();
+		});
+		$("#prev").click(function(){
+			$("#read_form").prop("action","<?php echo $this->url->get("dashboard/list-message");?>");
+			$("#read_form").prop("method","post");
+			$("#read_form").submit();
+		});
+		$("#next").click(function(){
+			$("#read_form").prop("action","<?php echo $this->url->get("dashboard/list-message");?>");
+			$("#read_form").prop("method","post");
+			$("#read_form").submit();
+		});
+		$("#number_page").click(function(){
+			$("#read_form").prop("action","<?php echo $this->url->get("dashboard/list-message");?>");
+			$("#read_form").prop("method","post");
+			$("#read_form").submit();
+		});
+		$("#search").click(function(){
+			$("#read_form").prop("action","<?php echo $this->url->get("dashboard/list-message");?>");
+			$("#read_form").prop("method","post");
+			$("#read_form").submit();
+			
+		});
+		$('#yes').click(function(){
+			var str="<?php echo $this->url->get('dashboard/delete-message');?>?id=";
+			var id=$("#message_id").val();
+			str=str.concat(id);
+			$('#yes').attr("href",str);
+			});	
+	});
+</script>
+<script>
+$(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-message");?>'>List Message</a></li>");
+</script>
+<?php
+if($this->request->get("type")!=NULL||$this->request->get("message")!=NULL) 
+{
+?>
+ <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $this->request->get("type")?>">
+       <?php echo $this->request->get("message");	   ?>
+
+ </p>
+<?php }	?>
+<div>
+	<form name="read_form" id="read_form" method="POST">
+		<table>
+	<tr>
+	<th><input style="padding-top:-1px;" placeholder="Please enter key !"  name="txtSearch" id="txtSearch" type="text"/>
+	</th>
+	<th><input type="button" name="search" id="search" value="Search" class="btn btn-primary"/></th>
+	</tr>
+
+</table>
+	</form>
+</div>
+<div class="box-content">
+        				<table class="table table-striped table-bordered bootstrap-datatable">
+						  <thead>
+							  <tr>
+								  <th style="text-align:center;">Key</th>
+								  <th style="text-align:center;">Content</th>
+								  <th style="text-align:center;width: 152px;">Action</th>
+							  </tr>
+						  </thead>   
+						  <tbody>
+						  <?php
+						  $search=$this->dispatcher->getParam("txtSearch");
+						  $crr_page=$this->dispatcher->getParam("current_page");
+						  ?>
+						  <script>
+							  $(function(){
+								  document.getElementById("txtSearch").value="<?php echo $search;?>";
+							  });
+						  </script>
+                          <form novalidate="novalidate" class="form-horizontal" id="create_form" action="<?php echo $this->url->get("dashboard/insert-message");?>"
+                                method="POST">
+                              <input type="hidden" id="txtSearch" name="txtSearch" value="<?php echo $search; ?>" >
+                              <input type="hidden" id="page" name="page" value="<?php echo $crr_page; ?>" >
+                              <tr>
+                                  <td style="text-align:center;"  class="center">
+                                      <input maxlength="256" id="key" name="key" class="input-xlarge focused"   type="text" value="">
+                                  </td>
+                                  <td style="text-align:center;"  class="center">
+                                      <textarea  id="content" name ="content" style="width: 700px;height: 212px;" ></textarea>
+                                  </td>
+                                  <td style="text-align:center;" class="center">
+                                      <input type="submit" name="new" id="new" value="New" class="btn btn-primary"/>
+                                  </td>
+                              </tr>
+                          </form>
+                                  <?php $list_message=$this->dispatcher->getParam("list_message");
+								        foreach($list_message as $message){
+								   ?>
+								<form novalidate="novalidate" class="form-horizontal" id="create_form" action="<?php echo $this->url->get("dashboard/insert-message");?>"
+									  method="POST">
+									<script>
+										$(function(){
+											$('#delete<?php echo $message->getConfigKey();?>').live("click",function(e){
+												e.preventDefault();
+												$('#warn').modal('show');
+												var id=$("#key_<?php echo $message->getConfigKey();?>").val();
+												$("#message_id").val(id);
+												var str="Are you sure to remove ID = ".concat(id).concat(" of ").concat("Message");
+												$("#mess").text(str);
+
+											});
+										});
+									</script>
+
+								<tr>
+
+								<input type="hidden" id="key_<?php echo $message->getConfigKey();?>" name="id" value="<?php echo $message->getConfigKey();?>" >
+								<input type="hidden" id="txtSearch" name="txtSearch" value="<?php echo $search; ?>" >
+								<input type="hidden" id="page" name="page" value="<?php echo $crr_page; ?>" >
+
+									<td style="text-align:center;" id="<?php echo $message->getConfigKey();?>" class="center">
+									<input maxlength="256" id="key" name="key" class="input-xlarge focused" readonly  type="text" value="<?php echo $message->getConfigKey();?>">
+								</td>
+								<td style="text-align:center;"  class="center">
+									<textarea  id="content" name ="content" style="width: 700px;height: 212px;" ><?php echo $message->getConfigContent();?></textarea>
+								</td>
+								<td style="text-align:center; " class="center">
+									<input type="submit" name="edit" id="edit" value="Edit" class="btn btn-primary"/>
+									<a id="delete<?php echo $message->getConfigKey();?>" class="btn btn-danger" href="">
+										<i class="icon-trash icon-white"></i> 
+										Delete
+									</a>
+								</td>
+							</tr>
+
+							</form>
+							<?php }?>
+
+						  </tbody>
+					  </table>
+	<form name="read_form" id="read_form">
+
+	<div class="pagination pagination-centered">
+						  <ul>
+                          <?php $crr_page=$this->dispatcher->getParam("current_page");
+						  		 $total_page = $this->dispatcher->getParam("total_page");
+						  ?>
+                       
+                          <?php if ($crr_page != 1){?>
+							<li><a id="prev"  href="<?php echo $this->url->get('dashboard/list-message')?>?txtSearch=<?php echo $search; ?>&page=<?php echo $crr_page-1;?>">Prev</a></li>
+                            <?php }?>
+							<?php
+							$n=floor($total_page/10);
+							$b=$total_page%10;
+							$flag=0;
+							$limit=0;
+							if($crr_page >=1){
+								$flag=floor($crr_page/10);
+								if($flag<$n){
+									$limit=($flag*10)+10;
+								}else{
+									$limit=($flag*10)+$b;
+								}
+							}
+							if($crr_page < $limit){
+								$start=0;
+								if($flag==0)
+									$start=$flag*10+1;
+								else
+									$start=$flag*10;
+								for($i=$start;$i <=$limit;$i++){
+										if($i==$crr_page){
+							 ?>
+                             <li><a style="color:#333" id="number_page"  href="<?php echo $this->url->get('dashboard/list-message')?>?txtSearch=<?php echo $search; ?>&page=<?php echo $i ;?>"><?php echo $i ?></a></li>
+                             <?php }else{?>
+                             <li><a id="number_page" href="<?php echo $this->url->get('dashboard/list-message')?>?txtSearch=<?php echo $search; ?>&page=<?php echo $i ;?>"><?php echo $i ?></a></li>
+                             		<?php }?>
+                            	 <?php }?>
+                             <?php }?>
+                             <?php if ($crr_page<$total_page){?>
+							<li><a id="next"  href="<?php echo $this->url->get('dashboard/list-message')?>?txtSearch=<?php echo $search; ?>&page=<?php echo $crr_page+1;?>">Next</a></li>
+                            <?php }?>
+						  </ul>
+						</div> 
+                        <p style="text-align:left;font-size:16px;color:red"><strong style="">Total : <?php echo $this->dispatcher->getParam("all_records");?></strong> Messages</p>
+</div>
+</form>
+<form>
+<div class="modal hide fade" id="warn">
+	<div class="modal-header">
+<input type="hidden" id="message_id" name="message_id" />
+<button type="button" class="close" data-dismiss="modal">×</button>
+				<h3>Warning !</h3>
+	</div>
+	<div class="modal-body">
+				<p id="mess"></p>
+	</div>
+	<div class="modal-footer">
+				<a href="" class="btn" data-dismiss="modal">Close</a>
+				<a id="yes" name="yes" href="" class="btn btn-primary">Yes</a>
+	</div>
+</div>
+</form>

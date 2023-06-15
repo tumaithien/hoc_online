@@ -1,0 +1,78 @@
+<?php
+/**
+ * @var \Learncom\Models\LearnTest $test_model
+ * @var \Learncom\Models\LearnTestFolder $folder
+ */
+?>
+
+<a name="create_article" id="create_article" class="btn btn-primary pull-left">Back</a>
+<hr>
+<div class=" p-20 text-center">
+    <div class=" list-courses-wrap list-courses-custom">
+        <div class=" h-100 mt-xs-15 bg-white border-1-primary rounded mb-xs-70">
+            <h2 id="txtName" class="text-main text-center text-uppercase">Bài thi: <?= $test_parent_model->getTestName() ?></h2>
+            <?php if (strlen($test_model->getTestLink()) > 0) { ?>
+                <div class="video-iframe">
+                    <iframe width="100%" height="500px" src="<?php echo $test_model->getTestLinkComment() ?>" allow="autoplay"></iframe>
+                </div>
+            <?php } else {
+                $testArr = json_decode($test_model->getTestArray(),true);
+                if (sizeof($testArr) > 0){
+                    ?>
+                    <div class="carousel main-banner slide"  id="carousel-home-banner" data-ride="carousel">
+
+                        <div class="carousel-inner">
+                            <?php
+                            foreach ($testArr as $key => $test){
+                                if (!isset($arrTestAnswer[$test])) {
+                                    continue;
+                                }
+                                $folder = \Learncom\Models\LearnTestFolder::findFirstByTestIdAndFolderStatus($test_parent_id,$test);
+                                if ($folder){
+                                    ?>
+                                    <div class="carousel-item<?= ($key-1) == 0 ? ' active' : '' ?>">
+                                        <h3 style="padding-left: 80px" class="text-left font-weight-bold">Câu <?php echo $key ?> :</h3>
+                                        <img style="width: 80%" src="<?php echo $this->url->getStatic($folder->getFolderLink()) ?>" title="<?php echo $test_model->getTestName() ?>" alt="<?php echo $test_model->getTestName() ?>">
+                                        <p style="padding-left: 80px"  class=" text-left text-gray pl-80">Đáp của HS: <?= isset($arrTestScore[$key]) ? $arrTestScore[$key] : "" ?></p>
+                                        <p style="padding-left: 80px" class="text-left text-danger pl-80">Đáp án đúng: <?= isset($arrTestAnswer[$test]) ? $arrTestAnswer[$test] : "" ?></p>
+                                    </div>
+                                <?php } ?>
+                                <hr><hr>
+                            <?php } ?>
+                        </div>
+                    </div>
+                <?php }} ?>
+            <?php
+            if ($score_model->getScoreDataNotChoose()) {
+                $arrNotChoose = explode(',',$score_model->getScoreDataNotChoose())
+                ?>
+                <h2 class="text-red text-left">Câu trả lời tự luận: </h2>
+                <?php foreach ($arrNotChoose as $link) { ?>
+                <img style="width: 80%" src="<?= $link ?>" alt="bai lam tu luan">
+                <?php }?>
+            <?php } ?>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.carousel').carousel({
+            touch: true,
+            interval: false
+        });
+        window.onload = function() {
+            var reloading = sessionStorage.getItem("reloading");
+            if (reloading) {
+                sessionStorage.removeItem("reloading");
+                $('#subTest').submit();
+            } else {
+                sessionStorage.setItem("reloading", "true");
+            }
+
+        };
+        $('#create_article').on('click',function () {
+            history.back()
+        })
+    })
+</script>

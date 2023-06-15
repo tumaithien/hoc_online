@@ -1,0 +1,23 @@
+.footer_main{
+    background: $base-black;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    color: $white;
+    margin-top: 50px;
+    font-size: 16px;
+    color: #d0d0d0;
+}
+.list-menu-footer{
+    li{
+        margin: 10px 0;
+        img{
+            margin-right: 10px;
+        }
+        a{
+            color: #d0d0d0;
+            &:hover{
+                color: rgba(0,123,255,0.5)
+            }
+        }
+    }
+}

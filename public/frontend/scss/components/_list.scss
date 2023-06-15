@@ -1,0 +1,66 @@
+ul.list-style {
+	margin: 0;
+	list-style-type: none;
+	> li {
+		> a {
+			display: flex;
+			align-items: center;
+			padding: 8px 15px;
+			font-size: 16px;			
+			img.active {
+				display: none;
+			}
+			&.active {
+				img:not(.active) {
+					display: none;
+				}
+				img.active {
+					display: inline-block;
+				}
+			}
+		}
+		&:not(:last-child) > a {
+			border-bottom: 1px solid #ddd;
+		}
+		&:hover > a {
+			img:not(.active) {
+				display: none;
+			}
+			img.active {
+				display: inline-block;
+			}
+		}
+		&:hover > a {
+			color: $secondary-color;
+		}
+	}
+}
+.list-custom{
+	overflow: auto;
+	height: 600px;
+	@include media-breakpoint-down(md){
+		height: 200px;
+		overflow: auto;
+	}
+}
+.list-courses-custom{
+	padding-left:0 !important;
+	padding-right: 0 !important;
+	height: 850px !important;
+	.list-coutses{
+		.list-wrap{
+			.sub-list{
+				a{
+					&>.item-style{
+						transition: color .2s;
+						color:#ffda0a !important;
+						&::before{
+							background: unset !important;
+						}
+					}
+				}
+			}
+		}
+	}
+
+}
