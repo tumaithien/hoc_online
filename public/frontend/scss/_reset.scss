@@ -4,7 +4,7 @@ body {
   color: $base-black;
   line-height: 1.4;
   overflow-x: hidden;
-  background-color: #F1F1F1;
+  background-color: #f1f1f1;
 }
 * {
   user-select: none;
@@ -85,18 +85,19 @@ button:focus {
   outline: none;
 }
 
-img , iframe {
+img,
+iframe {
   max-width: 100%;
 }
 ul {
   padding: 0;
 }
 .grecaptcha-badge {
-  box-shadow: none!important;
-  opacity: 0!important;
+  box-shadow: none !important;
+  opacity: 0 !important;
 }
 @include media-breakpoint-up(lg) {
   .container {
-    max-width: 1170px;
+    max-width: 1320px;
   }
 }

@@ -13,103 +13,50 @@
     <meta name="description" content="<?php if(isset($meta_descript)) {echo $meta_descript;} ?>">
     <?php echo $this->tag->getTitle(); ?>
     <link rel="shortcut icon" href="<?php echo $this->url->getStatic('favicon.ico?v=3'); ?>">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i&display=swap" rel="stylesheet" />
     <link href="<?php echo $this->url->getStatic('frontend/css/')?>app.css?v=<?php echo time(); ?>" rel="stylesheet">
+    <link href="<?php echo $this->url->getStatic('frontend/vendor/aos/')?>aos.css" rel="stylesheet">
+    <link href="<?php echo $this->url->getStatic('frontend/vendor/bootstrap-icons/')?>bootstrap-icons.css" rel="stylesheet">
     <script>
         var commands = [];
         var WEB_URL = "<?php echo $this->url->get('/'); ?>";
     </script>
 </head>
 <body>
-<header class="header" data-spy="affix" data-offset-top="10">
-    <div class="header-top">
-        <img src="<?php echo isset($bannerTop) ? $bannerTop->getBannerImage() : '' ?>" alt="" title="" class="w-100">
+<header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+        <h1 class="logo">
+            <a href="#">ChiBao</a>
+        </h1>
+        <nav id="navbar" class="navbar order-last order-lg-0">
+            <ul>
+            <li><a class="active" href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="courses.html">Courses</a></li>
+            <li><a href="trainers.html">Trainers</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+                <ul>
+                <li><a href="#">Drop Down 1</a></li>
+                <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
+                    <ul>
+                    <li><a href="#">Deep Drop Down 1</a></li>
+                    <li><a href="#">Deep Drop Down 2</a></li>
+                    <li><a href="#">Deep Drop Down 3</a></li>
+                    <li><a href="#">Deep Drop Down 4</a></li>
+                    <li><a href="#">Deep Drop Down 5</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Drop Down 2</a></li>
+                <li><a href="#">Drop Down 3</a></li>
+                <li><a href="#">Drop Down 4</a></li>
+                </ul>
+            </li>
+            <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+        <a href="#" class="get-started-btn">Login</a>
     </div>
-
-    <?php
-    $arrClass = \Learncom\Models\LearnClass::find([
-            'order' => 'class_order ASC'
-    ]);
-    $arrSubject = \Learncom\Models\LearnSubject::find([
-            'subject_parent_id = 0',
-            'order' => 'subject_order ASC'
-    ]);
-    $gethtml = new \Learncom\Repositories\Header();
-    ?>
-    <div class="header-nav">
-        <div class="container">
-            <div class="header-nav__wrap">
-                <div class="nav-desktop-mobile flex-grow-1">
-                    <div class="nav-menu-1">
-                        <div class="nav-menu-wrap">
-                            <?php foreach ($menus as $menu) {
-                                    $type = $menu->getMenuType();
-                                    $menuExcluded = '';
-                                    if ($menu->getMenuExcluded()) {
-                                        $menuExcluded = $menu->getMenuExcluded();
-                                    }
-                                ?>
-                                <div class="dropdown-nav">
-                                    <?php if ($menu->getMenuType() == 'home'){ ?>
-                                        <span class="nav-item">
-                                            <a href="<?php echo $this->url->get('/') ?>"><?php echo $menu->getMenuName() ?></a>
-                                        </span>
-                                    <?php } ?>
-                                    <?php if ($menu->getMenuType() == 'tailieu' || $menu->getMenuType() == 'baigiang' || $menu->getMenuType() == 'khoahoc'|| $menu->getMenuType() == 'tailieuboiduong'  || $menu->getMenuType() == 'start-test' || $menu->getMenuType() == 'kiem-tra'){ ?>
-                                        <span class="nav-item">
-                                            <?php echo $menu->getMenuName() ?>
-                                        </span>
-                                        <div class="dropdown-content">
-                                            <?= $gethtml->getHtmlHeader($arrClass,$arrSubject,$type,explode(',',$menuExcluded)) ?>
-                                        </div>
-                                    <?php } ?>
-                                    <?php if ($menu->getMenuType() == 'blog'){ ?>
-                                        <span class="nav-item">
-                                            <a href="<?php echo $this->url->get('/blogs') ?>"><?php echo $menu->getMenuName() ?></a>
-                                        </span>
-                                    <?php } ?>
-                                    <?php if ($menu->getMenuType() == 'login'){ ?>
-                                        <?php if ($auth) { ?>
-                                            <div class="dropdown-nav">
-                                                <span class="nav-item" >
-                                                    <img src="<?php echo $this->url->getStatic('frontend/')?>images/user-circle-solid.svg" alt="" class="icon-24 on">
-                                                    <img src="<?php echo $this->url->getStatic('frontend/')?>images/user-circle-solid-white.svg" alt="" class="icon-24 off">
-                                                </span>
-                                                <div class="dropdown-content">
-                                                    <div class="dropdown-nav">
-                                                        <span class="nav-subitem">
-                                                            <a href="<?php echo $this->url->get('/account/change-profile') ?>">
-                                                                Thông tin tài khoản
-                                                            </a>
-                                                        </span>
-                                                    </div>
-                                                    <div class="dropdown-nav">
-                                                        <span class="nav-subitem">
-                                                            <a href="<?php echo $this->url->get('/logout') ?>">Thoát</a>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php } else { ?>
-                                            <div class="dropdown-nav">
-                                                <span class="nav-item" >
-                                                    <a href="<?php echo $this->url->get('/login') ?>"><?php echo $menu->getMenuName() ?></a>
-                                                </span>
-                                            </div>
-                                        <?php } ?>
-                                    <?php } ?>
-                                </div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="bar-menu-mobile btn-open-nav">
-                    <div class="bar-item"></div>
-                    <div class="bar-item"></div>
-                    <div class="bar-item"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </header>

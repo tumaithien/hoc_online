@@ -6,7 +6,6 @@ use Phalcon\Session\Adapter\Files as SessionAdapter;
 
 error_reporting(E_ERROR);//0 t0 disable
 ini_set('display_errors', 1);//0 to disable
-
 try {
     /**/
     /**
