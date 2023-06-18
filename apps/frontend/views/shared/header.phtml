@@ -54,7 +54,7 @@
                         <?php endif ?>
                         <?php if (in_array($menu['menu_type'], ['tailieu', 'baigiang', 'khoahoc', 'tailieuboiduong', 'start-test', 'kiem-tra'])): ?>
                             <li class="dropdown">
-                                <a href=""><span>
+                                <a href="javascript:void(0)"><span>
                                         <?= $menu['menu_name'] ?>
                                     </span> <i class="bi bi-chevron-down"></i>
                                 </a>
@@ -63,7 +63,7 @@
                                     $url = $type . '?classId=';
                                     foreach ($arrClass as $class):
                                         ?>
-                                        <li class="dropdown"><a href=""><span>
+                                        <li class="dropdown"><a href="javascript:void(0)"><span>
                                                     <?= $class['class_name'] ?>
                                                 </span> <i class="bi bi-chevron-right"></i></a>
                                             <ul>
