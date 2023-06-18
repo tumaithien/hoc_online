@@ -43,32 +43,32 @@
                     <div class="nav-menu-1">
                         <div class="nav-menu-wrap">
                             <?php foreach ($menus as $menu) {
-                                    $type = $menu->getMenuType();
+                                    $type = $menu['menu_type'];
                                     $menuExcluded = '';
-                                    if ($menu->getMenuExcluded()) {
-                                        $menuExcluded = $menu->getMenuExcluded();
+                                    if ($menu['menu_excluded']) {
+                                        $menuExcluded = $menu['menu_excluded'];
                                     }
                                 ?>
                                 <div class="dropdown-nav">
-                                    <?php if ($menu->getMenuType() == 'home'){ ?>
+                                    <?php if ($menu['menu_type'] == 'home'){ ?>
                                         <span class="nav-item">
-                                            <a href="<?php echo $this->url->get('/') ?>"><?php echo $menu->getMenuName() ?></a>
+                                            <a href="<?php echo $this->url->get('/') ?>"><?php echo $menu['menu_name'] ?></a>
                                         </span>
                                     <?php } ?>
-                                    <?php if ($menu->getMenuType() == 'tailieu' || $menu->getMenuType() == 'baigiang' || $menu->getMenuType() == 'khoahoc'|| $menu->getMenuType() == 'tailieuboiduong'  || $menu->getMenuType() == 'start-test' || $menu->getMenuType() == 'kiem-tra'){ ?>
+                                    <?php if ($menu['menu_type'] == 'tailieu' || $menu['menu_type'] == 'baigiang' || $menu['menu_type'] == 'khoahoc'|| $menu['menu_type'] == 'tailieuboiduong'  || $menu['menu_type'] == 'start-test' || $menu['menu_type'] == 'kiem-tra'){ ?>
                                         <span class="nav-item">
-                                            <?php echo $menu->getMenuName() ?>
+                                            <?php echo $menu['menu_name'] ?>
                                         </span>
                                         <div class="dropdown-content">
                                             <?= $gethtml->getHtmlHeader($arrClass,$arrSubject,$type,explode(',',$menuExcluded)) ?>
                                         </div>
                                     <?php } ?>
-                                    <?php if ($menu->getMenuType() == 'blog'){ ?>
+                                    <?php if ($menu['menu_type'] == 'blog'){ ?>
                                         <span class="nav-item">
-                                            <a href="<?php echo $this->url->get('/blogs') ?>"><?php echo $menu->getMenuName() ?></a>
+                                            <a href="<?php echo $this->url->get('/blogs') ?>"><?php echo $menu['menu_name'] ?></a>
                                         </span>
                                     <?php } ?>
-                                    <?php if ($menu->getMenuType() == 'login'){ ?>
+                                    <?php if ($menu['menu_type'] == 'login'){ ?>
                                         <?php if ($auth) { ?>
                                             <div class="dropdown-nav">
                                                 <span class="nav-item" >
@@ -93,7 +93,7 @@
                                         <?php } else { ?>
                                             <div class="dropdown-nav">
                                                 <span class="nav-item" >
-                                                    <a href="<?php echo $this->url->get('/login') ?>"><?php echo $menu->getMenuName() ?></a>
+                                                    <a href="<?php echo $this->url->get('/login') ?>"><?php echo $menu['menu_name'] ?></a>
                                                 </span>
                                             </div>
                                         <?php } ?>

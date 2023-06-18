@@ -18,9 +18,9 @@ $arrSubject = \Learncom\Models\LearnSubject::find([
                 <div class="carousel-inner">
                     <?php foreach ($banners as $key => $banner) { ?>
                         <div class="carousel-item <?= $key == 0 ? 'active' : '' ?>">
-                            <img class="d-block w-100" src="<?= $banner->getBannerImage() ?>" alt="" title="">
+                            <img class="d-block w-100" src="<?=  $banner['banner_image']  ?>" alt="" title="">
                             <div class="carousel-caption d-none d-md-block">
-                                <?= $banner->getBannerContent() ?>
+                                <?= $banner['banner_content'] ?>
                             </div>
                         </div>
                     <?php } ?>
@@ -72,8 +72,8 @@ $arrSubject = \Learncom\Models\LearnSubject::find([
     <div class="banner-commit">
         <h2 class="text-white text-30 font-weight-bold text-center">
             <?php foreach ($menus as $menu) {
-                if ($menu->getMenuType() == 'default'){
-                    echo $menu->getMenuName();
+                if ($menu['menu_type'] == 'default'){
+                    echo $menu['menu_name'];
                 }
             }
              ?>
@@ -111,8 +111,8 @@ $arrSubject = \Learncom\Models\LearnSubject::find([
         <div class="container">
             <h2 class="text-main text-30 font-weight-bold text-center">
                 <?php foreach ($menus as $menu) {
-                    if ($menu->getMenuType() == 'course'){
-                        echo $menu->getMenuName();
+                    if ($menu['menu_type'] == 'course'){
+                        echo $menu['menu_name'];
                     }
                 }
                 ?>
@@ -122,9 +122,9 @@ $arrSubject = \Learncom\Models\LearnSubject::find([
                 <?php
                     $menuExcluded = '';
                     foreach ($menus as $menu) {
-                        if ($menu->getMenuType() == 'course'){
-                            if ($menu->getMenuExcluded()) {
-                                $menuExcluded = $menu->getMenuExcluded();
+                        if ($menu['menu_type'] == 'course'){
+                            if ($menu['menu_excluded']) {
+                                $menuExcluded = $menu['menu_excluded'];
                             }
                         }
                     }
@@ -164,8 +164,8 @@ $arrSubject = \Learncom\Models\LearnSubject::find([
             <div class="container">
                 <h2 class="text-main text-30 font-weight-bold text-center">
                     <?php foreach ($menus as $menu) {
-                        if ($menu->getMenuType() == 'blog'){
-                            echo $menu->getMenuName();
+                        if ($menu['menu_type'] == 'blog'){
+                            echo $menu['menu_name'];
                         }
                     }
                     ?>
