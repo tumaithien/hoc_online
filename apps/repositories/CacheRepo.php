@@ -73,7 +73,7 @@ class CacheRepo extends Component
             return false;
         }
         // $result =  $cache->set($cacheKey);
-        return $result;
+        return $data;
     }
     public static function getBackCache()
     {

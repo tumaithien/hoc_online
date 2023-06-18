@@ -4,6 +4,7 @@ namespace Learncom\Frontend\Controllers;
 
 use Learncom\Models\LearnUser;
 use Learncom\Repositories\Banner;
+use Learncom\Repositories\CacheRepo;
 use Learncom\Repositories\Config;
 use Learncom\Repositories\Device;
 use Learncom\Repositories\Info;
@@ -70,10 +71,32 @@ class ControllerBase extends Controller
         if ($menus) {
             $this->view->menus = $menus;
         }
-    //     $current_url = $this->request->getURI();
-    //   $current_url = "https://chibao.edu.vn". $current_url;
-    //     $img_base64 = $this->getqrcode($current_url);
-    //     $this->view->img_base64 = $img_base64;
+        $cacheClass = new CacheRepo('all_class');
+        $arrClass = $cacheClass->getCache();
+        if (!$arrClass) {
+            $arrClass = \Learncom\Models\LearnClass::find([
+                'order' => 'class_order ASC'
+            ])->toArray();
+            $arrClass = $cacheClass->setCache($arrClass);
+        }
+
+        $cacheSubject = new CacheRepo('all_subject');
+        $arrSubject = $cacheSubject->getCache();
+        if (!$arrSubject) {
+            $arrSubject = \Learncom\Models\LearnSubject::find([
+                'subject_parent_id = 0',
+                'order' => 'subject_order ASC'
+            ])->toArray();
+            $arrSubject = $cacheSubject->setCache($arrSubject);
+        }
+
+        $this->view->arrSubject = $arrSubject;
+        $this->view->arrClass = $arrClass;
+
+        //     $current_url = $this->request->getURI();
+        //   $current_url = "https://chibao.edu.vn". $current_url;
+        //     $img_base64 = $this->getqrcode($current_url);
+        //     $this->view->img_base64 = $img_base64;
     }
     public function getqrcode($actual_link)
     {
@@ -82,10 +105,10 @@ class ControllerBase extends Controller
         $result = Builder::create()
             ->writer(new PngWriter())
             ->writerOptions([
-    SvgWriter::WRITER_OPTION_EXCLUDE_XML_DECLARATION => true
-])
+                SvgWriter::WRITER_OPTION_EXCLUDE_XML_DECLARATION => true
+            ])
             ->data($actual_link)
-            
+
             ->encoding(new Encoding('ISO-8859-1'))
             ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
             ->size(300)
@@ -93,12 +116,12 @@ class ControllerBase extends Controller
             ->roundBlockSizeMode(new RoundBlockSizeModeShrink(1))
             ->foregroundColor(new Color(0, 0, 0))
             ->backgroundColor(new Color(255, 255, 255))
-                 ->logoPath( __DIR__.'/../../../public/frontend/images/logo.jpeg')
-                 ->logoPunchoutBackground(true)
-                 ->logoResizeToWidth(100)
-                 ->logoResizeToHeight(100)
-                 
-                 
+            ->logoPath(__DIR__ . '/../../../public/frontend/images/logo.jpeg')
+            ->logoPunchoutBackground(true)
+            ->logoResizeToWidth(100)
+            ->logoResizeToHeight(100)
+
+
             ->labelText('https://chibao.edu.vn')
             ->labelFont(new NotoSans(20))
             ->labelAlignment(new LabelAlignmentCenter())
