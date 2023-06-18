@@ -35,6 +35,9 @@ class ControllerBase extends Controller
     protected $group_subject_id;
     protected $school_class_id;
     protected $isMobile;
+    public $subject_select;
+    public $class_select;
+
     public function initialize()
     {
         //current user
@@ -92,6 +95,16 @@ class ControllerBase extends Controller
 
         $this->view->arrSubject = $arrSubject;
         $this->view->arrClass = $arrClass;
+
+        $menu_select = str_replace("/","",$this->request->get("_url"));
+        if ($menu_select == "") {
+            $menu_select = "home";
+        }
+        $this->view->menu_select = $menu_select;
+        $this->subject_select = $this->request->get("subjectId");
+        $this->class_select = $this->request->get("classId");
+        $this->view->subject_select = $this->subject_select;
+        $this->view->class_select = $this->class_select;
 
         //     $current_url = $this->request->getURI();
         //   $current_url = "https://chibao.edu.vn". $current_url;
