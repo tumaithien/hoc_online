@@ -62,13 +62,11 @@ class ControllerBase extends Controller
         $this->view->isMobile = $this->isMobile = $detect->isMobile() ? $detect->isMobile() : $detect->isTablet();
         $this->school_class_id = $this->auth['school_class_id'];
         $this->view->school_class_id = $this->auth['school_class_id'];
-        $bannerRepo = new Banner();
-        $bannerTop = $bannerRepo->findBannerTop();
+        $bannerTop = Banner::findBannerTop();
         if ($bannerTop) {
             $this->view->bannerTop = $bannerTop;
         }
-        $menuRepo = new Menu();
-        $menus = $menuRepo->findMenu();
+        $menus = Menu::findMenu();
         if ($menus) {
             $this->view->menus = $menus;
         }

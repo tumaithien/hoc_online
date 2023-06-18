@@ -38,11 +38,17 @@ class Menu extends Component
             return $output;
     }
 
-    public function findMenu(){
-        return LearnMenu::find([
-            'menu_active = "Y"',
-            'order' => ['menu_order ASC']
-        ]);
+    public static function findMenu(){
+        $cache = new CacheRepo("banner_findMenu");
+        $data = $cache->getCache();
+        if (!$data) {
+            $models = LearnMenu::find([
+                'menu_active = "Y"',
+                'order' => ['menu_order ASC']
+            ]);
+            $data = $cache->setCache( $models->toArray());
+        }
+        return $data;
     }
 
 }

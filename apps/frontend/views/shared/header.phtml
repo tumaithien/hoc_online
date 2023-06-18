@@ -59,4 +59,94 @@
         </nav>
         <a href="#" class="get-started-btn">Login</a>
     </div>
+<<<<<<< HEAD
+=======
+
+    <?php
+    $arrClass = \Learncom\Models\LearnClass::find([
+            'order' => 'class_order ASC'
+    ]);
+    $arrSubject = \Learncom\Models\LearnSubject::find([
+            'subject_parent_id = 0',
+            'order' => 'subject_order ASC'
+    ]);
+    $gethtml = new \Learncom\Repositories\Header();
+    ?>
+    <div class="header-nav">
+        <div class="container">
+            <div class="header-nav__wrap">
+                <div class="nav-desktop-mobile flex-grow-1">
+                    <div class="nav-menu-1">
+                        <div class="nav-menu-wrap">
+                            <?php foreach ($menus as $menu) {
+                                    $type = $menu['menu_type'];
+                                    $menuExcluded = '';
+                                    if ($menu['menu_excluded']) {
+                                        $menuExcluded = $menu['menu_excluded'];
+                                    }
+                                ?>
+                                <div class="dropdown-nav">
+                                    <?php if ($menu['menu_type'] == 'home'){ ?>
+                                        <span class="nav-item">
+                                            <a href="<?php echo $this->url->get('/') ?>"><?php echo $menu['menu_name'] ?></a>
+                                        </span>
+                                    <?php } ?>
+                                    <?php if ($menu['menu_type'] == 'tailieu' || $menu['menu_type'] == 'baigiang' || $menu['menu_type'] == 'khoahoc'|| $menu['menu_type'] == 'tailieuboiduong'  || $menu['menu_type'] == 'start-test' || $menu['menu_type'] == 'kiem-tra'){ ?>
+                                        <span class="nav-item">
+                                            <?php echo $menu['menu_name'] ?>
+                                        </span>
+                                        <div class="dropdown-content">
+                                            <?= $gethtml->getHtmlHeader($arrClass,$arrSubject,$type,explode(',',$menuExcluded)) ?>
+                                        </div>
+                                    <?php } ?>
+                                    <?php if ($menu['menu_type'] == 'blog'){ ?>
+                                        <span class="nav-item">
+                                            <a href="<?php echo $this->url->get('/blogs') ?>"><?php echo $menu['menu_name'] ?></a>
+                                        </span>
+                                    <?php } ?>
+                                    <?php if ($menu['menu_type'] == 'login'){ ?>
+                                        <?php if ($auth) { ?>
+                                            <div class="dropdown-nav">
+                                                <span class="nav-item" >
+                                                    <img src="<?php echo $this->url->getStatic('frontend/')?>images/user-circle-solid.svg" alt="" class="icon-24 on">
+                                                    <img src="<?php echo $this->url->getStatic('frontend/')?>images/user-circle-solid-white.svg" alt="" class="icon-24 off">
+                                                </span>
+                                                <div class="dropdown-content">
+                                                    <div class="dropdown-nav">
+                                                        <span class="nav-subitem">
+                                                            <a href="<?php echo $this->url->get('/account/change-profile') ?>">
+                                                                Thông tin tài khoản
+                                                            </a>
+                                                        </span>
+                                                    </div>
+                                                    <div class="dropdown-nav">
+                                                        <span class="nav-subitem">
+                                                            <a href="<?php echo $this->url->get('/logout') ?>">Thoát</a>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php } else { ?>
+                                            <div class="dropdown-nav">
+                                                <span class="nav-item" >
+                                                    <a href="<?php echo $this->url->get('/login') ?>"><?php echo $menu['menu_name'] ?></a>
+                                                </span>
+                                            </div>
+                                        <?php } ?>
+                                    <?php } ?>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="bar-menu-mobile btn-open-nav">
+                    <div class="bar-item"></div>
+                    <div class="bar-item"></div>
+                    <div class="bar-item"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+>>>>>>> 3f2d4410dc21473bab8ce6302c4031926c274a3d
 </header>

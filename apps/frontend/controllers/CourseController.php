@@ -2,6 +2,7 @@
 
 namespace Learncom\Frontend\Controllers;
 
+use Learncom\Repositories\CacheRepo;
 use Learncom\Repositories\Chapter;
 use Learncom\Repositories\Group;
 use Learncom\Repositories\Page;
@@ -12,7 +13,7 @@ class CourseController extends ControllerBase
     public function indexAction()
     {
         $parent_keyword = 'khoahoc';
-        $type = 'video';
+        $type = 'video';        
         $repoPage = new Page();
         $repoPage->AutoGenMetaPage('khoahoc', 'Course');
         $class_id = $this->request->get('classId');
@@ -36,13 +37,7 @@ class CourseController extends ControllerBase
         $video_id = $this->request->get('videoId');
         $group_id = $group_id ? $group_id : 0;
         $video_id = $video_id ? $video_id : 0;
-        // if (strpos($current_url, "#") !== false) {
-        //     $href_after = explode("#", $current_url)[1];
-        //     if (count(explode("-", $href_after)) == 2) {
-        //         $group_id = explode("-", $href_after)[0];
-        //         $video_id = explode("-", $href_after)[1];
-        //     }
-        // }
+    
         $current_url = $this->request->getURI();
         $base_url = explode("?",$current_url)[0];
         $base_url = $base_url."?classId=".$class_id."&subjectId=".$subject_id;
