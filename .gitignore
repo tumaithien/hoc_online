@@ -13,3 +13,5 @@ public/loigiaikhode
 public/test
 public/upload
 config/config.php
+cache
+cache/*
