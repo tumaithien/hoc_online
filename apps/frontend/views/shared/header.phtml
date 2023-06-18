@@ -5,12 +5,17 @@
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
-    <meta name="keywords" content="<?php if(isset($meta_key)) { echo $meta_key; } ?>">
-    <meta name="description" content="<?php if(isset($meta_descript)) {echo $meta_descript;} ?>">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+    <meta name="keywords" content="<?php if (isset($meta_key)) {
+        echo $meta_key;
+    } ?>">
+    <meta name="description" content="<?php if (isset($meta_descript)) {
+        echo $meta_descript;
+    } ?>">
     <?php echo $this->tag->getTitle(); ?>
     <link rel="shortcut icon" href="<?php echo $this->url->getStatic('favicon.ico?v=3'); ?>">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i&display=swap" rel="stylesheet" />
@@ -23,42 +28,85 @@
         var WEB_URL = "<?php echo $this->url->get('/'); ?>";
     </script>
 </head>
-<body>
-<header id="header" class="fixed-top">
-    <div class="container d-flex align-items-center">
-        <h1 class="logo">
-            <a href="#">ChiBao</a>
-        </h1>
-        <nav id="navbar" class="navbar order-last order-lg-0">
-            <ul>
-            <li><a class="active" href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="courses.html">Courses</a></li>
-            <li><a href="trainers.html">Trainers</a></li>
-            <li><a href="events.html">Events</a></li>
-            <li><a href="pricing.html">Pricing</a></li>
-            <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
-                <ul>
-                <li><a href="#">Drop Down 1</a></li>
-                <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                    <ul>
-                    <li><a href="#">Deep Drop Down 1</a></li>
-                    <li><a href="#">Deep Drop Down 2</a></li>
-                    <li><a href="#">Deep Drop Down 3</a></li>
-                    <li><a href="#">Deep Drop Down 4</a></li>
-                    <li><a href="#">Deep Drop Down 5</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Drop Down 2</a></li>
-                <li><a href="#">Drop Down 3</a></li>
-                <li><a href="#">Drop Down 4</a></li>
-                </ul>
-            </li>
-            <li><a href="contact.html">Contact</a></li>
-            </ul>
-            <i class="bi bi-list mobile-nav-toggle"></i>
-        </nav>
-        <a href="#" class="get-started-btn">Login</a>
-    </div>
 
-</header>
+<body>
+    <header id="header" class="fixed-top">
+        <div class="container d-flex align-items-center">
+            <h1 class="logo">
+                <a href="#">ChiBao</a>
+            </h1>
+            <nav id="navbar" class="navbar order-last order-lg-0">
+                <ul>
+                    <?php foreach ($menus as $menu):
+                        $type = $menu['menu_type'];
+                        $menuExcluded = '';
+                        if ($menu['menu_exclude']) {
+                            $menuExcluded = $menu['menu_exclude'];
+                        }
+                        ?>
+                        <?php if ($menu['menu_type'] == 'home'): ?>
+                            <li><a class="active" href="<? echo $this->url->get('/') ?>">
+                                    <?= $menu['menu_name'] ?>
+                                </a>
+                            </li>
+                        <?php endif ?>
+                        <?php if (in_array($menu['menu_type'], ['tailieu', 'baigiang', 'khoahoc', 'tailieuboiduong', 'start-test', 'kiem-tra'])): ?>
+                            <li class="dropdown">
+                                <a href="javascript:void(0)"><span>
+                                        <?= $menu['menu_name'] ?>
+                                    </span> <i class="bi bi-chevron-down"></i>
+                                </a>
+                                <ul>
+                                    <?php
+                                    $url = $type . '?classId=';
+                                    foreach ($arrClass as $class):
+                                        ?>
+                                        <li class="dropdown"><a href="javascript:void(0)"><span>
+                                                    <?= $class['class_name'] ?>
+                                                </span> <i class="bi bi-chevron-right"></i></a>
+                                            <ul>
+                                                <?php foreach ($arrSubject as $subject): ?>
+                                                    <li><a
+                                                            href="<?= $this->url->get($url) . $class['class_id'] . '&subjectId=' . $subject['subject_id'] ?>"><?= $subject['subject_name'] ?></a></li>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </li>
+                        <?php endif ?>
+                        <?php if ($menu['menu_type'] == 'blog'): ?>
+                            <li><a class="active" href="<?php echo $this->url->get('/blogs') ?>">
+                                    <?= $menu['menu_name'] ?>
+                                </a>
+                            </li>
+                        <?php endif ?>
+
+                        <!--                         
+                        <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+                            <ul>
+                                <li><a href="#">Drop Down 1</a></li>
+                                <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i
+                                            class="bi bi-chevron-right"></i></a>
+                                    <ul>
+                                        <li><a href="#">Deep Drop Down 1</a></li>
+                                        <li><a href="#">Deep Drop Down 2</a></li>
+                                        <li><a href="#">Deep Drop Down 3</a></li>
+                                        <li><a href="#">Deep Drop Down 4</a></li>
+                                        <li><a href="#">Deep Drop Down 5</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">Drop Down 2</a></li>
+                                <li><a href="#">Drop Down 3</a></li>
+                                <li><a href="#">Drop Down 4</a></li>
+                            </ul>
+                        </li> -->
+                        <!-- <li><a href="contact.html">Contact</a></li> -->
+                    <?php endforeach; ?>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+            <a href="#" class="get-started-btn">Login</a>
+        </div>
+
+    </header>
