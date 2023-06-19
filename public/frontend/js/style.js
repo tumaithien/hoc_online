@@ -134,4 +134,15 @@ $(function () {
     },
     true
   );
+  /**
+   * Toggle Pass
+   */
+  on("click", ".toggle-pass", function (e) {
+    this.closest("._input--pasword").classList.toggle("active");
+    if (select("._input--pasword").classList.contains("active")) {
+      this.previousElementSibling.setAttribute("type", "text");
+    } else {
+      this.previousElementSibling.setAttribute("type", "password");
+    }
+  });
 });

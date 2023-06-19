@@ -12319,6 +12319,101 @@ ul.list-style > li:hover > a {
   margin-top: 20px;
 }
 
+.form_wrapper {
+  position: relative;
+  width: 100%;
+  padding: 100px 10px;
+  isolation: isolate;
+  min-height: 50vh;
+  background-color: #fcfcfd;
+}
+.form_wrapper .form_login {
+  background-color: white;
+  width: 100%;
+  max-width: 556px;
+  margin: 0 auto;
+  padding: 50px 60px;
+  border-radius: 10px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.form_wrapper form {
+  margin-top: 20px;
+}
+.form_wrapper h2 {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+}
+.form_wrapper p {
+  text-align: center;
+  font-size: 14px;
+  color: #808191;
+}
+.form_wrapper a {
+  color: #5fcf80;
+  text-decoration: underline;
+  font-size: 14px;
+}
+.form_wrapper label {
+  color: #808191;
+}
+.form_wrapper .input_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.form_wrapper .input_wrapper input {
+  padding: 15px 25px;
+  border: 1px solid #f1f1f3;
+  border-radius: 10px;
+}
+.form_wrapper .input_wrapper input.has-error {
+  border-color: #eb5757;
+}
+.form_wrapper .input_wrapper input:focus,
+.form_wrapper .input_wrapper input:focus-visible {
+  outline: unset;
+}
+.form_wrapper .input_wrapper .text-error {
+  color: #eb5757;
+}
+.form_wrapper ._input--pasword {
+  position: relative;
+}
+.form_wrapper ._input--pasword .toggle-pass {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  cursor: pointer;
+}
+.form_wrapper ._input--pasword .toggle-pass ._hide-password {
+  display: none;
+}
+.form_wrapper ._input--pasword input {
+  padding-right: 50px;
+}
+.form_wrapper ._input--pasword.active .toggle-pass ._show-password {
+  display: none;
+}
+.form_wrapper ._input--pasword.active .toggle-pass ._hide-password {
+  display: block;
+}
+.form_wrapper button {
+  padding: 13px;
+  border-radius: 10px;
+  text-align: center;
+  background-color: #5fcf80;
+  font-size: 16px;
+  color: white;
+  border: unset;
+  width: 100%;
+  transition: 0.2s;
+}
+.form_wrapper button:hover {
+  background-color: #3ac162;
+}
+
 .w-85px {
   width: 85px !important;
 }
@@ -12736,6 +12831,7 @@ input, input:before, input:after {
   color: #37423b;
   font-size: 14px;
   background: #eef0ef;
+  max-height: 237px;
 }
 #footer .footer-top {
   padding: 60px 0 30px 0;
