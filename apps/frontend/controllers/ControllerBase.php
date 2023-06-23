@@ -82,7 +82,6 @@ class ControllerBase extends Controller
             ])->toArray();
             $arrClass = $cacheClass->setCache($arrClass);
         }
-
         $cacheSubject = new CacheRepo('all_subject');
         $arrSubject = $cacheSubject->getCache();
         if (!$arrSubject) {

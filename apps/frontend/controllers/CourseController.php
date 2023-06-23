@@ -8,26 +8,27 @@ use Learncom\Repositories\Group;
 use Learncom\Repositories\Page;
 use Learncom\Repositories\Video;
 
-class CourseController extends ControllerBase
+class CourseController extends CoursebaseController
 {
     
     public function indexAction()
     {
+        
         $parent_keyword = 'khoahoc';
-        // $this->type = "video";
+        $this->type = "video";
         $repoPage = new Page();
         $repoPage->AutoGenMetaPage('khoahoc', 'Course');
 
-        // $this->checkingAuth();
-        // $this->getListGroup();
-        // $this->getListLesson();
+        $this->checkingAuth();
+        $this->getListGroup();
+        $this->getListLesson();
         $this->view->setVars([
             // 'type' => $this->type,
             'parent_keyword' => $parent_keyword,
             'class_id' => $this->class_select,
             'subject_id' => $this->subject_select,
-            // 'chapters' => $this->list_chapter,
-            // 'lessons' => $this->lesson,
+            'chapters' => $this->list_chapter,
+            'lessons' => $this->lesson,
         ]);
     }
     public function viewAction()

@@ -2,13 +2,10 @@
 
 namespace Learncom\Frontend\Controllers;
 
+// use Learncom\Frontend\Controllers\ControllerBase;
 use Learncom\Repositories\Group;
 use Learncom\Repositories\Video;
 
-/**
- * @property \GlobalVariable globalVariable
- * @property \My my
- */
 class CoursebaseController extends ControllerBase
 {
 
@@ -20,6 +17,7 @@ class CoursebaseController extends ControllerBase
     protected $lesson_select;
     public function initialize()
     {
+        parent::initialize();
         $this->group_select = $this->request->get('group'); //chapter in document
         $this->lesson_select = $this->request->get('lesson');
     }
@@ -40,8 +38,9 @@ class CoursebaseController extends ControllerBase
     }
     public function getListLesson()
     {
+        
         foreach ($this->list_chapter as $chapter) {
-            $this->lesson = Video::findByClassAndSubjectAndTypeAndGroupAndCache($this->class_select, $this->subject_select, $this->type, $chapter['group_id']);
+            $this->lesson = Video::findAndCache($this->class_select, $this->subject_select, $this->type, $chapter['group_id']);
             if (!empty($this->lesson)) {
                 $this->chapter = $chapter;
                 break;

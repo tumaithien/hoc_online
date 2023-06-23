@@ -35,7 +35,7 @@ class Video extends Component
             'order' => 'video_order ASC'
         ]);
     }
-    public static function findByClassAndSubjectAndTypeAndGroupAndCache($class_id, $subject_id, $type, $group_id)
+    public static function findAndCache($class_id, $subject_id, $type, $group_id)
     {
         $key = "video_findByClassAndSubjectAndTypeAndGroupAndCache_{$class_id}_{$subject_id}_{$type}_{$group_id}";
         $cache = new CacheRepo($key);
@@ -48,6 +48,6 @@ class Video extends Component
             ]);
             $data = $cache->setCache($model->toArray());
         }
-        return $data
+        return $data;
     }
 }
