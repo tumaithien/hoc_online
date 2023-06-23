@@ -10,6 +10,7 @@ use Learncom\Repositories\Video;
 
 class CourseController extends CoursebaseController
 {
+    
     public function indexAction()
     {
         $parent_keyword = 'khoahoc';
@@ -20,14 +21,13 @@ class CourseController extends CoursebaseController
         $this->checkingAuth();
         $this->getListGroup();
         $this->getListLesson();
-
         $this->view->setVars([
-            'type' => $this->type,
+            // 'type' => $this->type,
             'parent_keyword' => $parent_keyword,
             'class_id' => $this->class_select,
             'subject_id' => $this->subject_select,
             'chapters' => $this->list_chapter,
-            'lessons' => $this->list_lesson,
+            'lessons' => $this->lesson,
         ]);
     }
     public function viewAction()

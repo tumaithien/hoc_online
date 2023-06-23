@@ -25,12 +25,13 @@ class CoursebaseController extends ControllerBase
     }
     public function checkingAuth()
     {
-        if (!$this->auth) {
-            return $this->response->redirect("/login");
-        }
-        if (!in_array($this->class_select, $this->class_id) || !in_array($this->subject_select, $this->subject_id)) {
-            return $this->response->redirect("/permission");
-        }
+        // var_dump($this->auth);exit;
+        // if (!$this->auth) {
+        //     return $this->response->redirect("/login");
+        // }
+        // if (!in_array($this->class_select, $this->class_id) || !in_array($this->subject_select, $this->subject_id)) {
+        //     return $this->response->redirect("/permission");
+        // }
     }
     public function getListGroup()
     {
