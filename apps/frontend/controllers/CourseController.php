@@ -13,7 +13,7 @@ class CourseController extends ControllerBase
     public function indexAction()
     {
         $parent_keyword = 'khoahoc';
-        $type = 'video';        
+        $type = 'video';
         $repoPage = new Page();
         $repoPage->AutoGenMetaPage('khoahoc', 'Course');
         $class_id = $this->request->get('classId');
@@ -32,15 +32,15 @@ class CourseController extends ControllerBase
                 break;
             }
         }
-       
+
         $group_id = $this->request->get('groupId');
         $video_id = $this->request->get('videoId');
         $group_id = $group_id ? $group_id : 0;
         $video_id = $video_id ? $video_id : 0;
-    
+
         $current_url = $this->request->getURI();
-        $base_url = explode("?",$current_url)[0];
-        $base_url = $base_url."?classId=".$class_id."&subjectId=".$subject_id;
+        $base_url = explode("?", $current_url)[0];
+        $base_url = $base_url . "?classId=" . $class_id . "&subjectId=" . $subject_id;
         $this->view->setVars([
             'type' => $type,
             'parent_keyword' => $parent_keyword,
@@ -52,5 +52,8 @@ class CourseController extends ControllerBase
             'base_url' => $base_url,
             'listChapters' => $listChapters
         ]);
+    }
+    public function viewAction()
+    {
     }
 }

@@ -13,17 +13,15 @@ class LoginController extends ControllerBase
 {
     public function indexAction()
     {
-
     }
     public function loginAction()
     {
-        if($this->auth)
-        {
+        if ($this->auth) {
             $this->response->redirect('/');
         }
         $data = array();
         $message = array();
-        if($this->request->isPost()){
+        if ($this->request->isPost()) {
             $data = array(
                 'user_code' => $this->request->getPost('txtEmail', array('string', 'trim')),
                 'user_password' => $this->request->getPost('txtPassword', array('string', 'trim')),
@@ -36,25 +34,24 @@ class LoginController extends ControllerBase
                 $message['password'] = 'Vui lòng nhập mật khẩu';
             }
             $user = LearnUser::findFirstByUserCode($data['user_code']);
-            if(!$user){
+            if (!$user) {
                 $message['email'] = 'Account này không tồn tại';
             }
-            if (empty($message)){
+            if (empty($message)) {
                 $userPassword = $user->getUserPassword();
-                if($this->security->checkHash($data['user_password'], $userPassword)){
+                if ($this->security->checkHash($data['user_password'], $userPassword)) {
                     if ($user->getUserRole() === 'user') {
                         $checkIp = self::whithStudent($user);
                     } else {
                         $checkIp = true;
                     }
                     $checkIp = true;
-                    if ($checkIp){
+                    if ($checkIp) {
                         $this->startSession($user);
                         $preURL = $this->session->get('preURL');
-                       // var_dump($preURL);exit;
+                        // var_dump($preURL);exit;
                         $this->session->remove('preURL');
-                        if($preURL)
-                        {
+                        if ($preURL) {
                             $this->response->redirect($preURL);
                         } else {
                             return $this->response->redirect('/');
@@ -73,15 +70,17 @@ class LoginController extends ControllerBase
             'message' => $message,
         ]);
         $repoPage = new Page();
-        $repoPage->AutoGenMetaPage('login','Login');
+        $repoPage->AutoGenMetaPage('login', 'Login');
     }
-
+    public function registerAction()
+    {
+    }
     public function logoutAction()
     {
         $preUrl = $this->session->get('preURL');
         $destoyed = $this->session->destroy();
-        setcookie('email', '', time()-3600);
-        setcookie('password', '', time()-3600);
+        setcookie('email', '', time() - 3600);
+        setcookie('password', '', time() - 3600);
         $this->session->set('preURL', $preURl);
         $this->response->redirect('/login');
     }
@@ -97,12 +96,13 @@ class LoginController extends ControllerBase
         if ($result) {
             $role_name = $user->getUserRole();
             $user_repo = new User();
-            $user_repo->initSession($user,$role_name, $token_onile);
+            $user_repo->initSession($user, $role_name, $token_onile);
             $this->auth = $this->session->get('auth');
             $_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
         }
     }
-    private static function whithStudent($user) {
+    private static function whithStudent($user)
+    {
         $checkIp = false;
         $externalIp = $_SERVER['REMOTE_ADDR'];
         $userIp = $user->getUserIp();
@@ -110,15 +110,14 @@ class LoginController extends ControllerBase
         $cookie_2 = isset($_COOKIE['p2']) ? $_COOKIE['p2'] : "";
         $token_cookie_1 = $user->getUserTokenCokie1();
         $token_cookie_2 = $user->getUserTokenCokie2();
-        if ($userIp && strlen($userIp)){
-            if ($userIp == $externalIp){
+        if ($userIp && strlen($userIp)) {
+            if ($userIp == $externalIp) {
                 $checkIp = true;
             }
-
         } else {
             $user->setUserIp($externalIp);
             $resultSave = $user->save();
-            if($resultSave){
+            if ($resultSave) {
                 $checkIp = true;
             }
         }
@@ -129,7 +128,7 @@ class LoginController extends ControllerBase
                 $result1 = $user->save();
                 if ($result1) {
                     //cokie 1 năm
-                    setcookie('p1', $token_1, time() + 1 * 365 * 24* 60 *60, "/");
+                    setcookie('p1', $token_1, time() + 1 * 365 * 24 * 60 * 60, "/");
                 }
             } else {
                 $token_2 = Login::generateKey(30);
@@ -137,7 +136,7 @@ class LoginController extends ControllerBase
                 $result2 = $user->save();
                 if ($result2) {
                     //cokie 1 năm
-                    setcookie('p2', $token_2, time() + 1 * 365 * 24* 60 *60, "/");
+                    setcookie('p2', $token_2, time() + 1 * 365 * 24 * 60 * 60, "/");
                 }
             }
         } else {
