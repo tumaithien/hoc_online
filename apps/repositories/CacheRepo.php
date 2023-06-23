@@ -31,7 +31,7 @@ class CacheRepo extends Component
     }
     public function getCache()
     {
-        
+
         $sessionId = self::PRE_SESSION_CACHE . $this->key;
 
         $cache = self::getBackCache();
@@ -51,7 +51,6 @@ class CacheRepo extends Component
                 mkdir(self::filePath);
             }
             $result = $cache->delete($cacheKey);
-
         } catch (\Exception $e) {
             return false;
         }
@@ -59,7 +58,7 @@ class CacheRepo extends Component
         // $result =  $cache->set($cacheKey);
         return $result;
     }
-    public function setCache( $data)
+    public function setCache($data)
     {
         $sessionId = self::PRE_SESSION_CACHE . $this->key;
         $cache = self::getBackCache();
@@ -88,7 +87,7 @@ class CacheRepo extends Component
     public static function getFrontCache()
     {
         if (self::$frontCache == null) {
-            self::$frontCache = new FrontData(['lifetime' => 24 * 60 * 60]);
+            self::$frontCache = new FrontData(['lifetime' => 360 * 24 * 60 * 60]);
         }
 
         return self::$frontCache;
@@ -99,5 +98,4 @@ class CacheRepo extends Component
     {
         return $sessionId . 'cls.data';
     }
-
 }
