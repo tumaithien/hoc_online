@@ -3,7 +3,7 @@
 namespace Learncom\Models;
 use Phalcon\Security;
 
-class LearnUser extends \Phalcon\Mvc\Model
+class LearnUser extends BaseModel
 {
 
     /**

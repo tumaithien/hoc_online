@@ -58,6 +58,15 @@ class CacheRepo extends Component
         // $result =  $cache->set($cacheKey);
         return $result;
     }
+    public function deleteAllCache()
+    {
+        $cache = self::getBackCache();
+        $cacheKeys = $cache->queryKeys();
+        foreach ($cacheKeys as $key) {
+            $result = $cache->delete($key);
+        }
+
+    }
     public function setCache($data)
     {
         $sessionId = self::PRE_SESSION_CACHE . $this->key;
