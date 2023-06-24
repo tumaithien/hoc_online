@@ -54,7 +54,7 @@ class LoginController extends ControllerBase
                         if ($preURL) {
                             $this->response->redirect($preURL);
                         } else {
-                            return $this->response->redirect('/');
+                            $this->response->redirect("/account/change-profile");
                         }
                     } else {
                         $message['password'] = 'Vui lòng đăng nhập đúng địa chỉ IP';
@@ -74,6 +74,59 @@ class LoginController extends ControllerBase
     }
     public function registerAction()
     {
+        $this->response->redirect('/');
+
+        if ($this->auth) {
+            $this->response->redirect('/');
+        }
+        $data = array();
+        $message = array();
+        if ($this->request->isPost()) {
+            $data = array(
+                'user_name' => $this->request->getPost('txtName', array('string', 'trim')),
+                'user_code' => $this->request->getPost('txtEmail', array('string', 'trim')),
+                'user_password' => $this->request->getPost('txtPassword', array('string', 'trim')),
+                'user_password_confirm' => $this->request->getPost('txtPasswordConfirm', array('string', 'trim')),
+
+            );
+
+            $checkUser = User::checkExistCode($data['user_code']);
+            if ($checkUser) {
+                $message['user_code'] = 'Tài khoản đã có người đăng ký';
+            }
+
+            if (empty($data['user_code'])) {
+                $message['user_code'] = 'Vui lòng nhập account';
+            }
+            if (empty($data['user_password'])) {
+                $message['user_password'] = 'Vui lòng nhập mật khẩu';
+            }
+            if (empty($data['user_password_confirm'])) {
+                $message['password_confirm'] = 'Vui lòng nhập mật khẩu';
+            }
+            if (empty($message)) {
+                $data['user_active'] = "Y";
+                $data['user_spencial'] = "N";
+                $data['user_role'] = "user";
+                $data['user_insert_time'] = time();
+
+                $user = new LearnUser();
+                $result = $user->save($data);
+                if ($result) {
+                    $user = User::checkExistCode($data['user_code']);
+                    $this->startSession($user);
+                    $this->response->redirect("/account/change-profile");
+                }
+
+            }
+
+        }
+        $this->view->setVars([
+            'formData' => $data,
+            'message' => $message,
+        ]);
+        $repoPage = new Page();
+        $repoPage->AutoGenMetaPage('login', 'Login');
     }
     public function logoutAction()
     {

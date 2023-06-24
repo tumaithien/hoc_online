@@ -2,7 +2,7 @@
 
 namespace Learncom\Models;
 
-class LearnGroup extends \Phalcon\Mvc\Model
+class LearnGroup extends BaseModelCache
 {
 
     /**

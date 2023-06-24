@@ -18,11 +18,14 @@
     } ?>">
     <?php echo $this->tag->getTitle(); ?>
     <link rel="shortcut icon" href="<?php echo $this->url->getStatic('favicon.ico?v=3'); ?>">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i&display=swap" rel="stylesheet" />
-    <link href="<?php echo $this->url->getStatic('frontend/css/')?>app.css?v=<?php echo time(); ?>" rel="stylesheet">
-    <link href="<?php echo $this->url->getStatic('frontend/vendor/aos/')?>aos.css" rel="stylesheet">
-    <link href="<?php echo $this->url->getStatic('frontend/vendor/bootstrap-icons/')?>bootstrap-icons.css" rel="stylesheet">
-    <link href="<?php echo $this->url->getStatic('frontend/vendor/boxicons/css/')?>boxicons.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i&display=swap"
+        rel="stylesheet" />
+    <link href="<?php echo $this->url->getStatic('frontend/css/') ?>app.css?v=<?php echo time(); ?>" rel="stylesheet">
+    <link href="<?php echo $this->url->getStatic('frontend/vendor/aos/') ?>aos.css" rel="stylesheet">
+    <link href="<?php echo $this->url->getStatic('frontend/vendor/bootstrap-icons/') ?>bootstrap-icons.css"
+        rel="stylesheet">
+    <link href="<?php echo $this->url->getStatic('frontend/vendor/boxicons/css/') ?>boxicons.min.css" rel="stylesheet">
     <script>
         var commands = [];
         var WEB_URL = "<?php echo $this->url->get('/'); ?>";
@@ -50,14 +53,14 @@
                         }
                         ?>
                         <?php if ($menu['menu_type'] == 'home'): ?>
-                            <li><a class="<?=$active_menu ?>" href="<? echo $this->url->get('/') ?>">
+                            <li><a class="<?= $active_menu ?>" href="<? echo $this->url->get('/') ?>">
                                     <?= $menu['menu_name'] ?>
                                 </a>
                             </li>
                         <?php endif ?>
                         <?php if (in_array($menu['menu_type'], ['tailieu', 'baigiang', 'khoahoc', 'tailieuboiduong', 'start-test', 'kiem-tra'])): ?>
                             <li class="dropdown">
-                                <a class="<?=$active_menu ?>" href="javascript:void(0)"><span>
+                                <a class="<?= $active_menu ?>" href="javascript:void(0)"><span>
                                         <?= $menu['menu_name'] ?>
                                     </span> <i class="bi bi-chevron-down"></i>
                                 </a>
@@ -90,7 +93,7 @@
                             </li>
                         <?php endif ?>
                         <?php if ($menu['menu_type'] == 'blog'): ?>
-                            <li><a  class="<?=$active_menu ?>" href="<?php echo $this->url->get('/blogs') ?>">
+                            <li><a class="<?= $active_menu ?>" href="<?php echo $this->url->get('/blogs') ?>">
                                     <?= $menu['menu_name'] ?>
                                 </a>
                             </li>
@@ -99,7 +102,15 @@
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav>
-            <a href="<?php echo $this->url->get('/login') ?>" class="get-started-btn">Đăng Nhập</a>
+            <?php if (empty($auth)): ?>
+                <a href="<?php echo $this->url->get('/login') ?>" class="get-started-btn">Đăng Nhập</a>
+
+            <?php else: ?>
+                <a href="<?php echo $this->url->get('/account/change-profile') ?>" class="get-started-btn">Thông tin tài
+                    khoản</a>
+                <a href="<?php echo $this->url->get('/logout') ?>" class="get-started-btn">Thoát</a>
+
+            <?php endif ?>
         </div>
 
     </header>

@@ -1,8 +1,7 @@
 <main>
     <div class="form_wrapper">
         <div class="form_login">
-            <h2>Welcome Back!</h2>
-            <p>Dont have an account? <a href="#">Sign up</a></p>
+            <h2>Đăng nhập!</h2>
             <form autoComplete="off" method="POST" name="formLogin" enctype="multipart/form-data" action="">
                 <div class="input_wrapper">
                     <label for="email">Email <span class="text-danger">*</span></label>
@@ -29,7 +28,6 @@
                     </div>
                     <span class="text-error msg-password"><?php echo isset($message['password']) ? $message['password'] : ""; ?></span>
                 </div>
-                <div class="text-right"><a href="#">Forgot password</a></div>
                 <div class="mt-20">
                     <button type="button" name="btnLogin">
                         Đăng nhập

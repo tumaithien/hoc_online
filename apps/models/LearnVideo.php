@@ -2,7 +2,7 @@
 
 namespace Learncom\Models;
 
-class LearnVideo extends \Phalcon\Mvc\Model
+class LearnVideo extends BaseModelCache
 {
 
     /**
@@ -296,7 +296,7 @@ class LearnVideo extends \Phalcon\Mvc\Model
     /**
      * Initialize method for model.
      */
-//    public function initialize()
+    //    public function initialize()
 //    {
 //        $this->setSchema("hoc_truc_tuyen");
 //    }
