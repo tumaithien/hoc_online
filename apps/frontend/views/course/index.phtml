@@ -10,75 +10,38 @@
  * @var \Learncom\Models\LearnGroup[] $listChapters
  */
 ?>
-<main>
-    <div class="container-fluid">
-        <h2 class="text-main text-center text-bolder my-20">
-            <?php echo \Learncom\Repositories\ClassSubject::findFirstSubjectNameById($subject_id) . ' ' . \Learncom\Repositories\ClassSubject::findFirstClassNameById($class_id) ?>
-        </h2>
-        <?php
-        if (count($lessons) > 0) {
-            if ($group_id == 0) {
-                $group_id = $lessons[0]->getVideoGroupId();
-            }
-        ?>
-            <div class="row mx-0 list-courses-wrap">
-                <div class="col-12 col-lg-4 col-xl-3 list-coutses">
-                    <div class="list-wrap box-shadow-1">
-                        <?php
-
-                        if (sizeof($listChapters) > 0) {
-                            $lesson_link = "";
-                            foreach ($listChapters as $chapter) {
-                                if (!in_array($chapter->getGroupId(), $auth['group_excluded_ids'])) {
-                                    $aria_expanded = "";
-                                    $is_show = '';
-                                    if ($chapter->getGroupId() == $group_id) {
-                                        $aria_expanded = 'aria-expanded="true"';
-                                        $is_show = "show";
-                                    }
-
-                        ?>
-                                    <span id="tab1-<?php echo $chapter->getGroupId() ?>" class="item-style item-menu justify-content-start" data-toggle="collapse" data-target="#course-sub-<?php echo $chapter->getGroupId() ?>" <?= $aria_expanded ?>>
-                                        <?php echo $chapter->getGroupName() ?>
-                                    </span>
-                                    <?php
-                                    $listLessons = \Learncom\Repositories\Video::findByClassAndSubjectAndTypeAndGroup($class_id, $subject_id, $type, $chapter->getGroupId());
-                                    if (sizeof($listLessons) > 0) {
-                                    ?>
-                                        <div class="collapse <?= $is_show ?>" id="course-sub-<?php echo $chapter->getGroupId() ?>">
-                                            <div class="sub-list">
-                                                <?php foreach ($listLessons as $lesson) {
-                                                    if ($video_id == 0) {
-                                                        $video_id = $lessons[0]->video_id;
-                                                    }
-                                                    $class_style = "";
-                                                    if ($lesson->video_id == $video_id) {
-                                                        $lesson_link = $lesson->video_link;
-                                                        $class_style = "active";
-                                                    }
-                                                    $href_a = $base_url . "&groupId=" . $chapter->group_id . "&videoId=" .  $lesson->video_id;
-                                                ?>
-                                                    <a id="<?= $chapter->group_id ?>-<?= $lesson->video_id ?>" href="<?= $href_a ?>" class="item-style <?= $class_style ?> justify-content-start" data-src-iframe="<?php echo $lesson->video_link ?>">
-                                                        <?php echo $lesson->video_name ?>
-                                                    </a>
-                                                <?php } ?>
-                                            </div>
-                                        </div>
-                                    <?php } ?>
-                        <?php }
-                            }
-                        } ?>
+<main class="videoCourse_wrapper" >
+    <div class="videoCourse_top">
+        <a href="/" title="home" class="videoCourse_back"><i class="bx bx-chevron-left"></i>Home</a>
+        <h1 class="videoCourse_title">Vật Lý 10</h1>
+    </div>
+    <div class="videoCourse_content">
+            <div class="videoCourse_video">
+                <iframe src="https://www.youtube.com/embed/gCQPgRqdSd8" allowfullscreen></iframe>
+            </div>
+            <div class="videoCourse_rightSidebar">
+                <div class="videoCourse_rightSidebar-top">
+                    <h2>Nội dung bài học</h2>
+                </div>
+                <div class="videoCourse_collapsibleContent">
+                <div class="videoCourse_collapsible">Chương 1: Vật lý hiện đại <i class='bx bxs-chevron-down'></i></div>
+                <div class="videoCourse_contentRight">
+                    <div class="contentRight-item">
+                        <a href="#">1. Vật lý nguyên tử</a>
+                    </div>
+                    <div class="contentRight-item">
+                        <a href="#">2. Vật lý hạt nhân</a>
+                    </div>
+                    <div class="contentRight-item">
+                        <a href="#">3. Vật lý động học</a>
+                    </div>
+                    <div class="contentRight-item">
+                        <a href="#">4. Chuyển động kép</a>
                     </div>
                 </div>
-                <div class="col-12 col-lg-8 col-xl-9 courses-detail">
-                    <div class="video-iframe">
-                        <iframe src="<?= $lesson_link ?>" allowfullscreen></iframe>
-                    </div>
                 </div>
             </div>
-        <?php } ?>
-
-    </div>
+        </div>
 </main>
 
 <script type="text/javascript">

@@ -12414,6 +12414,93 @@ ul.list-style > li:hover > a {
   background-color: #3ac162;
 }
 
+.videoCourse_wrapper {
+  padding-top: 71px;
+}
+.videoCourse_wrapper .videoCourse_top {
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+}
+.videoCourse_wrapper .videoCourse_title {
+  font-size: 20px;
+  margin-bottom: 0;
+}
+.videoCourse_wrapper .videoCourse_back {
+  font-size: 20px;
+  display: inline-flex;
+  align-items: center;
+  padding-right: 30px;
+  margin-right: 30px;
+  border-right: 1px solid #e0e0e0;
+}
+.videoCourse_wrapper .videoCourse_back i {
+  font-size: 30px;
+}
+.videoCourse_wrapper .videoCourse_content {
+  display: flex;
+  padding: 20px 0 20px 30px;
+}
+.videoCourse_wrapper .videoCourse_content .videoCourse_video {
+  width: 80%;
+  min-height: 35rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.videoCourse_wrapper .videoCourse_content .videoCourse_video iframe {
+  width: 100%;
+  height: 100%;
+}
+.videoCourse_wrapper .videoCourse_content .videoCourse_rightSidebar {
+  width: 20%;
+  background-color: white;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 100%;
+}
+.videoCourse_wrapper .videoCourse_content .videoCourse_rightSidebar-top {
+  padding: 20px 1rem;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  background-color: white;
+  justify-content: space-between;
+}
+.videoCourse_wrapper .videoCourse_content .videoCourse_rightSidebar-top h2 {
+  margin-bottom: 0;
+  font-weight: bold;
+}
+.videoCourse_wrapper .videoCourse_content .videoCourse_rightSidebar-top i {
+  font-size: 25px;
+}
+.videoCourse_wrapper .videoCourse_content .videoCourse_collapsible {
+  padding: 20px;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #e9ecef;
+  font-weight: bold;
+  cursor: pointer;
+}
+.videoCourse_wrapper .videoCourse_content .videoCourse_collapsible.active {
+  background-color: #5fcf80;
+  color: white;
+}
+.videoCourse_wrapper .videoCourse_content .contentRight-item a {
+  display: block;
+  padding: 1rem;
+  transition: all 0.1s ease;
+  font-size: 14px;
+}
+.videoCourse_wrapper .videoCourse_content .contentRight-item a:hover, .videoCourse_wrapper .videoCourse_content .contentRight-item a.active {
+  background-color: #5fcf80;
+  color: white;
+}
+
 .w-85px {
   width: 85px !important;
 }
@@ -12630,6 +12717,7 @@ input, input:before, input:after {
 }
 #header .navbar .dropdown ul li {
   min-width: 200px;
+  margin-bottom: 5px;
 }
 #header .navbar .dropdown ul a {
   padding: 10px 20px;
