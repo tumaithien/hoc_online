@@ -10,10 +10,9 @@ use Learncom\Repositories\Video;
 
 class CourseController extends CoursebaseController
 {
-    
+
     public function indexAction()
     {
-        
         $parent_keyword = 'khoahoc';
         $this->type = "video";
         $repoPage = new Page();
@@ -29,6 +28,9 @@ class CourseController extends CoursebaseController
             'subject_id' => $this->subject_select,
             'chapters' => $this->list_chapter,
             'lessons' => $this->lesson,
+            'group_select' => $this->group_select,
+            'lesson_select' => $this->lesson_select,
+            'link' => $this->link,
         ]);
     }
     public function viewAction()

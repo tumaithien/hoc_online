@@ -100,7 +100,7 @@ class LearnClass extends BaseModelCache
     /**
      * Initialize method for model.
      */
-//    public function initialize()
+    //    public function initialize()
 //    {
 //        $this->setSchema("hoc_truc_tuyen");
 //    }
@@ -135,6 +135,16 @@ class LearnClass extends BaseModelCache
     public static function findFirst($parameters = null)
     {
         return parent::findFirst($parameters);
+    }
+    public static function getNameById($id)
+    {
+        $object = self::findFirst([
+            'class_id = :id:',
+            'bind' => [
+                'id' => $id
+            ]
+        ]);
+        return $object ? $object->getClassName() : "";
     }
 
 }
