@@ -49,7 +49,10 @@ class DocumentdifficultController extends CoursebaseController
         $this->getListGroup();
         foreach ($this->chapter_temp as $chapter) {
             $active_group = "";
-            $lesson_temp = Document::findByClassAndSubjectAndChapterAndCache($this->class_select, $this->subject_select, $chapter['chapter_id']);
+            $lesson_temp = Document::findByClassAndSubjectAndChapterAndCache($this->class_select, $this->subject_select, $chapter['chapter_id'],"excellent");
+            if (empty($lesson_temp)) {
+                continue;
+            }
             if (!$this->group_select) {
                 $this->group_select = $chapter['chapter_id'];
             }
