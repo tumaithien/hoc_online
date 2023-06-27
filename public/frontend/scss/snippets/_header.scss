@@ -4,6 +4,17 @@
   z-index: 1000;
   padding: 15px 0;
   box-shadow: 0px 0 18px rgba(55, 66, 59, 0.08);
+  @media (max-width: 1520px) {
+    &:has(.get-started-btn:nth-of-type(2)) {
+      .header_wrapper {
+        flex-wrap: wrap !important;
+        row-gap: 10px;
+      }
+      .get-started-btn:nth-of-type(1) {
+        margin-left: 0;
+      }
+    }
+  }
 
   .logo {
     font-size: 30px;

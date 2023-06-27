@@ -72,6 +72,14 @@
       background-color: $primary-color;
       color: white;
     }
+    .videoCourse_collapsibleContent {
+      border-bottom: 1px solid $gray-1;
+    }
+    .videoCourse_contentRight {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
     .contentRight-item a {
       display: block;
       padding: 1rem;
@@ -81,6 +89,19 @@
       &.active {
         background-color: $primary-color;
         color: white;
+      }
+    }
+  }
+  @media (max-width: 992px) {
+    .videoCourse_content {
+      flex-direction: column;
+      padding-left: 0;
+      .videoCourse_video {
+        width: 100%;
+      }
+      .videoCourse_rightSidebar {
+        width: 100%;
+        margin-top: 20px;
       }
     }
   }

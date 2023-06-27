@@ -145,14 +145,24 @@ $(function () {
       this.previousElementSibling.setAttribute("type", "password");
     }
   });
-});
 
-on("click", ".videoCourse_collapsible", function (e) {
-  this.classList.toggle("active");
-  var content = this.nextElementSibling;
-  if (content.style.maxHeight) {
-    content.style.maxHeight = null;
-  } else {
-    content.style.maxHeight = content.scrollHeight + "px";
-  }
+  on("click", ".videoCourse_collapsible", function (e) {
+    console.log("true :>> ", true);
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight) {
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + "px";
+    }
+  });
+
+  window.addEventListener("load", () => {
+    AOS.init({
+      duration: 1000,
+      easing: "ease-in-out",
+      once: true,
+      mirror: false,
+    });
+  });
 });

@@ -1,0 +1,43 @@
+<?php
+/**
+ * @var $parent_keyword;
+ * @var \Learncom\Models\LearnArticle[] $articles
+ */
+?>
+
+<main>
+    <div class="padding-block bg-white">
+        <div class="container">
+            <h2 class="text-main text-30 font-weight-bold text-center">BLOGS</h2>
+            <div class="line-bottom-bolder mx-auto mb-10"></div>
+            <?php if (count($articles) > 0) {?>
+                <div class="row mt-20">
+                    <?php foreach ($articles as $key_ar => $article){
+                        if (($key_ar)%3 == 0 && $key_ar != 0) {
+                    ?>
+                        </div>
+                        <div class="row mt-20">
+                    <?php } ?>
+                        <div class="col-lg-4 mt-20">
+                            <div class="box-blog">
+                                <div class="img-blog">
+                                    <a href="<?php echo $this->url->get('/'.$parent_keyword.'/'.$article->getArticleKeyword()); ?>" target="_self" title=""><img src="<?php echo $article->getArticleIcon() ?>" alt="" title=""></a>
+                                </div>
+                                <div class="content-blog p-15">
+                                    <h3><a href="" target="_self" title="" class="text-main"><?php echo $article->getArticleName() ?></a></h3>
+                                    <div class="line-bottom-bolder-2 mb-10"></div>
+                                    <p class="text-14"><?php echo $article->getArticleSummary() ?></p>
+                                    <a href="" target="_self" title="" class="d-block text-right text-main">Xem thêm</a>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
+            <?php if(isset($htmlPaginator) && strlen($htmlPaginator)>0){ ?>
+                <div class="paginator mgtop-30">
+                    <?php echo $htmlPaginator; ?>
+                </div>
+            <?php }} ?>
+        </div>
+    </div>
+</main>

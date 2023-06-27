@@ -1,0 +1,17 @@
+<?php
+/**
+ * @var $parent_keyword;
+ * @var \Learncom\Models\LearnArticle[] $related_articles
+ * @var \Learncom\Models\LearnArticle $article
+ */
+?>
+<nav aria-label="breadcrumb" class="breadcrumb-cus">
+    <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="<?php echo $this->url->get('/'); ?>">Trang chủ</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a href="<?php echo $this->url->get('/'.$parent_keyword); ?>">Blog</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><?php echo isset($menu_bread) ? $menu_bread : ''?></li>
+    </ol>
+</nav>
+<main class="bg-white">
+    <div class=""></div>
+</main>

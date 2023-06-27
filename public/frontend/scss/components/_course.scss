@@ -1,0 +1,58 @@
+.infoCourse_top {
+  padding: 30px 0;
+  text-align: center;
+  background-color: $primary-color;
+  color: white;
+  p {
+    color: white;
+  }
+}
+.infoCourse_wrapper {
+  padding: 60px 0;
+}
+.infoCourse_item {
+  background-color: white;
+  border: 1px solid $gray-400;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 30px;
+  .infoCourse_content {
+    padding: 15px;
+    h4 {
+      background-color: $primary-color;
+      font-size: 14px;
+      padding: 7px 14px;
+      color: white;
+      border-radius: 2px;
+      margin-bottom: 0;
+    }
+    h3 {
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    h3 a {
+      transition: all 0.3s;
+    }
+    h3 a:hover {
+      color: $primary-color;
+    }
+    p {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-word;
+      margin-bottom: 20px;
+    }
+    .trainer-rank {
+      font-size: 18px;
+      gap: 10px;
+      align-items: center;
+      color: $gray-600;
+      i {
+        font-size: 30px;
+      }
+    }
+  }
+}
