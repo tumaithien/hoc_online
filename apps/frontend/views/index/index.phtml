@@ -11,21 +11,15 @@
     </section>
     <section class="section container">
         <div class="section-title" data-aos="fade-up">
-            <p>Khóa học</p>
-            <h2>KHAI GIẢNG KHÓA HỌC</h2>
+            <p>Khai Giảng</p>
+            <h2>Lịch Khai Giảng Mới Nhất</h2>
         </div>
         <section id="course-details" data-aos="fade-up">
             <div class="container">
                 <div class="row pt-50">
                     <div class="col-lg-12">
-                        <h3>Et enim incidunt fuga tempora</h3>
-                        <p>Qui et explicabo voluptatem et ab qui vero et voluptas. Sint voluptates temporibus quam
-                            autem. Atque nostrum voluptatum laudantium a doloremque enim et ut dicta. Nostrum ducimus
-                            est iure minima totam doloribus nisi ullam deserunt. Corporis aut officiis sit nihil est.
-                            Labore aut sapiente aperiam. Qui voluptas qui vero ipsum ea voluptatem. Omnis et est.
-                            Voluptatem officia voluptatem adipisci et iusto provident doloremque consequatur. Quia et
-                            porro est. Et qui corrupti laudantium ipsa. Eum quasi saepe aperiam qui delectus quaerat in.
-                            Vitae mollitia ipsa quam. Ipsa aut qui numquam eum iste est dolorum. Rem voluptas ut sit ut.
+                        <h3><?= $blog['article_name'] ?></h3>
+                        <p><?= $blog['article_summary'] ?>
                         </p>
                         <div class="course-details-img">
                             <img src="https://bootstrapmade.com/demo/templates/Mentor/assets/img/course-details.jpg"
@@ -43,24 +37,24 @@
         <div class="container">
             <div class="row counters">
                 <div class="col-lg-3 col-6 text-center">
-                    <span data-purecounter-start="0" data-purecounter-end="1232" data-purecounter-duration="1"
+                    <span data-purecounter-start="0" data-purecounter-end="<?= $total_user ?>" data-purecounter-duration="1"
                         class="purecounter"></span>
                     <p>Học sinh</p>
                 </div>
                 <div class="col-lg-3 col-6 text-center">
-                    <span data-purecounter-start="0" data-purecounter-end="64" data-purecounter-duration="1"
+                    <span data-purecounter-start="0" data-purecounter-end="<?= $total_video ?>" data-purecounter-duration="1"
                         class="purecounter"></span>
-                    <p>Khóa học</p>
+                    <p>Bài Giảng</p>
                 </div>
 
                 <div class="col-lg-3 col-6 text-center">
-                    <span data-purecounter-start="0" data-purecounter-end="42" data-purecounter-duration="1"
+                    <span data-purecounter-start="0" data-purecounter-end="<?= $total_document ?>" data-purecounter-duration="1"
                         class="purecounter"></span>
-                    <p>Sự kiện</p>
+                    <p>Tài Liệu</p>
                 </div>
 
                 <div class="col-lg-3 col-6 text-center">
-                    <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1"
+                    <span data-purecounter-start="0" data-purecounter-end="3" data-purecounter-duration="1"
                         class="purecounter"></span>
                     <p>Giáo viên</p>
                 </div>
@@ -69,106 +63,38 @@
     </section>
     <section class="section container">
         <div class="section-title" data-aos="fade-up">
-            <p>Video</p>
-            <h2>VIDEO TIÊU BIỂU</h2>
+            <p>Bài giảng</p>
+            <h2>BÀI GIẢNG TIÊU BIỂU</h2>
         </div>
         <div class="row section-slick" data-aos="zoom-in" data-aos-delay="100">
-            <div class="col-lg-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
-                <div class="course-item">
-                    <div class="course-img">
-                        <img src="https://bootstrapmade.com/demo/templates/Mentor/assets/img/course-2.jpg"
-                            alt="Course" />
-                    </div>
-                    <div class="course-content">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4>Vật lý 10</h4>
+            <?php foreach ($videos as $video):
+                ?>
+                <div class="col-lg-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <img src="https://bootstrapmade.com/demo/templates/Mentor/assets/img/course-2.jpg"
+                                alt="Course" />
                         </div>
-                        <h3>
-                            <a href="#">Khóa học vật lý 10</a>
-                        </h3>
-                        <p>Xuất phát từ nhu cầu học thêm môn toán của các em học sinh để chuẩn bị kiến thức cho kỳ thi
-                            vào lớp 10 vô cùng khốc liệt ở Hà Nội, CMath đã cùng với các thầy cô giáo</p>
-                        <div>
-                            <div class="trainer-rank d-flex align-items-center">
-                                <i class='bx bxs-calendar'></i>
-                                <span>19/02/2023</span>
+                        <div class="course-content">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4>Vật lý 10</h4>
+                            </div>
+                            <h3>
+                                <a href="<?= $this->url->get("/tailieu?classId=21&subjectId=5") ?>"><?= $video['video_name'] ?></a>
+                            </h3>
+                            <p>
+                                <?= $video['video_name'] ?>
+                            </p>
+                            <div>
+                                <div class="trainer-rank d-flex align-items-center">
+                                    <i class='bx bxs-calendar'></i>
+                                    <span>19/02/2023</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
-                <div class="course-item">
-                    <div class="course-img">
-                        <img src="https://bootstrapmade.com/demo/templates/Mentor/assets/img/course-2.jpg"
-                            alt="Course" />
-                    </div>
-                    <div class="course-content">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4>Vật lý 10</h4>
-                        </div>
-                        <h3>
-                            <a href="#">Khóa học vật lý 10</a>
-                        </h3>
-                        <p>Xuất phát từ nhu cầu học thêm môn toán của các em học sinh để chuẩn bị kiến thức cho kỳ thi
-                            vào lớp 10 vô cùng khốc liệt ở Hà Nội, CMath đã cùng với các thầy cô giáo</p>
-                        <div>
-                            <div class="trainer-rank d-flex align-items-center">
-                                <i class='bx bxs-calendar'></i>
-                                <span>19/02/2023</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
-                <div class="course-item">
-                    <div class="course-img">
-                        <img src="https://bootstrapmade.com/demo/templates/Mentor/assets/img/course-2.jpg"
-                            alt="Course" />
-                    </div>
-                    <div class="course-content">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4>Vật lý 10</h4>
-                        </div>
-                        <h3>
-                            <a href="#">Khóa học vật lý 10</a>
-                        </h3>
-                        <p>Xuất phát từ nhu cầu học thêm môn toán của các em học sinh để chuẩn bị kiến thức cho kỳ thi
-                            vào lớp 10 vô cùng khốc liệt ở Hà Nội, CMath đã cùng với các thầy cô giáo</p>
-                        <div>
-                            <div class="trainer-rank d-flex align-items-center">
-                                <i class='bx bxs-calendar'></i>
-                                <span>19/02/2023</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
-                <div class="course-item">
-                    <div class="course-img">
-                        <img src="https://bootstrapmade.com/demo/templates/Mentor/assets/img/course-2.jpg"
-                            alt="Course" />
-                    </div>
-                    <div class="course-content">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4>Vật lý 10</h4>
-                        </div>
-                        <h3>
-                            <a href="#">Khóa học vật lý 10</a>
-                        </h3>
-                        <p>Xuất phát từ nhu cầu học thêm môn toán của các em học sinh để chuẩn bị kiến thức cho kỳ thi
-                            vào lớp 10 vô cùng khốc liệt ở Hà Nội, CMath đã cùng với các thầy cô giáo</p>
-                        <div>
-                            <div class="trainer-rank d-flex align-items-center">
-                                <i class='bx bxs-calendar'></i>
-                                <span>19/02/2023</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php endforeach ?>
         </div>
     </section>
     <section class="section container">
@@ -191,10 +117,10 @@
                                 <h4>Vật lý 10</h4>
                             </div>
                             <h3>
-                                <a href="<?= $this->url->get("/tailieu?classId=21&subjectId=5") ?>">1</a>
+                                <a href="<?= $this->url->get("/tailieu?classId=21&subjectId=5") ?>"><?= $document['document_name'] ?></a>
                             </h3>
                             <p>
-                                <?= 1 ?>
+                                <?= $document['document_name'] ?>
                             </p>
                             <div>
                                 <div class="trainer-rank d-flex align-items-center">
@@ -211,106 +137,39 @@
     </section>
     <section class="section container">
         <div class="section-title" data-aos="fade-up">
-            <p>Khóa học</p>
+            <p>Khóa Học</p>
             <h2>KHÓA HỌC TIÊU BIỂU</h2>
         </div>
         <div class="row section-slick" data-aos="zoom-in" data-aos-delay="100">
-            <div class="col-lg-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
-                <div class="course-item">
-                    <div class="course-img">
-                        <img src="https://bootstrapmade.com/demo/templates/Mentor/assets/img/course-2.jpg"
-                            alt="Course" />
-                    </div>
-                    <div class="course-content">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4>Vật lý 10</h4>
+            <?php foreach ($arrClassSubjectNew as $class):
+                ?>
+                <div class="col-lg-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <img src="<?= $this->url->getStatic( $class['image'])?>"
+                                alt="Course" />
                         </div>
-                        <h3>
-                            <a href="#">Khóa học vật lý 10</a>
-                        </h3>
-                        <p>Xuất phát từ nhu cầu học thêm môn toán của các em học sinh để chuẩn bị kiến thức cho kỳ thi
-                            vào lớp 10 vô cùng khốc liệt ở Hà Nội, CMath đã cùng với các thầy cô giáo</p>
-                        <div>
-                            <div class="trainer-rank d-flex align-items-center">
-                                <i class='bx bxs-calendar'></i>
-                                <span>19/02/2023</span>
+                        <div class="course-content">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4><?= $class['name'] ?></h4>
+                            </div>
+                            <h3>
+                                <a href="<?= $this->url->get("/tailieu?classId=21&subjectId=5") ?>"><?= $class['name'] ?></a>
+                            </h3>
+                            <p>
+                                <?= $class['name'] ?>
+                            </p>
+                            <div>
+                                <div class="trainer-rank d-flex align-items-center">
+                                    <i class='bx bxs-calendar'></i>
+                                    <span>19/02/2023</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
-                <div class="course-item">
-                    <div class="course-img">
-                        <img src="https://bootstrapmade.com/demo/templates/Mentor/assets/img/course-2.jpg"
-                            alt="Course" />
-                    </div>
-                    <div class="course-content">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4>Vật lý 10</h4>
-                        </div>
-                        <h3>
-                            <a href="#">Khóa học vật lý 10</a>
-                        </h3>
-                        <p>Xuất phát từ nhu cầu học thêm môn toán của các em học sinh để chuẩn bị kiến thức cho kỳ thi
-                            vào lớp 10 vô cùng khốc liệt ở Hà Nội, CMath đã cùng với các thầy cô giáo</p>
-                        <div>
-                            <div class="trainer-rank d-flex align-items-center">
-                                <i class='bx bxs-calendar'></i>
-                                <span>19/02/2023</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
-                <div class="course-item">
-                    <div class="course-img">
-                        <img src="https://bootstrapmade.com/demo/templates/Mentor/assets/img/course-2.jpg"
-                            alt="Course" />
-                    </div>
-                    <div class="course-content">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4>Vật lý 10</h4>
-                        </div>
-                        <h3>
-                            <a href="#">Khóa học vật lý 10</a>
-                        </h3>
-                        <p>Xuất phát từ nhu cầu học thêm môn toán của các em học sinh để chuẩn bị kiến thức cho kỳ thi
-                            vào lớp 10 vô cùng khốc liệt ở Hà Nội, CMath đã cùng với các thầy cô giáo</p>
-                        <div>
-                            <div class="trainer-rank d-flex align-items-center">
-                                <i class='bx bxs-calendar'></i>
-                                <span>19/02/2023</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
-                <div class="course-item">
-                    <div class="course-img">
-                        <img src="https://bootstrapmade.com/demo/templates/Mentor/assets/img/course-2.jpg"
-                            alt="Course" />
-                    </div>
-                    <div class="course-content">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4>Vật lý 10</h4>
-                        </div>
-                        <h3>
-                            <a href="#">Khóa học vật lý 10</a>
-                        </h3>
-                        <p>Xuất phát từ nhu cầu học thêm môn toán của các em học sinh để chuẩn bị kiến thức cho kỳ thi
-                            vào lớp 10 vô cùng khốc liệt ở Hà Nội, CMath đã cùng với các thầy cô giáo</p>
-                        <div>
-                            <div class="trainer-rank d-flex align-items-center">
-                                <i class='bx bxs-calendar'></i>
-                                <span>19/02/2023</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php endforeach ?>
+
         </div>
     </section>
 </main>

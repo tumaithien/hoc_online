@@ -34,7 +34,7 @@ class Article extends Component
             ->where("article_active = 'Y'")
             ->orderBy('article_order ASC')
             ->limit(1)
-            ->execute();
+            ->execute()->toArray()[0];
     }
 }
 

@@ -195,4 +195,16 @@ class User extends Component
             $score->delete();
         }
     }
+    public static function countUser() {
+        $cache = new CacheRepo("user_count_user");
+        $total = $cache->getCache();
+        if(!$total) {
+            $total = LearnUser::count([
+                'user_role = "user"'
+            ]);
+            $total = $cache->setCache($total);
+        }
+        return $total;
+        
+    }
 }

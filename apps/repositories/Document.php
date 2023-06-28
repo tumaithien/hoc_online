@@ -11,6 +11,17 @@ use \Learncom\Models\LearnArticle;
 
 class Document extends Component
 {
+    public static function count() {
+        $cache = new CacheRepo("document_count_document");
+        $total = $cache->getCache();
+        if(!$total) {
+            $total = LearnDocument::count([
+            ]);
+            $total = $cache->setCache($total);
+        }
+        return $total;
+        
+    }
     public static function findFirstById($id)
     {
         return LearnDocument::findFirst([
@@ -57,12 +68,12 @@ class Document extends Component
     }
     public static function findHomeDocument()
     {
-        $cache = new CacheRepo("document_findHomeDocument");
+        $cache = new CacheRepo("document_findHomeDocument",1);
         $data = $cache->getCache();
         if(!$data) {
             $data = LearnDocument::find([
                 'limit' => 4,
-                'order' => 'document_order ASC'
+                'order' => 'RAND()'
             ])->toArray();
             $data = $cache->setCache($data);
         }

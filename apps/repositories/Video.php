@@ -10,6 +10,17 @@ use \Learncom\Models\LearnArticle;
 
 class Video extends Component
 {
+    public static function count() {
+        $cache = new CacheRepo("video_count_video");
+        $total = $cache->getCache();
+        if(!$total) {
+            $total = LearnVideo::count([
+            ]);
+            $total = $cache->setCache($total);
+        }
+        return $total;
+        
+    }
     public static function findFirstById($id)
     {
         return LearnVideo::findFirst([
@@ -47,6 +58,19 @@ class Video extends Component
                 'order' => 'video_order ASC'
             ]);
             $data = $cache->setCache($model->toArray());
+        }
+        return $data;
+    }
+    public static function findHomeVideo()
+    {
+        $cache = new CacheRepo("vieo_findHomeVideo",1);
+        $data = $cache->getCache();
+        if(!$data) {
+            $data = LearnVideo::find([
+                'limit' => 4,
+                'order' => 'RAND()'
+            ])->toArray();
+            $data = $cache->setCache($data);
         }
         return $data;
     }

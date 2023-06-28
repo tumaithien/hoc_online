@@ -13,11 +13,13 @@ class CacheRepo extends Component
     static $frontCache = null;
     static $backCache = null;
     public $key = "";
-    public function __construct($key = "")
+    public $time;
+    public function __construct($key = "", $time = 360)
     {
         if ($key) {
             $this->key = $key;
         }
+        $this->time = $time;
     }
     public function clearCacheExpried()
     {
@@ -34,7 +36,7 @@ class CacheRepo extends Component
 
         $sessionId = self::PRE_SESSION_CACHE . $this->key;
 
-        $cache = self::getBackCache();
+        $cache = $this->getBackCache();
         $cacheKey = self::cacheKeyClients($sessionId);
         $clients = $cache->get($cacheKey);
 
@@ -43,7 +45,7 @@ class CacheRepo extends Component
     public function deleteCache()
     {
         $sessionId = self::PRE_SESSION_CACHE . $this->key;
-        $cache = self::getBackCache();
+        $cache = $this->getBackCache();
         $cacheKey = self::cacheKeyClients($sessionId);
 
         try {
@@ -60,7 +62,7 @@ class CacheRepo extends Component
     }
     public function deleteAllCache()
     {
-        $cache = self::getBackCache();
+        $cache = $this->getBackCache();
         $cacheKeys = $cache->queryKeys();
         foreach ($cacheKeys as $key) {
             $result = $cache->delete($key);
@@ -70,7 +72,7 @@ class CacheRepo extends Component
     public function setCache($data)
     {
         $sessionId = self::PRE_SESSION_CACHE . $this->key;
-        $cache = self::getBackCache();
+        $cache = $this->getBackCache();
         $cacheKey = self::cacheKeyClients($sessionId);
         try {
             if (!is_dir(self::filePath)) {
@@ -83,9 +85,9 @@ class CacheRepo extends Component
         // $result =  $cache->set($cacheKey);
         return $data;
     }
-    public static function getBackCache()
+    public function getBackCache()
     {
-        $frontCache = self::getFrontCache();
+        $frontCache = $this->getFrontCache();
         if (self::$backCache == null) {
             self::$backCache = new BackFile($frontCache, ['cacheDir' => self::filePath,]);
         }
@@ -93,10 +95,10 @@ class CacheRepo extends Component
         return self::$backCache;
     }
 
-    public static function getFrontCache()
+    public  function getFrontCache()
     {
         if (self::$frontCache == null) {
-            self::$frontCache = new FrontData(['lifetime' => 360 * 24 * 60 * 60]);
+            self::$frontCache = new FrontData(['lifetime' => $this->time * 24 * 60 * 60]);
         }
 
         return self::$frontCache;

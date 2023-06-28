@@ -12,7 +12,13 @@ use Endroid\QrCode\Label\Font\NotoSans;
 use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
 use Endroid\QrCode\Writer\BinaryWriter;
 use Endroid\QrCode\Color\Color;
+use Learncom\Models\LearnClass;
+use Learncom\Models\LearnSubject;
+use Learncom\Models\LearnUser;
+use Learncom\Repositories\CacheRepo;
 use Learncom\Repositories\Document;
+use Learncom\Repositories\User;
+use Learncom\Repositories\Video;
 
 class IndexController extends ControllerBase
 {
@@ -21,14 +27,49 @@ class IndexController extends ControllerBase
         $bannerRepo = new Banner();
         $banner = $bannerRepo->findBanner();
         $blogRepo = new Article();
-        $blogs = $blogRepo->getHomeArticle();
+        $blog = $blogRepo->getHomeArticle();
         $documents = Document::findHomeDocument();
+        $videos = Video::findHomeVideo();
         $blog_keyword = 'blogs';
+        $total_user = User::countUser();
+        $total_document = Document::count();
+        $total_video = Video::count();
+        $cache = new CacheRepo("all_class_subject",1);
+        $arrClassSubject = $cache->getCache();
+        if (!$arrClassSubject) {
+            $arrClass = LearnClass::find([
+                'order' => "RAND()"
+            ])->toArray();
+            $arrSubject = LearnSubject::find([
+                'order' => "RAND()"
+            ])->toArray();
+            $arrClassSubject = [];
+            foreach ($arrClass as $class) {
+                foreach ($arrSubject as $subject) {
+                    $arrClassSubject[] = [
+                        'id' => $subject['subject_id'] . "_" . $class['class_id'],
+                        'name' => $subject['subject_name'] . " " . $class['class_name'],
+                        'image' => $subject['subject_image']
+                    ];
+                }
+            }
+            $arrClassSubject = $cache->setCache($arrClassSubject);
+        } 
+        $arrClassSubjectNew[0] = $arrClassSubject[rand(0,count($arrClassSubject))];
+        $arrClassSubjectNew[1] = $arrClassSubject[rand(0,count($arrClassSubject))];
+        $arrClassSubjectNew[2] = $arrClassSubject[rand(0,count($arrClassSubject))];
+        $arrClassSubjectNew[3] = $arrClassSubject[rand(0,count($arrClassSubject))];
+
         $this->view->setVars([
             'banners' => $banner,
-            'blogs' => $blogs,
+            'blog' => $blog,
             'blog_keyword' => $blog_keyword,
             'documents' => $documents,
+            'videos' => $videos,
+            'total_user' => $total_user,
+            'total_document' => $total_document,
+            'total_video' => $total_video,
+            'arrClassSubjectNew' => $arrClassSubjectNew,
         ]);
     }
     public function getqrcodeAction()
