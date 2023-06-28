@@ -165,4 +165,22 @@ $(function () {
       mirror: false,
     });
   });
+
+  new PureCounter();
+});
+
+$(".section-slick").slick({
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  autoplay: false,
+  autoplaySpeed: 6000,
+  mobileFirst: true,
+  arrows: false,
+  dots: true,
+  responsive: [
+    {
+      breakpoint: 767,
+      settings: "unslick",
+    },
+  ],
 });
