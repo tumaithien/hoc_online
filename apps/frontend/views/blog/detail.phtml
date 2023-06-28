@@ -5,37 +5,42 @@
  * @var \Learncom\Models\LearnArticle $article
  */
 ?>
-<nav aria-label="breadcrumb" class="breadcrumb-cus">
-    <ol class="breadcrumb mb-0">
-        <li class="breadcrumb-item"><a href="<?php echo $this->url->get('/'); ?>">Trang chủ</a></li>
-        <li class="breadcrumb-item" aria-current="page"><a href="<?php echo $this->url->get('/'.$parent_keyword); ?>">Blog</a></li>
-        <li class="breadcrumb-item active" aria-current="page"><?php echo isset($menu_bread) ? $menu_bread : ''?></li>
-    </ol>
-</nav>
-<main>
-    <div class="padding-block bg-white">
+<main data-aos="fade-in">
+    <div class="infoCourse_top">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-7">
-                    <h2 class="text-main text-30 font-weight-bold"><?php echo isset($menu_bread) ? $menu_bread : ''; ?></h2>
-                    <?php echo $article->getArticleContent() ?>
+            <h2>Thông tin tuyển sinh</h2>
+            <p>Est dolorum ut non facere possimus quibusdam eligendi voluptatem. Quia id aut similique quia voluptas sit quaerat debitis. Rerum omnis ipsam aperiam consequatur laboriosam nemo harum praesentium.</p>
+        </div>
+    </div>
+    <section id="course-details" data-aos="fade-up">
+        <div class="container" >
+            <div class="row pt-50">
+                <div class="col-lg-8">
+                    <div class="course-details-img">
+                        <img src="https://bootstrapmade.com/demo/templates/Mentor/assets/img/course-details.jpg" alt="Course">
+                    </div>
+                    <h3>Et enim incidunt fuga tempora</h3>
+                    <p>Qui et explicabo voluptatem et ab qui vero et voluptas. Sint voluptates temporibus quam autem. Atque nostrum voluptatum laudantium a doloremque enim et ut dicta. Nostrum ducimus est iure minima totam doloribus nisi ullam deserunt. Corporis aut officiis sit nihil est. Labore aut sapiente aperiam. Qui voluptas qui vero ipsum ea voluptatem. Omnis et est. Voluptatem officia voluptatem adipisci et iusto provident doloremque consequatur. Quia et porro est. Et qui corrupti laudantium ipsa. Eum quasi saepe aperiam qui delectus quaerat in. Vitae mollitia ipsa quam. Ipsa aut qui numquam eum iste est dolorum. Rem voluptas ut sit ut.</p>
                 </div>
-                <div class="col-lg-5">
-                    <?php if(count($related_articles) > 0) { ?>
-                        <h2 class="text-main text-20">CÁC TIN TỨC LIÊN QUAN</h2>
-                        <div class="line-bottom-bolder mb-10"></div>
-                        <?php foreach ($related_articles as $item) { ?>
-                            <div class="d-flex mb-20">
-                                <div class="round-img-120">
-                                    <a href="<?php echo $this->url->get('/'.$parent_keyword.'/'.$item->getArticleKeyword()) ?>"><img src="<?php echo $item->getArticleIcon() ?>" alt="" title=""></a>
-                                </div>
-                                <div class="ml-20">
-                                    <h3 class="text-16"><a href="<?php echo $this->url->get('/'.$parent_keyword.'/'.$item->getArticleKeyword()) ?>" target="_self" title="<?php echo htmlentities($item->getArticleName()) ?>"><?php echo $item->getArticleName() ?></a></h3>
-                                </div>
-                            </div>
-                    <?php }} ?>
+                <div class="col-lg-4">
+                    <div class="course-info d-flex justify-content-between align-items-center">
+                        <h5>Giáo viên</h5>
+                        <p>Thầy Hải</p>
+                    </div>
+                    <div class="course-info d-flex justify-content-between align-items-center">
+                        <h5>Học phí</h5>
+                        <p>800.000 đồng</p>
+                    </div>
+                    <div class="course-info d-flex justify-content-between align-items-center">
+                        <h5>Sỉ số</h5>
+                        <p>30</p>
+                    </div>
+                    <div class="course-info d-flex justify-content-between align-items-center">
+                        <h5>Thời gian</h5>
+                        <p>5 giờ - 7 giờ</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 </main>
