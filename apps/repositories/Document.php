@@ -55,4 +55,17 @@ class Document extends Component
             'order' => 'document_order ASC'
         ]);
     }
+    public static function findHomeDocument()
+    {
+        $cache = new CacheRepo("document_findHomeDocument");
+        $data = $cache->getCache();
+        if(!$data) {
+            $data = LearnDocument::find([
+                'limit' => 4,
+                'order' => 'document_order ASC'
+            ])->toArray();
+            $data = $cache->setCache($data);
+        }
+        return $data;
+    }
 }

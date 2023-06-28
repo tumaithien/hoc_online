@@ -12,6 +12,7 @@ use Endroid\QrCode\Label\Font\NotoSans;
 use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
 use Endroid\QrCode\Writer\BinaryWriter;
 use Endroid\QrCode\Color\Color;
+use Learncom\Repositories\Document;
 
 class IndexController extends ControllerBase
 {
@@ -21,11 +22,13 @@ class IndexController extends ControllerBase
         $banner = $bannerRepo->findBanner();
         $blogRepo = new Article();
         $blogs = $blogRepo->getHomeArticle();
+        $documents = Document::findHomeDocument();
         $blog_keyword = 'blogs';
         $this->view->setVars([
             'banners' => $banner,
             'blogs' => $blogs,
-            'blog_keyword' => $blog_keyword
+            'blog_keyword' => $blog_keyword,
+            'documents' => $documents,
         ]);
     }
     public function getqrcodeAction()
