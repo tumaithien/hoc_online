@@ -59,7 +59,7 @@ class IndexController extends ControllerBase
         $arrClassSubjectNew[1] = $arrClassSubject[rand(0,count($arrClassSubject))];
         $arrClassSubjectNew[2] = $arrClassSubject[rand(0,count($arrClassSubject))];
         $arrClassSubjectNew[3] = $arrClassSubject[rand(0,count($arrClassSubject))];
-
+        $arrClassSubject = array_column($arrClassSubject,'name','id');
         $this->view->setVars([
             'banners' => $banner,
             'blog' => $blog,
@@ -70,6 +70,7 @@ class IndexController extends ControllerBase
             'total_document' => $total_document,
             'total_video' => $total_video,
             'arrClassSubjectNew' => $arrClassSubjectNew,
+            'arrClassSubject' => $arrClassSubject
         ]);
     }
     public function getqrcodeAction()
