@@ -21,7 +21,7 @@ if (strlen($this->dispatcher->getParam("txtSearchKeyword")) > 0) {
     });
 </script>
 <script>
-    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-article");?>'>  Blog </a></li>");
+    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-article");?>'>  Lịch </a></li>");
 </script>
 
 <?php if(isset($msg_result))  {?>
@@ -110,7 +110,7 @@ if (strlen($this->dispatcher->getParam("txtSearchKeyword")) > 0) {
         <div class="row">
             <div class="col-md-6 ">
                 <div style="float:left">
-                    <p style="text-align:left;font-size:16px;color:red"><strong style="">Total : <?= $list_item->total_items;?></strong> Blog</p>
+                    <p style="text-align:left;font-size:16px;color:red"><strong style="">Total : <?= $list_item->total_items;?></strong> Lịch</p>
 
                 </div>
             </div>

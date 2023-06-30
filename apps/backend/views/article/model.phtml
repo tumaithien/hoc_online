@@ -2,6 +2,17 @@
 <script>
 
     $(document).ready(function(){
+       
+   $('#fileUpload').on("change",function() {
+            if ($('#fileUpload')[0].files[0]) {
+            var reader = new FileReader();            
+            reader.onload = function (e) {
+                $('#image-fileUpload').attr('src', e.target.result);
+            }
+            reader.readAsDataURL($('#fileUpload')[0].files[0]);
+        }
+
+    });
         $("#create_form").submit(function(){
             var valid = true;
             if($('input[name=txtName]').val() == '') {
@@ -51,11 +62,11 @@ if(!empty($formData['message']))
 <div class="row-fluid sortable">
     <div class="box span12">
         <div class="box-header well" data-original-title>
-            <h2><i class="icon-edit"></i><?= isset($formData['mode']) ? $formData['mode'] : "" ?> Blog :</h2>
+            <h2><i class="icon-edit"></i><?= isset($formData['mode']) ? $formData['mode'] : "" ?> Lịch Khai giảng :</h2>
             <div class="box-icon"> <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a> <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a> <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a> </div>
         </div>
         <div class="box-content">
-            <form novalidate="novalidate" class="form-horizontal" id="create_form" action="" method="post">
+            <form novalidate="novalidate" class="form-horizontal" id="create_form" action="" method="post"  enctype="multipart/form-data">
                 <fieldset>
                     <div class="control-group">
 
@@ -100,9 +111,9 @@ if(!empty($formData['message']))
                     <div class="control-group">
                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Active </label>
                         <div class=" controls">
-                            <label class="checkbox"><input  type="radio" name="radActive"
-                                                                  value="Y" <?php echo (isset($formData["article_active"]) && $formData["article_active"] == "Y") ? "checked" : ''; ?>>Yes<span
-                                        class="check_active"></span></label>
+                            <label class="checkbox"><input  type="radio" name="radActive" value="Y" <?php echo (isset($formData["article_active"]) && $formData["article_active"] == "Y") ? "checked" : ''; ?>>
+                                                                  Yes
+                                                                  <span class="check_active"></span></label>
                             <label class="checkbox"><input  type="radio" name="radActive"
                                                                   value="N" <?php echo (isset($formData["article_active"]) && $formData["article_active"] == "N") ? "checked" : ''; ?>>No<span
                                         class="check_active"></span></label>
@@ -115,23 +126,27 @@ if(!empty($formData['message']))
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="txtContent">Content </label>
-                        <div class="controls">
-                            <textarea style="width: 500px;height: 200px" id="txtContent" name="txtContent"><?php echo isset($formData['article_content']) ? $formData['article_content'] : "" ?></textarea>
-                        </div>
+                       
+                    <label class="control-label" for="upload-files">Hình ảnh<em style="color:red;">*</em></label>
+
+                       
+                    
+                    <div class="controls">
+                    <?php
+                        if ($formData['article_content']) :
+                        ?>
+                    <label id="label-fileUpload" for="fileUpload"><img style="max-width: 300px" id="image-fileUpload" src="<?= $formData['article_content']?>" /></label>
+                    <?php else: ?>
+                        <label id="label-fileUpload" for="fileUpload"><img style="max-width: 300px" id="image-fileUpload" src="/frontend/images/uploadfile.png" /></label>
+                        <?php endif ?>
+                        <input  id="fileUpload" name="fileUpload" type="file" class="hidden"
+                            accept="<?php
+                                foreach($this->globalVariable->acceptUploadTypes as $k => $v)
+                                {
+                                    echo $k.",";
+                                } ?>"  />
                     </div>
-
-                    <script type="text/javascript">
-                        window.onload = function () {
-                            var oFCKeditor2 = new FCKeditor('txtContent');
-                            oFCKeditor2.Height = '500';
-                            oFCKeditor2.Width = '650';
-                            oFCKeditor2.ToolbarSet = "Default";
-                            oFCKeditor2.Basepath = '../backend/fckeditor/';
-                            oFCKeditor2.ReplaceTextarea();
-                        }
-                    </script>
-
+                </div>
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary" id="submit_create">Save changes</button>
                         <a id="edit_page" class="btn" href="<?php echo $this->url->get('dashboard/list-article');?>"> Cancel </a> </div>
