@@ -66,12 +66,17 @@ class Document extends Component
             'order' => 'document_order ASC'
         ]);
     }
-    public static function findHomeDocument()
+    public static function findHomeDocument($arrClassId,$arrSubjectId)
     {
         $cache = new CacheRepo("document_findHomeDocument",1);
         $data = $cache->getCache();
         if(!$data) {
             $data = LearnDocument::find([
+                'FIND_IN_SET(document_class_id,:arrClass:) AND FIND_IN_SET(document_subject_id,:arrSubject:)',
+                'bind' => [
+                    'arrClass' => implode(",",$arrClassId),
+                    'arrSubject' => implode(",",$arrSubjectId)
+                ],
                 'limit' => 4,
                 'order' => 'RAND()'
             ])->toArray();

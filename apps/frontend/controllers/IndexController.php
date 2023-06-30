@@ -25,24 +25,26 @@ class IndexController extends ControllerBase
     public function indexAction()
     {
         $bannerRepo = new Banner();
+        $blog_keyword = 'blogs';
+
         $banner = $bannerRepo->findBanner();
         $blogRepo = new Article();
         $blog = $blogRepo->getHomeArticle();
-        $documents = Document::findHomeDocument();
-        $videos = Video::findHomeVideo();
-        $blog_keyword = 'blogs';
         $total_user = User::countUser();
         $total_document = Document::count();
         $total_video = Video::count();
-        $cache = new CacheRepo("all_class_subject",1);
+
+        $arrClass = LearnClass::find([
+            'order' => "RAND()"
+        ])->toArray();
+        $arrSubject = LearnSubject::find([
+            'order' => "RAND()"
+        ])->toArray();
+
+        $cache = new CacheRepo("all_class_subject", 1);
         $arrClassSubject = $cache->getCache();
         if (!$arrClassSubject) {
-            $arrClass = LearnClass::find([
-                'order' => "RAND()"
-            ])->toArray();
-            $arrSubject = LearnSubject::find([
-                'order' => "RAND()"
-            ])->toArray();
+
             $arrClassSubject = [];
             foreach ($arrClass as $class) {
                 foreach ($arrSubject as $subject) {
@@ -54,12 +56,17 @@ class IndexController extends ControllerBase
                 }
             }
             $arrClassSubject = $cache->setCache($arrClassSubject);
-        } 
-        $arrClassSubjectNew[0] = $arrClassSubject[rand(0,count($arrClassSubject))];
-        $arrClassSubjectNew[1] = $arrClassSubject[rand(0,count($arrClassSubject))];
-        $arrClassSubjectNew[2] = $arrClassSubject[rand(0,count($arrClassSubject))];
-        $arrClassSubjectNew[3] = $arrClassSubject[rand(0,count($arrClassSubject))];
-        $arrClassSubject = array_column($arrClassSubject,'name','id');
+        }
+        $arrClassId = array_column($arrClass, "class_id");
+        $arrSubjectId = array_column($arrSubject, "subject_id");
+        $arrClassSubjectNew[0] = $arrClassSubject[rand(0, count($arrClassSubject))];
+        $arrClassSubjectNew[1] = $arrClassSubject[rand(0, count($arrClassSubject))];
+        $arrClassSubjectNew[2] = $arrClassSubject[rand(0, count($arrClassSubject))];
+        $arrClassSubjectNew[3] = $arrClassSubject[rand(0, count($arrClassSubject))];
+        $arrClassSubject = array_column($arrClassSubject, 'name', 'id');
+
+        $documents = Document::findHomeDocument($arrClassId, $arrSubjectId);
+        $videos = Video::findHomeVideo($arrClassId, $arrSubjectId);
         $this->view->setVars([
             'banners' => $banner,
             'blog' => $blog,
@@ -81,11 +88,11 @@ class IndexController extends ControllerBase
         //     die(json_endcode(["Not found link"]));
         // }
         $actual_link = "https://chibao.edu.vn/qr-code";
-          $result = Builder::create()
+        $result = Builder::create()
             ->writer(new BinaryWriter())
             ->writerOptions([])
             ->data($actual_link)
-            
+
             ->encoding(new Encoding('UTF-8'))
             ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
             ->size(300)
@@ -93,25 +100,25 @@ class IndexController extends ControllerBase
             ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
             // ->foregroundColor(new Color(0, 0, 0))
             // ->backgroundColor(new Color(255, 255, 255))
-                 ->logoPath( __DIR__.'/../../../public/frontend/images/logo.jpeg')
-                 ->logoPunchoutBackground(true)
-                  ->logoResizeToWidth(100)
-                  ->logoResizeToHeight(100)
-                 
-                 
+            ->logoPath(__DIR__ . '/../../../public/frontend/images/logo.jpeg')
+            ->logoPunchoutBackground(true)
+            ->logoResizeToWidth(100)
+            ->logoResizeToHeight(100)
+
+
             ->labelText('https://chibao.edu.vn')
             ->labelFont(new NotoSans(20))
             ->labelAlignment(new LabelAlignmentCenter())
             ->validateResult(false)
             ->build();
-header('Content-Type: '.$result->getMimeType());
-echo $result->getString();
+        header('Content-Type: ' . $result->getMimeType());
+        echo $result->getString();
 
-// Save it to a file
+        // Save it to a file
 // $result->saveToFile(__DIR__.'/qrcode.png');
 
-// Generate a data URI to include image data inline (i.e. inside an <img> tag)
-$dataUri = $result->getDataUri();
+        // Generate a data URI to include image data inline (i.e. inside an <img> tag)
+        $dataUri = $result->getDataUri();
     }
     function require_files_recursive($dir, $level = 0)
     {

@@ -63,13 +63,15 @@ class BlogController extends ControllerBase
             $this->my->redirectToNotFoundPage();
             return;
         }
-        $related_articles = $repoArticle->getRelatedArticle($article->getArticleId());
+
+        $article =  $article->toArray();
+        $related_articles = $repoArticle->getRelatedArticle($article['article_id']);
 
         $this->view->setVars([
             'parent_keyword' => $parent_keyword,
             'ar_keyword' => $ar_keyword,
             'article' => $article,
-            'menu_bread' => $article->getArticleName(),
+            'menu_bread' => $article['article_name'],
             'related_articles' => $related_articles,
         ]);
     }

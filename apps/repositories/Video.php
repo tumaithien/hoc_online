@@ -10,16 +10,17 @@ use \Learncom\Models\LearnArticle;
 
 class Video extends Component
 {
-    public static function count() {
+    public static function count()
+    {
         $cache = new CacheRepo("video_count_video");
         $total = $cache->getCache();
-        if(!$total) {
+        if (!$total) {
             $total = LearnVideo::count([
             ]);
             $total = $cache->setCache($total);
         }
         return $total;
-        
+
     }
     public static function findFirstById($id)
     {
@@ -52,7 +53,7 @@ class Video extends Component
         $cache = new CacheRepo($key);
         $data = $cache->getCache();
         if (empty($data)) {
-            $model =  LearnVideo::find([
+            $model = LearnVideo::find([
                 'video_class_id = :class_id: AND video_subject_id = :subject: AND video_active = "Y" AND video_type = :type: AND video_group_id = :group_id:',
                 'bind' => ['class_id' => $class_id, 'subject' => $subject_id, 'type' => $type, 'group_id' => $group_id],
                 'order' => 'video_order ASC'
@@ -61,12 +62,17 @@ class Video extends Component
         }
         return $data;
     }
-    public static function findHomeVideo()
+    public static function findHomeVideo($arrClassId, $arrSubjectId)
     {
-        $cache = new CacheRepo("vieo_findHomeVideo",1);
+        $cache = new CacheRepo("vieo_findHomeVideo", 1);
         $data = $cache->getCache();
-        if(!$data) {
+        if (!$data) {
             $data = LearnVideo::find([
+                'FIND_IN_SET(video_class_id,:arrClass:) AND FIND_IN_SET(video_subject_id,:arrSubject:)',
+                'bind' => [
+                    'arrClass' => implode(",",$arrClassId),
+                    'arrSubject' => implode(",",$arrSubjectId)
+                ],
                 'limit' => 4,
                 'order' => 'RAND()'
             ])->toArray();
