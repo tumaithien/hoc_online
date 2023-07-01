@@ -12,6 +12,8 @@ public/loigiaikhode/*
 public/loigiaikhode
 public/test
 public/upload
+public/frontend/upload
+public/frontend/upload/*
 config/config.php
 
 public/error_log
