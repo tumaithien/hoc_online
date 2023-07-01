@@ -13,11 +13,17 @@
 <main class="videoCourse_wrapper">
     <div class="videoCourse_top">
         <a href="/" title="home" class="videoCourse_back"><i class="bx bx-chevron-left"></i>Home</a>
-        <h1 class="videoCourse_title"><?= $title_name ?></h1>
+        <h1 class="videoCourse_title">
+            <?= $title_name ?>
+        </h1>
     </div>
     <div class="videoCourse_content">
         <div class="videoCourse_video">
-            <iframe src="<?= $link ?>" allowfullscreen></iframe>
+            <?php if (strpos($link, "vimeo") || strpos($link, "video") || strpos($link, "youtube")): ?>
+                <iframe src="<?= $link ?>" allowfullscreen></iframe>
+            <?php else: ?>
+                <embed src="<?= $link ?>" type="application/pdf" height="100%" width="100%">
+            <?php endif ?>
         </div>
         <div class="videoCourse_rightSidebar">
             <div class="videoCourse_rightSidebar-top">

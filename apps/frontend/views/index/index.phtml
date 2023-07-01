@@ -25,9 +25,9 @@
                             <?= $blog['article_summary'] ?>
                         </p>
                         <div class="course-details-img text-center">
-                            <a href="<?= $this->url->get("/blogs/".$blog['article_keyword']) ?>"> <img src="<?= $blog['article_content'] ?>"
-                                alt="Course"></a>
-                           
+                            <a href="<?= $this->url->get("/blogs/" . $blog['article_keyword']) ?>"> <img
+                                    src="<?= $blog['article_content'] ?>" alt="Course"></a>
+
                         </div>
 
                     </div>
@@ -80,15 +80,16 @@
                 <div class="col-lg-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
                     <div class="course-item">
                         <div class="course-img">
-                            <img src="https://bootstrapmade.com/demo/templates/Mentor/assets/img/course-2.jpg"
-                                alt="Course" />
+                            <embed src="<?= $video['video_link'] ?>" type="application/pdf" height="100%" width="100%">
                         </div>
                         <div class="course-content">
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h4><?= $class_name ?></h4>
+                                <h4>
+                                    <?= $class_name ?>
+                                </h4>
                             </div>
                             <h3>
-                                <a href="<?= $this->url->get("/tailieu?classId=21&subjectId=5") ?>"><?= $video['video_name'] ?></a>
+                                <a href="<?= $this->url->get("/tailieu?classId=21&subjectId=5") ?>"></a>
                             </h3>
                             <p>
                                 <?= $video['video_name'] ?>
@@ -116,13 +117,14 @@
                 $class_name = "";
                 if (isset($arrClassSubject[$document['document_subject_id'] . "_" . $document['document_class_id']])) {
                     $class_name = $arrClassSubject[$document['document_subject_id'] . "_" . $document['document_class_id']];
-                } 
+                }
                 ?>
                 <div class="col-lg-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
                     <div class="course-item">
                         <div class="course-img">
-                            <img src="https://bootstrapmade.com/demo/templates/Mentor/assets/img/course-2.jpg"
-                                alt="Course" />
+                            <embed src="<?= $document['document_link'] ?>" type="application/pdf" height="100%"
+                                width="100%">
+
                         </div>
                         <div class="course-content">
                             <div class="d-flex justify-content-between align-items-center mb-3">
