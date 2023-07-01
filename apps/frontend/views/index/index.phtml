@@ -14,27 +14,25 @@
             <p>Khai Giảng</p>
             <h2>Lịch Khai Giảng Mới Nhất</h2>
         </div>
-        <section id="course-details" data-aos="fade-up">
-            <div class="container">
-                <div class="row pt-50">
-                    <div class="col-lg-12 ">
-                        <h3>
-                            <?= $blog['article_name'] ?>
-                        </h3>
-                        <p>
-                            <?= $blog['article_summary'] ?>
-                        </p>
-                        <div class="course-details-img text-center">
-                            <a href="<?= $this->url->get("/blogs/" . $blog['article_keyword']) ?>"> <img
-                                    src="<?= $blog['article_content'] ?>" alt="Course"></a>
-
-                        </div>
+        <div class="container">
+            <div class="row pt-50">
+                <div class="col-lg-12 ">
+                    <h3>
+                        <?= $blog['article_name'] ?>
+                    </h3>
+                    <p>
+                        <?= $blog['article_summary'] ?>
+                    </p>
+                    <div class="course-details-img text-center">
+                        <a href="<?= $this->url->get("/blogs/" . $blog['article_keyword']) ?>"> <img
+                                src="<?= $blog['article_content'] ?>" alt="Course"></a>
 
                     </div>
 
                 </div>
+
             </div>
-        </section>
+        </div>
         </div>
     </section>
     <section class="counter">
