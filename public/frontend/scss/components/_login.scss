@@ -1,4 +1,5 @@
-.form_wrapper {
+.form_wrapper,
+.form_change {
   position: relative;
   width: 100%;
   padding: 100px 10px;
@@ -93,5 +94,15 @@
     &:hover {
       background-color: $primary-color-dark;
     }
+  }
+}
+.form_change {
+  background-color: transparent;
+  width: 50%;
+  padding: 20px;
+  isolation: unset;
+  min-height: unset;
+  @media (max-width: 767px) {
+    width: 100%;
   }
 }

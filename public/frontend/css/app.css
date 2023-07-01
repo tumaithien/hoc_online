@@ -10800,17 +10800,22 @@ a.text-main:hover, a.text-main:focus, a.text-main:active {
   min-height: 48px;
 }
 
-.form-info-user, .form-change-pass {
+.form-info-user,
+.form-change-pass {
+  margin-top: 20px;
   width: 100%;
 }
-.form-info-user .form-item > label, .form-change-pass .form-item > label {
-  flex: 0 0 180px;
+.form-info-user .form-item > label,
+.form-change-pass .form-item > label {
+  font-weight: normal;
 }
 @media (max-width: 991.98px) {
-  .form-info-user, .form-change-pass {
+  .form-info-user,
+  .form-change-pass {
     width: 100%;
   }
-  .form-info-user .form-item > label, .form-change-pass .form-item > label {
+  .form-info-user .form-item > label,
+  .form-change-pass .form-item > label {
     flex: 0 0 0px !important;
   }
 }
@@ -11400,37 +11405,43 @@ input[type=checkbox] {
   }
 }
 
-.date-select, .date-select-birthday {
+.date-select,
+.date-select-birthday {
   position: relative;
 }
-.date-select .datepicker-custom, .date-select-birthday .datepicker-custom {
+.date-select .datepicker-custom,
+.date-select-birthday .datepicker-custom {
   height: 40px !important;
-  border: 1px solid #E3E3E3;
+  border: 1px solid #e3e3e3;
   border-radius: 4px;
   padding: 10px 15px;
   background-color: #fff;
-  color: #9F9F9F;
+  color: #9f9f9f;
   background-image: url("../images/icon-calendar.svg");
   background-repeat: no-repeat;
   background-position: 95% 10px;
   cursor: pointer;
 }
-.date-select .datepicker-custom:focus-visible, .date-select-birthday .datepicker-custom:focus-visible {
-  outline: 0.5px auto #6A9EDD;
+.date-select .datepicker-custom:focus-visible,
+.date-select-birthday .datepicker-custom:focus-visible {
+  outline: 0.5px auto #6a9edd;
 }
-.date-select img, .date-select-birthday img {
+.date-select img,
+.date-select-birthday img {
   position: absolute;
   right: 10px;
   top: 10px;
   cursor: pointer;
 }
 @media (max-width: 991.98px) {
-  .date-select, .date-select-birthday {
+  .date-select,
+  .date-select-birthday {
     display: flex;
     width: 50%;
     flex-direction: column;
   }
-  .date-select img, .date-select-birthday img {
+  .date-select img,
+  .date-select-birthday img {
     top: 27px;
   }
 }
@@ -11439,7 +11450,7 @@ input[type=checkbox] {
   width: 28px;
   height: 28px;
   border-radius: 6px;
-  border: 1px solid #E3E3E3;
+  border: 1px solid #e3e3e3;
   padding: 4px 0;
   text-align: center;
   font-size: 14px;
@@ -11455,8 +11466,8 @@ input[type=checkbox] {
   right: 0 !important;
 }
 .txt-phone-1 input[type=text][disabled] {
-  color: #6F6F6F;
-  background-color: #F3F3F3 !important;
+  color: #6f6f6f;
+  background-color: #f3f3f3 !important;
 }
 
 .date-select-birthday .datepicker-custom {
@@ -11464,12 +11475,17 @@ input[type=checkbox] {
 }
 
 .user-value input[type=text] {
-  font-size: 14px !important;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid #f1f1f3;
+  padding: 15px 25px;
+  height: 55px;
 }
 .user-value input[type=text][disabled] {
-  color: #6F6F6F;
-  background-color: #F3F3F3 !important;
-  font-size: 14px;
+  color: #6f6f6f;
+  background-color: #f3f3f3 !important;
+  font-size: 16px;
+  min-height: 55px;
 }
 
 .hide-show-pass {
@@ -11495,7 +11511,7 @@ input[type=checkbox] {
 .form-search-contact .title-date {
   position: absolute;
   font-size: 16px;
-  color: #9F9F9F;
+  color: #9f9f9f;
   background-color: #fff;
   padding-left: 10px;
   padding-right: 10px;
@@ -11579,10 +11595,10 @@ input[type=checkbox] {
 .gender-selection {
   width: 100%;
   height: 100%;
-  border: 1px solid #E3E3E3;
-  border-radius: 4px;
-  padding-left: 10px;
-  font-size: 14px;
+  border: 1px solid #f1f1f3;
+  border-radius: 10px;
+  padding: 15px 25px;
+  font-size: 16px;
 }
 
 .checkbox {
@@ -11848,27 +11864,34 @@ input[type=checkbox]:checked ~ .checkmark.circle,
   top: 3px;
 }
 
-.banner-custom, .banner-commit {
+.banner-custom,
+.banner-commit {
   position: relative;
   transition: all 0.3s;
 }
-.banner-custom:hover .carousel-control-next-icon, .banner-commit:hover .carousel-control-next-icon {
+.banner-custom:hover .carousel-control-next-icon,
+.banner-commit:hover .carousel-control-next-icon {
   opacity: 1;
 }
-.banner-custom:hover .carousel-control-prev-icon, .banner-commit:hover .carousel-control-prev-icon {
+.banner-custom:hover .carousel-control-prev-icon,
+.banner-commit:hover .carousel-control-prev-icon {
   opacity: 1;
 }
-.banner-custom .carousel-inner, .banner-commit .carousel-inner {
+.banner-custom .carousel-inner,
+.banner-commit .carousel-inner {
   max-height: 391px;
 }
-.banner-custom .carousel-inner .carousel-item, .banner-commit .carousel-inner .carousel-item {
+.banner-custom .carousel-inner .carousel-item,
+.banner-commit .carousel-inner .carousel-item {
   max-height: 391px;
 }
-.banner-custom .carousel-inner .carousel-item img, .banner-commit .carousel-inner .carousel-item img {
+.banner-custom .carousel-inner .carousel-item img,
+.banner-commit .carousel-inner .carousel-item img {
   max-height: 391px;
   width: 100%;
 }
-.banner-custom .carousel-inner .carousel-item img:before, .banner-commit .carousel-inner .carousel-item img:before {
+.banner-custom .carousel-inner .carousel-item img:before,
+.banner-commit .carousel-inner .carousel-item img:before {
   content: "";
   position: absolute;
   top: 0;
@@ -11878,25 +11901,32 @@ input[type=checkbox]:checked ~ .checkmark.circle,
   background-color: rgba(0, 0, 0, 0.1);
   z-index: 2;
 }
-.banner-custom .carousel-control-next-icon, .banner-custom .carousel-control-prev-icon, .banner-commit .carousel-control-next-icon, .banner-commit .carousel-control-prev-icon {
+.banner-custom .carousel-control-next-icon,
+.banner-custom .carousel-control-prev-icon,
+.banner-commit .carousel-control-next-icon,
+.banner-commit .carousel-control-prev-icon {
   border: 1px solid #fff;
   border-radius: 50%;
   height: 36px;
   width: 36px;
   z-index: 3;
 }
-.banner-custom .carousel-control-next-icon, .banner-commit .carousel-control-next-icon {
+.banner-custom .carousel-control-next-icon,
+.banner-commit .carousel-control-next-icon {
   opacity: 0;
   background: url(../images/icon-arrow-right-white.svg) no-repeat center center;
 }
-.banner-custom .carousel-control-next-icon:hover, .banner-commit .carousel-control-next-icon:hover {
+.banner-custom .carousel-control-next-icon:hover,
+.banner-commit .carousel-control-next-icon:hover {
   background: #5fcf80 url(../images/icon-arrow-right-white.svg) no-repeat center center;
 }
-.banner-custom .carousel-control-prev-icon, .banner-commit .carousel-control-prev-icon {
+.banner-custom .carousel-control-prev-icon,
+.banner-commit .carousel-control-prev-icon {
   opacity: 0;
   background: url(../images/icon-arrow-left-white.svg) no-repeat center center;
 }
-.banner-custom .carousel-control-prev-icon:hover, .banner-commit .carousel-control-prev-icon:hover {
+.banner-custom .carousel-control-prev-icon:hover,
+.banner-commit .carousel-control-prev-icon:hover {
   background: #5fcf80 url(../images/icon-arrow-left-white.svg) no-repeat center center;
 }
 
@@ -12033,25 +12063,32 @@ input[type=checkbox]:checked ~ .checkmark.circle,
   display: flex;
   flex-direction: column;
   border: 0;
+  row-gap: 15px;
 }
 .nav-custom .nav-link {
   border: 0;
-  border-radius: unset;
+  border-radius: 10px;
   font-size: 18px;
+  text-decoration: none;
 }
 .nav-custom .nav-link:hover {
-  background: #d1d1d1;
-  color: #5fcf80;
+  background-color: #5fcf80;
+  color: white;
 }
-.nav-custom .nav-link.active:hover {
-  background: #fff;
-  color: #000;
+.nav-custom .nav-link.active {
+  background-color: #5fcf80;
+  color: white;
 }
 @media (max-width: 991.98px) {
   .nav-custom {
     flex-direction: row;
     width: 100%;
   }
+}
+
+.sub-title {
+  color: #808191;
+  font-size: 14px;
 }
 
 .box-account-course {
@@ -12319,7 +12356,8 @@ ul.list-style > li:hover > a {
   margin-top: 20px;
 }
 
-.form_wrapper {
+.form_wrapper,
+.form_change {
   position: relative;
   width: 100%;
   padding: 100px 10px;
@@ -12327,7 +12365,8 @@ ul.list-style > li:hover > a {
   min-height: 50vh;
   background-color: #fcfcfd;
 }
-.form_wrapper .form_login {
+.form_wrapper .form_login,
+.form_change .form_login {
   background-color: white;
   width: 100%;
   max-width: 556px;
@@ -12336,70 +12375,88 @@ ul.list-style > li:hover > a {
   border-radius: 10px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
-.form_wrapper form {
+.form_wrapper form,
+.form_change form {
   margin-top: 20px;
 }
-.form_wrapper h2 {
+.form_wrapper h2,
+.form_change h2 {
   text-align: center;
   font-size: 20px;
   font-weight: 600;
 }
-.form_wrapper p {
+.form_wrapper p,
+.form_change p {
   text-align: center;
   font-size: 14px;
   color: #808191;
 }
-.form_wrapper a {
+.form_wrapper a,
+.form_change a {
   color: #5fcf80;
   text-decoration: underline;
   font-size: 14px;
 }
-.form_wrapper label {
+.form_wrapper label,
+.form_change label {
   color: #808191;
 }
-.form_wrapper .input_wrapper {
+.form_wrapper .input_wrapper,
+.form_change .input_wrapper {
   display: flex;
   flex-direction: column;
   gap: 12px;
   margin-bottom: 20px;
 }
-.form_wrapper .input_wrapper input {
+.form_wrapper .input_wrapper input,
+.form_change .input_wrapper input {
   padding: 15px 25px;
   border: 1px solid #f1f1f3;
   border-radius: 10px;
 }
-.form_wrapper .input_wrapper input.has-error {
+.form_wrapper .input_wrapper input.has-error,
+.form_change .input_wrapper input.has-error {
   border-color: #eb5757;
 }
 .form_wrapper .input_wrapper input:focus,
-.form_wrapper .input_wrapper input:focus-visible {
+.form_wrapper .input_wrapper input:focus-visible,
+.form_change .input_wrapper input:focus,
+.form_change .input_wrapper input:focus-visible {
   outline: unset;
 }
-.form_wrapper .input_wrapper .text-error {
+.form_wrapper .input_wrapper .text-error,
+.form_change .input_wrapper .text-error {
   color: #eb5757;
 }
-.form_wrapper ._input--pasword {
+.form_wrapper ._input--pasword,
+.form_change ._input--pasword {
   position: relative;
 }
-.form_wrapper ._input--pasword .toggle-pass {
+.form_wrapper ._input--pasword .toggle-pass,
+.form_change ._input--pasword .toggle-pass {
   position: absolute;
   top: 50%;
   right: 10px;
   cursor: pointer;
 }
-.form_wrapper ._input--pasword .toggle-pass ._hide-password {
+.form_wrapper ._input--pasword .toggle-pass ._hide-password,
+.form_change ._input--pasword .toggle-pass ._hide-password {
   display: none;
 }
-.form_wrapper ._input--pasword input {
+.form_wrapper ._input--pasword input,
+.form_change ._input--pasword input {
   padding-right: 50px;
 }
-.form_wrapper ._input--pasword.active .toggle-pass ._show-password {
+.form_wrapper ._input--pasword.active .toggle-pass ._show-password,
+.form_change ._input--pasword.active .toggle-pass ._show-password {
   display: none;
 }
-.form_wrapper ._input--pasword.active .toggle-pass ._hide-password {
+.form_wrapper ._input--pasword.active .toggle-pass ._hide-password,
+.form_change ._input--pasword.active .toggle-pass ._hide-password {
   display: block;
 }
-.form_wrapper button {
+.form_wrapper button,
+.form_change button {
   padding: 13px;
   border-radius: 10px;
   text-align: center;
@@ -12410,8 +12467,22 @@ ul.list-style > li:hover > a {
   width: 100%;
   transition: 0.2s;
 }
-.form_wrapper button:hover {
+.form_wrapper button:hover,
+.form_change button:hover {
   background-color: #3ac162;
+}
+
+.form_change {
+  background-color: transparent;
+  width: 50%;
+  padding: 20px;
+  isolation: unset;
+  min-height: unset;
+}
+@media (max-width: 767px) {
+  .form_change {
+    width: 100%;
+  }
 }
 
 .videoCourse_wrapper {
@@ -13282,7 +13353,7 @@ main {
   border-radius: 6px;
 }
 .select2-container.select2 {
-  border: 1px solid #DDD;
+  border: 1px solid #ddd;
 }
 .select2-container .select2-selection__arrow b {
   width: 14px !important;
@@ -13357,15 +13428,22 @@ main {
   display: none;
 }
 
-.form-selection .select2.select2-container, .form-select-number .select2.select2-container {
-  position: relative !important;
-  height: 40px;
+.form-selection,
+.form-select-number {
+  height: 55px !important;
+  border-radius: 10px !important;
 }
-.form-selection .select2-container .select2-selection__arrow b, .form-select-number .select2-container .select2-selection__arrow b {
+.form-selection .select2.select2-container,
+.form-select-number .select2.select2-container {
+  position: relative !important;
+}
+.form-selection .select2-container .select2-selection__arrow b,
+.form-select-number .select2-container .select2-selection__arrow b {
   background-repeat: no-repeat;
 }
-.form-selection .select2-container--default .select2-selection--single .select2-selection__rendered, .form-select-number .select2-container--default .select2-selection--single .select2-selection__rendered {
-  font-size: 14px !important;
+.form-selection .select2-container--default .select2-selection--single .select2-selection__rendered,
+.form-select-number .select2-container--default .select2-selection--single .select2-selection__rendered {
+  font-size: 16px !important;
 }
 
 .form-select-number {
@@ -13373,13 +13451,13 @@ main {
   width: 140px;
 }
 .form-select-number .select2-container--default .select2-selection--single .select2-selection__placeholder {
-  color: #9F9F9F;
+  color: #9f9f9f;
 }
 
 .form-select-status .select2.select2-container {
   position: relative;
   border: unset;
-  background-color: #475F7C;
+  background-color: #475f7c;
   color: #fff;
 }
 .form-select-status .select2-container--default .select2-selection--single .select2-selection__rendered {
@@ -13551,6 +13629,7 @@ main {
   border-radius: 5px;
   overflow: hidden;
   margin-bottom: 30px;
+  width: 100%;
 }
 .course-item .course-img {
   height: 40%;
@@ -13563,6 +13642,8 @@ main {
 .course-item .course-content {
   padding: 15px;
   height: 60%;
+  display: grid;
+  grid-template-rows: minmax(40px, max-content) minmax(85px, max-content) minmax(50px, max-content) minmax(42px, max-content);
 }
 .course-item .course-content h4 {
   background-color: #5fcf80;
@@ -13578,13 +13659,19 @@ main {
 }
 .course-item .course-content h3 a {
   transition: all 0.3s;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
 }
 .course-item .course-content h3 a:hover {
   color: #5fcf80;
 }
 .course-item .course-content p {
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -13601,6 +13688,18 @@ main {
 }
 .course-item .course-content .trainer-rank i {
   font-size: 30px;
+}
+.course-item .course-label {
+  grid-row: 1;
+}
+.course-item .course-title {
+  grid-row: 2;
+}
+.course-item .course-text {
+  grid-row: 3;
+}
+.course-item .course-info {
+  grid-row: 4;
 }
 
 .slick-dots {
