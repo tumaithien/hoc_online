@@ -1,5 +1,5 @@
-.form-group{
-  label{
+.form-group {
+  label {
   }
   .form-control {
     min-height: 40px;
@@ -19,7 +19,7 @@
         background-color: #fff !important;
       }
     }
-    option{
+    option {
       color: $text-base;
     }
   }
@@ -29,7 +29,7 @@
     }
   }
   @include media-breakpoint-down(md) {
-    .form-control{
+    .form-control {
       min-height: 44px;
     }
   }
@@ -40,14 +40,16 @@
     min-height: 48px;
   }
 }
-.form-info-user, .form-change-pass{
+.form-info-user,
+.form-change-pass {
+  margin-top: 20px;
   width: 100%;
-  .form-item>label{
-    flex: 0 0 180px;
+  .form-item > label {
+    font-weight: normal;
   }
-  @include media-breakpoint-down(md){
+  @include media-breakpoint-down(md) {
     width: 100%;
-    .form-item>label{
+    .form-item > label {
       flex: 0 0 0px !important;
     }
   }
@@ -55,12 +57,12 @@
 label {
   font-weight: 500;
 }
-@media screen and (max-width: 1150px){
-  .form-info-user{
-    .form-item>label{
+@media screen and (max-width: 1150px) {
+  .form-info-user {
+    .form-item > label {
       flex: 0 0 90px;
     }
-    .title-birthday{
+    .title-birthday {
       margin-right: 10px !important;
     }
   }
