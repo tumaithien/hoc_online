@@ -81,9 +81,11 @@ class ArticleController extends ControllerBase
             if ($this->request->hasFiles() == true) {
                 Upload::uploadFile($uploadFiles, $messagesUpload);
             }
-            var_dump($messagesUpload,$uploadFiles);exit;
-            $this->view->message = $messages;
+            
             $this->view->uploadFiles = $uploadFiles;
+            if (!empty($uploadFiles)) {
+                $data['article_content'] = $uploadFiles[0]['file_url'];
+            }
             if (count($messages) == 0) {
                 $msg_result = array();
                 $new_device = new LearnArticle();

@@ -49,9 +49,10 @@
                         if ($type == $menu_select) {
                             $active_menu = "active";
                         }
-                        $menuExcluded = '';
-                        if ($menu['menu_exclude']) {
-                            $menuExcluded = $menu['menu_exclude'];
+                        $menuExcluded = [];
+                        if ($menu['menu_excluded']) {
+                            $menuExcluded =explode(",", $menu['menu_excluded']);
+
                         }
                         ?>
                         <?php if ($menu['menu_type'] == 'home'): ?>
@@ -81,6 +82,9 @@
                                             <ul>
                                                 <?php foreach ($arrSubject as $subject):
                                                     $active_subject = "";
+                                                    if (in_array($subject['subjec_id'] . "-" . $class['class_id'],$menuExcluded)) {
+                                                        continue;
+                                                    }
                                                     if ($subject['subject_id'] == $subject_select && $active_menu && $active_class) {
                                                         $active_subject = "active";
                                                     }
