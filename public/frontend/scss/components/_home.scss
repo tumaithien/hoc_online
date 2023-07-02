@@ -48,6 +48,14 @@
   overflow: hidden;
   margin-bottom: 30px;
   width: 100%;
+  display: block;
+  transition: all 0.2s linear;
+  cursor: pointer;
+  &:hover {
+    border-color: $primary-color;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    transform: translate(-5px, -5px);
+  }
   .course-img {
     height: 40%;
     img {
@@ -57,6 +65,7 @@
     }
   }
   .course-content {
+    background-color: white;
     padding: 15px;
     height: 60%;
     display: grid;
@@ -166,6 +175,19 @@
     font-size: 15px;
     font-weight: 600;
     color: #37423b;
+  }
+}
+.table-custom {
+  .thead-light th {
+    color: white;
+    background-color: $primary-color;
+    border-right: 1px solid white;
+  }
+  .thead-light th:last-child {
+    border-right: unset;
+  }
+  tbody tr td {
+    border-right: 1px solid $gray-300;
   }
 }
 @media (max-width: 767px) {
