@@ -177,9 +177,7 @@
     color: #37423b;
   }
 }
-.ui_kit-table {
-  overflow: auto;
-}
+
 .table-custom {
   .thead-light th {
     color: white;
@@ -192,9 +190,23 @@
   tbody tr td {
     border-right: 1px solid $gray-300;
   }
+  tbody tr td:first-child {
+    border-left: 1px solid $gray-300;
+  }
+  tbody tr td {
+    border-bottom: 1px solid $gray-300;
+  }
   min-width: 1208px;
+  transition: all 0.2s linear;
+  &:hover {
+    transform: translate(-5px, -5px);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  }
 }
 @media (max-width: 767px) {
+  .ui_kit-table {
+    overflow: auto;
+  }
   .table-custom {
     overflow: hidden;
   }
