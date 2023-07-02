@@ -29,7 +29,7 @@ class IndexController extends ControllerBase
 
         $banner = $bannerRepo->findBanner();
         $blogRepo = new Article();
-        $blog = $blogRepo->getHomeArticle();
+        $blogs = $blogRepo->getHomeArticle();
         $total_user = User::countUser();
         $total_document = Document::count();
         $total_video = Video::count();
@@ -38,7 +38,7 @@ class IndexController extends ControllerBase
         $arrClassId = array_unique(array_column($videos,"video_class_id"));
         $this->view->setVars([
             'banners' => $banner,
-            'blog' => $blog,
+            'blogs' => $blogs,
             'blog_keyword' => $blog_keyword,
             'videos' => $videos,
             'total_user' => $total_user,

@@ -4,34 +4,32 @@
  * @var \Learncom\Models\LearnArticle[] $related_articles
  * @var \Learncom\Models\LearnArticle $article
  */
-?> <main data-aos="fade-in">
-  <section id="course-details" data-aos="fade-up">
-    <div class="infoCourse_top">
-      <div class="container">
-        <h2> <?= $article['article_name'] ?> </h2>
-        <p> <?= $article['article_summary'] ?> </p>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row pt-50">
-        <div class="col-lg-8 course-left">
-          <div class="course-details-img text-center">
-            <img src="https://img.upanh.tv/2023/07/02/Untitled-1.jpg" alt="Course">
-          </div> xml_error_string
-            <h3>Et enim incidunt fuga tempora</h3>
-            <p>Qui et explicabo voluptatem et ab qui vero et voluptas. Sint voluptates temporibus quam autem. Atque nostrum voluptatum laudantium a doloremque enim et ut dicta. Nostrum ducimus est iure minima totam doloribus nisi ullam deserunt. Corporis aut officiis sit nihil est. Labore aut sapiente aperiam. Qui voluptas qui vero ipsum ea voluptatem. Omnis et est. Voluptatem officia voluptatem adipisci et iusto provident doloremque consequatur. Quia et porro est. Et qui corrupti laudantium ipsa. Eum quasi saepe aperiam qui delectus quaerat in. Vitae mollitia ipsa quam. Ipsa aut qui numquam eum iste est dolorum. Rem voluptas ut sit ut.</p>
-        </div>
-        <div class="col-lg-4 course-right">
-            <div class="course-info d-flex justify-content-between align-items-center">
-                <h5>Sỉ số</h5>
-                <p>30</p>
-            </div>
-            <div class="course-info d-flex justify-content-between align-items-center">
-                <h5>Thời gian</h5>
-                <p>1 giờ 30 phút</p>
+?>
+<main data-aos="fade-in">
+    <section id="course-details" data-aos="fade-up">
+        <div class="infoCourse_top">
+            <div class="container">
+                <h2>
+                    <?= $article['article_icon'] ?>
+                </h2>
+                <p>
+                    <?= $article['article_name'] ?>
+                </p>
             </div>
         </div>
-      </div>
-    </div>
-  </section>
+        <div class="container">
+            <div class="row pt-50">
+                <div class="col-lg-8 course-left">
+                    <div class="course-details-img text-center">
+                        <img src="<?= $article['article_content'] ?>" alt="Course">
+                    </div>
+                    <?= $article['article_summary'] ?>
+                </div>
+                <div class="col-lg-4 course-right">
+                    <?= $article['article_content_left'] ?>
+
+                </div>
+            </div>
+        </div>
+    </section>
 </main>
