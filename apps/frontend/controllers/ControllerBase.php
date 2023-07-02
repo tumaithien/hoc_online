@@ -37,6 +37,7 @@ class ControllerBase extends Controller
     protected $isMobile;
     public $subject_select;
     public $class_select;
+    public $allClass;
 
     public function initialize()
     {
@@ -93,7 +94,7 @@ class ControllerBase extends Controller
         }
 
         $this->view->arrSubject = $arrSubject;
-        $this->view->arrClass = $arrClass;
+        $this->view->arrClass = $this->allClass = $arrClass;
 
         $menu_select = str_replace("/","",$this->request->get("_url"));
         if ($menu_select == "") {

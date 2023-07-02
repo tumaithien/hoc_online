@@ -33,14 +33,9 @@ class IndexController extends ControllerBase
         $total_user = User::countUser();
         $total_document = Document::count();
         $total_video = Video::count();
-
-        $arrClass = LearnClass::find([
-            'order' => "class_order"
-        ])->toArray();
-  
-
         //môn toán subject_id = 5
-        $videos = Video::findHomeVideo(5);
+        $videos = Video::findHomeVideo(5,$this->allClass);
+        $arrClassId = array_unique(array_column($videos,"video_class_id"));
         $this->view->setVars([
             'banners' => $banner,
             'blog' => $blog,
@@ -49,7 +44,7 @@ class IndexController extends ControllerBase
             'total_user' => $total_user,
             'total_document' => $total_document,
             'total_video' => $total_video,
-            'arrClass' => $arrClass,
+            'arrClassId' => $arrClassId
         ]);
     }
     public function getqrcodeAction()
