@@ -73,7 +73,7 @@ class Video extends Component
                     'subject_id' => $subject_id,
                     'arrClassId' => implode(",",array_column($arrClass,"class_id"))
                 ],
-                'order' => 'video_subject_id'
+                'order' => 'video_subject_id DESC,video_insert_time DESC, video_order ASC'
             ])->toArray();
             $data = $cache->setCache($data);
         }
