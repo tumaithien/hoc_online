@@ -13523,7 +13523,7 @@ main {
 }
 
 #course-details .course-details-img {
-  min-height: 350px;
+  margin-bottom: 10px;
 }
 #course-details .course-details-img img {
   width: 100%;
