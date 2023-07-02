@@ -127,18 +127,18 @@
                                     <img src="<?= $link_image_rand?>" >
                                 </div>
                                 <div class="course-content">
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-3 course-label">
                                         <h4>
                                             <?= $class_name ?>
                                         </h4>
                                     </div>
-                                    <h3>
+                                    <h3 class="course-title">
                                         <a href="<?= $this->url->get($href_video) ?>"><?= $video['video_name'] ?></a>
                                     </h3>
-                                    <p>
+                                    <p class="course-text">
                                         <?= $video['video_name'] ?>
                                     </p>
-                                    <div>
+                                    <div class="course-info">
                                         <div class="trainer-rank d-flex align-items-center">
                                             <i class='bx bxs-calendar'></i>
                                             <span>
