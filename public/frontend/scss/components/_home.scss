@@ -177,6 +177,9 @@
     color: #37423b;
   }
 }
+.ui_kit-table {
+  overflow: auto;
+}
 .table-custom {
   .thead-light th {
     color: white;
@@ -189,8 +192,12 @@
   tbody tr td {
     border-right: 1px solid $gray-300;
   }
+  min-width: 1208px;
 }
 @media (max-width: 767px) {
+  .table-custom {
+    overflow: hidden;
+  }
   #hero {
     height: 25vh;
   }
