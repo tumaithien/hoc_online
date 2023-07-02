@@ -1,64 +1,68 @@
 // global
-$primary-color: #233785;
+$primary-color: #5fcf80;
+$primary-color-dark: #3ac162;
 $secondary-color: #074085;
-$secondary-dark: #C56726;
-$light-gray: #d0d0d0;
-$dark-gray: #969696;
-$text-base: #464646;
+$secondary-dark: #c56726;
+$light-gray: #777777;
+$dark-gray: #444444;
+$text-base: #37423b;
 $base-black: #4f4f4f;
+$text-3: #808191;
 $dark-black: #363636;
-$main-1: #6A9EDD; 
+$main-1: #6a9edd;
 $primary-color-lighten: #2a83da;
+$color-border: #f1f1f3;
+$white-darker: #fcfcfd;
+$color-error: #eb5757;
 
-$accent: #F3B821;
-$brown: #B08965;
-$brown-lighten: #BDA25D;
-$red: #CF2626;
-$red-1: #F12E36;
-$orange: #FF4600;
-$gray: #8497A9;
-$green: #27AE60;
-$gray-1: #E0E0E0;
+$accent: #f3b821;
+$brown: #b08965;
+$brown-lighten: #bda25d;
+$red: #cf2626;
+$red-1: #f12e36;
+$orange: #ff4600;
+$gray: #8497a9;
+$green: #27ae60;
+$gray-1: #e0e0e0;
 $gray-2: #6f6f6f;
 $white: #fff;
 $black: #000;
 $light-gray-1: #767676;
 
 $background-grey-color: #f0f0f0;
-$background-form-control:#E1E5E9;
+$background-form-control: #e1e5e9;
 $box-shadow-menu-color: rgba(0, 0, 0, 0.2);
 $font-family: "Roboto", sans-serif;
 $font-size: 16px;
 $font-size-sm: $font-size - 2px;
 $font-size-xs: $font-size - 4px;
 $font-size-lg: $font-size + 2px;
-$fb: #4267B2;
-$youtube: #FF0000;
-$in: #0A66C2;
-$insta: linear-gradient(45deg, #FFD600 8.39%, #FF0100 50%, #D800B9 91.61%);
-$tw: #1DA1F2;
-$bg-google: #3C8BD9;
-$blue-light1: #168DDD;
+$fb: #4267b2;
+$youtube: #ff0000;
+$in: #0a66c2;
+$insta: linear-gradient(45deg, #ffd600 8.39%, #ff0100 50%, #d800b9 91.61%);
+$tw: #1da1f2;
+$bg-google: #3c8bd9;
+$blue-light1: #168ddd;
 $bg-google-darken: darken($bg-google, 10%);
-$bg-facebook: #4267B2;
-$bg-youtube: #E43030;
-$bg-adx: #FCAF17;
-$bg-adx-light-1: #FBC316;
-$bg-instagram: #E8283F;
+$bg-facebook: #4267b2;
+$bg-youtube: #e43030;
+$bg-adx: #fcaf17;
+$bg-adx-light-1: #fbc316;
+$bg-instagram: #e8283f;
 $bg-google-suite: #a0a0a0;
-
 
 // background
 $background-body: #f3f3f3;
-$bg1: #E3E3E3;
-$bg-gray2: #DFE6E9;
+$bg1: #e3e3e3;
+$bg-gray2: #dfe6e9;
 //button
 $base-button-color: #424d68;
 
 //transition
 $transition: all 0.2s;
 $transition-1: all 0.35s;
-$transition-2: all .3s linear 0ms;
+$transition-2: all 0.3s linear 0ms;
 
 // shadow
 $shadow: 0px 2px 7px rgba(0, 0, 0, 0.2);
@@ -66,17 +70,17 @@ $shadow1: 0px 2px 10px rgba(0, 0, 0, 0.2);
 
 // new
 // panel
-$panel-header: #2F353D;
+$panel-header: #2f353d;
 $base-radius: 6px;
 
-$line: #DFE6E9;
-$border: #C0C0C0;
-$border-light-grey:#DDDDDD;
+$line: #dfe6e9;
+$border: #e0e5e2;
+$border-light-grey: #dddddd;
 
 //slick
 $slick-arrow-color: #000;
-$slick-font-path: '../fonts/';
+$slick-font-path: "../fonts/";
 
 $border: #ddd;
-$fb: #1877F2;
-$gg: #F14336;
+$fb: #1877f2;
+$gg: #f14336;

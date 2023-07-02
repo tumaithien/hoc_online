@@ -2,7 +2,7 @@
 
 namespace Learncom\Models;
 
-class LearnClass extends \Phalcon\Mvc\Model
+class LearnClass extends BaseModelCache
 {
 
     /**
@@ -100,7 +100,7 @@ class LearnClass extends \Phalcon\Mvc\Model
     /**
      * Initialize method for model.
      */
-//    public function initialize()
+    //    public function initialize()
 //    {
 //        $this->setSchema("hoc_truc_tuyen");
 //    }
@@ -135,6 +135,16 @@ class LearnClass extends \Phalcon\Mvc\Model
     public static function findFirst($parameters = null)
     {
         return parent::findFirst($parameters);
+    }
+    public static function getNameById($id)
+    {
+        $object = self::findFirst([
+            'class_id = :id:',
+            'bind' => [
+                'id' => $id
+            ]
+        ]);
+        return $object ? $object->getClassName() : "";
     }
 
 }

@@ -13,7 +13,7 @@ class Upload extends Component
    public static function uploadFile(&$uploadFiles,&$messages) {
        if ($_SERVER['REQUEST_METHOD'] == "POST") {
            $error = array();
-           $target_dir = __DIR__."/../../public/frontend/images/";
+           $target_dir = __DIR__."/../../public/frontend/upload/images/";
            $target_file = $target_dir . basename($_FILES['fileUpload']['name']);
            $type_file = pathinfo($_FILES['fileUpload']['name'], PATHINFO_EXTENSION);
 
@@ -38,7 +38,7 @@ class Upload extends Component
                        "file_name" => $_FILES['fileUpload']['name'],
                        "file_size" => $_FILES['fileUpload']['size'],
                        "file_type" => $type_file,
-                       "file_url" => "/frontend/images/".$_FILES['fileUpload']['name']
+                       "file_url" => "/frontend/upload/images/".$_FILES['fileUpload']['name']
                    );
                    $flag = true;
                } else {
@@ -59,7 +59,7 @@ class Upload extends Component
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $error = array();
             $start_time = time();
-            $target_dir = __DIR__."/../../public/frontend/images/".$start_time;
+            $target_dir = __DIR__."/../../public/frontend/upload/images/".$start_time;
             $target_file = $target_dir . basename($_FILES['fileUpload']['name'][$t]);
             $type_file = pathinfo($_FILES['fileUpload']['name'][$t], PATHINFO_EXTENSION);
 
@@ -84,7 +84,7 @@ class Upload extends Component
                         "file_name" => $_FILES['fileUpload']['name'][$t],
                         "file_size" => $_FILES['fileUpload']['size'][$t],
                         "file_type" => $type_file,
-                        "file_url" => "/frontend/images/".$start_time.$_FILES['fileUpload']['name'][$t]
+                        "file_url" => "/frontend/upload/images/".$start_time.$_FILES['fileUpload']['name'][$t]
                     );
                     $flag = true;
                 } else {

@@ -33,8 +33,8 @@ class Article extends Component
         return LearnArticle::query()
             ->where("article_active = 'Y'")
             ->orderBy('article_order ASC')
-            ->limit(3)
-            ->execute();
+            ->limit(1)
+            ->execute()->toArray()[0];
     }
 }
 

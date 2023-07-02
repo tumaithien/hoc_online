@@ -2,7 +2,7 @@
 
 namespace Learncom\Models;
 
-class LearnRole extends \Phalcon\Mvc\Model
+class LearnRole extends BaseModel
 {
 
     /**

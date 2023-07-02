@@ -7,36 +7,85 @@ use Learncom\Repositories\Document;
 use Learncom\Repositories\Page;
 use Learncom\Repositories\Video;
 
-class DocumentdifficultController extends ControllerBase
+class DocumentdifficultController extends CoursebaseController
 {
     public function indexAction()
     {
-        // $parent_keyword = 'lesson';
-        // $repoPage = new Page();
-        // $repoPage->AutoGenMetaPage('tailieu','Document');
-        // $class_id = $this->request->get('classId');
-        // $subject_id = $this->request->get('subjectId');
-        // if (!$this->auth){
-        //     return $this->response->redirect("/login");
-        // }
-        // if (!in_array($class_id,$this->class_id) || !in_array($subject_id,$this->subject_id)) {
-        //     return $this->response->redirect("/permission");
-        // }
-        // $subject_parents_id = 0;
-        // $subject = ClassSubject::findFirstBySubjectId($subject_id);
-        // if ($subject){
-        //     $subject_parents_id = $subject->getSubjectParentId();
-        // }
-        // if ($subject_parents_id != 0){
-        //     $listChapters = Chapter::findByClassAndSubject($class_id,$subject_parents_id);
-        // } else {
-        //     $listChapters = Chapter::findByClassAndSubject($class_id,$subject_id);
-        // }
+        $parent_keyword = 'lesson';
+        $repoPage = new Page();
+        $repoPage->AutoGenMetaPage('tailieu', 'Document');
+        $this->checkingAuth();
+        $this->getListLesson();
+        $this->view->pick("course/index");
 
-        // $this->view->setVars([
-        //     'parent_keyword' => $parent_keyword,
-        //     'class_id' => $class_id,
-        //     'subject_id' => $subject_id,
-        // ]);
+        $this->view->setVars([
+            // 'type' => $this->type,
+            'parent_keyword' => $parent_keyword,
+            'class_id' => $this->class_select,
+            'subject_id' => $this->subject_select,
+            'chapters' => $this->list_chapter,
+            'lessons' => $this->lesson,
+            'group_select' => $this->group_select,
+            'lesson_select' => $this->lesson_select,
+            'link' => $this->link,
+        ]);
+    }
+    public function getListGroup()
+    {
+        $subject = ClassSubject::findFirstBySubjectId($this->subject_select);
+        if ($subject) {
+            $subject_parents_id = $subject->getSubjectParentId();
+        }
+        if ($subject_parents_id != 0) {
+            $this->chapter_temp = Chapter::findByClassAndSubjectAndCache($this->class_select, $subject_parents_id);
+        } else {
+            $this->chapter_temp = Chapter::findByClassAndSubjectAndCache($this->class_select, $this->subject_select);
+        }
+        //ở video thì sẽ là group
+    }
+    public function getListLesson()
+    {
+
+        $this->getListGroup();
+        foreach ($this->chapter_temp as $chapter) {
+            $active_group = "";
+            $lesson_temp = Document::findByClassAndSubjectAndChapterAndCache($this->class_select, $this->subject_select, $chapter['chapter_id'],"excellent");
+            if (empty($lesson_temp)) {
+                continue;
+            }
+            if (!$this->group_select) {
+                $this->group_select = $chapter['chapter_id'];
+            }
+            if ($chapter['chapter_id'] == $this->group_select) {
+                $active_group = "active";
+            }
+
+            foreach ($lesson_temp as $lesson) {
+                $active_lesson = "";
+                if (!$this->lesson_select) {
+                    $this->lesson_select = $lesson['document_id'];
+                }
+                if ($lesson['document_id'] == $this->lesson_select) {
+                    $active_lesson = "active";
+                }
+                $this->lesson[$chapter['chapter_id']][] = [
+                    'id' => $lesson['document_id'],
+                    'name' => $lesson['document_name'],
+                    'link' => $lesson['document_link'],
+                    'active' => $active_lesson,
+                    'href' => "/tailieu?classId={$this->class_select}&subjectId={$this->subject_select}&group={$chapter['chapter_id']}&lesson={$lesson['document_id']}"
+                ];
+                if ($this->lesson_select == $lesson['document_id'] && $this->group_select == $chapter['chapter_id']) {
+                    $this->link = $lesson['document_link'];
+                }
+
+            }
+            $this->list_chapter[] = [
+                'id' => $chapter['chapter_id'],
+                'name' => $chapter['chapter_name'],
+                'active' => $active_group
+            ];
+
+        }
     }
 }

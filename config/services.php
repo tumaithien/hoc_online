@@ -205,16 +205,17 @@ $di['router'] = function () {
 		"controller" => "login",
         "action"     => "login"
 	));
+    $router->add("/register", array(
+		"module"	=> "frontend",
+		"controller" => "login",
+        "action"     => "register"
+	));
     $router->add("/logout", array(
         "module"	=> "frontend",
         "controller" => "login",
         "action"     => "logout"
     ));
-    $router->add("/register", array(
-        "module"	=> "frontend",
-        "controller" => "register",
-        "action"     => "index"
-    ));
+
     $router->add("/baigiang", array(
         "module"	=> "frontend",
         "controller" => "lesson",

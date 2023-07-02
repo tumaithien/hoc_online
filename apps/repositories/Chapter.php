@@ -7,13 +7,15 @@ use Phalcon\Mvc\User\Component;
 
 class Chapter extends Component
 {
-    public static function findFirstById($id) {
+    public static function findFirstById($id)
+    {
         return LearnChapter::findFirst([
             'chapter_id = :id:',
             'bind' => ['id' => $id]
         ]);
     }
-    public static function getCombobox($chapter_id,$subject_id,$class_id) {
+    public static function getCombobox($chapter_id, $subject_id, $class_id)
+    {
         if ($subject_id) {
             $subject_model = ClassSubject::findFirstBySubjectId($subject_id);
             $parent_id = 0;
@@ -23,7 +25,7 @@ class Chapter extends Component
             }
             $data = LearnChapter::find([
                 'chapter_class_id = :class: AND (chapter_subject_id= :subject: OR chapter_subject_id = :parent: )',
-                'bind' => ['class' => $class_id,'subject' => $subject_id,'parent' => $parent_id]
+                'bind' => ['class' => $class_id, 'subject' => $subject_id, 'parent' => $parent_id]
             ]);
             $output = '';
             foreach ($data as $value) {
@@ -38,21 +40,35 @@ class Chapter extends Component
         return "";
     }
 
-    public static function findByClassAndSubject($class_id,$subject_id) {
+    public static function findByClassAndSubject($class_id, $subject_id)
+    {
         return LearnChapter::find([
             'chapter_class_id = :class_id: AND chapter_subject_id = :subject: AND chapter_active = "Y"',
-            'bind' => ['class_id' => $class_id,'subject'=>$subject_id],
+            'bind' => ['class_id' => $class_id, 'subject' => $subject_id],
             'order' => 'chapter_order ASC'
         ]);
     }
+    public static function findByClassAndSubjectAndCache($class_id, $subject_id)
+    {
+        $cache = new CacheRepo("Chapter_findByClassAndSubjectAndCache_{$class_id}_{$subject_id}");
+        $data = $cache->getCache();
+        if (!$data) {
+            $data = LearnChapter::find([
+                'chapter_class_id = :class_id: AND chapter_subject_id = :subject: AND chapter_active = "Y"',
+                'bind' => ['class_id' => $class_id, 'subject' => $subject_id],
+                'order' => 'chapter_order ASC'
+            ])->toArray();
+            $data = $cache->setCache($data);
+        }
 
-    public static function getNameById($id) {
+        return $data;
+    }
+
+    public static function getNameById($id)
+    {
         $chapter_model = self::findFirstById($id);
         return $chapter_model ? $chapter_model->getChapterName() : "";
     }
 
 
 }
-
-
-

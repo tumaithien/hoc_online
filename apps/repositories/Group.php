@@ -85,6 +85,22 @@ class Group extends Component
             'order' => 'group_order ASC'
         ]);
     }
+
+    public static function findByClassAndSubjectAndCache($class_id,$subject_id,$type="video") {
+        $key = "group_findByClassAndSubjectAndCache_{$class_id}_{$subject_id}";
+        $cache = new CacheRepo($key);
+        $data = $cache->getCache();
+        if (!$data) {
+            $models =  LearnGroup::find([
+                'columns' => "group_id,group_name",
+                'group_class_id = :class_id: AND group_subject_id = :subject: AND group_active = "Y" AND group_type = :type:',
+                'bind' => ['class_id' => $class_id,'subject'=>$subject_id,'type'=>$type],
+                'order' => 'group_order ASC'
+            ])->toArray();
+            $data = $cache->setCache($models);
+        }
+        return $data;
+    }
 }
 
 
