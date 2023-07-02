@@ -11,35 +11,41 @@
     </section>
     <section class="section container">
         <div class="section-title" data-aos="fade-up">
-            <p>Khai Giảng</p>
-            <h2>Lịch Khai Giảng Mới Nhất</h2>
+            <p>Thông Báo Chiêu Sinh</p>
+            <h3><a href="<?= $this->url->get("/blogs") ?>">Lịch Chiêu Sinh Mới Nhất</a></h3>
         </div>
         <section id="course-details" data-aos="fade-up">
             <div class="container">
                 <div class="ui_kit-table">
-                <table class="table table-custom">
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col"  class="font-weight-bold">Khóa học</th>
-                            <th scope="col" class="font-weight-bold">Lớp học</th>
-                            <th scope="col" class="font-weight-bold">Lịch học</th>
-                            <th scope="col" class="font-weight-bold" style="width: 150px">Khai giảng</th>
-                        </tr>
-                    </thead>
-                    <tbody id="offline-loader">
-                        <?php foreach($blogs as $blog) :
-                            ?>
-                        <tr>
-                            <td rowspan="1"><a href="<?= $this->url->get("/blogs/" . $blog['article_keyword']) ?>"
-                                    class="text-primary"><?= $blog['article_name'] ?></td>
-                            <td><?= $blog['article_icon'] ?></td>
-                            <td><?= $blog['article_content_show'] ?></td>
-                            <td><?= $blog['article_time'] ?></td>
-                        </tr>
-                        <?php endforeach ?>
-                       
-                    </tbody>
-                </table>
+                    <table class="table table-custom">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" class="font-weight-bold">Khóa học</th>
+                                <th scope="col" class="font-weight-bold">Lớp học</th>
+                                <th scope="col" class="font-weight-bold">Lịch học</th>
+                                <th scope="col" class="font-weight-bold" style="width: 150px">Khai giảng</th>
+                            </tr>
+                        </thead>
+                        <tbody id="offline-loader">
+                            <?php foreach ($blogs as $blog):
+                                ?>
+                                <tr>
+                                    <td rowspan="1"><a href="<?= $this->url->get("/blogs/" . $blog['article_keyword']) ?>"
+                                            class="text-primary"><?= $blog['article_name'] ?></td>
+                                    <td>
+                                        <?= $blog['article_icon'] ?>
+                                    </td>
+                                    <td>
+                                        <?= $blog['article_content_show'] ?>
+                                    </td>
+                                    <td>
+                                        <?= $blog['article_time'] ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach ?>
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </section>
@@ -88,7 +94,8 @@
                 <p>Các Bài Giảng Mới Nhất
                 </p>
                 <h3>Bài giảng Môn Toán
-                    <?= $class_name ?></h3>
+                    <?= $class_name ?>
+                </h3>
             </div>
             <div class="row section-slick" data-aos="zoom-in" data-aos-delay="100">
                 <?php
@@ -101,32 +108,37 @@
                     if ($total_video > 4) {
                         break;
                     }
+                    $href_video = "/khoahoc?classId={$class_id}&subjectId={$video['video_subject_id']}&group_id={$video['video_group_id']}&lesson={$video['video_chapter_id']}";
                     ?>
                     <div class="col-lg-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
-                        <div class="course-item" href="<?= $this->url->get("/khoahoc?classId=21&subjectId=5") ?>">
-                            <div class="course-img">
-                                <embed src="<?= $video['video_link'] ?>" type="application/pdf" height="100%" width="100%">
-                            </div>
-                            <div class="course-content">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h4>
-                                        <?= $class_name ?>
-                                    </h4>
+                        <a href="<?= $this->url->get($href_video) ?>">
+                            <div class="course-item">
+                                <div class="course-img">
+                                    <embed src="<?= $video['video_link'] ?>" type="application/pdf" height="100%" width="100%">
                                 </div>
-                                <h3>
-                                    <a href="<?= $this->url->get("/tailieu?classId=21&subjectId=5") ?>"><?= $video['video_name'] ?></a>
-                                </h3>
-                                <p>
-                                    <?= $video['video_name'] ?>
-                                </p>
-                                <div>
-                                    <div class="trainer-rank d-flex align-items-center">
-                                        <i class='bx bxs-calendar'></i>
-                                        <span><?= date("d/m/Y",strtotime($video['video_insert_time'])) ?></span>
+                                <div class="course-content">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h4>
+                                            <?= $class_name ?>
+                                        </h4>
+                                    </div>
+                                    <h3>
+                                        <a href="<?= $this->url->get($href_video) ?>"><?= $video['video_name'] ?></a>
+                                    </h3>
+                                    <p>
+                                        <?= $video['video_name'] ?>
+                                    </p>
+                                    <div>
+                                        <div class="trainer-rank d-flex align-items-center">
+                                            <i class='bx bxs-calendar'></i>
+                                            <span>
+                                                <?= date("d/m/Y", strtotime($video['video_insert_time'])) ?>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 <?php endforeach ?>
             </div>
