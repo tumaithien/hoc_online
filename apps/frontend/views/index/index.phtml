@@ -27,20 +27,20 @@
                     </thead>
                     <tbody id="offline-loader">
                         <tr>
-                            <td rowspan="1"><a href="<?= $this->url->get("/blogs/". $blog['article_keyword']) ?>"
+                            <td rowspan="1"><a href="<?= $this->url->get("/blogs/" . $blog['article_keyword']) ?>"
                                     class="text-primary">Khóa học lớp 10 các môn Toán, Lý, Hóa</td>
                             <td>Khóa học lớp 10 các môn Toán, Lý, Hóa</td>
                             <td>Từ 19h đến 21h tối thứ 2, 4, 6 hàng tuần</td>
                             <td>07-07-2023</td>
                         </tr>
                         <tr>
-                            <td rowspan="1"><a href="<?= $this->url->get("/blogs/". $blog['article_keyword']) ?>"
+                            <td rowspan="1"><a href="<?= $this->url->get("/blogs/" . $blog['article_keyword']) ?>"
                                     class="text-primary">Khóa học lớp 12 các môn Toán, Lý, Hóa</a></td>
                             <td>>Khóa học lớp 12 các môn Toán, Lý, Hóa Tối thứ ba, thứ năm</td>
                             <td>Từ 19h đến 21h tối thứ 2, 4, 6 hàng tuần</td>
                             <td>11-07-2022</td>
                         </tr>
-                      
+
                     </tbody>
                 </table>
             </div>
@@ -75,49 +75,55 @@
             </div>
         </div>
     </section>
-    <section class="section container">
-        <div class="section-title" data-aos="fade-up">
-            <p>Bài giảng</p>
-            <h2>BÀI GIẢNG TIÊU BIỂU</h2>
-        </div>
-        <div class="row section-slick" data-aos="zoom-in" data-aos-delay="100">
-            <?php foreach ($videos as $key => $video):
-                if ($key == 4) {
-                    break;
-                }
-                $class_name = "";
-                if (isset($arrClassSubject[$video['video_subject_id'] . "_" . $video['video_class_id']])) {
-                    $class_name = $arrClassSubject[$video['video_subject_id'] . "_" . $video['video_class_id']];
-                }
-                ?>
-            <div class="col-lg-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
-                <div class="course-item">
-                    <div class="course-img">
-                        <embed src="<?= $video['video_link'] ?>" type="application/pdf" height="100%" width="100%">
-                    </div>
-                    <div class="course-content">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4>
-                                <?= $class_name ?>
-                            </h4>
-                        </div>
-                        <h3>
-                            <a href="<?= $this->url->get("/tailieu?classId=21&subjectId=5") ?>"></a>
-                        </h3>
-                        <p>
-                            <?= $video['video_name'] ?>
-                        </p>
-                        <div>
-                            <div class="trainer-rank d-flex align-items-center">
-                                <i class='bx bxs-calendar'></i>
-                                <span>19/02/2023</span>
+    <?php foreach ($arrSubject as $keySubject => $subject):
+        ?>
+        <section class="section container">
+            <div class="section-title" data-aos="fade-up">
+                <p>Bài giảng</p>
+                <h2>BÀI GIẢNG TIÊU BIỂU</h2>
+            </div>
+            <div class="row section-slick" data-aos="zoom-in" data-aos-delay="100">
+                <?php foreach ($videos as $key => $video):
+                    if ($video['video_subject_id'] != $subject['subject_id']) {
+                        continue;
+                    }
+                    if ($key == 4) {
+                        break;
+                    }
+                    $class_name = "";
+                    if (isset($arrClassSubject[$video['video_subject_id'] . "_" . $video['video_class_id']])) {
+                        $class_name = $arrClassSubject[$video['video_subject_id'] . "_" . $video['video_class_id']];
+                    }
+                    ?>
+                    <div class="col-lg-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
+                        <div class="course-item">
+                            <div class="course-img">
+                                <embed src="<?= $video['video_link'] ?>" type="application/pdf" height="100%" width="100%">
+                            </div>
+                            <div class="course-content">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h4>
+                                        <?= $class_name ?>
+                                    </h4>
+                                </div>
+                                <h3>
+                                    <a href="<?= $this->url->get("/tailieu?classId=21&subjectId=5") ?>"></a>
+                                </h3>
+                                <p>
+                                    <?= $video['video_name'] ?>
+                                </p>
+                                <div>
+                                    <div class="trainer-rank d-flex align-items-center">
+                                        <i class='bx bxs-calendar'></i>
+                                        <span>19/02/2023</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                <?php endforeach ?>
             </div>
-            <?php endforeach ?>
-        </div>
-    </section>
+        </section>
+    <?php endforeach ?>
 
 </main>
