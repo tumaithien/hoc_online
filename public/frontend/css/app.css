@@ -12471,6 +12471,12 @@ ul.list-style > li:hover > a {
 .form_change button:hover {
   background-color: #3ac162;
 }
+@media (max-width: 767px) {
+  .form_wrapper .form_login,
+  .form_change .form_login {
+    padding: 20px;
+  }
+}
 
 .form_change {
   background-color: transparent;
@@ -12575,7 +12581,11 @@ ul.list-style > li:hover > a {
   transition: all 0.1s ease;
   font-size: 14px;
 }
-.videoCourse_wrapper .videoCourse_content .contentRight-item a:hover, .videoCourse_wrapper .videoCourse_content .contentRight-item a.active {
+.videoCourse_wrapper .videoCourse_content .contentRight-item a:hover {
+  background-color: #5fcf80;
+  color: white;
+}
+.videoCourse_wrapper .videoCourse_content .contentRight-item.active a {
   background-color: #5fcf80;
   color: white;
 }
@@ -12948,6 +12958,48 @@ input, input:before, input:after {
 }
 #header .mobile-nav-toggle.bi-x {
   color: #fff;
+}
+#header .wrapper-info--account {
+  padding: 0 20px;
+  position: relative;
+  max-width: 70px;
+  width: 100%;
+}
+#header .info-account {
+  display: inline-block;
+  font-size: 30px;
+}
+#header .info-account:hover,
+#header .info-account.active {
+  color: #5fcf80;
+}
+#header .popup-account {
+  position: absolute;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #5fcf80;
+  padding: 10px 20px;
+  right: 0;
+  width: max-content;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(30px);
+  transition: all 0.2s;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+#header .popup-account a {
+  display: block;
+  padding: 10px 0;
+}
+#header .popup-account a:hover,
+#header .popup-account a:active {
+  color: #5fcf80;
+}
+#header .popup-account.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0px);
 }
 
 .qr-block {

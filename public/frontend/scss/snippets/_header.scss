@@ -219,4 +219,48 @@
   .mobile-nav-toggle.bi-x {
     color: #fff;
   }
+
+  .wrapper-info--account {
+    padding: 0 20px;
+    position: relative;
+    max-width: 70px;
+    width: 100%;
+  }
+
+  .info-account {
+    display: inline-block;
+    font-size: 30px;
+  }
+  .info-account:hover,
+  .info-account.active {
+    color: $primary-color;
+  }
+  .popup-account {
+    position: absolute;
+    background: white;
+    border-radius: 10px;
+    border: 1px solid $primary-color;
+    padding: 10px 20px;
+    right: 0;
+    width: max-content;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(30px);
+    transition: all 0.2s;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    a {
+      display: block;
+      padding: 10px 0;
+    }
+    a:hover,
+    a:active {
+      color: $primary-color;
+    }
+  }
+  .popup-account.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0px);
+  }
 }

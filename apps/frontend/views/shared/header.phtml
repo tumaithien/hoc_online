@@ -38,7 +38,7 @@
     <header id="header" class="fixed-top">
         <div class="container d-flex align-items-center header_wrapper">
             <h1 class="logo">
-                <a href="<?= $this->url->get('/'); ?>">Chi Bảo</a>
+                <a href="<?= $this->url->get('/'); ?>">ChiBao</a>
             </h1>
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
@@ -49,10 +49,9 @@
                         if ($type == $menu_select) {
                             $active_menu = "active";
                         }
-                        $menuExcluded = [];
-                        if ($menu['menu_excluded']) {
-                            $menuExcluded =explode(",", $menu['menu_excluded']);
-
+                        $menuExcluded = '';
+                        if ($menu['menu_exclude']) {
+                            $menuExcluded = $menu['menu_exclude'];
                         }
                         ?>
                         <?php if ($menu['menu_type'] == 'home'): ?>
@@ -82,9 +81,6 @@
                                             <ul>
                                                 <?php foreach ($arrSubject as $subject):
                                                     $active_subject = "";
-                                                    if (in_array($subject['subjec_id'] . "-" . $class['class_id'],$menuExcluded)) {
-                                                        continue;
-                                                    }
                                                     if ($subject['subject_id'] == $subject_select && $active_menu && $active_class) {
                                                         $active_subject = "active";
                                                     }
@@ -112,9 +108,16 @@
                 <a href="<?php echo $this->url->get('/login') ?>" class="get-started-btn">Đăng Nhập</a>
 
             <?php else: ?>
-                <a href="<?php echo $this->url->get('/account/change-profile') ?>" class="get-started-btn">Thông tin tài
-                    khoản</a>
-                <a href="<?php echo $this->url->get('/logout') ?>" class="get-started-btn">Thoát</a>
+                <div class="wrapper-info--account">
+                    <a href="#" class="info-account">
+                        <i class='bx bx-user'></i>
+                    </a>
+                    <div class="popup-account">
+                        <a href="<?php echo $this->url->get('/account/change-profile') ?>">Thông tin tài
+                            khoản</a>
+                        <a href="<?php echo $this->url->get('/logout') ?>">Thoát</a>
+                    </div>
+                </div>
 
             <?php endif ?>
         </div>

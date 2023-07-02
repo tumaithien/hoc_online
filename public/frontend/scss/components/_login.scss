@@ -95,6 +95,12 @@
       background-color: $primary-color-dark;
     }
   }
+
+  @media (max-width: 767px) {
+    .form_login {
+      padding: 20px;
+    }
+  }
 }
 .form_change {
   background-color: transparent;
