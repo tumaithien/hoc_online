@@ -13487,7 +13487,7 @@ main {
   padding: 15px;
   height: 50%;
   display: grid;
-  grid-template-rows: minmax(40px, max-content) minmax(85px, max-content) minmax(50px, max-content) minmax(42px, max-content);
+  grid-template-rows: minmax(40px, max-content) minmax(85px, max-content) minmax(67px, max-content) minmax(42px, max-content);
 }
 .infoCourse_item .infoCourse_content h4 {
   background-color: #5fcf80;
@@ -13654,7 +13654,8 @@ main {
   transform: translate(-5px, -5px);
 }
 .course-item .course-img {
-  height: 40%;
+  height: 100%;
+  max-height: 195px;
 }
 .course-item .course-img img {
   width: 100%;
@@ -13801,6 +13802,10 @@ main {
 }
 
 @media (max-width: 767px) {
+  .course-item .course-img {
+    max-height: 150px;
+    height: 100%;
+  }
   .ui_kit-table {
     overflow: auto;
   }
