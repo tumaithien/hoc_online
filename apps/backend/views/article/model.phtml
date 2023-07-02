@@ -156,3 +156,13 @@ if(!empty($formData['message']))
         </div>
     </div>
 </div>
+<script type="text/javascript">
+                        window.onload = function () {
+                            var oFCKeditor2 = new FCKeditor('txtSummary');
+                            oFCKeditor2.Height = '500';
+                            oFCKeditor2.Width = '650';
+                            oFCKeditor2.ToolbarSet = "Default";
+                            oFCKeditor2.Basepath = '../backend/fckeditor/';
+                            oFCKeditor2.ReplaceTextarea();
+                        }
+                    </script>

@@ -62,19 +62,18 @@ class Video extends Component
         }
         return $data;
     }
-    public static function findHomeVideo($arrClassId, $arrSubjectId)
+    public static function findHomeVideo($class_id)
     {
-        $cache = new CacheRepo("vieo_findHomeVideo", 1);
+        $cache = new CacheRepo("vieo_findHomeVideo1", 1);
         $data = $cache->getCache();
         if (!$data) {
             $data = LearnVideo::find([
-                'FIND_IN_SET(video_class_id,:arrClass:) AND FIND_IN_SET(video_subject_id,:arrSubject:)',
+                'video_subject_id = :subject_id: AND video_class_id != 0',
                 'bind' => [
-                    'arrClass' => implode(",",$arrClassId),
-                    'arrSubject' => implode(",",$arrSubjectId)
+                    'subject_id' => $class_id,
+                    
                 ],
-                'limit' => 4,
-                'order' => 'RAND()'
+                'order' => 'video_subject_id'
             ])->toArray();
             $data = $cache->setCache($data);
         }

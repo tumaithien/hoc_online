@@ -14,25 +14,37 @@
             <p>Khai Giảng</p>
             <h2>Lịch Khai Giảng Mới Nhất</h2>
         </div>
-        <div class="container">
-            <div class="row pt-50">
-                <div class="col-lg-12 ">
-                    <h3>
-                        <?= $blog['article_name'] ?>
-                    </h3>
-                    <p>
-                        <?= $blog['article_summary'] ?>
-                    </p>
-                    <div class="course-details-img text-center">
-                        <a href="<?= $this->url->get("/blogs/" . $blog['article_keyword']) ?>"> <img
-                                src="<?= $blog['article_content'] ?>" alt="Course"></a>
-
-                    </div>
-
-                </div>
-
+        <section id="course-details" data-aos="fade-up">
+            <div class="container">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col" class="font-weight-bold">Khóa học</th>
+                            <th scope="col" class="font-weight-bold">Lớp học</th>
+                            <th scope="col" class="font-weight-bold">Lịch học</th>
+                            <th scope="col" class="font-weight-bold" style="width: 150px">Khai giảng</th>
+                        </tr>
+                    </thead>
+                    <tbody id="offline-loader">
+                        <tr>
+                            <td rowspan="1"><a href="<?= $this->url->get("/blogs/". $blog['article_keyword']) ?>"
+                                    class="text-primary">Khóa học lớp 10 các môn Toán, Lý, Hóa</td>
+                            <td>Khóa học lớp 10 các môn Toán, Lý, Hóa</td>
+                            <td>Từ 19h đến 21h tối thứ 2, 4, 6 hàng tuần</td>
+                            <td>07-07-2023</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="1"><a href="<?= $this->url->get("/blogs/". $blog['article_keyword']) ?>"
+                                    class="text-primary">Khóa học lớp 12 các môn Toán, Lý, Hóa</a></td>
+                            <td>>Khóa học lớp 12 các môn Toán, Lý, Hóa Tối thứ ba, thứ năm</td>
+                            <td>Từ 19h đến 21h tối thứ 2, 4, 6 hàng tuần</td>
+                            <td>11-07-2022</td>
+                        </tr>
+                      
+                    </tbody>
+                </table>
             </div>
-        </div>
+        </section>
         </div>
     </section>
     <section class="counter">
@@ -69,122 +81,43 @@
             <h2>BÀI GIẢNG TIÊU BIỂU</h2>
         </div>
         <div class="row section-slick" data-aos="zoom-in" data-aos-delay="100">
-            <?php foreach ($videos as $video):
+            <?php foreach ($videos as $key => $video):
+                if ($key == 4) {
+                    break;
+                }
                 $class_name = "";
                 if (isset($arrClassSubject[$video['video_subject_id'] . "_" . $video['video_class_id']])) {
                     $class_name = $arrClassSubject[$video['video_subject_id'] . "_" . $video['video_class_id']];
                 }
                 ?>
-                <div class="col-lg-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
-                    <div class="course-item">
-                        <div class="course-img">
-                            <embed src="" type="application/pdf" height="100%" width="100%">
+            <div class="col-lg-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
+                <div class="course-item">
+                    <div class="course-img">
+                        <embed src="<?= $video['video_link'] ?>" type="application/pdf" height="100%" width="100%">
+                    </div>
+                    <div class="course-content">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4>
+                                <?= $class_name ?>
+                            </h4>
                         </div>
-                        <div class="course-content">
-                            <div class="d-flex justify-content-between align-items-center mb-3 course-label">
-                                <h4>
-                                    <?= $class_name ?>
-                                </h4>
-                            </div>
-                            <h3 class="course-title">
-                                <a href="<?= $this->url->get("/tailieu?classId=21&subjectId=5") ?>"></a>
-                            </h3>
-                            <p class="course-text">
-                                <?= $video['video_name'] ?>
-                            </p>
-                            <div class="course-info">
-                                <div class="trainer-rank d-flex align-items-center">
-                                    <i class='bx bxs-calendar'></i>
-                                    <span>19/02/2023</span>
-                                </div>
+                        <h3>
+                            <a href="<?= $this->url->get("/tailieu?classId=21&subjectId=5") ?>"></a>
+                        </h3>
+                        <p>
+                            <?= $video['video_name'] ?>
+                        </p>
+                        <div>
+                            <div class="trainer-rank d-flex align-items-center">
+                                <i class='bx bxs-calendar'></i>
+                                <span>19/02/2023</span>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
             <?php endforeach ?>
         </div>
     </section>
-    <section class="section container">
-        <div class="section-title" data-aos="fade-up">
-            <p>Tài liệu</p>
-            <h2>THƯ VIỆN TÀI LIỆU</h2>
-        </div>
-        <div class="row section-slick" data-aos="zoom-in" data-aos-delay="100">
 
-            <?php foreach ($documents as $document):
-                $class_name = "";
-                if (isset($arrClassSubject[$document['document_subject_id'] . "_" . $document['document_class_id']])) {
-                    $class_name = $arrClassSubject[$document['document_subject_id'] . "_" . $document['document_class_id']];
-                }
-                ?>
-                <div class="col-lg-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
-                    <div class="course-item">
-                        <div class="course-img">
-                            <embed src="<?= $document['document_link'] ?>" type="application/pdf" height="100%"
-                                width="100%">
-
-                        </div>
-                        <div class="course-content">
-                            <div class="d-flex justify-content-between align-items-center mb-3 course-label">
-                                <h4>
-                                    <?= $class_name ?>
-                                </h4>
-                            </div>
-                            <h3 class="course-title">
-                                <a href="<?= $this->url->get("/tailieu?classId=21&subjectId=5") ?>"><?= $document['document_name'] ?></a>
-                            </h3>
-                            <p class="course-text">
-                                <?= $document['document_name'] ?>
-                            </p>
-                            <div class="course-info">
-                                <div class="trainer-rank d-flex align-items-center">
-                                    <i class='bx bxs-calendar'></i>
-                                    <span>19/02/2023</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach ?>
-
-        </div>
-    </section>
-    <section class="section container">
-        <div class="section-title" data-aos="fade-up">
-            <p>Khóa Học</p>
-            <h2>KHÓA HỌC TIÊU BIỂU</h2>
-        </div>
-        <div class="row section-slick" data-aos="zoom-in" data-aos-delay="100">
-            <?php foreach ($arrClassSubjectNew as $class):
-                ?>
-                <div class="col-lg-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
-                    <div class="course-item">
-                        <div class="course-img">
-                            <img src="<?= $this->url->getStatic($class['image']) ?>" alt="Course" />
-                        </div>
-                        <div class="course-content">
-                            <div class="d-flex justify-content-between align-items-center mb-3 course-label">
-                                <h4>
-                                    <?= $class['name'] ?>
-                                </h4>
-                            </div>
-                            <h3 class="course-title">
-                                <a href="<?= $this->url->get("/tailieu?classId=21&subjectId=5") ?>"><?= $class['name'] ?></a>
-                            </h3>
-                            <p class="course-text">
-                                <?= $class['name'] ?>
-                            </p>
-                            <div class="course-info">
-                                <div class="trainer-rank d-flex align-items-center">
-                                    <i class='bx bxs-calendar'></i>
-                                    <span>19/02/2023</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach ?>
-
-        </div>
-    </section>
 </main>

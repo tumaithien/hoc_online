@@ -35,49 +35,21 @@ class IndexController extends ControllerBase
         $total_video = Video::count();
 
         $arrClass = LearnClass::find([
-            'order' => "RAND()"
+            'order' => "class_order"
         ])->toArray();
-        $arrSubject = LearnSubject::find([
-            'order' => "RAND()"
-        ])->toArray();
+  
 
-        $cache = new CacheRepo("all_class_subject", 1);
-        $arrClassSubject = $cache->getCache();
-        if (!$arrClassSubject) {
-
-            $arrClassSubject = [];
-            foreach ($arrClass as $class) {
-                foreach ($arrSubject as $subject) {
-                    $arrClassSubject[] = [
-                        'id' => $subject['subject_id'] . "_" . $class['class_id'],
-                        'name' => $subject['subject_name'] . " " . $class['class_name'],
-                        'image' => $subject['subject_image']
-                    ];
-                }
-            }
-            $arrClassSubject = $cache->setCache($arrClassSubject);
-        }
-        $arrClassId = array_column($arrClass, "class_id");
-        $arrSubjectId = array_column($arrSubject, "subject_id");
-        $arrClassSubjectNew[0] = $arrClassSubject[rand(0, count($arrClassSubject))];
-        $arrClassSubjectNew[1] = $arrClassSubject[rand(0, count($arrClassSubject))];
-        $arrClassSubjectNew[2] = $arrClassSubject[rand(0, count($arrClassSubject))];
-        $arrClassSubjectNew[3] = $arrClassSubject[rand(0, count($arrClassSubject))];
-        $arrClassSubject = array_column($arrClassSubject, 'name', 'id');
-
-        $documents = Document::findHomeDocument($arrClassId, $arrSubjectId);
-        $videos = Video::findHomeVideo($arrClassId, $arrSubjectId);
+        //môn toán subject_id = 5
+        $videos = Video::findHomeVideo(5);
         $this->view->setVars([
             'banners' => $banner,
             'blog' => $blog,
             'blog_keyword' => $blog_keyword,
-            'documents' => $documents,
             'videos' => $videos,
             'total_user' => $total_user,
             'total_document' => $total_document,
             'total_video' => $total_video,
-            'arrClassSubjectNew' => $arrClassSubjectNew,
-            'arrClassSubject' => $arrClassSubject
+            'arrClass' => $arrClass,
         ]);
     }
     public function getqrcodeAction()
