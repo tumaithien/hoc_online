@@ -34,7 +34,7 @@ class IndexController extends ControllerBase
         $total_document = Document::count();
         $total_video = Video::count();
         //môn toán subject_id = 5
-        $videos = Video::findHomeVideo(5,$this->allClass);
+        $videos = Video::findHomeVideo($this->allSubject,$this->allClass);
         $arrClassId = array_unique(array_column($videos,"video_class_id"));
         $this->view->setVars([
             'banners' => $banner,

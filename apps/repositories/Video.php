@@ -62,19 +62,46 @@ class Video extends Component
         }
         return $data;
     }
-    public static function findHomeVideo($subject_id, $arrClass)
+    public static function findHomeVideo($arrSubject, $arrClass)
     {
-        $cache = new CacheRepo("vieo_findHomeVideo8", 1);
+        $cache = new CacheRepo("vieo_findHomeVideo12");
         $data = $cache->getCache();
         if (!$data) {
-            $data = LearnVideo::find([
-                'video_subject_id = :subject_id: AND  FIND_IN_SET(video_class_id,:arrClassId:)',
-                'bind' => [
-                    'subject_id' => $subject_id,
-                    'arrClassId' => implode(",",array_column($arrClass,"class_id"))
-                ],
-                'order' => 'video_subject_id DESC,video_insert_time DESC, video_order ASC'
-            ])->toArray();
+            $data = [];
+            foreach ($arrSubject as $subject) {
+                $class_end = 0;
+                $id = 0;
+                foreach ($arrClass as $class) {
+                    $dataTem = LearnVideo::findFirst([
+                        'video_subject_id = :subject_id: AND  video_class_id = :class_id: ',
+                        'bind' => [
+                            'subject_id' => $subject['subject_id'],
+                            'class_id' => $class['class_id']
+                        ],
+                        'order' => 'video_insert_time DESC, video_order ASC'
+                    ]);
+                    if ($dataTem) {
+                        $class_end = $class['class_id'];
+                        $id = $dataTem->toArray()['video_id'];
+                        $data[$subject['subject_id']][$class['class_id']] = $dataTem->toArray();
+                    }
+                }
+                if (count($data[$subject['subject_id']]) < 4 && $class_end) {
+                    $dataTem = LearnVideo::findFirst([
+                        'video_subject_id = :subject_id: AND  video_class_id = :class_id: AND video_id != :id:',
+                        'bind' => [
+                            'subject_id' => $subject['subject_id'],
+                            'class_id' => $class_end,
+                            'id' => $id
+                        ],
+                        'order' => 'video_insert_time DESC, video_order ASC'
+                    ]);
+                    if ($dataTem) {
+                        $data[$subject['subject_id']][999] = $dataTem->toArray();
+                    }
+                }
+            }
+
             $data = $cache->setCache($data);
         }
         return $data;

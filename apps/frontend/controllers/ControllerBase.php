@@ -38,6 +38,7 @@ class ControllerBase extends Controller
     public $subject_select;
     public $class_select;
     public $allClass;
+    public $allSubject;
 
     public function initialize()
     {
@@ -93,7 +94,7 @@ class ControllerBase extends Controller
             $arrSubject = $cacheSubject->setCache($arrSubject);
         }
 
-        $this->view->arrSubject = $arrSubject;
+        $this->view->arrSubject = $this->allSubject = $arrSubject;
         $this->view->arrClass = $this->allClass = $arrClass;
 
         $menu_select = str_replace("/","",$this->request->get("_url"));

@@ -80,51 +80,50 @@
         </div>
     </section>
     <?php
-    foreach ($arrClassId as $class_id):
-        $class_name = "";
+    foreach ($arrSubject as $subject):
 
-        foreach ($arrClass as $class) {
-            if ($class['class_id'] == $class_id) {
-                $class_name = $class['class_name'];
-            }
-        }
-        $link_image = "";
-        if (strpos($class_name,"12")) {
-            $link_image = "/frontend/image_toan_12/";
-        } elseif (strpos($class_name,"11")) {
-            $link_image = "/frontend/image_toan_11/";
-
-        } else {
-            $link_image = "/frontend/image_toan_10/";
-        }
         ?>
         <section class="section container">
             <div class="section-title" data-aos="fade-up">
                 <p>Các Bài Giảng Mới Nhất
                 </p>
-                <h3>Bài giảng Môn Toán
-                    <?= $class_name ?>
+                <h3>Bài giảng Môn
+                    <?= $subject['subject_name'] ?>
                 </h3>
             </div>
             <div class="row section-slick" data-aos="zoom-in" data-aos-delay="100">
                 <?php
                 $total_video = 0;
-                foreach ($videos as $key => $video):
-                    if ($video['video_class_id'] != $class_id) {
-                        continue;
+                $col = 12 / count($videos[$subject['subject_id']]);
+                foreach ($videos[$subject['subject_id']] as $key => $video):
+                    $class_id = (int) $video['video_subject_id'];
+                    $class_name = "";
+                    
+                    foreach ($arrClass as $class) {
+                        if ($class['class_id'] == $video['video_class_id']) {
+                            $class_name = $class['class_name'];
+                            break;
+                        }
                     }
-                    $total_video++;
-                    if ($total_video > 4) {
-                        break;
+
+                    if (strpos($class_name, "12")) {
+                        $link_image = "/frontend/image_toan_12/";
+                    } elseif (strpos($class_name, "11")) {
+                        $link_image = "/frontend/image_toan_11/";
+
+                    } else {
+                        $link_image = "/frontend/image_toan_10/";
                     }
-                    $link_image_rand = $link_image. rand(1,8). ".jpg";
+
+                    $link_image_rand = $link_image . rand(1, 8) . ".jpg";
                     $href_video = "/khoahoc?classId={$class_id}&subjectId={$video['video_subject_id']}&group_id={$video['video_group_id']}&lesson={$video['video_chapter_id']}";
+
                     ?>
-                    <div class="col-lg-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
+                    <div class="col-lg-<?= $col ?> col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
                         <a href="<?= $this->url->get($href_video) ?>">
                             <div class="course-item">
                                 <div class="course-img">
-                                    <img src="<?= $link_image_rand?>" >
+                                    <img src="<?= $link_image_rand ?>">
                                 </div>
                                 <div class="course-content">
                                     <div class="d-flex justify-content-between align-items-center mb-3 course-label">

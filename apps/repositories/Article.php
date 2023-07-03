@@ -35,7 +35,7 @@ class Article extends Component
         if (!$data) {
             $data = LearnArticle::query()
             ->where("article_active = 'Y'")
-            ->orderBy('article_insert_time DESC')
+            ->orderBy('article_order ASC')
             ->limit(7)
             ->execute()->toArray();
             $data = $cache->setCache($data);
