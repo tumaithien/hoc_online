@@ -45,7 +45,6 @@ class LoginController extends ControllerBase
                     } else {
                         $checkIp = true;
                     }
-                    $checkIp = true;
                     if ($checkIp) {
                         $this->startSession($user);
                         $preURL = $this->session->get('preURL');
