@@ -10,7 +10,7 @@
               <form id="formChangePass" action="" method="POST">
               <div class="input_wrapper _input--pasword">
                     <label for="password" class="text-left">Password <span class="text-danger">*</span></label>
-                    <input type="password" name="txtPass" id="txtPass" value="<?= $formData['user_pass'] ? $formData['user_pass'] : "" ?>">
+                    <input class="<?php echo isset($message['user_pass']) ? $message['status'] : ""; ?>" type="password" name="txtPass" id="txtPass" value="<?= $formData['user_pass'] ? $formData['user_pass'] : "" ?>">
                     <div class="toggle-pass">
                         <span class="_show-password">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"

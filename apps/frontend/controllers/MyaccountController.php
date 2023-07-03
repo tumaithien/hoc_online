@@ -147,10 +147,11 @@ class MyaccountController extends ControllerBase
             }
         }
         $messages['status'] = 'border-danger';
+
         $this->view->setVars([
             'formData' => $data,
             'msg_result' => $msg_result,
-            'messages' => $messages,
+            'message' => $messages,
             'type' => 'changePass'
         ]);
     }
