@@ -10,7 +10,7 @@
               <form id="formChangePass" action="" method="POST">
               <div class="input_wrapper _input--pasword">
                     <label for="password" class="text-left">Password <span class="text-danger">*</span></label>
-                    <input type="password" name="txtPassword" id="password">
+                    <input type="password" name="txtPass" id="txtPass" value="<?= $formData['user_pass'] ? $formData['user_pass'] : "" ?>">
                     <div class="toggle-pass">
                         <span class="_show-password">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -35,13 +35,13 @@
                             </svg>
                         </span>
                     </div>
-                    <span class="text-error msg-password">
-                        <?php echo isset($message['password']) ? $message['password'] : ""; ?>
+                    <span class="text-error msg-pass">
+                        <?php echo isset($message['user_pass']) ? $message['user_pass'] : ""; ?>
                     </span>
                 </div>
                 <div class="input_wrapper _input--pasword">
-                    <label for="password" class="text-left">Password <span class="text-danger">*</span></label>
-                    <input type="password" name="txtPassword" id="password">
+                    <label for="password" class="text-left">New Password <span class="text-danger">*</span></label>
+                    <input type="password" name="txtNewPass" id="txtNewPass" value="<?= $formData['user_new_pass'] ? $formData['user_new_pass'] : "" ?>">
                     <div class="toggle-pass">
                         <span class="_show-password">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -66,13 +66,13 @@
                             </svg>
                         </span>
                     </div>
-                    <span class="text-error msg-password">
-                        <?php echo isset($message['password']) ? $message['password'] : ""; ?>
+                    <span class="text-error msg-new-pass">
+                        <?php echo isset($message['user_new_pass']) ? $message['user_new_pass'] : ""; ?>
                     </span>
                 </div>
                 <div class="input_wrapper _input--pasword">
-                    <label for="password" class="text-left">Password <span class="text-danger">*</span></label>
-                    <input type="password" name="txtPassword" id="password">
+                    <label for="password" class="text-left">Confirm Passowrd <span class="text-danger">*</span></label>
+                    <input type="password" name="txtConfirmPass" id="txtConfirmPass" value="<?= $formData['user_confirm_pass'] ? $formData['user_confirm_pass'] : "" ?>">
                     <div class="toggle-pass">
                         <span class="_show-password">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -97,8 +97,8 @@
                             </svg>
                         </span>
                     </div>
-                    <span class="text-error msg-password">
-                        <?php echo isset($message['password']) ? $message['password'] : ""; ?>
+                    <span class="text-error msg-confirm-pass">
+                        <?php echo isset($message['user_confirm_pass']) ? $message['user_confirm_pass'] : ""; ?>
                     </span>
                 </div>
                 <div class="form-item mb-20 d-flex justtify-content-xs-between">
