@@ -14,7 +14,7 @@ class DocumentController extends CoursebaseController
         $parent_keyword = 'lesson';
         $repoPage = new Page();
         $repoPage->AutoGenMetaPage('tailieu', 'Document');
-      //  $this->checkingAuth();
+       $this->checkingAuth();
         $this->getListLesson();
         $this->view->pick("course/index");
 
