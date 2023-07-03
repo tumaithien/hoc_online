@@ -27,7 +27,7 @@
     <link href="<?php echo $this->url->getStatic('frontend/vendor/bootstrap-icons/') ?>bootstrap-icons.css"
         rel="stylesheet">
     <link href="<?php echo $this->url->getStatic('frontend/vendor/boxicons/css/') ?>boxicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <script>
         var commands = [];
         var WEB_URL = "<?php echo $this->url->get('/'); ?>";
@@ -49,10 +49,11 @@
                         if ($type == $menu_select) {
                             $active_menu = "active";
                         }
-                        $menuExcluded = '';
-                        if ($menu['menu_exclude']) {
-                            $menuExcluded = $menu['menu_exclude'];
+                        $menuExcluded = [];
+                        if ($menu['menu_excluded']) {
+                            $menuExcluded = explode(",", $menu['menu_excluded']);
                         }
+
                         ?>
                         <?php if ($menu['menu_type'] == 'home'): ?>
                             <li><a class="<?= $active_menu ?>" href="<? echo $this->url->get('/') ?>">
@@ -80,6 +81,9 @@
                                                 </span> <i class="bi bi-chevron-right"></i></a>
                                             <ul>
                                                 <?php foreach ($arrSubject as $subject):
+                                                    if (in_array($class['class_id'] . "-" . $subject['subject_id'], $menuExcluded)) {
+                                                        continue;
+                                                    }
                                                     $active_subject = "";
                                                     if ($subject['subject_id'] == $subject_select && $active_menu && $active_class) {
                                                         $active_subject = "active";
