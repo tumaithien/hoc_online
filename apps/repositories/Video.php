@@ -64,6 +64,7 @@ class Video extends Component
     {
         $cache = new CacheRepo("vieo_findHomeVideo13");
         $data = $cache->getCache();
+        $image = "";
         if (!$data) {
             $data = [];
             foreach ($arrSubject as $subject) {
@@ -82,7 +83,7 @@ class Video extends Component
                         $class_end = $class['class_id'];
                         $id = $dataTem->toArray()['video_id'];
                         $data[$subject['subject_id']][$class['class_id']] = $dataTem->toArray();
-                        $data[$subject['subject_id']][$class['class_id']]['link_image'] = self::addImageByNameClass($class['class_name'], $subject['subject_name']);
+                        $data[$subject['subject_id']][$class['class_id']]['link_image'] = $image = self::addImageByNameClass($class['class_name'], $subject['subject_name']);
                     }
                 }
                 if (count($data[$subject['subject_id']]) < 4 && $class_end) {
@@ -97,7 +98,7 @@ class Video extends Component
                     ]);
                     if ($dataTem) {
                         $data[$subject['subject_id']][999] = $dataTem->toArray();
-                        $data[$subject['subject_id']][999]['link_image'] = self::addImageByNameClass($class['class_name'], $subject['subject_name']);
+                        $data[$subject['subject_id']][999]['link_image'] = $image;
                     }
                 }
             }
