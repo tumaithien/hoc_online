@@ -62,7 +62,7 @@ class Video extends Component
     }
     public static function findHomeVideo($arrSubject, $arrClass)
     {
-        $cache = new CacheRepo("vieo_findHomeVideo12");
+        $cache = new CacheRepo("vieo_findHomeVideo13");
         $data = $cache->getCache();
         if (!$data) {
             $data = [];
@@ -114,10 +114,15 @@ class Video extends Component
         switch (true) {
             case strpos($c_s, "hóa"):
                 $image .= "hoa";
-            case strpos($c_s, "lý"):
+                break;
+            case strpos($c_s, "lí"):
                 $image .= "ly";
+                break;
             case strpos($c_s, "toán"):
                 $image .= "toan";
+                break;
+        }
+        switch (true) {
             case strpos($c_s, "10"):
                 $image .= "-10";
                 break;
