@@ -15,12 +15,10 @@ class Video extends Component
         $cache = new CacheRepo("video_count_video");
         $total = $cache->getCache();
         if (!$total) {
-            $total = LearnVideo::count([
-            ]);
+            $total = LearnVideo::count([]);
             $total = $cache->setCache($total);
         }
         return $total;
-
     }
     public static function findFirstById($id)
     {
@@ -84,6 +82,7 @@ class Video extends Component
                         $class_end = $class['class_id'];
                         $id = $dataTem->toArray()['video_id'];
                         $data[$subject['subject_id']][$class['class_id']] = $dataTem->toArray();
+                        $data[$subject['subject_id']][$class['class_id']]['link_image'] = self::addImageByNameClass($class['class_name'], $subject['subject_name']);
                     }
                 }
                 if (count($data[$subject['subject_id']]) < 4 && $class_end) {
@@ -98,6 +97,7 @@ class Video extends Component
                     ]);
                     if ($dataTem) {
                         $data[$subject['subject_id']][999] = $dataTem->toArray();
+                        $data[$subject['subject_id']][999]['link_image'] = self::addImageByNameClass($class['class_name'], $subject['subject_name']);
                     }
                 }
             }
@@ -105,5 +105,31 @@ class Video extends Component
             $data = $cache->setCache($data);
         }
         return $data;
+    }
+    private static function addImageByNameClass($class_name, $subject_name)
+    {
+        $c_s = $class_name . $subject_name;
+        $c_s = strtolower($c_s);
+        $image = "/frontend/images/image-subject/";
+        switch (true) {
+            case strpos($c_s, "hóa"):
+                $image .= "hoa";
+            case strpos($c_s, "lý"):
+                $image .= "ly";
+            case strpos($c_s, "toán"):
+                $image .= "toan";
+            case strpos($c_s, "10"):
+                $image .= "-10";
+                break;
+            case strpos($c_s, "11"):
+                $image .= "-11";
+                break;
+            case strpos($c_s, "12"):
+                $image .= "-12";
+                break;
+            default:
+                $image = "/frontend/images/image-subject/default";
+        }
+        return $image . ".jpg";
     }
 }
