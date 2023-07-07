@@ -62,7 +62,7 @@ class Video extends Component
     }
     public static function findHomeVideo($arrSubject, $arrClass)
     {
-        $cache = new CacheRepo("vieo_findHomeVideo13");
+        $cache = new CacheRepo("vieo_findHomeVideo");
         $data = $cache->getCache();
         $image = "";
         if (!$data) {
