@@ -28,7 +28,7 @@
     padding: 20px 0 20px 30px;
     .videoCourse_video {
       width: 80%;
-      min-height: 35rem;
+      min-height: 60rem;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -101,6 +101,7 @@
       padding-left: 0;
       .videoCourse_video {
         width: 100%;
+        min-height: 15rem;
       }
       .videoCourse_rightSidebar {
         width: 100%;
