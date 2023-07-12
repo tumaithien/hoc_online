@@ -22,7 +22,7 @@
             <?php if (strpos($link, "vimeo") || strpos($link, "video") || strpos($link, "youtube")): ?>
                 <iframe src="<?= $link ?>" allowfullscreen></iframe>
             <?php else: ?>
-                <embed src="<?= $link ?>" type="application/pdf" height="100%" width="100%">
+                <embed src="https://drive.google.com/viewerng/viewer?embedded=true&url=<?= $link ?>" type="application/pdf" height="100%" width="100%">
             <?php endif ?>
         </div>
         <div class="videoCourse_rightSidebar">
