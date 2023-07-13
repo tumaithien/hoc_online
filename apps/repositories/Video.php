@@ -77,7 +77,7 @@ class Video extends Component
                             'subject_id' => $subject['subject_id'],
                             'class_id' => $class['class_id']
                         ],
-                        'order' => 'video_insert_time DESC, video_order ASC'
+                        'order' => 'video_insert_time DESC'
                     ]);
                     if ($dataTem) {
                         $class_end = $class['class_id'];
@@ -94,7 +94,7 @@ class Video extends Component
                             'class_id' => $class_end,
                             'id' => $id
                         ],
-                        'order' => 'video_insert_time DESC, video_order ASC'
+                        'order' => 'video_insert_time DESC'
                     ]);
                     if ($dataTem) {
                         $data[$subject['subject_id']][999] = $dataTem->toArray();
