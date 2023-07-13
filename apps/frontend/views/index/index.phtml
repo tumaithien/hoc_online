@@ -92,7 +92,7 @@
                 $total_video = 0;
                 $col = 12 / count($videos[$subject['subject_id']]);
                 foreach ($videos[$subject['subject_id']] as $key => $video) :
-                    $class_id = (int) $video['video_subject_id'];
+                    $class_id = (int) $video['video_class_id'];
                     $class_name = "";
 
                     foreach ($arrClass as $class) {
