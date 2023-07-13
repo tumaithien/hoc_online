@@ -42,6 +42,10 @@ class ControllerBase extends Controller
 
     public function initialize()
     {
+
+        $a = "//�y���R�m�z�W�[�i��p�X�L��";
+        $encodedString = base64_encode($a);
+var_dump($encodedString);exit;
         //current user
         $this->view->auth = $this->auth = $this->session->get('auth');
         if ($this->auth) {

@@ -1,0 +1,209 @@
+<script>
+
+    $(document).ready(function () {
+        $("#create_form").submit(function () {
+            var valid = true;
+            if ($('input[name=txtName]').val() == '') {
+                $('.msg-name').text('Bạn cần nhập thông tin này');
+                $('#txtName').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-name').text('');
+                $('#txtName').removeClass("border-red");
+            }
+            if ($('input[name=txtOrder]').val() == '') {
+                $('.msg-order').text('Bạn cần nhập thông tin này');
+                $('#txtOrder').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-order').text('');
+                $('#txtOrder').removeClass("border-red");
+            }
+            if ($('input[name=txtTeacher]').val() == '') {
+                $('.msg-teacher').text('Bạn cần nhập thông tin này');
+                $('#txtTeacher').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-teacher').text('');
+                $('#txtTeacher').removeClass("border-red");
+            }
+
+            if (!valid) event.preventDefault();
+            if (valid) {
+                $('button[name=submit]').prop('disabled', true);
+            }
+        });
+    });
+
+</script>
+<script>
+    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-type-dgnl"); ?>'>List Video</a><span class='divider'>/</span></li><li><a href='<?php echo $this->url->get("dashboard/create-type-dgnl"); ?>'>Create Video</a></li>");
+</script>
+<?php
+if (!empty($formData['message'])) {
+    ?>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $formData['typeMessage'] ?>">
+        <?php echo $formData['message']; ?>
+    </p>
+<?php } ?>
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header well" data-original-title>
+            <h2><i class="icon-edit"></i>
+                <?= isset($formData['mode']) ? $formData['mode'] : "" ?> Môn Học :
+            </h2>
+            <div class="box-icon"> <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a> <a
+                    href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a> <a href="#"
+                    class="btn btn-close btn-round"><i class="icon-remove"></i></a> </div>
+        </div>
+        <div class="box-content">
+            <form novalidate="novalidate" class="form-horizontal" id="create_form" action="" method="post" enctype="multipart/form-data">
+                <fieldset>
+                    <div class="control-group">
+
+                        <label class="control-label" for="focusedInput">Tên Môn học <em
+                                style="color:red;">*</em></label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['type_name']) ? $formData['type_name'] : "" ?>"
+                                maxlength="256" id="txtName" name="txtName" class="input-xlarge focused" type="text">
+                            <div class="text-danger msg-name">
+                                <?php echo isset($messages["type_name"]) ? $messages["type_name"] : ""; ?>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+
+                        <label class="control-label" for="focusedInput">Giáo viên <em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <input
+                                value="<?php echo isset($formData['type_teacher']) ? $formData['type_teacher'] : "" ?>"
+                                maxlength="256" id="txtTeacher" name="txtTeacher" class="input-xlarge focused"
+                                type="text">
+                            <div class="text-danger msg-teacher">
+                                <?php echo isset($messages["type_teacher"]) ? $messages["type_teacher"] : ""; ?>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Order <em style="color:red;">*</em> </label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['type_order']) ? $formData['type_order'] : "" ?>"
+                                id="txtOrder" name="txtOrder" class="input-xlarge focused" maxlength="10" type="text">
+                            <div class="text-danger msg-order">
+                                <?php echo isset($messages["type_order"]) ? $messages["type_order"] : ""; ?>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+
+                        <label class="control-label" for="upload-files">Hình ảnh Môn học<em
+                                style="color:red;">*</em></label>
+                        <div class="controls">
+                            <?php
+                            if ($formData['type_image']):
+                                ?>
+                                <label id="label-fileUpload-1" for="fileUpload-1"><img style="max-width: 300px"
+                                        id="image-fileUpload-1" src="<?= $formData['type_image'] ?>" /></label>
+                            <?php else: ?>
+                                <label id="label-fileUpload-1" for="fileUpload-1"><img style="max-width: 300px"
+                                        id="image-fileUpload-1" src="/frontend/images/uploadfile.png" /></label>
+                            <?php endif ?>
+                            <input id="fileUpload-1" name="fileUpload-1" type="file" class="hidden" accept="<?php
+                            foreach ($this->globalVariable->acceptUploadTypes as $k => $v) {
+                                echo $k . ",";
+                            } ?>" />
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+
+                        <label class="control-label" for="upload-files">Hình ảnh Giáo viên<em
+                                style="color:red;">*</em></label>
+                        <div class="controls">
+                            <?php
+                            if ($formData['type_icon']):
+                                ?>
+                                <label id="label-fileUpload-2" for="fileUpload-2"><img style="max-width: 300px"
+                                        id="image-fileUpload" src="<?= $formData['type_icon'] ?>" /></label>
+                            <?php else: ?>
+                                <label id="label-fileUpload-2" for="fileUpload-2"><img style="max-width: 300px"
+                                        id="image-fileUpload-2" src="/frontend/images/uploadfile.png" /></label>
+                            <?php endif ?>
+                            <input id="fileUpload-2" name="fileUpload-2" type="file" class="hidden" accept="<?php
+                            foreach ($this->globalVariable->acceptUploadTypes as $k => $v) {
+                                echo $k . ",";
+                            } ?>" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="textarea2">Chi Tiết Môn học </label>
+                        <div class="controls">
+                            <textarea style="width: 500px;height: 200px" id="txtDescriotiont"
+                                name="txtDescriotiont"><?php echo isset($formData['type_descriptiont']) ? $formData['type_descriptiont'] : "" ?></textarea>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="textarea2">Giới thiệu giáo viên </label>
+                        <div class="controls">
+                            <textarea style="width: 500px;height: 200px" id="txtContent"
+                                name="txtContent"><?php echo isset($formData['type_content']) ? $formData['type_content'] : "" ?></textarea>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="submit_create">Save changes</button>
+                        <a id="edit_page" class="btn" href="<?php echo $this->url->get('dashboard/list-type-dgnl'); ?>">
+                            Cancel </a>
+                    </div>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    window.onload = function () {
+        var oFCKeditor2 = new FCKeditor('txtDescriotiont');
+        oFCKeditor2.Height = '500';
+        oFCKeditor2.Width = '650';
+        oFCKeditor2.ToolbarSet = "Default";
+        oFCKeditor2.Basepath = '../backend/fckeditor/';
+        oFCKeditor2.ReplaceTextarea();
+
+        var oFCKeditor3 = new FCKeditor('txtContent');
+        oFCKeditor3.Height = '500';
+        oFCKeditor3.Width = '650';
+        oFCKeditor3.ToolbarSet = "Default";
+        oFCKeditor3.Basepath = '../backend/fckeditor/';
+        oFCKeditor3.ReplaceTextarea();
+    }
+
+    $('#fileUpload-1').on("change", function () {
+        if ($('#fileUpload-1')[0].files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#image-fileUpload-1').attr('src', e.target.result);
+            }
+            reader.readAsDataURL($('#fileUpload-1')[0].files[0]);
+        }
+
+    });
+    
+    $('#fileUpload-2').on("change", function () {
+        if ($('#fileUpload-2')[0].files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#image-fileUpload-2').attr('src', e.target.result);
+            }
+            reader.readAsDataURL($('#fileUpload-2')[0].files[0]);
+        }
+
+    });
+
+</script>

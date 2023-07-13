@@ -1,0 +1,53 @@
+<?php
+/**
+ * @var $parent_keyword;
+ * @var \Learncom\Models\LearnArticle[] $articles
+ */
+?>
+
+<main data-aos="fade-in">
+    <div class="infoCourse_top">
+        <div class="container">
+            <h2>Thông Báo Chiêu Sinh</h2>
+        </div>
+    </div>
+    <section class="container infoCourse_wrapper" data-aos="fade-up">
+        <div class="row" data-aos="zoom-in" data-aos-delay="100">
+            <?php foreach ($articles as $article):
+                ?>
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
+                    <div class="infoCourse_item">
+                        <div class="infoCourse_img">
+                            <img src="<?= $article['article_content'] ?>"
+                                alt="Course" />
+                        </div>
+                        <div class="infoCourse_content">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4>
+                                    <?= $article['article_name'] ?>
+                                </h4>
+                            </div>
+                            <h3>
+                                <a href="<?= $this->url->get("/blogs/" . $article['article_keyword']) ?>">
+                                    <?= $article['article_icon'] ?>
+                                </a>
+                            </h3>
+                            <p>
+                                <?= $article['article_content_show'] ?>
+                            </p>
+                            <div class="infoCourse_rank">
+                                <div class="trainer-rank d-flex align-items-center">
+                                    <i class='bx bxs-calendar'></i>
+                                    <span>
+                                        <?= $article['article_time'] ?>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach ?>
+        </div>
+    </section>
+
+</main>

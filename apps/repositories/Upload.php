@@ -10,35 +10,35 @@ use Phalcon\Mvc\User\Component;
 
 class Upload extends Component
 {
-   public static function uploadFile(&$uploadFiles,&$messages) {
+   public static function uploadFile(&$uploadFiles,&$messages, $name_upload = "fileUpload") {
        if ($_SERVER['REQUEST_METHOD'] == "POST") {
            $error = array();
            $target_dir = __DIR__."/../../public/frontend/upload/images/";
-           $target_file = $target_dir . basename($_FILES['fileUpload']['name']);
-           $type_file = pathinfo($_FILES['fileUpload']['name'], PATHINFO_EXTENSION);
+           $target_file = $target_dir . basename($_FILES[$name_upload]['name']);
+           $type_file = pathinfo($_FILES[$name_upload]['name'], PATHINFO_EXTENSION);
 
            $type_fileAllow = array('png', 'jpg', 'jpeg', 'gif');
            if (!in_array(strtolower($type_file), $type_fileAllow)) {
-               $error['fileUpload'] = "File bạn vừa chọn hệ thống không hỗ trợ, bạn vui lòng chọn hình ảnh";
+               $error[$name_upload] = "File bạn vừa chọn hệ thống không hỗ trợ, bạn vui lòng chọn hình ảnh";
            }
-           $size_file = $_FILES['fileUpload']['size'];
+           $size_file = $_FILES[$name_upload]['size'];
            if ($size_file > 5242880) {
-               $error['fileUpload'] = "File bạn chọn không được quá 5MB";
+               $error[$name_upload] = "File bạn chọn không được quá 5MB";
            }
            if (file_exists($target_file)) {
                unlink($target_file);
            }
            if (empty($error)) {
-               if (move_uploaded_file($_FILES["fileUpload"]["tmp_name"], $target_file)) {
+               if (move_uploaded_file($_FILES[$name_upload]["tmp_name"], $target_file)) {
                    $messages = [
                        "type" => "success",
                        "message" =>  "Bạn đã upload file thành công",
                    ];
                    $uploadFiles[] = array(
-                       "file_name" => $_FILES['fileUpload']['name'],
-                       "file_size" => $_FILES['fileUpload']['size'],
+                       "file_name" => $_FILES[$name_upload]['name'],
+                       "file_size" => $_FILES[$name_upload]['size'],
                        "file_type" => $type_file,
-                       "file_url" => "/frontend/upload/images/".$_FILES['fileUpload']['name']
+                       "file_url" => "/frontend/upload/images/".$_FILES[$name_upload]['name']
                    );
                    $flag = true;
                } else {
@@ -50,7 +50,7 @@ class Upload extends Component
            } else {
                $messages = [
                    "type" => "error",
-                   "message" =>  $error['fileUpload'],
+                   "message" =>  $error[$name_upload],
                ];
            }
        }
