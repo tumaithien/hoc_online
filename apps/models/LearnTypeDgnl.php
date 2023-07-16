@@ -14,13 +14,48 @@ class LearnTypeDgnl extends BaseModelCache
     public $type_order;
 
 
+    public static function getCheckboxDGNL($arrChecked, $id = -1)
+    {
+        $output = '';
+        $dataService = LearnTypeDgnl::find();
+        foreach ($dataService as $value) {
+            $checked = '';
+            if (in_array($value->getId(), $arrChecked)) {
+                $checked = 'checked';
+            }
+            if ($id != -1) {
+                $output .= "<input class='check_class check_box search_group' type='checkbox' " . $checked . " id='class_" . $id . "_" . $value->getId() . "' name='slcType[" . $id . "][]' value='" . $value->getId() . "'>" . " " . addslashes(preg_replace("/\r|\n/", "", $value->getName())) . "<br>";
+            } else {
+                $output .= "<input class='check_class check_box search_group' type='checkbox' " . $checked . " id='class_" . $value->getId() . "' name='slcType[]' value='" . $value->getId() . "'>" . " " . addslashes(preg_replace("/\r|\n/", "", $value->getName())) . "<br>";
+            }
+        }
+        return $output;
+    }
+    public static function getNameById($id)
+    {
+        $model = self::findFirstById($id);
+        return $model ? $model->getName() : "";
 
+    }
     public static function findFirstById($id)
     {
         return self::findFirst([
             'type_id = :id:',
             'bind' => ['id' => $id]
         ]);
+    }
+    public static function getComboboxClass($type)
+    {
+        $data = self::find();
+        $output = '';
+        foreach ($data as $value) {
+            $selected = '';
+            if ($value->getId() == $type) {
+                $selected = 'selected';
+            }
+            $output .= "<option " . $selected . " value='" . $value->getId() . "'>" . $value->getName() . "</option>";
+        }
+        return $output;
     }
     /**
      * Returns table name mapped in the model.

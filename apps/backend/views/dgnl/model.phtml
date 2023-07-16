@@ -1,10 +1,9 @@
-
 <script>
 
-    $(document).ready(function(){
-        $("#create_form").submit(function(){
+    $(document).ready(function () {
+        $("#create_form").submit(function () {
             var valid = true;
-            if($('input[name=txtName]').val() == '') {
+            if ($('input[name=txtName]').val() == '') {
                 $('.msg-name').text('Bạn cần nhập thông tin này');
                 $('#txtName').addClass("border-red");
                 valid = false;
@@ -12,7 +11,7 @@
                 $('.msg-name').text('');
                 $('#txtName').removeClass("border-red");
             }
-            if($('input[name=txtOrder]').val() == '') {
+            if ($('input[name=txtOrder]').val() == '') {
                 $('.msg-order').text('Bạn cần nhập thông tin này');
                 $('#txtOrder').addClass("border-red");
                 valid = false;
@@ -20,7 +19,7 @@
                 $('.msg-order').text('');
                 $('#txtOrder').removeClass("border-red");
             }
-            if($('input[name=txtLink]').val() == '') {
+            if ($('input[name=txtLink]').val() == '') {
                 $('.msg-link').text('Bạn cần nhập thông tin này');
                 $('#txtLink').addClass("border-red");
                 valid = false;
@@ -28,24 +27,17 @@
                 $('.msg-link').text('');
                 $('#txtLink').removeClass("border-red");
             }
-            if($('select[name=slcClass]').val() == '') {
-                $('.msg-class').text('Bạn cần nhập thông tin này');
-                $('#slcClass').addClass("border-red");
-                valid = false;
-            } else {
-                $('.msg-class').text('');
-                $('#slcClass').removeClass("border-red");
-            }
-            if($('select[name=slcSubject]').val() == '') {
+
+            if ($('select[name=slcType]').val() == '') {
                 $('.msg-subject').text('Bạn cần nhập thông tin này');
-                $('#slcSubject').addClass("border-red");
+                $('#slcType').addClass("border-red");
                 valid = false;
             } else {
                 $('.msg-subject').text('');
-                $('#slcSubject').removeClass("border-red");
+                $('#slcType').removeClass("border-red");
             }
-            if( ! valid ) event.preventDefault();
-            if( valid ) {
+            if (!valid) event.preventDefault();
+            if (valid) {
                 $('button[name=submit]').prop('disabled', true);
             }
         });
@@ -53,117 +45,95 @@
 
 </script>
 <script>
-    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-video");?>'>List Video</a><span class='divider'>/</span></li><li><a href='<?php echo $this->url->get("dashboard/create-video");?>'>Create Video</a></li>");
+    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-dgnl"); ?>'>List Video</a><span class='divider'>/</span></li><li><a href='<?php echo $this->url->get("dashboard/create-dgnl"); ?>'>Create Video</a></li>");
 </script>
 <?php
-if(!empty($formData['message']))
-{
+if (!empty($formData['message'])) {
     ?>
-    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $formData['typeMessage']?>">
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $formData['typeMessage'] ?>">
         <?php echo $formData['message']; ?>
     </p>
-<?php }	?>
+<?php } ?>
 <div class="row-fluid sortable">
     <div class="box span12">
         <div class="box-header well" data-original-title>
-            <h2><i class="icon-edit"></i><?= isset($formData['mode']) ? $formData['mode'] : "" ?> Môn Học :</h2>
-            <div class="box-icon"> <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a> <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a> <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a> </div>
+            <h2><i class="icon-edit"></i>
+                <?= isset($formData['mode']) ? $formData['mode'] : "" ?> Video :
+            </h2>
+            <div class="box-icon"> <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a> <a
+                    href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a> <a href="#"
+                    class="btn btn-close btn-round"><i class="icon-remove"></i></a> </div>
         </div>
         <div class="box-content">
             <form novalidate="novalidate" class="form-horizontal" id="create_form" action="" method="post">
                 <fieldset>
                     <div class="control-group">
-
-                        <div class="control-group">
-                            <label class="control-label" for="selectError">Lớp <em style="color:red;">*</em></label>
-                            <div class="controls">
-                                <select  id="slcClass" name="slcClass" class="class-subject <?php echo isset($messages["video_class_id"]) ? $messages["status"] : "";?>">
-                                    <option value="">Chọn Lớp</option>
-                                    <?= isset($select_class) ? $select_class : "" ?>
-                                </select>
-                                <div class="text-danger msg-class"><?php echo isset($messages["video_class_id"]) ? $messages["video_class_id"] : "";?></div>
-
-                            </div>
-                        </div>
                         <div class="control-group">
                             <label class="control-label" for="selectError">Môn học <em style="color:red;">*</em></label>
                             <div class="controls">
-                                <select  id="slcSubject" name="slcSubject" class="class-subject <?php echo isset($messages["video_subject_id"]) ? $messages["status"] : "";?>">
+                                <select id="slcType" name="slcType"
+                                    class="class-subject <?php echo isset($messages["dgnl_type_id"]) ? $messages["status"] : ""; ?>">
                                     <option value="">Chọn Môn học</option>
-                                    <?= isset($select_subject) ? $select_subject : "" ?>
+                                    <?= isset($select_type) ? $select_type : "" ?>
                                 </select>
-                                <div class="text-danger msg-subject"><?php echo isset($messages["video_subject_id"]) ? $messages["video_subject_id"] : "";?></div>
+                                <div class="text-danger msg-subject">
+                                    <?php echo isset($messages["dgnl_type_id"]) ? $messages["dgnl_type_id"] : ""; ?>
+                                </div>
 
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="selectError">Khóa </label>
+                            <label class="control-label" for="selectError">Video/khoahoc </label>
                             <div class="controls">
-                                <select  id="slcGroup" name="slcGroup" class="<?php echo isset($messages["video_group_id"]) ? $messages["status"] : "";?> group">
+                                <select id="slcCategory" name="slcCategory"
+                                    class="<?php echo isset($messages["learn_category"]) ? $messages["status"] : ""; ?> group">
+                                    <option value="video" <?= $formData['learn_category'] == 'video' ? "selected" : "" ?>> VIDEO</option>
+                                    <option value="khoahoc" <?= $formData['learn_category'] == 'khoahoc' ? "selected" : "" ?>> KHÓA HỌC</option>
+
                                 </select>
 
                             </div>
                         </div>
                         <label class="control-label" for="focusedInput">Tên <em style="color:red;">*</em></label>
                         <div class="controls">
-                            <input value="<?php echo isset($formData['video_name']) ? $formData['video_name'] : ""?>" maxlength="256" id="txtName" name="txtName" class="input-xlarge focused"  type="text" >
-                            <div class="text-danger msg-name"><?php echo isset($messages["video_name"]) ? $messages["video_name"] : "";?></div>
+                            <input value="<?php echo isset($formData['dgnl_name']) ? $formData['dgnl_name'] : "" ?>"
+                                maxlength="256" id="txtName" name="txtName" class="input-xlarge focused" type="text">
+                            <div class="text-danger msg-name">
+                                <?php echo isset($messages["dgnl_name"]) ? $messages["dgnl_name"] : ""; ?>
+                            </div>
 
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="focusedInput">Link <em style="color:red;">*</em></label>
                         <div class="controls">
-                            <input value="<?php echo isset($formData['video_link']) ? $formData['video_link'] : ""?>" maxlength="256" id="txtLink" name="txtLink" class="input-xlarge focused"  type="text" >
-                            <div class="text-danger msg-link"><?php echo isset($messages["video_link"]) ? $messages["video_link"] : "";?></div>
+                            <input value="<?php echo isset($formData['dgnl_link']) ? $formData['dgnl_link'] : "" ?>"
+                                maxlength="256" id="txtLink" name="txtLink" class="input-xlarge focused" type="text">
+                            <div class="text-danger msg-link">
+                                <?php echo isset($messages["dgnl_link"]) ? $messages["dgnl_link"] : ""; ?>
+                            </div>
 
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label">Order <em style="color:red;">*</em> </label>
                         <div class="controls">
-                            <input value="<?php echo isset($formData['video_order']) ? $formData['video_order'] : "" ?>" id="txtOrder" name="txtOrder" class="input-xlarge focused"    maxlength="10"  type="text" >
-                            <div class="text-danger msg-order"><?php echo isset($messages["video_order"]) ? $messages["video_order"] : "";?></div>
+                            <input value="<?php echo isset($formData['dgnl_order']) ? $formData['dgnl_order'] : "" ?>"
+                                id="txtOrder" name="txtOrder" class="input-xlarge focused" maxlength="10" type="text">
+                            <div class="text-danger msg-order">
+                                <?php echo isset($messages["dgnl_order"]) ? $messages["dgnl_order"] : ""; ?>
+                            </div>
+                        </div>
+                    </div>
 
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Active </label>
-                        <div class=" controls">
-                            <label class="checkbox"><input  type="radio" name="radActive"
-                                                                  value="Y" <?php echo (isset($formData["video_active"]) && $formData["video_active"] == "Y") ? "checked" : ''; ?>>Yes<span
-                                        class="check_active"></span></label>
-                            <label class="checkbox"><input type="radio" name="radActive"
-                                                                  value="N" <?php echo (isset($formData["video_active"]) && $formData["video_active"] == "N") ? "checked" : ''; ?>>No<span
-                                        class="check_active"></span></label>
-                        </div>
-                    </div>
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary" id="submit_create">Save changes</button>
-                        <a id="edit_page" class="btn" href="<?php echo $this->url->get('dashboard/list-video');?>"> Cancel </a> </div>
+                        <a id="edit_page" class="btn" href="<?php echo $this->url->get('dashboard/list-dgnl'); ?>">
+                            Cancel </a>
+                    </div>
 
                 </fieldset>
             </form>
         </div>
     </div>
 </div>
-<script>
-    $('.class-subject').on('change',function () {
-        var subject_id = $('#slcSubject').val();
-        var class_id = $('#slcClass').val();
-        var group_id = '<?= isset($formData['video_group_id']) ? $formData['video_group_id'] : 0 ?>';
-        $.ajax({
-            url: "<?php echo $this->url->get("/dashboard/get-group")?>",
-            async: false,
-            type: "POST",
-            dataType: "JSON",
-            data: {'subject_id': subject_id,
-                'class_id' : class_id,
-                'group_id' : group_id,
-            },
-            success: function(data){
-                $('#slcGroup').html('<option value="">Tất cả Khóa</option>'+data);
-            }
-        });
-    }).trigger('change');
-</script>

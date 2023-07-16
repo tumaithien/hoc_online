@@ -1,90 +1,157 @@
 <div class='span2 main-menu-span'>
-    <div id='cssmenu'>
-        <ul>
-            <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-summary');?>"><i class="icon-inbox"></i>
-                    <span class="hidden-tablet">Tổng kết các lớp</span></a>
-            </li>
-            <li class="has-sub"><a class="ajax-link" href=""><i class="icon-plus-sign"></i> <span class="hidden-tablet">Cấu trúc</span></a>
+        <div id='cssmenu'>
                 <ul>
-                    <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-class') ?>"><i
-                                    class="icon icon-book"></i>
-                            <span class="hidden-tablet">Lớp</span></a></li>
-                    <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-subject');?>"><i class="icon-bookmark"></i>
-                            <span class="hidden-tablet">Môn học</span></a>
-                    </li>
-                    <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-group-subject');?>"><i class="icon-bookmark"></i>
-                            <span class="hidden-tablet">Nhóm Đặc biệt</span></a>
-                    </li>
-                    <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-group');?>"><i class="icon-bookmark"></i>
-                            <span class="hidden-tablet">Khóa Học</span></a>
-                    </li>
-                    <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-chapter');?>"><i class="icon-calendar"></i>
-                            <span class="hidden-tablet">Chương </span></a>
-                    </li>
-                </ul>
-            </li>
-            <li class="has-sub"><a class="ajax-link" href=""><i class="icon-plus-sign"></i> <span class="hidden-tablet">Nội dung</span></a>
-                <ul>
-                    <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-videolesson');?>"><i class="icon-facetime-video"></i>
-                            <span class="hidden-tablet"> Video Bài giảng</span></a>
-                    </li>
-                    <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-video');?>"><i class="icon-facetime-video"></i>
-                            <span class="hidden-tablet"> Video Khóa học</span></a>
-                    </li>
+                        <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-summary'); ?>"><i
+                                                class="icon-inbox"></i>
+                                        <span class="hidden-tablet">Tổng kết các lớp</span></a>
+                        </li>
+                        <li class="has-sub"><a class="ajax-link" href=""><i class="icon-plus-sign"></i> <span
+                                                class="hidden-tablet">Cấu trúc</span></a>
+                                <ul>
+                                        <li><a class="ajax-link"
+                                                        href="<?php echo $this->url->get('dashboard/list-class') ?>"><i
+                                                                class="icon icon-book"></i>
+                                                        <span class="hidden-tablet">Lớp</span></a></li>
+                                        <li><a class="ajax-link"
+                                                        href="<?php echo $this->url->get('dashboard/list-subject'); ?>"><i
+                                                                class="icon-bookmark"></i>
+                                                        <span class="hidden-tablet">Môn học</span></a>
+                                        </li>
+                                        <li><a class="ajax-link"
+                                                        href="<?php echo $this->url->get('dashboard/list-group-subject'); ?>"><i
+                                                                class="icon-bookmark"></i>
+                                                        <span class="hidden-tablet">Nhóm Đặc biệt</span></a>
+                                        </li>
+                                        <li><a class="ajax-link"
+                                                        href="<?php echo $this->url->get('dashboard/list-group'); ?>"><i
+                                                                class="icon-bookmark"></i>
+                                                        <span class="hidden-tablet">Khóa Học</span></a>
+                                        </li>
+                                        <li><a class="ajax-link"
+                                                        href="<?php echo $this->url->get('dashboard/list-chapter'); ?>"><i
+                                                                class="icon-calendar"></i>
+                                                        <span class="hidden-tablet">Chương </span></a>
+                                        </li>
+                                </ul>
+                        </li>
+                        <li class="has-sub"><a class="ajax-link" href=""><i class="icon-plus-sign"></i> <span
+                                                class="hidden-tablet">Nội dung</span></a>
+                                <ul>
+                                        <li><a class="ajax-link"
+                                                        href="<?php echo $this->url->get('dashboard/list-videolesson'); ?>"><i
+                                                                class="icon-facetime-video"></i>
+                                                        <span class="hidden-tablet"> Video Bài giảng</span></a>
+                                        </li>
+                                        <li><a class="ajax-link"
+                                                        href="<?php echo $this->url->get('dashboard/list-video'); ?>"><i
+                                                                class="icon-facetime-video"></i>
+                                                        <span class="hidden-tablet"> Video Khóa học</span></a>
+                                        </li>
 
-                    <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-document');?>"><i class="icon-book"></i>
-                            <span class="hidden-tablet">Tài liệu</span></a>
-                    </li>
-                    <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-excellent-document');?>"><i class="icon-book"></i>
-                            <span class="hidden-tablet">Tài liệu Nâng Cao</span></a>
-                    </li>
-                    <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-test');?>"><i class="icon-book"></i>
-                            <span class="hidden-tablet">Đề Thi</span></a>
-                    </li>
-                </ul>
-            </li>
-            <li class="has-sub"><a class="ajax-link" href=""><i class="icon-plus-sign"></i> <span class="hidden-tablet">Quản lý User</span></a>
-                <ul>
-                    <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-student')?>"><i class="icon-user"></i>
-                            <span class="hidden-tablet">học sinh</span></a></li>
-                    <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-teacher')?>"><i class="icon-user"></i>
-                            <span class="hidden-tablet">giáo viên</span></a></li>
-                    <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-user')?>"><i class="icon-user"></i>
-                            <span class="hidden-tablet">admin</span></a></li>
+                                        <li><a class="ajax-link"
+                                                        href="<?php echo $this->url->get('dashboard/list-document'); ?>"><i
+                                                                class="icon-book"></i>
+                                                        <span class="hidden-tablet">Tài liệu</span></a>
+                                        </li>
+                                        <li><a class="ajax-link"
+                                                        href="<?php echo $this->url->get('dashboard/list-excellent-document'); ?>"><i
+                                                                class="icon-book"></i>
+                                                        <span class="hidden-tablet">Tài liệu Nâng Cao</span></a>
+                                        </li>
+                                        <li><a class="ajax-link"
+                                                        href="<?php echo $this->url->get('dashboard/list-test'); ?>"><i
+                                                                class="icon-book"></i>
+                                                        <span class="hidden-tablet">Đề Thi</span></a>
+                                        </li>
+                                </ul>
+                        </li>
+                        <li class="has-sub"><a class="ajax-link" href=""><i class="icon-plus-sign"></i> <span
+                                                class="hidden-tablet">Đánh giá năng lực</span></a>
+                                <ul>
+                                        <li><a class="ajax-link"
+                                                        href="<?php echo $this->url->get('dashboard/list-type-dgnl'); ?>"><i
+                                                                class="icon-facetime-video"></i>
+                                                        <span class="hidden-tablet"> Môn học</span></a>
+                                        </li>
+                                        <li><a class="ajax-link"
+                                                        href="<?php echo $this->url->get('dashboard/list-dgnl'); ?>"><i
+                                                                class="icon-facetime-video"></i>
+                                                        <span class="hidden-tablet"> Video / bài giảng</span></a>
+                                        </li>
+
+                                    
+                                </ul>
+                        </li>
+                        <li class="has-sub"><a class="ajax-link" href=""><i class="icon-plus-sign"></i> <span
+                                                class="hidden-tablet">Quản lý User</span></a>
+                                <ul>
+                                        <li><a class="ajax-link"
+                                                        href="<?php echo $this->url->get('dashboard/list-student') ?>"><i
+                                                                class="icon-user"></i>
+                                                        <span class="hidden-tablet">học sinh</span></a></li>
+                                        <li><a class="ajax-link"
+                                                        href="<?php echo $this->url->get('dashboard/list-teacher') ?>"><i
+                                                                class="icon-user"></i>
+                                                        <span class="hidden-tablet">giáo viên</span></a></li>
+                                        <li><a class="ajax-link"
+                                                        href="<?php echo $this->url->get('dashboard/list-user') ?>"><i
+                                                                class="icon-user"></i>
+                                                        <span class="hidden-tablet">admin</span></a></li>
+
+                                </ul>
+                        </li>
+                        <li class="has-sub"><a class="ajax-link" href=""><i class="icon-plus-sign"></i> <span
+                                                class="hidden-tablet">Quản Lý Trang Web</span></a>
+                                <ul>
+                                        <li><a class="ajax-link"
+                                                        href="<?php echo $this->url->get('dashboard/list-banner'); ?>"><i
+                                                                class="icon-book"></i>
+                                                        <span class="hidden-tablet">Banner</span></a>
+                                        <li><a class="ajax-link"
+                                                        href="<?php echo $this->url->get('dashboard/list-article'); ?>"><i
+                                                                class="icon-book"></i>
+                                                        <span class="hidden-tablet">Blog</span></a>
+                                        <li><a class="ajax-link"
+                                                        href="<?php echo $this->url->get('dashboard/list-menu'); ?>"><i
+                                                                class="icon-book"></i>
+                                                        <span class="hidden-tablet">Menu</span></a>
+                                        <li><a class="ajax-link"
+                                                        href="<?php echo $this->url->get('dashboard/list-role'); ?>"><i
+                                                                class="icon-picture"></i>
+                                                        <span class="hidden-tablet">List Role</span></a></li>
+                        </li>
 
                 </ul>
-            </li>
-            <li class="has-sub"><a class="ajax-link" href=""><i class="icon-plus-sign"></i> <span class="hidden-tablet">Quản Lý Trang Web</span></a>
-                <ul>
-                    <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-banner');?>"><i class="icon-book"></i>
-                            <span class="hidden-tablet">Banner</span></a>
-                    <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-article');?>"><i class="icon-book"></i>
-                            <span class="hidden-tablet">Blog</span></a>
-                    <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-menu');?>"><i class="icon-book"></i>
-                            <span class="hidden-tablet">Menu</span></a>
-                    <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-role');?>" ><i class="icon-picture"></i>
-                            <span class="hidden-tablet">List Role</span></a></li>
-                    </li>
+                </li>
+                <li class="has-sub"><a class="ajax-link" href=""><i class="icon-plus-sign"></i> <span
+                                        class="hidden-tablet">Ngân Hàng Đề Thi</span></a>
+                        <ul>
+                                <li><a class="ajax-link"
+                                                href="<?php echo $this->url->get('dashboard/list-exam-subject'); ?>"><i
+                                                        class="icon-book"></i>
+                                                <span class="hidden-tablet">Lớp Chuyên đề</span></a>
+                                <li><a class="ajax-link"
+                                                href="<?php echo $this->url->get('dashboard/list-exam-chapter'); ?>"><i
+                                                        class="icon-book"></i>
+                                                <span class="hidden-tablet">Chương</span></a>
+                                <li><a class="ajax-link"
+                                                href="<?php echo $this->url->get('dashboard/list-exam-lesson'); ?>"><i
+                                                        class="icon-book"></i>
+                                                <span class="hidden-tablet">Bài</span></a>
+                                <li><a class="ajax-link"
+                                                href="<?php echo $this->url->get('dashboard/list-exam-type'); ?>"><i
+                                                        class="icon-book"></i>
+                                                <span class="hidden-tablet">Phân loại Đề thi</span></a>
+                                <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-exam'); ?>"><i
+                                                        class="icon-book"></i>
+                                                <span class="hidden-tablet">Quản lý câu hỏi</span></a>
+                                <li><a class="ajax-link"
+                                                href="<?php echo $this->url->get('/dashboard/create-test-exam'); ?>"><i
+                                                        class="icon-book"></i>
+                                                <span class="hidden-tablet">Tạo Đề thi </span></a>
+                        </ul>
+                </li>
 
                 </ul>
-            </li>
-            <li class="has-sub"><a class="ajax-link" href=""><i class="icon-plus-sign"></i> <span class="hidden-tablet">Ngân Hàng Đề Thi</span></a>
-                <ul>
-                    <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-exam-subject');?>"><i class="icon-book"></i>
-                            <span class="hidden-tablet">Lớp Chuyên đề</span></a>
-                    <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-exam-chapter');?>"><i class="icon-book"></i>
-                            <span class="hidden-tablet">Chương</span></a>
-                    <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-exam-lesson');?>"><i class="icon-book"></i>
-                            <span class="hidden-tablet">Bài</span></a>
-                    <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-exam-type');?>"><i class="icon-book"></i>
-                            <span class="hidden-tablet">Phân loại Đề thi</span></a>
-                    <li><a class="ajax-link" href="<?php echo $this->url->get('dashboard/list-exam');?>"><i class="icon-book"></i>
-                            <span class="hidden-tablet">Quản lý câu hỏi</span></a>
-                    <li><a class="ajax-link" href="<?php echo $this->url->get('/dashboard/create-test-exam');?>"><i class="icon-book"></i>
-                            <span class="hidden-tablet">Tạo Đề thi </span></a>
-                </ul>
-            </li>
-
-        </ul>
-    </div>
+        </div>
 </div>

@@ -107,5 +107,15 @@ class LearnDgnl extends BaseModelCache
     {
         return parent::findFirst($parameters);
     }
+    public static function findFirstById($id)
+    {
+        return self::findFirst([
+            'dgnl_id = :id:',
+            'bind' => [
+                'id' => $id
+            ]
+            ]);
+    }
+
 
 }

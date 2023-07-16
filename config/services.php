@@ -505,6 +505,14 @@ $di['router'] = function () {
         )
     );
     $router->add(
+        '/dashboard/delete-dgnl',
+        array(
+            "module" => "backend",
+            "controller" => 'dgnl',
+            "action" => "delete"
+        )
+    );
+    $router->add(
         '/dashboard/list-type-dgnl',
         array(
             "module" => "backend",
