@@ -89,6 +89,8 @@ class DgnltypeController extends ControllerBase
                 Upload::uploadFile($uploadFilesType, $messagesUpload, 'fileUpload-1');
                 Upload::uploadFile($uploadFilesTeacher, $messagesUpload, 'fileUpload-2');
             }
+            var_dump($messagesUpload);
+            exit;
 
             $this->view->uploadFiles = $uploadFilesType;
             if (!empty($uploadFilesType)) {
@@ -137,14 +139,12 @@ class DgnltypeController extends ControllerBase
         $messages = array();
         if ($this->request->isPost()) {
             $messages = array();
-            $data = array(
-                'type_name' => $this->request->getPost("txtName", array('string', 'trim')),
-                'type_order' => $this->request->getPost("txtOrder", array('string', 'trim')),
-                'type_teacher' => $this->request->getPost("txtTeacher", array('string', 'trim')),
-                'type_descriptiont' => $this->request->getPost("txtDescriotiont"),
-                'type_content' => $this->request->getPost("txtContent"),
 
-            );
+            $data['type_name'] = $this->request->getPost("txtName", array('string', 'trim'));
+            $data['type_order'] = $this->request->getPost("txtOrder", array('string', 'trim'));
+            $data['type_teacher'] = $this->request->getPost("txtTeacher", array('string', 'trim'));
+            $data['type_descriptiont'] = $this->request->getPost("txtDescriotiont");
+            $data['type_content'] = $this->request->getPost("txtContent");
 
             if (empty($data['type_name'])) {
                 $messages['type_name'] = 'Bạn cần nhập thông tin này';
@@ -160,20 +160,28 @@ class DgnltypeController extends ControllerBase
 
             $error = [];
             $messagesUpload = [];
+            $messagesUpload2 = [];
             // Check if the user has uploaded files
             if ($this->request->hasFiles() == true) {
-                Upload::uploadFile($uploadFilesType, $messagesUpload, 'fileUpload-1');
-                Upload::uploadFile($uploadFilesTeacher, $messagesUpload, 'fileUpload-2');
+                if ($_FILES['fileUpload-1']['size']) {
+                    Upload::uploadFile($uploadFilesType, $messagesUpload, 'fileUpload-1');
+
+                }
+                if ($_FILES['fileUpload-2']['size']) {
+                    Upload::uploadFile($uploadFilesTeacher, $messagesUpload2, 'fileUpload-2');
+
+                }
             }
 
             $this->view->uploadFiles = $uploadFilesType;
             if (!empty($uploadFilesType)) {
+
                 $data['type_image'] = $uploadFilesType[0]['file_url'];
             }
             if (!empty($uploadFilesTeacher)) {
                 $data['type_icon'] = $uploadFilesTeacher[0]['file_url'];
             }
-            if (count($messages) == 0) {
+            if (count($messages) == 0 && empty($messagesUpload)) {
                 $msg_result = array();
                 $result = $gateway_model->save($data);
                 if ($result === true) {
