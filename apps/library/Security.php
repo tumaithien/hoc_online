@@ -62,6 +62,7 @@ class Security extends Plugin
                 'backofficelogin' => array('index', 'login', 'logout'),
                 'backendaccessdenied' => array('read', 'notfound'),
                 'frontendcron' => array('*'),
+                'frontenddgnl' => array('index'),
             );
             foreach ($publicResources as $resource => $actions) { //$resource is key, $actions is value
                 $acl->addResource(new \Phalcon\Acl\Resource($resource), $actions);
@@ -73,7 +74,7 @@ class Security extends Plugin
                 'frontendlesson' => array('*'),
                 'frontendcourse' => array('*'),
                 'frontenddocument' => array('*'),
-                'frontenddgnl' => array('*'),
+                'frontenddgnl' => array('detail'),
                 'frontendtest' => array('*'),
                 'frontendtestnew' => array('*'),
                 'frontenddocumentdifficult' => array('*'),

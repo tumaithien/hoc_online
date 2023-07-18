@@ -32,7 +32,7 @@ class DgnlController extends ControllerBase
     }
     public function viewAction()
     {
-        $this->dgnl_select = $this->request->get("type_id");
+        $this->dgnl_select = $this->dispatcher->getParam('type_id');
         $this->video_id = $this->request->get('video_id');
 
         if (!in_array($this->dgnl_select, $this->dgnl_type_id)) {

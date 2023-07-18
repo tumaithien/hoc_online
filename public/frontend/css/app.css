@@ -13581,6 +13581,28 @@ main {
   font-size: 16px;
 }
 
+.courses .trainer {
+  padding-top: 15px;
+  border-top: 1px solid #eef0ef;
+}
+
+.courses .trainer .trainer-profile img {
+  max-width: 50px;
+  border-radius: 50px;
+}
+
+.courses .trainer .trainer-profile span {
+  padding-left: 10px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #5a6c60;
+}
+
+.courses .trainer .trainer-rank {
+  font-size: 18px;
+  color: #657a6d;
+}
+
 @media (max-width: 767px) {
   .infoCourse_item .infoCourse_content {
     grid-template-rows: minmax(40px, max-content) minmax(85px, max-content) minmax(70px, max-content) minmax(42px, max-content);

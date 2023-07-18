@@ -111,10 +111,7 @@ if (!empty($formData['message'])) {
                                 <label id="label-fileUpload-1" for="fileUpload-1"><img style="max-width: 300px"
                                         id="image-fileUpload-1" src="/frontend/images/uploadfile.png" /></label>
                             <?php endif ?>
-                            <input id="fileUpload-1" name="fileUpload-1" type="file" class="hidden" accept="<?php
-                            foreach ($this->globalVariable->acceptUploadTypes as $k => $v) {
-                                echo $k . ",";
-                            } ?>" />
+                            <input id="fileUpload-1" name="fileUpload-1" type="file" class="hidden"  />
                         </div>
                     </div>
 
@@ -127,34 +124,28 @@ if (!empty($formData['message'])) {
                             if ($formData['type_icon']):
                                 ?>
                                 <label id="label-fileUpload-2" for="fileUpload-2"><img style="max-width: 300px"
-                                        id="image-fileUpload" src="<?= $formData['type_icon'] ?>" /></label>
+                                        id="image-fileUpload-2" src="<?= $formData['type_icon'] ?>" /></label>
                             <?php else: ?>
                                 <label id="label-fileUpload-2" for="fileUpload-2"><img style="max-width: 300px"
                                         id="image-fileUpload-2" src="/frontend/images/uploadfile.png" /></label>
                             <?php endif ?>
-                            <input id="fileUpload-2" name="fileUpload-2" type="file" class="hidden" accept="<?php
-                            foreach ($this->globalVariable->acceptUploadTypes as $k => $v) {
-                                echo $k . ",";
-                            } ?>" />
+                            <input id="fileUpload-2" name="fileUpload-2" type="file" class="hidden"  />
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="textarea2">Chi Tiết Môn học </label>
                         <div class="controls">
-                            <textarea style="width: 500px;height: 200px" id="txtDescriotiont"
+                            <textarea style="width: 500px;height: 100px" id="txtDescriotiont"
                                 name="txtDescriotiont"><?php echo isset($formData['type_descriptiont']) ? $formData['type_descriptiont'] : "" ?></textarea>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="textarea2">Giới thiệu giáo viên </label>
                         <div class="controls">
-                            <textarea style="width: 500px;height: 200px" id="txtContent"
+                            <textarea style="width: 500px;height: 100px" id="txtContent"
                                 name="txtContent"><?php echo isset($formData['type_content']) ? $formData['type_content'] : "" ?></textarea>
                         </div>
                     </div>
-
-
-
 
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary" id="submit_create">Save changes</button>
@@ -168,25 +159,25 @@ if (!empty($formData['message'])) {
     </div>
 </div>
 <script type="text/javascript">
-    window.onload = function () {
-        var oFCKeditor2 = new FCKeditor('txtDescriotiont');
-        oFCKeditor2.Height = '500';
-        oFCKeditor2.Width = '650';
-        oFCKeditor2.ToolbarSet = "Default";
-        oFCKeditor2.Basepath = '../backend/fckeditor/';
-        oFCKeditor2.ReplaceTextarea();
+    // window.onload = function () {
+    //     var oFCKeditor2 = new FCKeditor('txtDescriotiont');
+    //     oFCKeditor2.Height = '500';
+    //     oFCKeditor2.Width = '650';
+    //     oFCKeditor2.ToolbarSet = "Default";
+    //     oFCKeditor2.Basepath = '../backend/fckeditor/';
+    //     oFCKeditor2.ReplaceTextarea();
 
-        var oFCKeditor3 = new FCKeditor('txtContent');
-        oFCKeditor3.Height = '500';
-        oFCKeditor3.Width = '650';
-        oFCKeditor3.ToolbarSet = "Default";
-        oFCKeditor3.Basepath = '../backend/fckeditor/';
-        oFCKeditor3.ReplaceTextarea();
-    }
+    //     var oFCKeditor3 = new FCKeditor('txtContent');
+    //     oFCKeditor3.Height = '500';
+    //     oFCKeditor3.Width = '650';
+    //     oFCKeditor3.ToolbarSet = "Default";
+    //     oFCKeditor3.Basepath = '../backend/fckeditor/';
+    //     oFCKeditor3.ReplaceTextarea();
+    // }
 
     $('#fileUpload-1').on("change", function () {
         if ($('#fileUpload-1')[0].files[0]) {
-            var reader = new FileReader();
+            let reader = new FileReader();
             reader.onload = function (e) {
                 $('#image-fileUpload-1').attr('src', e.target.result);
             }
@@ -197,7 +188,9 @@ if (!empty($formData['message'])) {
     
     $('#fileUpload-2').on("change", function () {
         if ($('#fileUpload-2')[0].files[0]) {
-            var reader = new FileReader();
+            $('#image-fileUpload-2').attr('src', "");
+
+            let reader = new FileReader();
             reader.onload = function (e) {
                 $('#image-fileUpload-2').attr('src', e.target.result);
             }

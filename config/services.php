@@ -306,7 +306,7 @@ $di['router'] = function () {
         )
     );
     $router->add(
-        "/dgnl/{ar-key:([a-zA-Z0-9_-]+)}",
+        "/dgnl/{type_id:([a-zA-Z0-9_-]+)}",
         array(
             "module" => "frontend",
             "controller" => "dgnl",
