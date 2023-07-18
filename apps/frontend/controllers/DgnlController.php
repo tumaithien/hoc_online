@@ -33,6 +33,7 @@ class DgnlController extends ControllerBase
     public function viewAction()
     {
         $this->dgnl_select = $this->dispatcher->getParam('type_id');
+        var_dump($this->dgnl_select);exit;
         $this->video_id = $this->request->get('video_id');
 
         if (!in_array($this->dgnl_select, $this->dgnl_type_id)) {
@@ -50,6 +51,7 @@ class DgnlController extends ControllerBase
             ],
             'order' => "learn_category ASC,dgnl_order ASC"
         ])->toArray();
+        var_dump($arDgnlVideo);exit;
 
         $this->view->setVars([
             // 'type' => $this->type,

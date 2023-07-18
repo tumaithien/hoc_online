@@ -74,7 +74,7 @@ class Security extends Plugin
                 'frontendlesson' => array('*'),
                 'frontendcourse' => array('*'),
                 'frontenddocument' => array('*'),
-                'frontenddgnl' => array('detail'),
+                'frontenddgnl' => array('view'),
                 'frontendtest' => array('*'),
                 'frontendtestnew' => array('*'),
                 'frontenddocumentdifficult' => array('*'),
