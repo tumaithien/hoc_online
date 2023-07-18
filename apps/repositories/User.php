@@ -34,6 +34,7 @@ class User extends Component
                     'group_excluded_ids' => explode(',', $user->getUserGroupExcludedIds()),
                     'group_subject_id' => explode(',', $user->getUserGroupIds()),
                     'school_class_id' => $user->getUserSchoolClassId(),
+                    'dgnl_type_id' => explode(",",$user->getUserDgnlType())
                 )
             );
         }
