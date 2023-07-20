@@ -25,7 +25,8 @@ class Menu extends Component
             'default' => 'Giáo Viên',
             'course' => 'Khóa Học Tiêu Biểu',
             'tailieuboiduong' => "Bồi dưỡng HSG",
-            'kiem-tra' => "Bài Kiểm Tra"
+            'kiem-tra' => "Bài Kiểm Tra",
+            'dgnl' => "Đánh giá năng lực"
         ];
         $output = "";
             foreach ($data as $item=> $value) {

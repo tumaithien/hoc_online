@@ -105,6 +105,12 @@
                                 </a>
                             </li>
                         <?php endif ?>
+                        <?php if ($menu['menu_type'] == 'dgnl'): ?>
+                            <li><a class="<?= $active_menu ?>" href="<?php echo $this->url->get('/dgnl') ?>">
+                                    <?= $menu['menu_name'] ?>
+                                </a>
+                            </li>
+                        <?php endif ?>
                     <?php endforeach; ?>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
