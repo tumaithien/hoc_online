@@ -12492,13 +12492,13 @@ ul.list-style > li:hover > a {
   font-size: 16px;
   display: flex;
   justify-content: space-between;
-  background-color: #e9ecef;
+  background-color: white;
   font-weight: bold;
   cursor: pointer;
 }
 .videoCourse_wrapper .videoCourse_content .videoCourse_collapsible.active {
-  background-color: #5fcf80;
-  color: white;
+  background-color: white;
+  color: #5fcf80;
 }
 .videoCourse_wrapper .videoCourse_content .videoCourse_collapsibleContent {
   border-bottom: 1px solid #e0e0e0;
