@@ -83,12 +83,12 @@ if (!empty($formData['message'])) {
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="selectError">Video/khoahoc </label>
+                            <label class="control-label" for="selectError">Video/Bài giảng </label>
                             <div class="controls">
                                 <select id="slcCategory" name="slcCategory"
                                     class="<?php echo isset($messages["learn_category"]) ? $messages["status"] : ""; ?> group">
                                     <option value="video" <?= $formData['learn_category'] == 'video' ? "selected" : "" ?>> VIDEO</option>
-                                    <option value="khoahoc" <?= $formData['learn_category'] == 'khoahoc' ? "selected" : "" ?>> KHÓA HỌC</option>
+                                    <option value="khoahoc" <?= $formData['learn_category'] == 'khoahoc' ? "selected" : "" ?>> BÀI GIẢNG</option>
 
                                 </select>
 

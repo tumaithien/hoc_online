@@ -12513,14 +12513,17 @@ ul.list-style > li:hover > a {
   padding: 1rem;
   transition: all 0.1s ease;
   font-size: 14px;
+  padding-left: 20px !important
 }
 .videoCourse_wrapper .videoCourse_content .contentRight-item a:hover {
   background-color: #5fcf80;
   color: white;
+  padding-left: 20px !important
 }
 .videoCourse_wrapper .videoCourse_content .contentRight-item.active a {
   background-color: #5fcf80;
   color: white;
+  padding-left: 20px !important
 }
 @media (max-width: 992px) {
   .videoCourse_wrapper .videoCourse_content {
