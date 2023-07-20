@@ -69,16 +69,14 @@ class DgnlController extends ControllerBase
             'order' => "learn_category ASC,dgnl_order ASC"
         ])->toArray();
         $dgnlModel = [];
-        if ($video_id) {
-            $dgnlModel = array_filter($arDgnlVideo, function ($dgnl) use ($video_id) {
-                return $dgnl['dgnl_id'] == $video_id;
-            }, ARRAY_FILTER_USE_BOTH);
-            $dgnlModel = reset($dgnlModel);
-
+        if (!$video_id) {
+            $video_id = $arDgnlVideo[0]['dgnl_id'] ?? "";
         }
-        if (empty($dgnlModel)) {
-            $dgnlModel = $arDgnlVideo[0]['dgnl_link'] ?? [];
-        }
+        
+        $dgnlModel = array_filter($arDgnlVideo, function ($dgnl) use ($video_id) {
+            return $dgnl['dgnl_id'] == $video_id;
+        }, ARRAY_FILTER_USE_BOTH);
+        $dgnlModel = reset($dgnlModel);
 
         $chapters = [];
         $lessons = [];
