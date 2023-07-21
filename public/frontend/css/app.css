@@ -12456,7 +12456,7 @@ ul.list-style > li:hover > a {
 }
 .videoCourse_wrapper .videoCourse_content .videoCourse_video {
   width: 80%;
-  min-height: 60rem;
+  min-height: 15rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12532,7 +12532,7 @@ ul.list-style > li:hover > a {
   }
   .videoCourse_wrapper .videoCourse_content .videoCourse_video {
     width: 100%;
-    min-height: 15rem;
+    min-height: 60rem;
   }
   .videoCourse_wrapper .videoCourse_content .videoCourse_rightSidebar {
     width: 100%;

@@ -9,6 +9,7 @@
  * @var \Learncom\Models\LearnVideo[] $listLessons
  * @var \Learncom\Models\LearnGroup[] $listChapters
  */
+
 ?>
 <main class="videoCourse_wrapper">
     <div class="videoCourse_top">
@@ -29,16 +30,18 @@
             <div class="videoCourse_rightSidebar-top">
                 <h2>Nội dung bài học</h2>
             </div>
-            <div class="videoCourse_collapsibleContent">
+            <div class="videoCourse_collapsibleContent" >
                 <?php foreach ($chapters as $chapter):
                     ?>
-                    <div class="videoCourse_collapsible <?= $chapter['active'] ?>">
+                    <a class="videoCourse_collapsible <?= $chapter['active'] ?> <?= $chapter['active'] ? "" : "collapseed"?> " data-toggle="collapse"
+                        href="#chapter_<?= $chapter['id'] ?>" role="button" aria-expanded="<?= $chapter['active'] ? true : false?> "
+                        aria-controls="chapter_<?= $chapter['id'] ?>">
                         <?= $chapter['name'] ?> <i class='bx bxs-chevron-down'></i>
-                    </div>
-                    <div class="videoCourse_contentRight">
+                    </a>
+                    <div  class="collapse <?= $chapter['active'] ? "show" : ""?>" id="chapter_<?= $chapter['id'] ?>" class="videoCourse_contentRight">
                         <?php foreach ($lessons[$chapter['id']] as $lesson):
                             ?>
-                            <div class="contentRight-item <?= $lesson['active'] ?>">
+                            <div style="padding-left: 20px" class="contentRight-item <?= $lesson['active'] ?>">
                                 <a href="<?= $lesson['href'] ?>">
                                     <?= $lesson['name'] ?>
                                 </a>
@@ -60,7 +63,6 @@
         // var video_id = href.split('-')[1];
         // $("#tab1-" + group_id).click();
         // $("#" + href).click();
-        // $src = "<?= $lesson_link ?>";
         // try {
         //     $(".courses-detail iframe").attr("src", src);
         // } catch (err) {
@@ -68,9 +70,9 @@
         // }
 
         $(function () {
-            $(".collapse").on("click", function (e) {
-                e.stopPropagation();
-            });
+            // $(".collapse").on("click", function (e) {
+            //     e.stopPropagation();
+            // });
             // $(".item-style:not(.item-menu)").on("click", function(e) {
             //     $(".item-style.active").removeClass("active");
             //     let parent = this.parentElement;
@@ -85,16 +87,16 @@
             //         console.log(err);
             //     }
             // });
-            $(".item-menu").on("click", function (e) {
-                $(".item-menu").each((ind, ele) => {
-                    if (ele !== this) {
-                        let target = $(ele).data("target");
-                        $(target).collapse("hide");
-                    }
-                });
-                let parent = this.parentElement;
-                $(parent).children(".item-style.active").removeClass('active');
-            })
+            // $(".item-menu").on("click", function (e) {
+            //     $(".item-menu").each((ind, ele) => {
+            //         if (ele !== this) {
+            //             let target = $(ele).data("target");
+            //             $(target).collapse("hide");
+            //         }
+            //     });
+            //     let parent = this.parentElement;
+            //     $(parent).children(".item-style.active").removeClass('active');
+            // })
         });
     })
 </script>

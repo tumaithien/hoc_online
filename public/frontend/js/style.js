@@ -146,37 +146,8 @@ $(function () {
     }
   });
 
-  const collapseCourse = document.querySelectorAll(".videoCourse_collapsible");
 
-  collapseCourse.forEach((item, index) => {
-    item.addEventListener("click", function (e) {
-      this.classList.toggle("active");
-      if (this.classList.contains("active")) {
-        var content = this.nextElementSibling;
-        if (content.style.maxHeight) {
-          content.style.maxHeight = null;
-        } else {
-          content.style.maxHeight = content.scrollHeight + "px";
-        }
-      }
-    });
-    if (item.classList.contains("active")) {
-      var contentActive = item.nextElementSibling;
-      contentActive.style.maxHeight = contentActive.scrollHeight + "px";
-    }
-  });
-
-  on("click", ".videoCourse_collapsible", function (e) {
-    // this.classList.toggle("active");
-    // var content = this.nextElementSibling;
-    // if (content.style.maxHeight) {
-    //   content.style.maxHeight = null;
-    // } else {
-    //   content.style.maxHeight = content.scrollHeight + "px";
-    // }
-    console.log("true :>> ", true);
-  });
-
+ 
   const popupAccount = document.querySelector(".popup-account");
   const infoAccount = document.querySelector(".info-account");
   on("click", ".bx-user", function (e) {
