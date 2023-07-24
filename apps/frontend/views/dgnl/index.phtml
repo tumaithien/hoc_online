@@ -40,9 +40,16 @@
                                 <div class="trainer d-flex justify-content-between align-items-center">
                                     <div class="trainer-profile d-flex align-items-center">
                                         <img src=" <?= $type['type_icon'] ?>" class="img-fluid" alt="">
-                                        <span>Brandon</span>
+                                        <span>
+                                            <?= $type['type_teacher'] ?>
+                                        </span>
                                     </div>
-
+                                    <div class="trainer-rank d-flex align-items-center">
+                                        <i class='bx bxs-calendar'></i>
+                                        <span>
+                                            <?= $type['total_video'] ?> bài giảng/video
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

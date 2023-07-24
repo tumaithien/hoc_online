@@ -20,4 +20,6 @@ public/error_log
 
 cache
 cache/*
+history
+history/*
 

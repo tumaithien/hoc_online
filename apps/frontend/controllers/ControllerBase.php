@@ -41,6 +41,7 @@ class ControllerBase extends Controller
     public $allSubject;
 
     public $dgnl_type_id;
+    public $dgnl_select;
 
     public function initialize()
     {
@@ -52,7 +53,7 @@ class ControllerBase extends Controller
             $this->class_id = $this->auth['class_ids'];
             $this->subject_id = $this->auth['subject_ids'];
             $this->group_subject_id = $this->auth['group_subject_id'];
-            $this->dgnl_type_id= $this->auth['dgnl_type_id'];
+            $this->dgnl_type_id = $this->auth['dgnl_type_id'];
             $this->view->group_subject_id = $this->group_subject_id;
             if (!$user_auth) {
                 $this->response->redirect("logout");
@@ -100,7 +101,7 @@ class ControllerBase extends Controller
         $this->view->arrSubject = $this->allSubject = $arrSubject;
         $this->view->arrClass = $this->allClass = $arrClass;
 
-        $menu_select = str_replace("/","",$this->request->get("_url"));
+        $menu_select = str_replace("/", "", $this->request->get("_url"));
         if ($menu_select == "") {
             $menu_select = "home";
         }
@@ -109,6 +110,7 @@ class ControllerBase extends Controller
         $this->class_select = $this->request->get("classId");
         $this->view->subject_select = $this->subject_select;
         $this->view->class_select = $this->class_select;
+        $this->dgnl_select = $this->dispatcher->getParam('type_id');
 
         //     $current_url = $this->request->getURI();
         //   $current_url = "https://chibao.edu.vn". $current_url;
