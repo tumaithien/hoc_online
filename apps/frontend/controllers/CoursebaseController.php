@@ -22,6 +22,7 @@ class CoursebaseController extends ControllerBase
     protected $chapter_temp;
     protected $link;
     protected $href;
+    protected $name;
     public function initialize()
     {
         parent::initialize();
@@ -84,6 +85,7 @@ class CoursebaseController extends ControllerBase
                 ];
                 if ($this->lesson_select == $lesson['video_id'] && $this->group_select == $chapter['group_id']) {
                     $this->link = $lesson['video_link'];
+                    $this->name = $lesson['video_name'];
                 }
 
             }

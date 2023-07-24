@@ -47,6 +47,7 @@ class CourseController extends CoursebaseController
             'group_select' => $this->group_select,
             'lesson_select' => $this->lesson_select,
             'link' => $this->link,
+            'name' => $this->name,
             'is_continue' => $is_continue
         ]);
     }

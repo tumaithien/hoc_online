@@ -115,6 +115,7 @@ class DgnlController extends ControllerBase
             return [];
         }
         $link = $dgnlModel['dgnl_link'] ?? "";
+        $name = $dgnlModel['dgnl_name'] ?? "";
         //format lại: chapter: video/bài giảng, lessons: list video
         $chapters = [
             'video' => [
@@ -143,6 +144,7 @@ class DgnlController extends ControllerBase
             'chapters' => $chapters,
             'lessons' => $lessons,
             'video_selected' => $video_id,
+            'name' => $name
         ];
 
     }
