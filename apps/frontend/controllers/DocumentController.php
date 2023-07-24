@@ -45,6 +45,7 @@ class DocumentController extends CoursebaseController
             'group_select' => $this->group_select,
             'lesson_select' => $this->lesson_select,
             'link' => $this->link,
+            'name' => $this->name,
             'is_continue' => $is_continue,
         ]);
     }
@@ -92,6 +93,7 @@ class DocumentController extends CoursebaseController
                 ];
                 if ($this->lesson_select == $lesson['document_id'] && $this->group_select == $chapter['chapter_id']) {
                     $this->link = $lesson['document_link'];
+                    $this->name = $lesson['document_name'];
                 }
 
             }
