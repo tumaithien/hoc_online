@@ -12456,7 +12456,7 @@ ul.list-style > li:hover > a {
 }
 .videoCourse_wrapper .videoCourse_content .videoCourse_video {
   width: 80%;
-  min-height: 15rem;
+  min-height: 60rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12492,16 +12492,18 @@ ul.list-style > li:hover > a {
   font-size: 16px;
   display: flex;
   justify-content: space-between;
-  background-color: white;
+  background-color: #e9ecef;
   font-weight: bold;
   cursor: pointer;
 }
 .videoCourse_wrapper .videoCourse_content .videoCourse_collapsible.active {
-  background-color: white;
-  color: #5fcf80;
+  background-color: #5fcf80;
+  color: white;
 }
 .videoCourse_wrapper .videoCourse_content .videoCourse_collapsibleContent {
   border-bottom: 1px solid #e0e0e0;
+  height: 15rem;
+  overflow-y: auto;
 }
 .videoCourse_wrapper .videoCourse_content .videoCourse_contentRight {
   max-height: 0;
@@ -12513,17 +12515,14 @@ ul.list-style > li:hover > a {
   padding: 1rem;
   transition: all 0.1s ease;
   font-size: 14px;
-  padding-left: 20px !important
 }
 .videoCourse_wrapper .videoCourse_content .contentRight-item a:hover {
   background-color: #5fcf80;
   color: white;
-  padding-left: 20px !important
 }
 .videoCourse_wrapper .videoCourse_content .contentRight-item.active a {
   background-color: #5fcf80;
   color: white;
-  padding-left: 20px !important
 }
 @media (max-width: 992px) {
   .videoCourse_wrapper .videoCourse_content {
@@ -12532,7 +12531,7 @@ ul.list-style > li:hover > a {
   }
   .videoCourse_wrapper .videoCourse_content .videoCourse_video {
     width: 100%;
-    min-height: 60rem;
+    min-height: 15rem;
   }
   .videoCourse_wrapper .videoCourse_content .videoCourse_rightSidebar {
     width: 100%;
@@ -13582,28 +13581,6 @@ main {
   margin-bottom: 0;
   font-weight: 400;
   font-size: 16px;
-}
-
-.courses .trainer {
-  padding-top: 15px;
-  border-top: 1px solid #eef0ef;
-}
-
-.courses .trainer .trainer-profile img {
-  max-width: 50px;
-  border-radius: 50px;
-}
-
-.courses .trainer .trainer-profile span {
-  padding-left: 10px;
-  font-weight: 600;
-  font-size: 16px;
-  color: #5a6c60;
-}
-
-.courses .trainer .trainer-rank {
-  font-size: 18px;
-  color: #657a6d;
 }
 
 @media (max-width: 767px) {

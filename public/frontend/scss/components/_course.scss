@@ -128,10 +128,12 @@
 }
 @media (max-width: 767px) {
   .infoCourse_item .infoCourse_content {
-    grid-template-rows: minmax(40px, max-content) minmax(85px, max-content) minmax(
+    grid-template-rows:
+      minmax(40px, max-content) minmax(85px, max-content) minmax(
         70px,
         max-content
-      ) minmax(42px, max-content);
+      )
+      minmax(42px, max-content);
   }
   #course-details {
     .course-details-img {

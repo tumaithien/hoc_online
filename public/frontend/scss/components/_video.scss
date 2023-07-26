@@ -74,6 +74,8 @@
     }
     .videoCourse_collapsibleContent {
       border-bottom: 1px solid $gray-1;
+      height: 15rem;
+      overflow-y: auto;
     }
     .videoCourse_contentRight {
       max-height: 0;
