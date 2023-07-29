@@ -43,7 +43,7 @@
                         class="videoCourse_contentRight">
                         <?php foreach ($lessons[$chapter['id']] as $lesson):
                             ?>
-                            <div style="padding-left: 20px" class="contentRight-item <?= $lesson['active'] ?>">
+                            <div class="contentRight-item <?= $lesson['active'] ?>">
                                 <a href="<?= $lesson['href'] ?>">
                                     <?= $lesson['name'] ?>
                                 </a>
@@ -56,7 +56,7 @@
         </div>
     </div>
 
-    <div class="modal-backdrop"></div>
+    <div class="modal-shadow"></div>
     <div class="modal-video" id="myModal" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -89,7 +89,7 @@
             // Function to close the modal
             function closeModal() {
                 var modal = document.getElementById('myModal');
-                var backdrop = document.querySelector('.modal-backdrop');
+                var backdrop = document.querySelector('.modal-shadow');
 
                 modal.style.display = 'none';
                 backdrop.style.display = 'none';
@@ -111,7 +111,7 @@
     }
 
     /* Overlay Styling */
-    .modal-backdrop.show {
+    .modal-shadow.show {
         position: fixed;
         top: 0;
         right: 0;

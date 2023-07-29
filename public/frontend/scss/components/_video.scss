@@ -28,7 +28,7 @@
     padding: 20px 0 20px 30px;
     .videoCourse_video {
       width: 80%;
-      min-height: 60rem;
+      height: 50rem;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -49,7 +49,7 @@
       display: flex;
       align-items: center;
       font-size: 16px;
-      background-color: white;
+      background-color: rgb(219, 219, 219);
       justify-content: space-between;
       h2 {
         margin-bottom: 0;
@@ -74,8 +74,20 @@
     }
     .videoCourse_collapsibleContent {
       border-bottom: 1px solid $gray-1;
-      height: 15rem;
+      height: 45rem;
       overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      &::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: darkgrey;
+      }
     }
     .videoCourse_contentRight {
       max-height: 0;
@@ -93,7 +105,7 @@
       }
     }
     .contentRight-item.active a {
-      background-color: $primary-color;
+      background-color: rgba($secondary-color, 0.6);
       color: white;
     }
   }
@@ -103,7 +115,7 @@
       padding-left: 0;
       .videoCourse_video {
         width: 100%;
-        min-height: 15rem;
+        height: 15rem;
       }
       .videoCourse_rightSidebar {
         width: 100%;

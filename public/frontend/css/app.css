@@ -12456,7 +12456,7 @@ ul.list-style > li:hover > a {
 }
 .videoCourse_wrapper .videoCourse_content .videoCourse_video {
   width: 80%;
-  min-height: 60rem;
+  height: 50rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12477,7 +12477,7 @@ ul.list-style > li:hover > a {
   display: flex;
   align-items: center;
   font-size: 16px;
-  background-color: white;
+  background-color: rgb(219, 219, 219);
   justify-content: space-between;
 }
 .videoCourse_wrapper .videoCourse_content .videoCourse_rightSidebar-top h2 {
@@ -12502,8 +12502,17 @@ ul.list-style > li:hover > a {
 }
 .videoCourse_wrapper .videoCourse_content .videoCourse_collapsibleContent {
   border-bottom: 1px solid #e0e0e0;
-  height: 15rem;
+  height: 45rem;
   overflow-y: auto;
+}
+.videoCourse_wrapper .videoCourse_content .videoCourse_collapsibleContent::-webkit-scrollbar {
+  width: 5px;
+}
+.videoCourse_wrapper .videoCourse_content .videoCourse_collapsibleContent::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+}
+.videoCourse_wrapper .videoCourse_content .videoCourse_collapsibleContent::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
 }
 .videoCourse_wrapper .videoCourse_content .videoCourse_contentRight {
   max-height: 0;
@@ -12521,7 +12530,7 @@ ul.list-style > li:hover > a {
   color: white;
 }
 .videoCourse_wrapper .videoCourse_content .contentRight-item.active a {
-  background-color: #5fcf80;
+  background-color: rgba(7, 64, 133, 0.6);
   color: white;
 }
 @media (max-width: 992px) {
@@ -12531,7 +12540,7 @@ ul.list-style > li:hover > a {
   }
   .videoCourse_wrapper .videoCourse_content .videoCourse_video {
     width: 100%;
-    min-height: 15rem;
+    height: 15rem;
   }
   .videoCourse_wrapper .videoCourse_content .videoCourse_rightSidebar {
     width: 100%;
