@@ -471,6 +471,21 @@ mark,
   max-width: 100%;
   height: auto;
 }
+.courses .trainer {
+  padding-top: 15px;
+  border-top: 1px solid #eef0ef;
+}
+.courses .trainer .trainer-profile img {
+  max-width: 50px;
+  border-radius: 50px;
+}
+
+.courses .trainer .trainer-profile span {
+  padding-left: 10px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #5a6c60;
+}
 
 .img-thumbnail {
   padding: 0.25rem;
