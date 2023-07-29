@@ -12522,16 +12522,34 @@ ul.list-style > li:hover > a {
 .videoCourse_wrapper .videoCourse_content .contentRight-item a {
   display: block;
   padding: 1rem;
+  padding-left: 1.75rem;
   transition: all 0.1s ease;
   font-size: 14px;
+  position: relative;
+}
+.videoCourse_wrapper .videoCourse_content .contentRight-item a::after {
+  position: absolute;
+  left: -1px;
+  top: 0;
+  height: 100%;
+  width: 0;
+  content: "";
+  transition: all 0.2s linear;
+  background-color: #5fcf80;
 }
 .videoCourse_wrapper .videoCourse_content .contentRight-item a:hover {
-  background-color: #5fcf80;
-  color: white;
+  color: #5fcf80;
+  padding-left: calc(1.75rem + 5px);
+}
+.videoCourse_wrapper .videoCourse_content .contentRight-item a:hover::after {
+  width: 5px;
 }
 .videoCourse_wrapper .videoCourse_content .contentRight-item.active a {
-  background-color: rgba(7, 64, 133, 0.6);
-  color: white;
+  color: #5fcf80;
+  padding-left: calc(1.75rem + 5px);
+}
+.videoCourse_wrapper .videoCourse_content .contentRight-item.active a::after {
+  width: 5px;
 }
 @media (max-width: 992px) {
   .videoCourse_wrapper .videoCourse_content {
@@ -12545,6 +12563,28 @@ ul.list-style > li:hover > a {
   .videoCourse_wrapper .videoCourse_content .videoCourse_rightSidebar {
     width: 100%;
     margin-top: 20px;
+  }
+}
+
+.modal-custom {
+  min-width: 500px;
+}
+.modal-custom .modal-header {
+  position: relative;
+  justify-content: center;
+}
+.modal-custom .close {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-25%);
+}
+.modal-custom p {
+  text-align: center;
+}
+@media (max-width: 550px) {
+  .modal-custom {
+    min-width: 360px;
   }
 }
 

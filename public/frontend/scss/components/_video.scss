@@ -97,16 +97,34 @@
     .contentRight-item a {
       display: block;
       padding: 1rem;
+      padding-left: 1.75rem;
       transition: all 0.1s ease;
       font-size: 14px;
-      &:hover {
+      position: relative;
+      &::after {
+        position: absolute;
+        left: -1px;
+        top: 0;
+        height: 100%;
+        width: 0;
+        content: "";
+        transition: all 0.2s linear;
         background-color: $primary-color;
-        color: white;
+      }
+      &:hover {
+        color: $primary-color;
+        padding-left: calc(1.75rem + 5px);
+        &::after {
+          width: 5px;
+        }
       }
     }
     .contentRight-item.active a {
-      background-color: rgba($secondary-color, 0.6);
-      color: white;
+      color: $primary-color;
+      padding-left: calc(1.75rem + 5px);
+      &::after {
+        width: 5px;
+      }
     }
   }
   @media (max-width: 992px) {
@@ -122,5 +140,25 @@
         margin-top: 20px;
       }
     }
+  }
+}
+.modal-custom {
+  min-width: 500px;
+  .modal-header {
+    position: relative;
+    justify-content: center;
+  }
+  .close {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-25%);
+  }
+  p {
+    text-align: center;
+  }
+
+  @media (max-width: 550px) {
+    min-width: 360px;
   }
 }
