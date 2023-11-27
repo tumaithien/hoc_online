@@ -1,0 +1,63 @@
+
+<script>
+    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-test");?>'>List Document</a><span class='divider'>/</span></li><li><a href='<?php echo $this->url->get("dashboard/create-test");?>'>Create Document</a></li>");
+</script>
+<?php
+if(!empty($messages['status']))
+{
+    ?>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $messages['status']?>">
+        <?php echo implode('<br>',$messages['mesage']); ?>
+    </p>
+<?php }	?>
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header well" data-original-title>
+            <h2><i class="icon-edit"></i><?= isset($formData['mode']) ? $formData['mode'] : "" ?> Bài Thi Của: </h2>
+            <div class="box-icon"> <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a> <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a> <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a> </div>
+        </div>
+        <div class="box-content">
+            <form novalidate="novalidate" class="form-horizontal" id="create_form" action=""  enctype="multipart/form-data" method="post">
+                <h4>NOTE:</h4>
+                <fieldset>
+
+                    <div id="image_1" class="control-group">
+                        <label class="control-label" for="upload-files">Câu hỏi<em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <input  id="fileUpload" name="fileUpload" type="file" multiple="multiple"
+                                    accept="<?php
+                                    foreach($this->globalVariable->acceptUploadTypes as $k => $v)
+                                    {
+                                        echo $k.",";
+                                    } ?>"  />
+                        </div>
+                    </div>
+
+                    <div id="comment_1" class="control-group">
+                        <label class="control-label" for="upload-files">Lời Giải</label>
+                        <div class="controls">
+                            <input id="fileUploadComment" name="fileUploadComment" type="file" multiple="multiple"
+                                   accept="<?php
+                                   foreach($this->globalVariable->acceptUploadTypes as $k => $v)
+                                   {
+                                       echo $k.",";
+                                   } ?>"  />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="focusedInput">Đáp Án </label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['test_answer']) ? $formData['test_answer'] : ""?>" maxlength="256" id="txtAnswer" name="txtAnswer" class="input-xlarge focused"  type="text" >
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="submit_create">Save changes</button>
+                        <a id="edit_page" class="btn" href="<?php echo $this->url->get('/dashboard/detail-list-test?id='.$test_id);?>"> Cancel </a> </div>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+</script>

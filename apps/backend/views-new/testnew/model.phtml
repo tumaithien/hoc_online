@@ -1,0 +1,303 @@
+<script>
+    $(document).ready(function() {
+        $("#create_form").submit(function() {
+            var valid = true;
+            if ($('input[name=txtName]').val() == '') {
+                $('.msg-name').text('Bạn cần nhập thông tin này');
+                $('#txtName').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-name').text('');
+                $('#txtName').removeClass("border-red");
+            }
+            if ($('input[name=txtOrder]').val() == '') {
+                $('.msg-order').text('Bạn cần nhập thông tin này');
+                $('#txtOrder').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-order').text('');
+                $('#txtOrder').removeClass("border-red");
+            }
+            if ($('input[name=txtTime]').val() == '') {
+                $('.msg-time').text('Bạn cần nhập thông tin này');
+                $('#txtTime').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-time').text('');
+                $('#txtTime').removeClass("border-red");
+            }
+            if ($('input[name=txtNumberQuestion]').val() == '') {
+                $('.msg-number-question').text('Bạn cần nhập thông tin này');
+                $('#txtNumberQuestion').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-number-question').text('');
+                $('#txtNumberQuestion').removeClass("border-red");
+            }
+            if ($('select[name=slcClass]').val() == '') {
+                $('.msg-class').text('Bạn cần nhập thông tin này');
+                $('#slcClass').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-class').text('');
+                $('#slcClass').removeClass("border-red");
+            }
+            if ($('select[name=slcSubject]').val() == '') {
+                $('.msg-subject').text('Bạn cần nhập thông tin này');
+                $('#slcSubject').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-subject').text('');
+                $('#slcSubject').removeClass("border-red");
+            }
+            if ($('#txtNumberOf').val() != "" && parseInt($('#txtNumberOf').val()) > 15) {
+                $('.msg-number-of').text('Không được lớn hơn 15');
+                $('#txtNumberOf').addClass("border-red");
+            } else {
+                $('.msg-number-of').text("");
+            }
+            if (!valid) event.preventDefault();
+            if (valid) {
+                $('button[name=submit]').prop('disabled', true);
+            }
+        });
+    });
+</script>
+<script>
+    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-test"); ?>'>List Document</a><span class='divider'>/</span></li><li><a href='<?php echo $this->url->get("dashboard/create-test"); ?>'>Create Document</a></li>");
+</script>
+<?php
+if (!empty($formData['message'])) {
+?>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $formData['typeMessage'] ?>">
+        <?php echo $formData['message']; ?>
+    </p>
+<?php }    ?>
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header well" data-original-title>
+            <h2><i class="icon-edit"></i><?= isset($formData['mode']) ? $formData['mode'] : "" ?> Đề Thi :</h2>
+            <div class="box-icon"> <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a> <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a> <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a> </div>
+        </div>
+        <div class="box-content">
+            <form novalidate="novalidate" class="form-horizontal" id="create_form" action="" enctype="multipart/form-data" method="post">
+                <h4>Note</h4>
+                -Nếu số hình ảnh câu hỏi lớn hơn đáp án, mặc định là số câu lơn hơn đó là tự luận
+                <br>
+                -Nếu Đề thi có cả trắc nghiệm và tự luận thì tên của tự luận phải lớn hơn trắc nghiệm (Ví dụ: Trắc nghiệm từ: Img001.PNG tới Img020.PNG, thì tự luận phải là Img021.PNG trở đi)
+                <fieldset>
+                    <div class="control-group">
+                        <div class="control-group">
+                            <label class="control-label" for="slcClass">Lớp <em style="color:red;">*</em></label>
+                            <div class="controls">
+                                <select id="slcClass" name="slcClass" class="class-subject <?php echo isset($messages["test_class_id"]) ? $messages["status"] : ""; ?>">
+                                    <?= isset($select_class) ? $select_class : "" ?>
+                                </select>
+                                <div class="text-danger msg-class"><?php echo isset($messages["test_class_id"]) ? $messages["test_class_id"] : ""; ?></div>
+
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="slcSubject">Môn học <em style="color:red;">*</em></label>
+                            <div class="controls">
+                                <select id="slcSubject" name="slcSubject" class="class-subject <?php echo isset($messages["test_subject_id"]) ? $messages["status"] : ""; ?>">
+                                    <option value="">Chọn Môn học</option>
+                                    <?= isset($select_subject) ? $select_subject : "" ?>
+                                </select>
+                                <div class="text-danger msg-subject"><?php echo isset($messages["test_subject_id"]) ? $messages["test_subject_id"] : ""; ?></div>
+
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="selectError">Chương </label>
+                            <div class="controls">
+                                <select id="slcGroup" name="slcGroup" class="<?php echo isset($messages["test_group_id"]) ? $messages["status"] : ""; ?>">
+                                </select>
+                                <div class="text-danger msg-subject"><?php echo isset($messages["test_group_id"]) ? $messages["test_group_id"] : ""; ?></div>
+                            </div>
+                        </div>
+                        <label class="control-label" for="focusedInput">Tên <em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['test_name']) ? $formData['test_name'] : "" ?>" maxlength="256" id="txtName" name="txtName" class="input-xlarge focused <?php echo isset($messages["test_name"]) ? $messages["status"] : ""; ?>" type="text">
+                            <div class="text-danger msg-name"><?php echo isset($messages["test_name"]) ? $messages["test_name"] : ""; ?></div>
+
+                        </div>
+                    </div>
+                    <div id="image_1" class="control-group">
+                        <label class="control-label" for="upload-files">Câu hỏi<em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <input id="fileUpload" name="fileUpload[]" type="file" multiple="multiple" accept="<?php
+                                                                                                                foreach ($this->globalVariable->acceptUploadTypes as $k => $v) {
+                                                                                                                    echo $k . ",";
+                                                                                                                } ?>" />
+                            <button type="button" class="file_image">Uploadfile / link</button>
+                            <div class="text-danger msg-image"><?php echo isset($messages["image"]) ? $messages["image"] : ""; ?></div>
+                        </div>
+                    </div>
+                    <div id="image_2" class="control-group hidden">
+                        <label class="control-label" for="focusedInput">Link <em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <input maxlength="256" id="image" name="image" class=" input-xlarge focused <?php echo isset($messages["image"]) ? $messages["status"] : ""; ?>" type="text" value="<?php echo isset($formData['test_link']) ? $formData['test_link'] : ""; ?>">
+                            <button type="button" class="file_image">Uploadfile / link</button>
+
+                            <div class="text-danger msg-image"><?php echo isset($messages["test_link"]) ? $messages["test_link"] : ""; ?></div>
+                        </div>
+                    </div>
+
+                    <div id="comment_1" class="control-group">
+                        <label class="control-label" for="upload-files">Hướng dẫn giải</label>
+                        <div class="controls">
+                            <input id="fileUploadComment" name="fileUploadComment[]" type="file" multiple="multiple" accept="<?php
+                                                                                                                                foreach ($this->globalVariable->acceptUploadTypes as $k => $v) {
+                                                                                                                                    echo $k . ",";
+                                                                                                                                } ?>" />
+                            <button type="button" class="file_image_comment">Uploadfile / link</button>
+                        </div>
+                    </div>
+                    <div id="comment_2" class="control-group hidden">
+                        <label class="control-label" for="focusedInput">Link <em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <input maxlength="256" id="imageComment" name="imageComment" class="input-xlarge focused " type="text" value="<?php echo isset($formData['test_link_comment']) ? $formData['test_link_comment'] : ""; ?>">
+                            <button type="button" class="file_image_comment">Uploadfile / link</button>
+                        </div>
+                    </div>
+                    <div <?= (isset($formData['mode']) && $formData['mode'] == 'Chỉnh Sửa') ? 'hidden' : "" ?>>
+
+                        <div class="control-group">
+                            <label class="control-label">Số Câu Hỏi <em style="color:red;">*</em> </label>
+                            <div class="controls">
+                                <input value="<?php echo isset($formData['test_number_question']) ? $formData['test_number_question'] : "" ?>" id="txtNumberQuestion" name="txtNumberQuestion" class="input-xlarge focused  <?= isset($messages["test_number_question"]) ? $messages["status"] : ""; ?>" maxlength="10" type="text">
+                                <div class="text-danger msg-number-question"><?php echo isset($messages["test_number_question"]) ? $messages["test_number_question"] : ""; ?></div>
+
+                            </div>
+                        </div>
+                        <div id="daode" class="control-group">
+                            <label class="control-label">Số Đề Thi <em style="color:red;">*</em> </label>
+                            <div class="controls">
+                                <input value="<?php echo isset($formData['test_number_exam']) ? $formData['test_number_exam'] : "" ?>" id="txtNumberOf" name="txtNumberOf" class="input-xlarge focused  <?= isset($messages["test_number_exam"]) ? $messages["status"] : ""; ?>" maxlength="10" type="text">
+                                *Nếu không cần đảo đề thì điền 0.(Số đề đảo hạn chế lớn hơn 15)
+                                <div class="text-danger msg-number-of"><?php echo isset($messages["test_number_exam"]) ? $messages["test_number_exam"] : ""; ?></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Số Điểm cho trắc nghiệm <em style="color:red;">*</em> </label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['test_score_choose']) ? $formData['test_score_choose'] : "" ?>" id="txtScroreChoose" name="txtScroreChoose" class="input-xlarge focused  <?= isset($messages["test_score_choose"]) ? $messages["status"] : ""; ?>" maxlength="10" type="text">
+                            *Nếu tất cả là trắc nghiệm thì số điểm cho trắc nghiệm là : 10, ngược lại, nếu tự luận: 0
+                            <div class="text-danger msg-number-question"><?php echo isset($messages["test_score_choose"]) ? $messages["test_score_choose"] : ""; ?></div>
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Thơi Gian Thi (phút) <em style="color:red;">*</em> </label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['test_time']) ? $formData['test_time'] : "" ?>" id="txtTime" name="txtTime" class="input-xlarge focused  <?= isset($messages["test_time"]) ? $messages["status"] : ""; ?>" maxlength="10" type="text">
+                            <div class="text-danger msg-time"><?php echo isset($messages["test_time"]) ? $messages["test_time"] : ""; ?></div>
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Order <em style="color:red;">*</em> </label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['test_order']) ? $formData['test_order'] : "" ?>" id="txtOrder" name="txtOrder" class="input-xlarge focused  <?= isset($messages["test_order"]) ? $messages["status"] : ""; ?>" maxlength="10" type="text">
+                            <div class="text-danger msg-order"><?php echo isset($messages["test_order"]) ? $messages["test_order"] : ""; ?></div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Số Lần Thi </label>
+                        <div class=" controls">
+                            <label class="checkbox"><input type="radio" name="radOnlyOne" value="Y" <?php echo (isset($formData["test_only_one"]) && $formData["test_only_one"] == "Y") ? "checked" : ''; ?>>một lần<span class="check_active"></span></label>
+                            <label class="checkbox"><input type="radio" name="radOnlyOne" value="N" <?php echo (isset($formData["test_only_one"]) && $formData["test_only_one"] == "N") ? "checked" : ''; ?>>Không giới hạn<span class="check_active"></span></label>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Xem Đáp Án </label>
+                        <div class=" controls">
+                            <label class="checkbox"><input type="radio" name="radIsPublicAnswer" value="Y" <?php echo (isset($formData["test_is_public_answer"]) && $formData["test_is_public_answer"] == "Y") ? "checked" : ''; ?>>Yes<span class="check_active"></span></label>
+                            <label class="checkbox"><input type="radio" name="radIsPublicAnswer" value="N" <?php echo (isset($formData["test_is_public_answer"]) && $formData["test_is_public_answer"] == "N") ? "checked" : ''; ?>>No<span class="check_active"></span></label>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Xem Điểm Thi </label>
+                        <div class=" controls">
+                            <label class="checkbox"><input type="radio" name="radIsPublicScore" value="Y" <?php echo (isset($formData["test_public_score"]) && $formData["test_public_score"] == "Y") ? "checked" : ''; ?>>Yes<span class="check_active"></span></label>
+                            <label class="checkbox"><input type="radio" name="radIsPublicScore" value="N" <?php echo (isset($formData["test_public_score"]) && $formData["test_public_score"] == "N") ? "checked" : ''; ?>>No<span class="check_active"></span></label>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Active </label>
+                        <div class=" controls">
+                            <label class="checkbox"><input type="radio" name="radActive" value="Y" <?php echo (isset($formData["test_active"]) && $formData["test_active"] == "Y") ? "checked" : ''; ?>>Yes<span class="check_active"></span></label>
+                            <label class="checkbox"><input type="radio" name="radActive" value="N" <?php echo (isset($formData["test_active"]) && $formData["test_active"] == "N") ? "checked" : ''; ?>>No<span class="check_active"></span></label>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="txtContent">Lời Nhắc nhở </label>
+                        <div class="controls">
+                            <textarea class=" <?= isset($messages["test_description"]) ? $messages["status"] : ""; ?>" style="width: 500px;height: 200px" id="txtDescription" name="txtDescription"><?php echo isset($formData['test_description']) ? $formData['test_description'] : "" ?></textarea>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="txtContent">Đáp Án </label>
+                        <div class="controls">
+                            <textarea class=" <?= isset($messages["test_answer_decode"]) ? $messages["status"] : ""; ?>" placeholder="1:A,2:B,3:C,4:A" style="width: 500px;height: 200px" id="txtAnswer" name="txtAnswer"><?php echo isset($formData['test_answer_decode']) ? $formData['test_answer_decode'] : "" ?></textarea>
+                            <div class="text-danger"><?php echo isset($messages["test_answer_decode"]) ? $messages["test_answer_decode"] : ""; ?></div>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        window.onload = function() {
+                            var oFCKeditor2 = new FCKeditor('txtAnswer');
+                            oFCKeditor2.Height = '500';
+                            oFCKeditor2.Width = '650';
+                            oFCKeditor2.ToolbarSet = "Default";
+                            oFCKeditor2.Basepath = '../backend/fckeditor/';
+                            oFCKeditor2.ReplaceTextarea();
+                        }
+                    </script>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="submit_create">Save changes</button>
+                        <a id="edit_page" class="btn" href="<?php echo $this->url->get('dashboard/list-test'); ?>"> Cancel </a>
+                    </div>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $('.class-subject').on('change', function() {
+        var subject_id = $('#slcSubject').val();
+        var class_id = $('#slcClass').val();
+        var group_id = '<?= isset($formData['test_group_id']) ? $formData['test_group_id'] : 0 ?>';
+        $.ajax({
+            url: "<?php echo $this->url->get("/dashboard/get-chapter") ?>",
+            async: false,
+            type: "POST",
+            dataType: "JSON",
+            data: {
+                'subject_id': subject_id,
+                'class_id': class_id,
+                'chapter_id': group_id,
+            },
+            success: function(data) {
+                $('#slcGroup').html('<option value=0>Chọn Chương</option>' + data);
+            }
+        });
+    }).trigger('change');
+    $('.file_image').on('click', function() {
+        if ($('#image_1').hasClass('hidden')) {
+            $('#image_2').addClass('hidden');
+            $('#image_1').removeClass('hidden');
+            $('#daode').removeClass('hidden disable');
+            $('#comment_2').addClass('hidden');
+            $('#comment_1').removeClass('hidden');
+        } else {
+            $('#image_1').addClass('hidden');
+            $('#image_2').removeClass('hidden');
+            $('#daode').addClass('hidden disable');
+            $('#comment_1').addClass('hidden');
+            $('#comment_2').removeClass('hidden');
+        }
+    });
+</script>

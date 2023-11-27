@@ -11,7 +11,7 @@ use Learncom\Repositories\Upload;
 use Learncom\Utils\Validator;
 use Phalcon\Paginator\Adapter\Model as PaginatorModel;
 
-class TestController extends ControllerBase
+class TestnewController extends ControllerBase
 {
     public function readAction()
     {

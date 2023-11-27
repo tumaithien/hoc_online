@@ -1,0 +1,241 @@
+<?php
+/**
+ * @var \Learncom\Models\LearnTest $test_model
+ * @var \Learncom\Models\LearnTestFolder $folder
+ */
+?>
+
+<main>
+    <div class="padding-block p-20">
+        <div class="row list-courses-wrap list-courses-custom">
+            <div class="col-lg-2 list-coutses">
+                <?php $this->partial('shared/left_test'); ?>
+            </div>
+            <div class="col-lg-7 h-100 mt-xs-15 bg-white border-1-primary rounded mb-xs-70 view-test">
+                <h2 id="txtName" class="text-main text-center text-uppercase"><?= $test_parent_model->getTestName() ?></h2>
+                <?php if (strlen($test_model->getTestLink()) > 0) { ?>
+                    <div class="video-iframe" style="height: calc(100% - 34px);">
+                        <iframe width="100%" height="100%" src="<?php echo $test_model->getTestLink() ?>" allow="autoplay"></iframe>
+                    </div>
+                <?php } else {
+                    $testArr = json_decode($test_model->getTestArray(),true);
+                    if (sizeof($testArr) > 0){
+                        ?>
+                        <div class="carousel main-banner slide" id="carousel-home-banner" data-ride="carousel">
+                            <?php if (count($testArr) > 1) { ?>
+                                <ol class="carousel-indicators">
+                                    <?php foreach ($testArr as $key => $banner) { ?>
+                                        <li data-target="#carousel-home-banner" data-slide-to="<?php echo ($key-1) ?>" class="<?= ($key-1) == 0 ? 'active' : '' ?>"><?php echo $key?></li>
+                                    <?php } ?>
+                                </ol>
+                            <?php } ?>
+                            <div class="carousel-inner">
+                                <?php
+                                foreach ($testArr as $key => $test){
+                                    if ($test_model->getTestParentId() == 0){
+                                        $test_parent_id = $test_model->getTestId();
+                                    } else {
+                                        $test_parent_id = $test_model->getTestParentId();
+                                    }
+                                    $folder = \Learncom\Models\LearnTestFolder::findFirstByTestIdAndFolderStatus($test_parent_id,$test);
+
+                                    if ($folder){
+                                        ?>
+                                        <div class="carousel-item justify-content-center<?= ($key-1) == 0 ? ' active' : '' ?>">
+                                            <div>
+                                                <p class="text-20 font-weight-bold pl-30 pl-xs-0 text-blue-test">Câu <?php echo $key ?> :</p>
+                                                <img src="<?php echo $this->url->getStatic($folder->getFolderLink()) ?>" title="<?php echo $test_model->getTestName() ?>" alt="<?php echo $test_model->getTestName() ?>">
+                                            </div>
+
+                                        </div>
+                                    <?php }} ?>
+                            </div>
+                        </div>
+                    <?php }} ?>
+            </div>
+            <div class="col-lg-3 h-100 pl-2 pr-0">
+                <div class="box-answer h-100 bg-white border-1-primary rounded p-10">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="text-orange d-flex align-items-center mb-0"><img src="<?php echo $this->url->getStatic('frontend/')?>images/icon-clock.svg" alt="" title="" class="mr-10"> <span class="time-remain text-26"><?=$test_model->getTestTime()?>:00</span></p>
+                        <button type="button"  class="btn btn-info btn-submit-results text-14" id="btn-submit">Nộp bài</button>
+                    </div>
+                    <input hidden id="time_test" value="<?=$test_model->getTestTime()?>">+
+                    +
+                    <hr class="border-primary">
+                    <form method="post" id="subTest" action="/finish-test?testId=<?= $test_id ?>">
+                        <div class="form-group <?= $hasNotChoose ? "" : "d-none" ?>">
+                            <label >Link Bài Làm Tự Luận: </label>
+                            <input type="text" name="txtNotChoose" class="form-control h-50px" placeholder="" value="">
+                            <a href="https://upanh.1doi1.com" target="_blank">Link Upload</a>
+                        </div>
+                        <div class="title-answer">
+                            <span class="align-items-center d-flex">Đã trả lời <strong class="text-main ml-2"><span id="currentAnswer">0</span>/<?=$test_model->getTestNumberQuestion() ?></strong></span>
+                        </div>
+                        <div class="list-test">
+                            <div class="list-test_content">
+                                <div class="tab-content tab-content-custom" id="pills-tabContent">
+                                    <?php
+                                    $arrAnswer = json_decode($test_model->getTestAnswer(),true);
+                                    $total_column = ceil(count($arrAnswer)/10);
+                                    for ($t = 1;$t <= $total_column; $t ++) {
+                                        ?>
+                                        <div class="tab-pane fade show <?= $t==1 ? "active" :"" ?>" id="pills-<?=$t?>" role="tabpanel" aria-labelledby="pills-tab-<?=$t?>">
+                                            <?php for ($i = ($t-1)*10 +1;$i<=($t)*10;$i++) {
+                                                if($i > count($arrAnswer)) {
+                                                    break;
+                                                }
+                                                if (!isset($arrAnswer[$i])) {
+                                                    continue;
+                                                }
+                                                ?>
+                                                <div class="check-answer-circle">
+                                        <span class="text-center">
+                                            <?=$i > 9 ? $i : '0'.$i?>.
+                                        </span>
+
+                                                    <label for="A_<?=$i?>" class="item-answer">
+                                                        <input type="radio" id="A_<?=$i?>" class="is_choose" value="A" name="question[<?=$i?>]">
+                                                        <span class="checkmark-circle">A</span>
+                                                    </label>
+                                                    <label for="B_<?=$i?>" class="item-answer">
+                                                        <input type="radio" id="B_<?=$i?>" class="is_choose" value="B" name="question[<?=$i?>]"">
+                                                        <span class="checkmark-circle">B</span>
+                                                    </label>
+                                                    <label for="C_<?=$i?>" class="item-answer">
+                                                        <input type="radio" id="C_<?=$i?>" class="is_choose" value="C" name="question[<?=$i?>]"">
+                                                        <span class="checkmark-circle">C</span>
+                                                    </label>
+                                                    <label for="D_<?=$i?>" class="item-answer">
+                                                        <input type="radio" id="D_<?=$i?>" class="is_choose" value="D" name="question[<?=$i?>]"">
+                                                        <span class="checkmark-circle text-center">D</span>
+                                                    </label>
+                                                </div>
+                                            <?php } ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <ul class="nav nav-pills justify-content-center" id="pills-tab" role="tablist">
+                                    <?php  for ($t = 1;$t <= $total_column; $t ++) { ?>
+                                        <li class="nav-item">
+                                            <a class="nav-link <?= $t==1 ? "active" : "" ?>" id="pills-tab-<?=$t?>" data-toggle="pill" href="#pills-<?=$t?>" role="tab" aria-controls="pills-<?=$t?>" aria-selected="true"><?=$t?></a>
+                                        </li>
+                                    <?php } ?>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script type="text/javascript">
+    commands.push(function(){
+        $('.carousel').carousel({
+            touch: true,
+            interval: false
+        });
+        window.onload = function() {
+            var reloading = sessionStorage.getItem("reloading");
+            if (reloading) {
+                sessionStorage.removeItem("reloading");
+                $('#subTest').submit();
+            } else {
+                sessionStorage.setItem("reloading", "true");
+            }
+
+        };
+        function countDown(minutes, callBack = function(mn, sc, isOver) {}) {
+            let x = minutes;
+            let seconds = 0;
+            let isOver = false;
+            function  process() {
+             if (seconds == 0) {
+                 $.ajax({
+                     url: "<?php echo $this->url->get('/check-time'); ?>",
+                     type: "POST",
+                     async: false,
+                     dataType: "JSON",
+                     data: {},
+                     success: function (data){
+                         if (data.minutes != undefined && data.seconds != undefined) {
+                             x = data.minutes;
+                             seconds = data.seconds;
+                         } else {
+                             if(!seconds) {
+                                 seconds = 59;
+                                 x--;
+                             } else {
+                                 seconds--;
+                             }
+                         }
+                     }
+                 });
+             } else {
+                 if(!seconds) {
+                     seconds = 59;
+                     x--;
+                 } else {
+                     seconds--;
+                 }
+             }
+            if(x==0 && seconds == 0) isOver = true;
+            callBack(x, seconds, isOver);
+            return isOver;
+            }
+            function runTimeout() {
+                setTimeout(() => {
+                    process();
+                    if(isOver) return;
+                runTimeout();
+            }, 1000);
+            }
+            runTimeout();
+        }
+
+        function updateCounter(mn, sc, isOver) {
+            let timeRemain = document.querySelector(".time-remain");
+            let txtMN = mn < 10 ? "0" + mn : mn;
+            let txtSC = sc < 10 ? "0" + sc : sc;
+            timeRemain.innerHTML = txtMN + " : " + txtSC;
+            if(isOver) {
+                $(".list-test").addClass("time-up");
+                alert('Thời gian làm bài thi đã hết!');
+                sessionStorage.removeItem("reloading");
+                $('#subTest').submit();
+            }
+        }
+        var time_test = $('#time_test').val();
+        countDown(time_test, updateCounter);
+
+        $('#btn-submit').on('click',function () {
+            if (confirm('Bạn có chắc chắn muốn kết thúc bài thi?')) {
+                sessionStorage.removeItem("reloading");
+                $('#subTest').submit();
+            }
+        });
+        $('.check-answer-circle input[type="radio"]').on('click', function () {
+            let element = $(this);
+            let arrId = element.attr('id').split("_");
+            let currentId = arrId[1];
+            $('.indicator-item').each(function(index, element) {
+                let $e = $(element);
+                let id = $e.attr('data-slide-to');
+                if (Number(currentId) == (Number(id)+1)) {
+                    $e.addClass('current');
+                }
+            });
+            element.parents('.check-answer-circle').addClass('checked');
+            let count = 0;
+            $('.check-answer-circle').each(function(index, element) {
+                let $e = $(element);
+                if ($e.hasClass('checked')){
+                    count++
+                }
+            });
+            $('#currentAnswer').text(count);
+        });
+
+    });
+</script>

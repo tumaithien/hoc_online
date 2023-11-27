@@ -1259,6 +1259,38 @@ $di['router'] = function () {
         )
     );
     $router->add(
+        '/office/list-test-v2',
+        array(
+            "module" => "backend",
+            "controller" => 'testnew',
+            "action" => 'read'
+        )
+    );
+    $router->add(
+        '/office/create-test-v2',
+        array(
+            "module" => "backend",
+            "controller" => 'testnew',
+            "action" => "create"
+        )
+    );
+    $router->add(
+        '/office/edit-test-v2',
+        array(
+            "module" => "backend",
+            "controller" => 'testnew',
+            "action" => "edit"
+        )
+    );
+    $router->add(
+        '/office/delete-test-v2',
+        array(
+            "module" => "backend",
+            "controller" => 'testnew',
+            "action" => "delete"
+        )
+    );
+    $router->add(
         '/dashboard/upload-file',
         array(
             "module" => "backend",

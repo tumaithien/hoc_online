@@ -1,0 +1,47 @@
+<?php
+/**
+ * @var \Learncom\Models\LearnTest $test_model
+ */
+?>
+<main>
+    <div class="padding-block p-20">
+        <div class="row list-courses-wrap list-courses-custom">
+            <div class="col-12 col-lg-2 list-coutses">
+            <?php $this->partial('shared/left_test'); ?>
+            </div>
+            <div class="col-lg-10 col-12 mt-xs-15 bg-white p-20 rounded border-1-primary">
+                <div class="w-50 mx-auto px-lg-90">
+
+                    <h2 id="txtName" class="text-main text-center text-uppercase"><?= $test_model->getTestName() ?></h2>
+                    <hr>
+                    <p id="txtClass" class="d-flex justify-content-between">
+                        <span class="text-medium">Lớp:</span>  <span><?= \Learncom\Repositories\ClassSubject::getNameSubjectByIds($test_model->getTestSubjectId()) ." " ?> <?= \Learncom\Repositories\ClassSubject::getNameClassByIds($test_model->getTestClassId()) ?></span></p>
+                    <p id="txtGroup"  class="d-flex justify-content-between <?=$test_model->getTestGroupId()==0 ? "d-none" : "" ?>"><span class="text-medium">Khóa học:</span> <span><?= \Learncom\Repositories\Group::getNameById($test_model->getTestGroupId()) ?></span></p>
+                    <p id ="txtTime" class="d-flex justify-content-between"><span class="text-medium">Thời gian:</span> <span><?= $test_model->getTestTime() ?> phút</span></p>
+                    <p id ="txtTime" class="d-flex justify-content-between"><span class="text-medium">Số câu hỏi:</span> <span><?= $test_model->getTestNumberQuestion() ?> câu</span></p>
+                    <p id="txtDes" class="d-flex justify-content-between"><span class="text-medium">Lời nhắn giáo viên:</span> <span><?= $test_model->getTestDescription() ?></span></p>
+                </div>
+                <?php if ($test_model->getTestActive() == "Y") { ?>
+                <div class="doc-preview text-center">
+                    <a href="do-test?id=<?=$test_model->getTestId() ?>" class="btn btn-info text-14" id="btn-submit">Bắt đầu làm bài</a>
+                </div>
+                <?php } else { ?>
+                    <div class="doc-preview text-center text-red text-20 ">
+                        Bài Thi chưa được phép làm
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    commands.push(function(){
+        window.onload = function() {
+            var reloading = sessionStorage.getItem("reloading");
+            if (reloading) {
+                sessionStorage.removeItem("reloading");
+            }
+        };
+    })
+</script>
