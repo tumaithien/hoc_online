@@ -2,6 +2,7 @@
 
 namespace Learncom\Frontend\Controllers;
 
+use Learncom\Repositories\CacheHistory;
 use Learncom\Repositories\CacheRepo;
 use Learncom\Repositories\Chapter;
 use Learncom\Repositories\Group;
@@ -18,6 +19,21 @@ class CourseController extends CoursebaseController
         $repoPage = new Page();
         $repoPage->AutoGenMetaPage('khoahoc', 'Course');
 
+        $key = "log_history_course" . $this->auth['id'];
+        $cache = new CacheHistory($key);
+        $is_continue = false;
+        if (empty($this->group_select) || empty($this->lesson_select)) {
+            $log = $cache->setLogCourse($this->class_select, $this->subject_select, $this->group_select, $this->lesson_select, false);
+            if (!empty($log)) {
+                $is_continue = true;
+                $this->group_select = $log['group'] ?? '';
+                $this->lesson_select = $log['lesson'] ?? '';
+            }
+        } else {
+            $log = $cache->setLogCourse($this->class_select, $this->subject_select, $this->group_select, $this->lesson_select, true);
+        }
+
+
         $this->checkingAuth();
         $this->getListGroup();
         $this->getListLesson();
@@ -31,6 +47,8 @@ class CourseController extends CoursebaseController
             'group_select' => $this->group_select,
             'lesson_select' => $this->lesson_select,
             'link' => $this->link,
+            'name' => $this->name,
+            'is_continue' => $is_continue
         ]);
     }
     public function viewAction()

@@ -1,10 +1,10 @@
-<main>
+<main style="padding-bottom: 0px">
     <div class="form_wrapper">
         <div class="form_login">
             <h2>Đăng nhập!</h2>
             <form autoComplete="off" method="POST" name="formLogin" enctype="multipart/form-data" action="">
                 <div class="input_wrapper">
-                    <label for="email">Email <span class="text-danger">*</span></label>
+                    <label for="email">ID <span class="text-danger">*</span></label>
                     <input type="email" name="txtEmail" id="email"
                         value="<?php echo isset($formData['user_code']) ? $formData['user_code'] : '' ?>">
                     <span class="text-error msg-email">

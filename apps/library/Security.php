@@ -1,46 +1,47 @@
 <?php
 use Phalcon\Events\Event,
-	Phalcon\Mvc\User\Plugin,
-	Phalcon\Mvc\Dispatcher,
-	Phalcon\Acl;
+Phalcon\Mvc\User\Plugin,
+Phalcon\Mvc\Dispatcher,
+Phalcon\Acl;
 use Learncom\Repositories\Role;
+
 /**
  * Security
  * This is the security plugin which controls that users only have access to the modules they're assigned to
  */
 class Security extends Plugin
 {
-	private $frontend;
-	private $backend;
-	public function __construct($dependencyInjector)
-	{
-		$this->_dependencyInjector = $dependencyInjector;
-	}
-	//get Acl
-	public function getAcl()
-	{
-		$acl;
-		if (!isset($this->persistent->acl)) {
-			$acl = new Phalcon\Acl\Adapter\Memory();
-			$acl->setDefaultAction(Acl::DENY);
-			/*Register roles*/
-			$guest = new \Phalcon\Acl\Role('guest');
-			$acl->addRole($guest);
-			$user = new \Phalcon\Acl\Role('user');
-			$acl->addRole($user, 'guest');
+    private $frontend;
+    private $backend;
+    public function __construct($dependencyInjector)
+    {
+        $this->_dependencyInjector = $dependencyInjector;
+    }
+    //get Acl
+    public function getAcl()
+    {
+        $acl;
+        if (!isset($this->persistent->acl)) {
+            $acl = new Phalcon\Acl\Adapter\Memory();
+            $acl->setDefaultAction(Acl::DENY);
+            /*Register roles*/
+            $guest = new \Phalcon\Acl\Role('guest');
+            $acl->addRole($guest);
+            $user = new \Phalcon\Acl\Role('user');
+            $acl->addRole($user, 'guest');
             //Get all role at database
 
             $role = new Role();
-            $list_role= $role->getRoleAction();
+            $list_role = $role->getRoleAction();
             /**
             Register Roles
              */
-            foreach($list_role as $role){
+            foreach ($list_role as $role) {
                 $acl->addRole(new \Phalcon\Acl\Role($role->role_name), 'user');
             }
             //Array Resource for any role
-            foreach ($list_role as  $item) {
-                $nameResource = $item->role_name;//echo $nameResource;exit();
+            foreach ($list_role as $item) {
+                $nameResource = $item->role_name; //echo $nameResource;exit();
                 $role_actions = unserialize($item->role_actions);
                 //echo $nameResource."<pre>";var_dump($role_actions);exit();
                 foreach ($role_actions as $resource => $actions) {
@@ -48,23 +49,24 @@ class Security extends Plugin
                     $acl->allow($nameResource, $resource, $actions);
                 }
             }
-			/*Guest resources*/
-			$publicResources = array(
-				'frontendindex' => array('*'),
-				'frontendlogin' => array('*'),
-                'frontendblog' => array('index','detail'),
+            /*Guest resources*/
+            $publicResources = array(
+                'frontendindex' => array('*'),
+                'frontendlogin' => array('*'),
+                'frontendblog' => array('index', 'detail'),
                 'frontendlesson' => array('index'),
                 'frontenddocument' => array('index'),
                 'frontendcourse' => array('index'),
-				'frontendnotfound' => array('*'),
-				'backendlogin' => array('index', 'login', 'logout'),
+                'frontendnotfound' => array('*'),
+                'backendlogin' => array('index', 'login', 'logout'),
                 'backofficelogin' => array('index', 'login', 'logout'),
-                'backendaccessdenied' => array('read','notfound'),
+                'backendaccessdenied' => array('read', 'notfound'),
                 'frontendcron' => array('*'),
-			);
-			foreach ($publicResources as $resource => $actions) {//$resource is key, $actions is value
-				$acl->addResource(new \Phalcon\Acl\Resource($resource), $actions);
-			}
+                'frontenddgnl' => array('index'),
+            );
+            foreach ($publicResources as $resource => $actions) { //$resource is key, $actions is value
+                $acl->addResource(new \Phalcon\Acl\Resource($resource), $actions);
+            }
 
             /*User resources*/
             $userResources = array(
@@ -72,13 +74,15 @@ class Security extends Plugin
                 'frontendlesson' => array('*'),
                 'frontendcourse' => array('*'),
                 'frontenddocument' => array('*'),
+                'frontenddgnl' => array('view'),
                 'frontendtest' => array('*'),
                 'frontendtestnew' => array('*'),
                 'frontenddocumentdifficult' => array('*'),
             );
-            foreach ($userResources as $resource => $actions) {//$resource is key, $actions is value
+            foreach ($userResources as $resource => $actions) { //$resource is key, $actions is value
                 $acl->addResource(new \Phalcon\Acl\Resource($resource), $actions);
             }
+
             /*Grant access to public areas to guest, user and editor*/
             foreach ($publicResources as $resource => $actions) {
                 $acl->allow('guest', $resource, $actions);
@@ -88,61 +92,54 @@ class Security extends Plugin
             }
             // Store serialized ACL
             $this->persistent->acl = $acl;
-			$this->persistent->acl = $acl;
-		}
-		else
-		{
-			 //Restore ACL object from serialized ACL
-			 $acl = $this->persistent->acl;
-		}
-		return $acl;
-	}
-	/**
-	 * This action is executed before execute any action in the application
-	 * @param Event $event
-	 * @param Dispatcher $dispatcher
-	 */
-	public function beforeDispatch(Event $event, Dispatcher $dispatcher)
-	{
+            $this->persistent->acl = $acl;
+        } else {
+            //Restore ACL object from serialized ACL
+            $acl = $this->persistent->acl;
+        }
+        return $acl;
+    }
+    /**
+     * This action is executed before execute any action in the application
+     * @param Event $event
+     * @param Dispatcher $dispatcher
+     */
+    public function beforeDispatch(Event $event, Dispatcher $dispatcher)
+    {
         $auth = $this->session->get('auth');
         $module = $dispatcher->getModuleName();
-        if(!$auth){
+        if (!$auth) {
             $role = 'guest';
-        }
-        else if(isset($auth['role'])){
+        } else if (isset($auth['role'])) {
             $role = $auth['role'];
-        }
-        else{
+        } else {
             $role = 'user';
         }
 
-        if($role == 'user' && $module == 'backend'){
+        if ($role == 'user' && $module == 'backend') {
             $this->response->redirect('/');
             return false;
         }
-		$module = $dispatcher->getModuleName();
-		$controller = $dispatcher->getControllerName();
-		$action = $dispatcher->getActionName();
+        $module = $dispatcher->getModuleName();
+        $controller = $dispatcher->getControllerName();
+        $action = $dispatcher->getActionName();
         $acl = $this->getAcl();
-		$resource = $module.$controller;
-		$allowed = $acl->isAllowed($role, $module.$controller, $action);
-		  $preURl = substr($this->request->getURI(), strlen($this->url->getBaseUri()));
+        $resource = $module . $controller;
+        $allowed = $acl->isAllowed($role, $module . $controller, $action);
+        $preURl = substr($this->request->getURI(), strlen($this->url->getBaseUri()));
 
-		  if ($preURl != "login" && $preURl != "logout") {
-		       $this->session->set('preURL', $preURl);
-		  }
-        if ($allowed != Acl::ALLOW)
-        {
-            if($acl->isResource($resource))
-            {
-                if(($module == 'backend') && !in_array($role, Role::getGuestUser())){
-                        $this->response->redirect('dashboard/accessdenied');
+        if ($preURl != "login" && $preURl != "logout") {
+            $this->session->set('preURL', $preURl);
+        }
+       // var_dump($acl);exit;
+        if ($allowed != Acl::ALLOW) {
+
+            if ($acl->isResource($resource)) {
+                if (($module == 'backend') && !in_array($role, Role::getGuestUser())) {
+                    $this->response->redirect('dashboard/accessdenied');
                     return false;
                 }
-              
-
-                switch($module)
-                {
+                switch ($module) {
                     case "backend":
                         $this->response->redirect('dashboard/login');
                         break;
@@ -150,13 +147,13 @@ class Security extends Plugin
                         $this->response->redirect('login');
                         break;
                 }
-            }
-            else{
-                $message = "URL Notfound : ".$_SERVER['REQUEST_URI']."<br>";
+            } else {
+                $message = "URL Notfound : " . $_SERVER['REQUEST_URI'] . "<br>";
                 $message .= "=================================== USER AGENT ======================================================<br>";
                 //$message .= $_SERVER['HTTP_USER_AGENT'];
                 // All Info User
-                $indicesServer = array('PHP_SELF',
+                $indicesServer = array(
+                    'PHP_SELF',
                     'argv',
                     'argc',
                     'GATEWAY_INTERFACE',
@@ -195,25 +192,24 @@ class Security extends Plugin
                     'PHP_AUTH_PW',
                     'AUTH_TYPE',
                     'PATH_INFO',
-                    'ORIG_PATH_INFO') ;
+                    'ORIG_PATH_INFO'
+                );
 
-                echo '<table cellpadding="10">' ;
+                echo '<table cellpadding="10">';
                 foreach ($indicesServer as $arg) {
                     if (isset($_SERVER[$arg])) {
-                        $message .= '<tr><td>'.$arg.'</td><td>' . $_SERVER[$arg] . '</td></tr>' ;
-                    }
-                    else {
-                        $message .= '<tr><td>'.$arg.'</td><td>-</td></tr>' ;
+                        $message .= '<tr><td>' . $arg . '</td><td>' . $_SERVER[$arg] . '</td></tr>';
+                    } else {
+                        $message .= '<tr><td>' . $arg . '</td><td>-</td></tr>';
                     }
                 }
-                echo '</table>' ;
+                echo '</table>';
                 $title = "URL NOTFOUND";
                 //$result = $this->my->sendError($message,$title);
                 //////////////Add 27 - 11//////////////
-                $this->response->redirect('notfound');//404 not found
+                $this->response->redirect('notfound'); //404 not found
             }
             return false;
         }
-	}
+    }
 }
-

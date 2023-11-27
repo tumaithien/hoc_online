@@ -1,0 +1,139 @@
+<script>
+
+    $(document).ready(function () {
+        $("#create_form").submit(function () {
+            var valid = true;
+            if ($('input[name=txtName]').val() == '') {
+                $('.msg-name').text('Bạn cần nhập thông tin này');
+                $('#txtName').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-name').text('');
+                $('#txtName').removeClass("border-red");
+            }
+            if ($('input[name=txtOrder]').val() == '') {
+                $('.msg-order').text('Bạn cần nhập thông tin này');
+                $('#txtOrder').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-order').text('');
+                $('#txtOrder').removeClass("border-red");
+            }
+            if ($('input[name=txtLink]').val() == '') {
+                $('.msg-link').text('Bạn cần nhập thông tin này');
+                $('#txtLink').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-link').text('');
+                $('#txtLink').removeClass("border-red");
+            }
+
+            if ($('select[name=slcType]').val() == '') {
+                $('.msg-subject').text('Bạn cần nhập thông tin này');
+                $('#slcType').addClass("border-red");
+                valid = false;
+            } else {
+                $('.msg-subject').text('');
+                $('#slcType').removeClass("border-red");
+            }
+            if (!valid) event.preventDefault();
+            if (valid) {
+                $('button[name=submit]').prop('disabled', true);
+            }
+        });
+    });
+
+</script>
+<script>
+    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-dgnl"); ?>'>List Video</a><span class='divider'>/</span></li><li><a href='<?php echo $this->url->get("dashboard/create-dgnl"); ?>'>Create Video</a></li>");
+</script>
+<?php
+if (!empty($formData['message'])) {
+    ?>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $formData['typeMessage'] ?>">
+        <?php echo $formData['message']; ?>
+    </p>
+<?php } ?>
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header well" data-original-title>
+            <h2><i class="icon-edit"></i>
+                <?= isset($formData['mode']) ? $formData['mode'] : "" ?> Video :
+            </h2>
+            <div class="box-icon"> <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a> <a
+                    href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a> <a href="#"
+                    class="btn btn-close btn-round"><i class="icon-remove"></i></a> </div>
+        </div>
+        <div class="box-content">
+            <form novalidate="novalidate" class="form-horizontal" id="create_form" action="" method="post">
+                <fieldset>
+                    <div class="control-group">
+                        <div class="control-group">
+                            <label class="control-label" for="selectError">Môn học <em style="color:red;">*</em></label>
+                            <div class="controls">
+                                <select id="slcType" name="slcType"
+                                    class="class-subject <?php echo isset($messages["dgnl_type_id"]) ? $messages["status"] : ""; ?>">
+                                    <option value="">Chọn Môn học</option>
+                                    <?= isset($select_type) ? $select_type : "" ?>
+                                </select>
+                                <div class="text-danger msg-subject">
+                                    <?php echo isset($messages["dgnl_type_id"]) ? $messages["dgnl_type_id"] : ""; ?>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="selectError">Video/Bài giảng </label>
+                            <div class="controls">
+                                <select id="slcCategory" name="slcCategory"
+                                    class="<?php echo isset($messages["learn_category"]) ? $messages["status"] : ""; ?> group">
+                                    <option value="video" <?= $formData['learn_category'] == 'video' ? "selected" : "" ?>> VIDEO</option>
+                                    <option value="khoahoc" <?= $formData['learn_category'] == 'khoahoc' ? "selected" : "" ?>> BÀI GIẢNG</option>
+
+                                </select>
+
+                            </div>
+                        </div>
+                        <label class="control-label" for="focusedInput">Tên <em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['dgnl_name']) ? $formData['dgnl_name'] : "" ?>"
+                                maxlength="256" id="txtName" name="txtName" class="input-xlarge focused" type="text">
+                            <div class="text-danger msg-name">
+                                <?php echo isset($messages["dgnl_name"]) ? $messages["dgnl_name"] : ""; ?>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="focusedInput">Link <em style="color:red;">*</em></label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['dgnl_link']) ? $formData['dgnl_link'] : "" ?>"
+                                maxlength="256" id="txtLink" name="txtLink" class="input-xlarge focused" type="text">
+                            <div class="text-danger msg-link">
+                                <?php echo isset($messages["dgnl_link"]) ? $messages["dgnl_link"] : ""; ?>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Order <em style="color:red;">*</em> </label>
+                        <div class="controls">
+                            <input value="<?php echo isset($formData['dgnl_order']) ? $formData['dgnl_order'] : "" ?>"
+                                id="txtOrder" name="txtOrder" class="input-xlarge focused" maxlength="10" type="text">
+                            <div class="text-danger msg-order">
+                                <?php echo isset($messages["dgnl_order"]) ? $messages["dgnl_order"] : ""; ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="submit_create">Save changes</button>
+                        <a id="edit_page" class="btn" href="<?php echo $this->url->get('dashboard/list-dgnl'); ?>">
+                            Cancel </a>
+                    </div>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

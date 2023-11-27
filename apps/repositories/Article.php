@@ -30,11 +30,17 @@ class Article extends Component
     }
 
     public function getHomeArticle(){
-        return LearnArticle::query()
+        $cache = new CacheRepo("article_getHomeArticle");
+        $data = $cache->getCache();
+        if (!$data) {
+            $data = LearnArticle::query()
             ->where("article_active = 'Y'")
             ->orderBy('article_order ASC')
-            ->limit(1)
-            ->execute()->toArray()[0];
+            ->limit(7)
+            ->execute()->toArray();
+            $data = $cache->setCache($data);
+        }
+        return $data;
     }
 }
 

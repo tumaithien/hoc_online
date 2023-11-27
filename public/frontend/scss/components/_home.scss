@@ -1,6 +1,6 @@
 #hero {
   width: 100%;
-  height: 40vh;
+  min-height: 40vh;
   position: relative;
   background-color: white;
   margin-bottom: 40px;
@@ -47,8 +47,18 @@
   border-radius: 5px;
   overflow: hidden;
   margin-bottom: 30px;
+  width: 100%;
+  display: block;
+  transition: all 0.2s linear;
+  cursor: pointer;
+  &:hover {
+    border-color: $primary-color;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    transform: translate(-5px, -5px);
+  }
   .course-img {
-    height: 40%;
+    height: 100%;
+    max-height: 195px;
     img {
       width: 100%;
       height: 100%;
@@ -56,8 +66,13 @@
     }
   }
   .course-content {
+    background-color: white;
     padding: 15px;
     height: 60%;
+    display: grid;
+    grid-template-rows:
+      minmax(40px, max-content) minmax(85px, max-content)
+      minmax(50px, max-content) minmax(42px, max-content);
     h4 {
       background-color: $primary-color;
       font-size: 14px;
@@ -72,13 +87,19 @@
     }
     h3 a {
       transition: all 0.3s;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-word;
     }
     h3 a:hover {
       color: $primary-color;
     }
     p {
       display: -webkit-box;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -96,6 +117,18 @@
         font-size: 30px;
       }
     }
+  }
+  .course-label {
+    grid-row: 1;
+  }
+  .course-title {
+    grid-row: 2;
+  }
+  .course-text {
+    grid-row: 3;
+  }
+  .course-info {
+    grid-row: 4;
   }
 }
 .slick-dots {
@@ -145,9 +178,45 @@
     color: #37423b;
   }
 }
+
+.table-custom {
+  .thead-light th {
+    color: white;
+    background-color: $primary-color;
+    border-right: 1px solid white;
+  }
+  .thead-light th:last-child {
+    border-right: unset;
+  }
+  tbody tr td {
+    border-right: 1px solid $gray-300;
+  }
+  tbody tr td:first-child {
+    border-left: 1px solid $gray-300;
+  }
+  tbody tr td {
+    border-bottom: 1px solid $gray-300;
+  }
+  min-width: 1208px;
+  transition: all 0.2s linear;
+  &:hover {
+    transform: translate(-5px, -5px);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  }
+}
 @media (max-width: 767px) {
+  .course-item .course-img {
+    max-height: 150px;
+    height: 100%;
+  }
+  .ui_kit-table {
+    overflow: auto;
+  }
+  .table-custom {
+    overflow: hidden;
+  }
   #hero {
-    height: 25vh;
+    min-height: 10vh;
   }
   .course-item {
     margin-bottom: 15px;

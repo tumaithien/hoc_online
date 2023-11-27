@@ -28,56 +28,26 @@ class IndexController extends ControllerBase
         $blog_keyword = 'blogs';
 
         $banner = $bannerRepo->findBanner();
+        $video = $bannerRepo->findVideoIndex();
         $blogRepo = new Article();
-        $blog = $blogRepo->getHomeArticle();
+        $blogs = $blogRepo->getHomeArticle();
         $total_user = User::countUser();
         $total_document = Document::count();
         $total_video = Video::count();
+        //môn toán subject_id = 5
+        $videos = Video::findHomeVideo($this->allSubject,$this->allClass);
+        $arrClassId = array_unique(array_column($videos,"video_class_id"));
 
-        $arrClass = LearnClass::find([
-            'order' => "RAND()"
-        ])->toArray();
-        $arrSubject = LearnSubject::find([
-            'order' => "RAND()"
-        ])->toArray();
-
-        $cache = new CacheRepo("all_class_subject", 1);
-        $arrClassSubject = $cache->getCache();
-        if (!$arrClassSubject) {
-
-            $arrClassSubject = [];
-            foreach ($arrClass as $class) {
-                foreach ($arrSubject as $subject) {
-                    $arrClassSubject[] = [
-                        'id' => $subject['subject_id'] . "_" . $class['class_id'],
-                        'name' => $subject['subject_name'] . " " . $class['class_name'],
-                        'image' => $subject['subject_image']
-                    ];
-                }
-            }
-            $arrClassSubject = $cache->setCache($arrClassSubject);
-        }
-        $arrClassId = array_column($arrClass, "class_id");
-        $arrSubjectId = array_column($arrSubject, "subject_id");
-        $arrClassSubjectNew[0] = $arrClassSubject[rand(0, count($arrClassSubject))];
-        $arrClassSubjectNew[1] = $arrClassSubject[rand(0, count($arrClassSubject))];
-        $arrClassSubjectNew[2] = $arrClassSubject[rand(0, count($arrClassSubject))];
-        $arrClassSubjectNew[3] = $arrClassSubject[rand(0, count($arrClassSubject))];
-        $arrClassSubject = array_column($arrClassSubject, 'name', 'id');
-
-        $documents = Document::findHomeDocument($arrClassId, $arrSubjectId);
-        $videos = Video::findHomeVideo($arrClassId, $arrSubjectId);
         $this->view->setVars([
+            'video_intro' => $video[0]['banner_image'] ?? "",
             'banners' => $banner,
-            'blog' => $blog,
+            'blogs' => $blogs,
             'blog_keyword' => $blog_keyword,
-            'documents' => $documents,
             'videos' => $videos,
             'total_user' => $total_user,
             'total_document' => $total_document,
             'total_video' => $total_video,
-            'arrClassSubjectNew' => $arrClassSubjectNew,
-            'arrClassSubject' => $arrClassSubject
+            'arrClassId' => $arrClassId
         ]);
     }
     public function getqrcodeAction()

@@ -3,15 +3,17 @@
  * @var \Learncom\Models\LearnTest $test_model
  * @var \Learncom\Models\LearnTestFolder $folder
  */
+$arrAnswer = json_decode($test_model->getTestAnswer(),true);
+
 ?>
 
 <main>
     <div class="padding-block p-20">
         <div class="row list-courses-wrap list-courses-custom">
-            <div class="col-lg-2 list-coutses">
-                <?php $this->partial('shared/left_test'); ?>
-            </div>
-            <div class="col-lg-8 h-100 mt-xs-15 bg-white border-1-primary rounded mb-xs-70">
+        <div class="col-lg-2">
+            <a class="btn btn-primary" href="/start-test?classId=<?= $test_model->getTestClassId()?>&subjectId=<?= $test_model->getTestSubjectId()?>&testId=<?= $test_model->getTestId()?>">quay lại menu</a>
+        </div>
+            <div class="col-lg-10 h-100 mt-xs-15 bg-white border-1-primary rounded mb-xs-70">
                 <h2 id="txtName" class="text-main text-center text-uppercase"><?= $test_parent_model->getTestName() ?></h2>
                 <?php if (strlen($test_model->getTestLink()) > 0) { ?>
                     <div class="video-iframe" style="height: calc(100% - 34px);">
@@ -24,7 +26,11 @@
                         <div class="carousel main-banner slide" id="carousel-home-banner" data-ride="carousel">
                             <?php if (count($testArr) > 1) { ?>
                                 <ol class="carousel-indicators">
-                                    <?php foreach ($testArr as $key => $banner) {?>
+                                    <?php foreach ($testArr as $key => $banner) {
+                                        if (!isset($arrAnswer[$key])) {
+                                            continue;
+                                        }
+                                        ?>
                                         <li data-target="#carousel-home-banner" data-slide-to="<?php echo ($key-1) ?>" class="<?= ($key-1) == 0 ? 'active' : '' ?>"><?php echo $key?></li>
                                     <?php } ?>
                                 </ol>
@@ -32,6 +38,9 @@
                             <div class="carousel-inner">
                                 <?php
                                 foreach ($testArr as $key => $test){
+                                            if (!isset($arrAnswer[$key])) {
+                                                continue;
+                                            }
                                     $folder = \Learncom\Models\LearnTestFolder::findFirstByTestIdAndFolderStatus($test_parent_id,$test);
                                     if ($folder){
                                         ?>
@@ -93,10 +102,14 @@
                     </div>
                 </div>
             <?php } ?>
-            <?php if ($score_model->getScoreDataNotChoose()) { ?>
-                <div>
-                    <img src="<?=$score_model->getScoreDataNotChoose()?>" alt="bài tự luận">
-                </div>
+            Bài Tự Luận:
+            <?php if ($score_model->getScoreDataNotChoose()) {
+            $arrNotChoose = explode(',',$score_model->getScoreDataNotChoose())
+            ?>
+            <h2 class="text-red text-left">Câu trả lời tự luận: </h2>
+            <?php foreach ($arrNotChoose as $link) { ?>
+                <img style="width: 80%" src="<?= $link ?>" alt="bai lam tu luan">
+            <?php }?>
             <?php } ?>
         </div>
     </div>

@@ -1,43 +1,120 @@
 <?php
+
 /**
  * @var $blog_keyword;
  * @var \Learncom\Models\LearnArticle[] $blogs
  *  @var \Learncom\Models\LearnMenu[] $menus
  */
 ?>
-<main>
+<style>
+    /* Styles for modal */
+    /* Styles for modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-content {
+        position: relative;
+        margin: 10% auto;
+        max-width: 600px;
+        background-color: #fff;
+    }
+
+    .close {
+        position: absolute;
+        top: 0;
+        right: 10px;
+        font-size: 30px;
+        font-weight: bold;
+        color: #333;
+        cursor: pointer;
+    }
+
+    /* Styles for main content */
+
+
+    /* Apply blur effect to main content when modal is open */
+    .main-content.blur {
+        filter: blur(5px);
+    }
+
+    video.small {
+        position: fixed;
+        right: 10px;
+        bottom: 10px;
+        width: 200px;
+        height: 150px;
+        z-index: 2;
+    }
+
+    #videoPlayer {
+        max-width: 100%;
+        max-height: 100%;
+        transition: all 0.3s ease;
+    }
+
+    .video-shrink {
+        max-width: 300px;
+        max-height: 200px;
+    }
+</style>
+<main style="background-color: #fafafa main-content">
     <section id="hero">
         <img src="./././frontend/imagesbanner-he.jpg" alt="Banner">
     </section>
     <section class="section container">
         <div class="section-title" data-aos="fade-up">
-            <p>Khai Giảng</p>
-            <h2>Lịch Khai Giảng Mới Nhất</h2>
+            <p>Thông Báo Chung</p>
+            <h3><a href="<?= $this->url->get("/blogs") ?>">Thông báo mới nhất Mới Nhất</a></h3>
         </div>
-        <div class="container">
-            <div class="row pt-50">
-                <div class="col-lg-12 ">
-                    <h3>
-                        <?= $blog['article_name'] ?>
-                    </h3>
-                    <p>
-                        <?= $blog['article_summary'] ?>
-                    </p>
-                    <div class="course-details-img text-center">
-                        <a href="<?= $this->url->get("/blogs/" . $blog['article_keyword']) ?>"> <img
-                                src="<?= $blog['article_content'] ?>" alt="Course"></a>
+        <section id="course-details" data-aos="fade-up">
+            <div class="container">
+                <div class="ui_kit-table">
+                    <table class="table table-custom">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" class="font-weight-bold">Khóa học</th>
+                                <th scope="col" class="font-weight-bold">Lớp học</th>
+                                <th scope="col" class="font-weight-bold">Lịch học</th>
+                                <th scope="col" class="font-weight-bold" style="width: 150px">Khai giảng</th>
+                            </tr>
+                        </thead>
+                        <tbody id="offline-loader">
+                            <?php foreach ($blogs as $blog):
+                                ?>
+                                <tr>
+                                    <td rowspan="1"><a href="<?= $this->url->get("/blogs/" . $blog['article_keyword']) ?>"
+                                            class="text-primary"><?= $blog['article_name'] ?></td>
+                                    <td>
+                                        <?= $blog['article_icon'] ?>
+                                    </td>
+                                    <td>
+                                        <?= $blog['article_content_show'] ?>
+                                    </td>
+                                    <td>
+                                        <?= $blog['article_time'] ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach ?>
 
-                    </div>
-
+                        </tbody>
+                    </table>
                 </div>
-
             </div>
-        </div>
+        </section>
         </div>
     </section>
     <section class="counter">
         <div class="container">
-            <div class="row counters">
+            <div class="row counters" data-aos="zoom-in">
                 <div class="col-lg-3 col-6 text-center">
                     <span data-purecounter-start="0" data-purecounter-end="<?= $total_user ?>"
                         data-purecounter-duration="1" class="purecounter"></span>
@@ -63,128 +140,156 @@
             </div>
         </div>
     </section>
-    <section class="section container">
-        <div class="section-title" data-aos="fade-up">
-            <p>Bài giảng</p>
-            <h2>BÀI GIẢNG TIÊU BIỂU</h2>
-        </div>
-        <div class="row section-slick" data-aos="zoom-in" data-aos-delay="100">
-            <?php foreach ($videos as $video):
-                $class_name = "";
-                if (isset($arrClassSubject[$video['video_subject_id'] . "_" . $video['video_class_id']])) {
-                    $class_name = $arrClassSubject[$video['video_subject_id'] . "_" . $video['video_class_id']];
-                }
-                ?>
-                <div class="col-lg-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
-                    <div class="course-item">
-                        <div class="course-img">
-                            <embed src="<?= $video['video_link'] ?>" type="application/pdf" height="100%" width="100%">
-                        </div>
-                        <div class="course-content">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h4>
-                                    <?= $class_name ?>
-                                </h4>
-                            </div>
-                            <h3>
-                                <a href="<?= $this->url->get("/tailieu?classId=21&subjectId=5") ?>"></a>
-                            </h3>
-                            <p>
-                                <?= $video['video_name'] ?>
-                            </p>
-                            <div>
-                                <div class="trainer-rank d-flex align-items-center">
-                                    <i class='bx bxs-calendar'></i>
-                                    <span>19/02/2023</span>
+    <?php
+    foreach ($arrSubject as $subject):
+
+        ?>
+        <section class="section container">
+            <div class="section-title" data-aos="fade-up">
+                <p>Các Bài Giảng Mới Nhất
+                </p>
+                <h3>Bài giảng Môn
+                    <?= $subject['subject_name'] ?>
+                </h3>
+            </div>
+            <div class="row section-slick" data-aos="zoom-in" data-aos-delay="100">
+                <?php
+                $total_video = 0;
+                $col = 12 / count($videos[$subject['subject_id']]);
+                foreach ($videos[$subject['subject_id']] as $key => $video):
+                    $class_id = (int) $video['video_class_id'];
+                    $class_name = "";
+
+                    foreach ($arrClass as $class) {
+                        if ($class['class_id'] == $video['video_class_id']) {
+                            $class_name = $class['class_name'];
+                            break;
+                        }
+                    }
+
+                    $link_image_rand = !empty($video['link_image']) ? $video['link_image'] : "/frontend/images/image-subject/default.jpg";
+                    $href_video = "/khoahoc?classId={$class_id}&subjectId={$video['video_subject_id']}&group={$video['video_group_id']}&lesson={$video['video_id']}";
+
+                    ?>
+                    <div class="col-lg-<?= $col ?> col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
+                        <a href="<?= $this->url->get($href_video) ?>">
+                            <div class="course-item">
+                                <div class="course-img">
+                                    <img src="<?= $link_image_rand ?>">
+                                </div>
+                                <div class="course-content">
+                                    <div class="d-flex justify-content-between align-items-center mb-3 course-label">
+                                        <h4>
+                                            <?= $class_name ?>
+                                        </h4>
+                                    </div>
+                                    <h3 class="course-title">
+                                        <a href="<?= $this->url->get($href_video) ?>"><?= $video['video_name'] ?></a>
+                                    </h3>
+                                    <p class="course-text">
+                                        <?= $video['video_name'] ?>
+                                    </p>
+                                    <div class="course-info">
+                                        <div class="trainer-rank d-flex align-items-center">
+                                            <i class='bx bxs-calendar'></i>
+                                            <span>
+                                                <?= date("d/m/Y", strtotime($video['video_insert_time'])) ?>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
-                </div>
-            <?php endforeach ?>
-        </div>
-    </section>
-    <section class="section container">
-        <div class="section-title" data-aos="fade-up">
-            <p>Tài liệu</p>
-            <h2>THƯ VIỆN TÀI LIỆU</h2>
-        </div>
-        <div class="row section-slick" data-aos="zoom-in" data-aos-delay="100">
+                <?php endforeach ?>
+            </div>
+        </section>
+    <?php endforeach ?>
 
-            <?php foreach ($documents as $document):
-                $class_name = "";
-                if (isset($arrClassSubject[$document['document_subject_id'] . "_" . $document['document_class_id']])) {
-                    $class_name = $arrClassSubject[$document['document_subject_id'] . "_" . $document['document_class_id']];
-                }
-                ?>
-                <div class="col-lg-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
-                    <div class="course-item">
-                        <div class="course-img">
-                            <embed src="<?= $document['document_link'] ?>" type="application/pdf" height="100%"
-                                width="100%">
+    <?php if ($video_intro) : ?>
 
-                        </div>
-                        <div class="course-content">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h4>
-                                    <?= $class_name ?>
-                                </h4>
-                            </div>
-                            <h3>
-                                <a href="<?= $this->url->get("/tailieu?classId=21&subjectId=5") ?>"><?= $document['document_name'] ?></a>
-                            </h3>
-                            <p>
-                                <?= $document['document_name'] ?>
-                            </p>
-                            <div>
-                                <div class="trainer-rank d-flex align-items-center">
-                                    <i class='bx bxs-calendar'></i>
-                                    <span>19/02/2023</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach ?>
+    <div class="modal" id="videoModal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <video id="videoPlayer" controls="true" autoplay="autoplay" muted defaultmuted playsinline
+                src="<?= $video_intro ?>" type="video/mp4">
+                <button id="playButton">Play Video</button> <!-- Add this button -->
 
+                <!-- Add additional source elements for other video formats -->
+            </video>
         </div>
-    </section>
-    <section class="section container">
-        <div class="section-title" data-aos="fade-up">
-            <p>Khóa Học</p>
-            <h2>KHÓA HỌC TIÊU BIỂU</h2>
-        </div>
-        <div class="row section-slick" data-aos="zoom-in" data-aos-delay="100">
-            <?php foreach ($arrClassSubjectNew as $class):
-                ?>
-                <div class="col-lg-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
-                    <div class="course-item">
-                        <div class="course-img">
-                            <img src="<?= $this->url->getStatic($class['image']) ?>" alt="Course" />
-                        </div>
-                        <div class="course-content">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h4>
-                                    <?= $class['name'] ?>
-                                </h4>
-                            </div>
-                            <h3>
-                                <a href="<?= $this->url->get("/tailieu?classId=21&subjectId=5") ?>"><?= $class['name'] ?></a>
-                            </h3>
-                            <p>
-                                <?= $class['name'] ?>
-                            </p>
-                            <div>
-                                <div class="trainer-rank d-flex align-items-center">
-                                    <i class='bx bxs-calendar'></i>
-                                    <span>19/02/2023</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach ?>
+    </div>
 
-        </div>
-    </section>
+    <?php endif ?>
+
 </main>
+<?php if ($video_intro) : ?>
+
+<script>
+    commands.push(function () {
+        // Get modal and video elements
+        const modal = document.getElementById('videoModal');
+        const video = document.getElementById('videoPlayer');
+        const closeModal = document.getElementById('closeModal');
+        const mainContent = document.querySelector('.main-content');
+        const playButton = document.getElementById('playButton');
+
+
+        function playVideo() {
+            video.play();
+            playButton.style.display = 'none'; // Hide the play button after it's clicked
+        }
+
+        function playVideoWithSound() {
+            video.muted = false; // Bật âm thanh của video
+            video.play(); // Phát video
+            playButton.style.display = 'none'; // Ẩn nút "Play" sau khi bấm
+        }
+
+        // playButton.addEventListener('click', playVideoWithSound);
+
+
+        // Function to open the modal
+        function openModal() {
+            modal.style.display = 'block';
+            mainContent.classList.add('blur');
+
+        }
+
+        playButton.addEventListener('click', playVideo);
+
+        videoModal.addEventListener('click', () => {
+            video.classList.remove('video-shrink'); // Remove the class to return the video to its original size
+        });
+        // Function to close the modal
+        function closeModalHandler() {
+            modal.style.display = 'none';
+            mainContent.classList.remove('blur');
+            video.pause(); // Pause the video when modal is closed
+        }
+
+        // Event listener to open the modal when the page loads
+        window.addEventListener('load', openModal);
+
+        // Event listener to close the modal when the close button is clicked
+        closeModal.addEventListener('click', closeModalHandler);
+
+        // Event listener to close the modal when the user clicks outside the modal content
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                closeModalHandler();
+            }
+        });
+
+        // Event listener to pause the video when the modal is closed by pressing the 'Escape' key
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                closeModalHandler();
+            }
+        });
+
+    });
+
+</script>
+
+<?php endif ?>

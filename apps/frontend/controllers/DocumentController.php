@@ -1,6 +1,7 @@
 <?php
 namespace Learncom\Frontend\Controllers;
 
+use Learncom\Repositories\CacheHistory;
 use Learncom\Repositories\Chapter;
 use Learncom\Repositories\ClassSubject;
 use Learncom\Repositories\Document;
@@ -14,9 +15,25 @@ class DocumentController extends CoursebaseController
         $parent_keyword = 'lesson';
         $repoPage = new Page();
         $repoPage->AutoGenMetaPage('tailieu', 'Document');
-      //  $this->checkingAuth();
+        $key = "log_history_document" . $this->auth['id'];
+        $cache = new CacheHistory($key);
+        $is_continue = false;
+        if (empty($this->group_select) || empty($this->lesson_select)) {
+            $log = $cache->setLogCourse($this->class_select, $this->subject_select, $this->group_select, $this->lesson_select, false);
+            if (!empty($log)) {
+                $is_continue = true;
+                $this->group_select = $log['group'] ?? '';
+                $this->lesson_select = $log['lesson'] ?? '';
+            }
+        } else {
+            $log = $cache->setLogCourse($this->class_select, $this->subject_select, $this->group_select, $this->lesson_select, true);
+        }
+
+
+        $this->checkingAuth();
         $this->getListLesson();
         $this->view->pick("course/index");
+
 
         $this->view->setVars([
             // 'type' => $this->type,
@@ -28,6 +45,8 @@ class DocumentController extends CoursebaseController
             'group_select' => $this->group_select,
             'lesson_select' => $this->lesson_select,
             'link' => $this->link,
+            'name' => $this->name,
+            'is_continue' => $is_continue,
         ]);
     }
     public function getListGroup()
@@ -74,6 +93,7 @@ class DocumentController extends CoursebaseController
                 ];
                 if ($this->lesson_select == $lesson['document_id'] && $this->group_select == $chapter['chapter_id']) {
                     $this->link = $lesson['document_link'];
+                    $this->name = $lesson['document_name'];
                 }
 
             }

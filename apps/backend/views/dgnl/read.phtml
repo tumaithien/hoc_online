@@ -1,0 +1,171 @@
+<?php
+
+use Learncom\Models\LearnTypeDgnl;
+
+$urlPage = "?";
+if (strlen($this->dispatcher->getParam("txtSearchKeyword")) > 0) {
+    if ($urlPage != "?")
+        $urlPage .= "&";
+    $urlPage .= http_build_query(array("txtSearchKeyword" => $this->dispatcher->getParam("txtSearchKeyword")));
+}
+$slcType = $this->dispatcher->getParam("slcType");
+if (strlen($this->dispatcher->getParam("slcType")) > 0) {
+    if ($urlPage != "?")
+        $urlPage .= "&";
+    $urlPage .= http_build_query(array("slcType" => $this->dispatcher->getParam("slcType")));
+}
+?>
+<script>
+    $(document).ready(function () {
+        $('#delete').click(function () {
+            var str = "<?php echo $this->url->get('dashboard/delete-dgnl'); ?>";
+            var id = $("#video-id").val();
+            str = str.concat("?id=").concat(id);
+            $('#delete').attr("href", str);
+        });
+        $('button[name=search]').click(function () {
+            $('form[name=read_form]').prop('action', '<?php echo $this->url->get('/dashboard/list-dgnl'); ?>');
+            $('form[name=read_form]').submit();
+        });
+
+    });
+</script>
+<script>
+    $(".breadcrumb").append("<li><a href='<?php echo $this->url->get("dashboard/list-dgnl"); ?>'>  Video </a></li>");
+</script>
+
+<?php if (isset($msg_result)) { ?>
+    <div class="clearfix"></div>
+    <p style="font-size:18px;text-align:center" class="alert alert-<?php echo $msg_result['status'] ?>">
+        <?= $msg_result["message"]; ?>
+    </p>
+<?php } ?>
+<form name="read_form" id="read_form">
+    <div>
+        <table>
+            <?php
+            $keyword = $this->dispatcher->getParam("key_word");
+            ?>
+
+            <tr>
+                <th><input placeholder="Keyword(Name)" value="<?= isset($keyword) ? $keyword : ""; ?>"
+                        name="txtSearchKeyword" id="txtSearchKeyword" type="text" /></th>
+
+                <th>
+                    <select id="slcType" name="slcType" class="class-subject">
+                        <option value="">Tất cả môn học</option>
+                        <?php echo isset($select_type) ? $select_type : "" ?>
+                    </select>
+                </th>
+
+                <th>
+                    <button type="button" name="search" id="search" value="Search"
+                        class="btn btn-primary">Search</button>
+                </th>
+                <th><a href="<?php echo $this->url->get('dashboard/create-dgnl') ?>" name="create_article"
+                        id="create_article" class="btn btn-primary" />Add New</th>
+                </th>
+            </tr>
+        </table>
+    </div>
+    <div class="box-content">
+        <table class="table table-striped table-bordered bootstrap-datatable">
+            <thead>
+                <tr>
+                    <th style="text-align:center;width: 50px">ID</th>
+                    <th style="text-align:center;width: 300px">Name</th>
+                    <th style="text-align:center;">Môn</th>
+                    <th style="text-align:center;width: 50px">order</th>
+                    <th style="text-align:center;width: 200px">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+
+                foreach ($list_item->items as $item) {
+                    ?>
+                    <script>
+                        $(function () {
+                            $('#delete<?= $item->getId() ?>').live("click", function (e) {
+                                e.preventDefault();
+                                $('#warn').modal('show');
+                                var id = $("#<?= $item->getId(); ?>").text();
+                                $("#video-id").val(id);
+                                var str = "Are you sure to remove lớp học ID = ".concat(id);
+                                $("#message").text(str);
+
+                            });
+                        });
+                    </script>
+                    <tr>
+
+                        <td style="text-align:center;" class="center" id="<?php echo $item->getId(); ?>"><?php echo $item->getId(); ?></td>
+                        <td style="text-align:left;" class="center">
+                            <?php echo $item->getName(); ?>
+                        </td>
+                        <td style="text-align:left;" class="center">
+                            <?php echo LearnTypeDgnl::getNameById($item->getType()) ?>
+                        </td>
+
+                        <td style="text-align:left;">
+                            <?php echo $item->getOrder(); ?>
+                        </td>
+
+                        <td style="text-align:center;" class="center">
+                            <a id="edit_account" class="btn btn-info"
+                                href="<?php echo $this->url->get('dashboard/edit-dgnl'); ?>?id=<?php echo $item->getId(); ?>">
+                                <i class="icon-edit icon-white"></i>
+                                View
+                            </a>
+                            <a id="delete<?php echo $item->getId(); ?>" class="btn btn-danger" href="">delelte</a>
+                        </td>
+
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+
+        <div class="row">
+            <div class="col-md-6 ">
+                <div style="float:left">
+                    <p style="text-align:left;font-size:16px;color:red"><strong style="">Total :
+                            <?= $list_item->total_items; ?>
+                        </strong> Video</p>
+
+                </div>
+            </div>
+            <div class="col-md-6 t pull-right">
+                <?php if ($list_item->total_pages > 1) { ?>
+                    <nav class="pagination pagination-centered">
+                        <?php if ($urlPage != "?")
+                            $urlPage .= "&";
+                        $urlPage .= "page=";
+                        echo $this->my->renderPagination($urlPage, $list_item->current, $list_item->total_pages, 2);
+                        ?>
+                    </nav>
+                <?php } ?>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+
+<!--FORM DELETE A ARTICLE-->
+
+<form>
+    <div class="modal hide fade" id="warn">
+        <div class="modal-header">
+            <input type="hidden" id="video-id" name="video-id" />
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3>Warning !</h3>
+        </div>
+        <div class="modal-body">
+            <p id="message"></p>
+        </div>
+        <div class="modal-footer">
+            <a href="" class="btn" data-dismiss="modal">Close</a>
+            <a id="delete" name="delete" href="" class="btn btn-primary">Yes</a>
+        </div>
+    </div>
+</form>

@@ -45,7 +45,6 @@ class LoginController extends ControllerBase
                     } else {
                         $checkIp = true;
                     }
-                    $checkIp = true;
                     if ($checkIp) {
                         $this->startSession($user);
                         $preURL = $this->session->get('preURL');
@@ -57,7 +56,7 @@ class LoginController extends ControllerBase
                             $this->response->redirect("/account/change-profile");
                         }
                     } else {
-                        $message['password'] = 'Vui lòng đăng nhập đúng địa chỉ IP';
+                        $message['password'] = 'Vui lòng đăng nhập đúng địa chỉ IP hoặc thiết bị';
                     }
                 } else {
                     $message['password'] = 'Mật khẩu không đúng';
@@ -184,26 +183,12 @@ class LoginController extends ControllerBase
                     setcookie('p1', $token_1, time() + 1 * 365 * 24 * 60 * 60, "/");
                 }
             } else {
-                $token_2 = Login::generateKey(30);
-                $user->setUserTokenCokie2($token_2);
-                $result2 = $user->save();
-                if ($result2) {
-                    //cokie 1 năm
-                    setcookie('p2', $token_2, time() + 1 * 365 * 24 * 60 * 60, "/");
+                if ($cookie_1 != $token_cookie_1) {
+                    $checkIp = false;
                 }
             }
-        } else {
-            if ($cookie_1) {
-                if ($cookie_1 == $token_cookie_1) {
-                    $checkIp = true;
-                }
-            }
-            if ($cookie_2) {
-                if ($cookie_2 == $token_cookie_2) {
-                    $checkIp = true;
-                }
-            }
-        }
+            
+        } 
         return $checkIp;
     }
 }

@@ -28,7 +28,7 @@
     padding: 20px 0 20px 30px;
     .videoCourse_video {
       width: 80%;
-      min-height: 35rem;
+      height: 50rem;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -49,7 +49,7 @@
       display: flex;
       align-items: center;
       font-size: 16px;
-      background-color: white;
+      background-color: rgb(219, 219, 219);
       justify-content: space-between;
       h2 {
         margin-bottom: 0;
@@ -74,6 +74,20 @@
     }
     .videoCourse_collapsibleContent {
       border-bottom: 1px solid $gray-1;
+      height: 45rem;
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      &::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: darkgrey;
+      }
     }
     .videoCourse_contentRight {
       max-height: 0;
@@ -83,12 +97,33 @@
     .contentRight-item a {
       display: block;
       padding: 1rem;
+      padding-left: 1.75rem;
       transition: all 0.1s ease;
       font-size: 14px;
-      &:hover,
-      &.active {
+      position: relative;
+      &::after {
+        position: absolute;
+        left: -1px;
+        top: 0;
+        height: 100%;
+        width: 0;
+        content: "";
+        transition: all 0.2s linear;
         background-color: $primary-color;
-        color: white;
+      }
+      &:hover {
+        color: $primary-color;
+        padding-left: calc(1.75rem + 5px);
+        &::after {
+          width: 5px;
+        }
+      }
+    }
+    .contentRight-item.active a {
+      color: $primary-color;
+      padding-left: calc(1.75rem + 5px);
+      &::after {
+        width: 5px;
       }
     }
   }
@@ -98,11 +133,32 @@
       padding-left: 0;
       .videoCourse_video {
         width: 100%;
+        height: 15rem;
       }
       .videoCourse_rightSidebar {
         width: 100%;
         margin-top: 20px;
       }
     }
+  }
+}
+.modal-custom {
+  min-width: 500px;
+  .modal-header {
+    position: relative;
+    justify-content: center;
+  }
+  .close {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-25%);
+  }
+  p {
+    text-align: center;
+  }
+
+  @media (max-width: 550px) {
+    min-width: 360px;
   }
 }

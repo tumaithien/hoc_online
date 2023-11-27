@@ -23,6 +23,21 @@ class Banner extends Component
         }
         return $data;
     }
+    
+    public function findVideoIndex()
+    {
+        $cache = new CacheRepo("banner_findVideoIndex");
+        $data = $cache->getCache();
+        if (!$data) {
+            $model = LearnBanner::query()
+            ->where("banner_active = 'Y'")
+            ->andWhere('banner_type = "video"')
+            ->orderBy('banner_order ASC')
+            ->execute()->toArray();
+            $data = $cache->setCache($model);
+        }
+        return $data;
+    }
     public function findById($id){
         return LearnBanner::findFirst("banner_id = $id");
     }

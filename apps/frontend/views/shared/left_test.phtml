@@ -1,56 +1,100 @@
-<div class="list-wrap">
+<div class="videoCourse_collapsibleContent">
     <?php
-    foreach ($arrGroup as $group) {
-
+    $arrTestChapter = array_column($arrTest->toArray(), "test_group_id");
+    foreach ($arrGroup as $chapter):
+        if (!in_array($chapter->getChapterId(), $arrTestChapter)) {
+            continue;
+        }
+        $is_show = '';
+        $expanded = false;
+        if ($chapter->getChapterId() == $group_id) {
+            $is_show = "active";
+            $expanded = true;
+        }
         ?>
-        <span class="item-style item-menu <?= $group->getGroupId() == $group_id ? 'active' : "" ?>" data-toggle="collapse" data-target="#course-sub-1">
-        <?= $group->getGroupName() ?>
-    </span>
-            <div class="collapse <?= $group->getGroupId() == $group_id ? 'show' : "" ?>" id="course-sub-1">
-        <div class="sub-list">
-        <?php
-        $arrTest = \Learncom\Repositories\Test::findByGroupId($group->getGroupId());
-        foreach ($arrTest as $test) {
-            $arrParentId = \Learncom\Repositories\Test::getArrTestParentId($test->getTestId(),$test->getTestParentId());
-            ?>
-                    <a href="/start-test?classId=<?= $class_id?>&subjectId=<?= $subject_id?>&testId=<?=$test->getTestId() ?>">
-                <span class="item-style <?= in_array($test_id,$arrParentId) ? 'active' : "" ?>">
-                    <?= $test->getTestName() ?>
-                </span>
-                    </a>
-
-        <?php }?>
-        </div>
-            </div>
-    <?php }
-    foreach ($arrTestNoGroup as $test_item) {
-        $arrParentId = \Learncom\Repositories\Test::getArrTestParentId($test_item->getTestId(),$test_item->getTestParentId());
-    ?>
-    <a href="/start-test?classId=<?= $class_id?>&subjectId=<?= $subject_id?>&testId=<?=$test_item->getTestId() ?>">
-                <span class="item-style no-transition<?= in_array($test_id,$arrParentId) ? ' active' : "" ?>">
-                    <?= $test_item->getTestName() ?>
-                </span>
-    </a>
-
-    <?php }?>
-</div>
-<script type="text/javascript">
-    commands.push(function () {
-        $(".item-style:not(.item-menu)").on("click", function(e){
-            $(".item-style.active").removeClass("active");
-            let parent = this.parentElement;
-            $(parent).find(".item-menu[aria-expanded='true']").click();
-            $(this).addClass("active");
-        });
-        $(".item-menu").on("click", function(e){
-            $(".item-menu").each((ind, ele) => {
-                if(ele !== this) {
-                let target = $(ele).data("target");
-                $(target).collapse("hide");
+        <a class="videoCourse_collapsible <?= $is_show ?>" data-toggle="collapse"
+            href="#chapter_<?= $chapter->getChapterId() ?>" role="button" aria-expanded="<?= $expanded ?> "
+            aria-controls="chapter_<?= $chapter->getChapterId() ?>">
+            <?= $chapter->getChapterName() ?> <i class='bx bxs-chevron-down'></i>
+        </a>
+        <div class="collapse <?= $is_show ? "show" : "" ?>" id="chapter_<?= $chapter->getChapterId() ?>"
+            class="videoCourse_contentRight">
+            <?php foreach ($arrTest as $test):
+                if ($test->getTestGroupId() !== $chapter->getChapterId()) {
+                    continue;
                 }
-            });
-            let parent = this.parentElement;
-            $(parent).children(".item-style.active").removeClass('active');
-        });
-    });
-</script>
+                $class_style = $test->getTestId() == $test_id ? "active" : "";
+                $href = "/start-test?classId=$class_id&subjectId=$subject_id&testId=" . $test->getTestId();
+
+                ?>
+                <div class="contentRight-item <?= $class_style ?>">
+                    <a href="<?= $href ?>">
+                        <?= $test->getTestName() ?>
+                    </a>
+                </div>
+
+            <?php endforeach ?>
+        </div>
+    <?php endforeach ?>
+    <?php
+    if (!$test_model->getTestGroupId()) {
+        $is_show_no = "active";
+        $expanded_no = true;
+    }
+    ?>
+    <a class="videoCourse_collapsible <?= $is_show_no ?>" data-toggle="collapse" href="#chapter_no" role="button"
+        aria-expanded="<?= $expanded_no ?> " aria-controls="chapter_no">
+        Bài KT riêng lẻ <i class='bx bxs-chevron-down'></i>
+    </a>
+    <div class="collapse  <?= $is_show_no ? "show" : "" ?>" id="chapter_no" class="videoCourse_contentRight">
+        <?php foreach ($arrTestNoGroup as $test):
+
+            $class_style = $test->getTestId() == $test_id ? "active" : "";
+            $href = "/start-test?classId=$class_id&subjectId=$subject_id&testId=" . $test->getTestId();
+
+            ?>
+            <div class="contentRight-item <?= $class_style ?>">
+                <a href="<?= $href ?>">
+                    <?= $test->getTestName() ?>
+                </a>
+            </div>
+
+        <?php endforeach ?>
+    </div>
+</div>
+<style>
+    /* Modal Styling */
+    .modal-video {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1050;
+        /* Higher value to ensure it displays on top of other elements */
+    }
+
+    /* Overlay Styling */
+    .modal-shadow.show {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1040;
+        /* Lower value than modal to ensure it's behind the modal */
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Semi-transparent black background */
+    }
+
+    .modal-footer .btn {
+        width: 100px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    .modal-title {
+        text-align: center;
+        font-size: 20px;
+    }
+</style>

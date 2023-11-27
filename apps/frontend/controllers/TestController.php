@@ -2,6 +2,7 @@
 namespace Learncom\Frontend\Controllers;
 
 use Learncom\Models\LearnScore;
+use Learncom\Repositories\Chapter;
 use Learncom\Repositories\Group;
 use Learncom\Repositories\Test;
 
@@ -10,7 +11,7 @@ class TestController extends ControllerBase
     protected  $arrGroup;
     protected $arrTestNoGroup;
     public function setview($class_id,$subject_id) {
-        $this->arrGroup = Group::findByType($class_id,$subject_id,'test');
+        $this->arrGroup = Chapter::findByType($class_id,$subject_id,'test');
         $this->arrTestNoGroup = Test::findNoGroup($class_id,$subject_id);
         $this->view->setVars([
             'arrTestNoGroup' => $this->arrTestNoGroup,
@@ -95,6 +96,7 @@ class TestController extends ControllerBase
         $this->session->set('time_start_test',time());
         $this->session->set('time_finish_test',$test_model->getTestTime());
         $hasNotChoose = count(json_decode($test_model->getTestArray(),true)) > count(json_decode($test_model->getTestAnswer(),true)) ? true : false;
+     
         $this->view->setVars([
             'test_model' => $test_model,
             'test_parent_model' => $test_parent_model,
@@ -150,7 +152,10 @@ class TestController extends ControllerBase
                  }
              }
           }
-          $score_choose = round($total_success*$test_model->getTestScoreChoose()/count($arrTestAnswer),2);
+          $score_choose =  0;
+          if (!empty($arrTestAnswer)) {
+            $score_choose = round($total_success*$test_model->getTestScoreChoose()/count($arrTestAnswer),2);
+          }
           if (!$score_model) {
               if ($test_model->getTestParentId() == 0) {
                   $test_parent_id = 0;
@@ -182,7 +187,12 @@ class TestController extends ControllerBase
         $test_choose = $test_model->getTestScoreChoose() ? $test_model->getTestScoreChoose() : 10;
         $total_success = round($score_model->getScoreScoreChoose()*count($arrTestAnswer)/$test_choose);
         $this->setview($class_id,$subject_id);
+        $arrTest = Test::findByClassAndSubject($class_id,$subject_id);
+        if (count($arrTest) == 0) {
+            return $this->response->redirect('/nodata');
+        }
         $this->view->setVars([
+            'arrTest' => $arrTest,
             'class_id' => $class_id,
             'subject_id' => $subject_id,
             'test_id' => $test_id,

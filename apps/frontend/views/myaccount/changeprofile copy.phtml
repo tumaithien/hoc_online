@@ -1,0 +1,109 @@
+<main>
+    <div class="login-wrap overflow-auto">
+        <div class="container py-25">
+            <div class="row">
+                <div class="col-lg-2 pr-0 pl-xs-0">
+                    <?php $this->partial('shared/left_account'); ?>
+                </div>
+                <div class="col-lg-10 bg-white pt-20">
+                    <?php if (count($msg_result) > 0)  {?>
+                    <p class="alert alert-<?=$msg_result['status']?> text-center"> <?=$msg_result['message']?></p>
+                    <?php } ?>
+                    <div class="pt-30 px-20 px-xs-15 text-center">
+                        <h2>THÔNG TIN</h2>
+                        <div class="form-info-user">
+                            <form id="formChangeProfile" method="post">
+                                <div class="form-item d-flex align-items-lg-center flex-xs-column">
+                                    <label for="" class="mb-20 mb-xs-5"><strong>Email</strong></label>
+                                    <div class="user-value d-flex align-items-center w-100 form-group mb-20">
+                                        <input disabled type="text" class="form-control h-40" value="<?= isset($formData['user_email']) ? $formData['user_email'] : "" ?>">
+                                    </div>
+                                </div>
+                                <div class="form-item d-flex align-items-lg-baseline flex-xs-column">
+                                    <label for="" class="mb-20 mb-xs-5"><strong>Tên user</strong></label>
+                                    <div class="user-value d-flex align-items-center w-100 form-group mb-20 flex-column">
+                                        <input  maxlength="255" type="text" id="txtName" name="txtName"
+                                                class="form-control <?= isset($messages['user_name']) ? $messages['status'] : "" ?>"
+                                                value="<?= isset($formData['user_name']) ? $formData['user_name'] : "" ?>">
+                                        <p class="text-danger mb-0 mt-10 text-14 w-100 msg-name"><?= isset($messages['user_name']) ? $messages['user_name'] : "" ?></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 mb-xs-20">
+                                        <div class="form-item d-flex align-items-lg-baseline flex-xs-column">
+                                            <label for="" class="mb-0 mb-xs-5"><strong>Giới tính</strong></label>
+                                            <div class="form-selection w-100 h-40">
+                                                <select id="slcGender" name="slcGender" class="gender-selection <?= isset($messages['user_gender']) ? $messages['status'] : "" ?>">
+                                                    <option value="">Chọn giới tính</option>
+                                                    <?= isset($select_gender) ? $select_gender : "" ?>
+                                                </select>
+                                                <p class="text-danger mb-0 mt-10 text-14 w-100 msg-render"><?= isset($messages['user_gender']) ? $messages['user_gender'] : "" ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="d-flex align-items-lg-baseline flex-xs-column">
+                                            <label for="" class="mb-20 mb-xs-5 w-100"><strong>Ngày sinh</strong></label>
+                                            <div class="user-value d-flex align-items-center w-100 form-group mb-20 flex-column">
+                                                <input id="txtBirthday" name="txtBirthday" type="text" class="form-control" placeholder="DD/MM/YYYY"
+                                                       value="<?= isset($formData['user_birth_day']) && $formData['user_birth_day'] != "" ? $this->my->formatDateTimeBirthday($formData['user_birth_day']) : "" ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-item d-flex align-items-lg-center flex-xs-column">
+                                    <label for="" class="mb-20 mb-xs-5"><strong>Điện thoại</strong></label>
+                                    <div class="user-value d-flex align-items-center w-100 form-group mb-20">
+                                        <input maxlength="10" id="txtTel" name="txtTel" value="<?= isset($formData['user_tel']) && $formData['user_tel'] ? $formData['user_tel'] : "" ?>" type="text" class="form-control" placeholder="0911123456">
+                                    </div>
+                                </div>
+                                <div class="form-item d-flex align-items-lg-center flex-xs-column">
+                                    <label for="" class="mb-20 mb-xs-5"><strong>Địa chỉ</strong></label>
+                                    <div class="user-value d-flex align-items-center w-100 form-group mb-20">
+                                        <input maxlength="255" id="txtAddress" name="txtAddress" type="text" class="form-control h-40" value="<?= isset($formData['user_address']) ? $formData['user_address'] : "" ?>">
+                                    </div>
+                                </div>
+
+                                <div class="form-item mb-20 d-flex justtify-content-xs-between ">
+                                    <label for="" class="mb-0 hidden-xs"></label>
+                                    <button id="sbmProfile" class="btn btn-main">Cập nhật</button>
+                                </div>
+                            </form>
+                        </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    commands.push(function () {
+        $(document).ready(function () {
+            $("#sbmProfile").on('click',function () {
+                var valid = true;
+                if ($('input[name=txtName]').val() == '') {
+                    $('.msg-name').text('Bạn cần nhập thông tin này');
+                    $('#txtName').addClass("border-danger");
+                    valid = false;
+                }  else {
+                    $('.msg-name').text('');
+                    $('#txtName').removeClass("border-danger");
+                }
+                if ($('select[name=slcGender]').val() == '') {
+                    $('.msg-gender').text('Bạn cần nhập thông tin này');
+                    $('#slcGender').addClass("border-danger");
+                    valid = false;
+                }  else {
+                    $('.msg-gender').text('');
+                    $('#slcGender').removeClass("border-danger");
+                }
+
+                if (valid) {
+                    $('#sbmProfile').prop('disabled', true);
+                    $('#formChangeProfile').submit();
+                }
+            });
+        });
+    })
+
+</script>

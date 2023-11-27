@@ -22,6 +22,7 @@ class CoursebaseController extends ControllerBase
     protected $chapter_temp;
     protected $link;
     protected $href;
+    protected $name;
     public function initialize()
     {
         parent::initialize();
@@ -41,12 +42,12 @@ class CoursebaseController extends ControllerBase
     public function checkingAuth()
     {
         // var_dump($this->auth);exit;
-        // if (!$this->auth) {
-        //     return $this->response->redirect("/login");
-        // }
-        // if (!in_array($this->class_select, $this->class_id) || !in_array($this->subject_select, $this->subject_id)) {
-        //     return $this->response->redirect("/permission");
-        // }
+        if (!$this->auth) {
+            return $this->response->redirect("/login");
+        }
+        if (!in_array($this->class_select, $this->class_id) || !in_array($this->subject_select, $this->subject_id)) {
+            return $this->response->redirect("/permission");
+        }
     }
     public function getListGroup()
     {
@@ -84,6 +85,7 @@ class CoursebaseController extends ControllerBase
                 ];
                 if ($this->lesson_select == $lesson['video_id'] && $this->group_select == $chapter['group_id']) {
                     $this->link = $lesson['video_link'];
+                    $this->name = $lesson['video_name'];
                 }
 
             }

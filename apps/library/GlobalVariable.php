@@ -33,6 +33,7 @@ class GlobalVariable extends Component
         $this->type_news = 5;
 		//accept upload file types
 		$this->acceptUploadTypes = array(
+            "video/mp4" => array("type" => "videp", "ext" => ".mp4"),
 			"image/jpeg" => array("type" => "image", "ext" => ".jpg"),
 			"image/pjpeg" => array("type" => "image", "ext" => ".jpg"),
 			"image/png" => array("type" => "image", "ext" => ".png"),

@@ -14,6 +14,16 @@ class Chapter extends Component
             'bind' => ['id' => $id]
         ]);
     }
+    public static function findByType($class_id,$subject_id,$type) {
+        return  LearnChapter::find([
+            'chapter_class_id = :class_id: AND chapter_subject_id = :subject:',
+            'bind' => [
+                'class_id' => $class_id,
+                'subject' => $subject_id
+            ],
+            'order' => 'chapter_order ASC'
+        ]);
+    }
     public static function getCombobox($chapter_id, $subject_id, $class_id)
     {
         if ($subject_id) {

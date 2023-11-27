@@ -146,14 +146,18 @@ $(function () {
     }
   });
 
-  on("click", ".videoCourse_collapsible", function (e) {
-    console.log("true :>> ", true);
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.maxHeight) {
-      content.style.maxHeight = null;
-    } else {
-      content.style.maxHeight = content.scrollHeight + "px";
+
+ 
+  const popupAccount = document.querySelector(".popup-account");
+  const infoAccount = document.querySelector(".info-account");
+  on("click", ".bx-user", function (e) {
+    infoAccount.classList.toggle("active");
+    popupAccount.classList.toggle("active");
+  });
+  document.addEventListener("click", function (e) {
+    if (!e.target.matches(".bx-user")) {
+      popupAccount.classList.remove("active");
+      infoAccount.classList.remove("active");
     }
   });
 

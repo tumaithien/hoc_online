@@ -15,12 +15,10 @@ class Video extends Component
         $cache = new CacheRepo("video_count_video");
         $total = $cache->getCache();
         if (!$total) {
-            $total = LearnVideo::count([
-            ]);
+            $total = LearnVideo::count([]);
             $total = $cache->setCache($total);
         }
         return $total;
-
     }
     public static function findFirstById($id)
     {
@@ -62,22 +60,82 @@ class Video extends Component
         }
         return $data;
     }
-    public static function findHomeVideo($arrClassId, $arrSubjectId)
+    public static function findHomeVideo($arrSubject, $arrClass)
     {
-        $cache = new CacheRepo("vieo_findHomeVideo", 1);
+        $cache = new CacheRepo("vieo_findHomeVideo");
         $data = $cache->getCache();
+        $image = "";
         if (!$data) {
-            $data = LearnVideo::find([
-                'FIND_IN_SET(video_class_id,:arrClass:) AND FIND_IN_SET(video_subject_id,:arrSubject:)',
-                'bind' => [
-                    'arrClass' => implode(",",$arrClassId),
-                    'arrSubject' => implode(",",$arrSubjectId)
-                ],
-                'limit' => 4,
-                'order' => 'RAND()'
-            ])->toArray();
+            $data = [];
+            foreach ($arrSubject as $subject) {
+                $class_end = 0;
+                $id = 0;
+                foreach ($arrClass as $class) {
+                    $dataTem = LearnVideo::findFirst([
+                        'video_subject_id = :subject_id: AND  video_class_id = :class_id: ',
+                        'bind' => [
+                            'subject_id' => $subject['subject_id'],
+                            'class_id' => $class['class_id']
+                        ],
+                        'order' => 'video_insert_time DESC'
+                    ]);
+                    if ($dataTem) {
+                        $class_end = $class['class_id'];
+                        $id = $dataTem->toArray()['video_id'];
+                        $data[$subject['subject_id']][$class['class_id']] = $dataTem->toArray();
+                        $data[$subject['subject_id']][$class['class_id']]['link_image'] = $image = self::addImageByNameClass($class['class_name'], $subject['subject_name']);
+                    }
+                }
+                if (count($data[$subject['subject_id']]) < 4 && $class_end) {
+                    $dataTem = LearnVideo::findFirst([
+                        'video_subject_id = :subject_id: AND  video_class_id = :class_id: AND video_id != :id:',
+                        'bind' => [
+                            'subject_id' => $subject['subject_id'],
+                            'class_id' => $class_end,
+                            'id' => $id
+                        ],
+                        'order' => 'video_insert_time DESC'
+                    ]);
+                    if ($dataTem) {
+                        $data[$subject['subject_id']][999] = $dataTem->toArray();
+                        $data[$subject['subject_id']][999]['link_image'] = $image;
+                    }
+                }
+            }
+
             $data = $cache->setCache($data);
         }
         return $data;
+    }
+    private static function addImageByNameClass($class_name, $subject_name)
+    {
+        $c_s = $class_name . $subject_name;
+        $c_s = strtolower($c_s);
+        $image = "/frontend/images/image-subject/";
+        switch (true) {
+            case strpos($c_s, "hóa"):
+                $image .= "hoa";
+                break;
+            case strpos($c_s, "lí"):
+                $image .= "ly";
+                break;
+            case strpos($c_s, "toán"):
+                $image .= "toan";
+                break;
+        }
+        switch (true) {
+            case strpos($c_s, "10"):
+                $image .= "-10";
+                break;
+            case strpos($c_s, "11"):
+                $image .= "-11";
+                break;
+            case strpos($c_s, "12"):
+                $image .= "-12";
+                break;
+            default:
+                $image = "/frontend/images/image-subject/default";
+        }
+        return $image . ".jpg";
     }
 }

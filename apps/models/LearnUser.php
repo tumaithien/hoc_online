@@ -1,6 +1,7 @@
 <?php
 
 namespace Learncom\Models;
+
 use Phalcon\Security;
 
 class LearnUser extends BaseModel
@@ -139,7 +140,12 @@ class LearnUser extends BaseModel
      * @Column(type="string", length=255, nullable=true)
      */
     protected $user_class_ids;
-
+    /**
+     *
+     * @var string
+     * @Column(type="string", length=255, nullable=true)
+     */
+    protected $user_dgnl_type;
     /**
      *
      * @var string
@@ -167,6 +173,12 @@ class LearnUser extends BaseModel
      * @Column(type="string", nullable=true)
      */
     protected $user_description;
+    /**
+     *
+     * @var string
+     * @Column(type="string", nullable=true)
+     */
+    protected $user_history;
 
     /**
      * Method to set the value of field user_id
@@ -416,6 +428,19 @@ class LearnUser extends BaseModel
     }
 
     /**
+     * Method to set the value of field user_dgnl_type
+     *
+     * @param string $user_dgnl_type
+     * @return $this
+     */
+    public function setUserDgnlType($user_dgnl_type)
+    {
+        $this->user_dgnl_type = $user_dgnl_type;
+
+        return $this;
+    }
+
+    /**
      * Method to set the value of field user_subject_ids
      *
      * @param string $user_subject_ids
@@ -463,6 +488,19 @@ class LearnUser extends BaseModel
     public function setUserDescription($user_description)
     {
         $this->user_description = $user_description;
+
+        return $this;
+    }
+
+    /**
+     * Method to set the value of field user_history
+     *
+     * @param string $user_history
+     * @return $this
+     */
+    public function setUserHistory($user_history)
+    {
+        $this->user_history = $user_history;
 
         return $this;
     }
@@ -654,7 +692,15 @@ class LearnUser extends BaseModel
     {
         return $this->user_class_ids;
     }
-
+    /**
+     * Returns the value of field user_dgnl_type
+     *
+     * @return string
+     */
+    public function getUserDgnlType()
+    {
+        return $this->user_dgnl_type;
+    }
     /**
      * Returns the value of field user_subject_ids
      *
@@ -694,7 +740,15 @@ class LearnUser extends BaseModel
     {
         return $this->user_description;
     }
-
+    /**
+     * Returns the value of field user_history
+     *
+     * @return string
+     */
+    public function getUserHistory()
+    {
+        return $this->user_history;
+    }
     /**
      * Initialize method for model.
      */
@@ -743,9 +797,11 @@ class LearnUser extends BaseModel
     }
     public static function findFirstByUserCode($code)
     {
-        return self::findFirst(array(
-            'user_code = :user_code: AND user_active="Y"',
-            'bind' => array('user_code' => $code)
-        ));
+        return self::findFirst(
+            array(
+                'user_code = :user_code: AND user_active="Y"',
+                'bind' => array('user_code' => $code)
+            )
+        );
     }
 }

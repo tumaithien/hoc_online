@@ -47,7 +47,7 @@
             <form novalidate="novalidate" class="form-horizontal" id="create_form" action="" enctype="multipart/form-data"
                   method="post">
 
-                <fieldset>
+                  <fieldset>
                     <div class="control-group">
                         <label class="control-label" for="selectError">Thuộc tính <em style="color:red;">*</em></label>
                         <div class="controls">
@@ -56,6 +56,8 @@
                                 <option <?= $formData['banner_type'] == "top" ? "selected" : "" ?> value="top">Trên</option>
                                 <option <?= $formData['banner_type'] == "mid" ? "selected" : "" ?> value="mid">Giữa</option>
                                 <option <?= $formData['banner_type'] == "bot" ? "selected" : "" ?> value="bot">Dưới</option>
+                                <option <?= $formData['banner_type'] == "video" ? "selected" : "" ?> value="video">Video</option>
+
                             </select>
                             <div class="text-danger msg-type"><?php echo isset($messages["banner_type"]) ? $messages["banner_type"] : "";?></div>
                         </div>

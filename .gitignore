@@ -2,10 +2,14 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=laravel
 
 node_modules/
+history/
+history/*
 upload/
 public/excel/*
 public/excel
 
+public/comment/*
+public/comment
 public/Khode/*
 public/Khode
 public/loigiaikhode/*

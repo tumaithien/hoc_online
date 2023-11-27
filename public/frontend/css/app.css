@@ -471,6 +471,21 @@ mark,
   max-width: 100%;
   height: auto;
 }
+.courses .trainer {
+  padding-top: 15px;
+  border-top: 1px solid #eef0ef;
+}
+.courses .trainer .trainer-profile img {
+  max-width: 50px;
+  border-radius: 50px;
+}
+
+.courses .trainer .trainer-profile span {
+  padding-left: 10px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #5a6c60;
+}
 
 .img-thumbnail {
   padding: 0.25rem;
@@ -10800,17 +10815,22 @@ a.text-main:hover, a.text-main:focus, a.text-main:active {
   min-height: 48px;
 }
 
-.form-info-user, .form-change-pass {
+.form-info-user,
+.form-change-pass {
+  margin-top: 20px;
   width: 100%;
 }
-.form-info-user .form-item > label, .form-change-pass .form-item > label {
-  flex: 0 0 180px;
+.form-info-user .form-item > label,
+.form-change-pass .form-item > label {
+  font-weight: normal;
 }
 @media (max-width: 991.98px) {
-  .form-info-user, .form-change-pass {
+  .form-info-user,
+  .form-change-pass {
     width: 100%;
   }
-  .form-info-user .form-item > label, .form-change-pass .form-item > label {
+  .form-info-user .form-item > label,
+  .form-change-pass .form-item > label {
     flex: 0 0 0px !important;
   }
 }
@@ -11400,37 +11420,43 @@ input[type=checkbox] {
   }
 }
 
-.date-select, .date-select-birthday {
+.date-select,
+.date-select-birthday {
   position: relative;
 }
-.date-select .datepicker-custom, .date-select-birthday .datepicker-custom {
+.date-select .datepicker-custom,
+.date-select-birthday .datepicker-custom {
   height: 40px !important;
-  border: 1px solid #E3E3E3;
+  border: 1px solid #e3e3e3;
   border-radius: 4px;
   padding: 10px 15px;
   background-color: #fff;
-  color: #9F9F9F;
+  color: #9f9f9f;
   background-image: url("../images/icon-calendar.svg");
   background-repeat: no-repeat;
   background-position: 95% 10px;
   cursor: pointer;
 }
-.date-select .datepicker-custom:focus-visible, .date-select-birthday .datepicker-custom:focus-visible {
-  outline: 0.5px auto #6A9EDD;
+.date-select .datepicker-custom:focus-visible,
+.date-select-birthday .datepicker-custom:focus-visible {
+  outline: 0.5px auto #6a9edd;
 }
-.date-select img, .date-select-birthday img {
+.date-select img,
+.date-select-birthday img {
   position: absolute;
   right: 10px;
   top: 10px;
   cursor: pointer;
 }
 @media (max-width: 991.98px) {
-  .date-select, .date-select-birthday {
+  .date-select,
+  .date-select-birthday {
     display: flex;
     width: 50%;
     flex-direction: column;
   }
-  .date-select img, .date-select-birthday img {
+  .date-select img,
+  .date-select-birthday img {
     top: 27px;
   }
 }
@@ -11439,7 +11465,7 @@ input[type=checkbox] {
   width: 28px;
   height: 28px;
   border-radius: 6px;
-  border: 1px solid #E3E3E3;
+  border: 1px solid #e3e3e3;
   padding: 4px 0;
   text-align: center;
   font-size: 14px;
@@ -11455,8 +11481,8 @@ input[type=checkbox] {
   right: 0 !important;
 }
 .txt-phone-1 input[type=text][disabled] {
-  color: #6F6F6F;
-  background-color: #F3F3F3 !important;
+  color: #6f6f6f;
+  background-color: #f3f3f3 !important;
 }
 
 .date-select-birthday .datepicker-custom {
@@ -11464,12 +11490,17 @@ input[type=checkbox] {
 }
 
 .user-value input[type=text] {
-  font-size: 14px !important;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid #f1f1f3;
+  padding: 15px 25px;
+  height: 55px;
 }
 .user-value input[type=text][disabled] {
-  color: #6F6F6F;
-  background-color: #F3F3F3 !important;
-  font-size: 14px;
+  color: #6f6f6f;
+  background-color: #f3f3f3 !important;
+  font-size: 16px;
+  min-height: 55px;
 }
 
 .hide-show-pass {
@@ -11495,7 +11526,7 @@ input[type=checkbox] {
 .form-search-contact .title-date {
   position: absolute;
   font-size: 16px;
-  color: #9F9F9F;
+  color: #9f9f9f;
   background-color: #fff;
   padding-left: 10px;
   padding-right: 10px;
@@ -11579,10 +11610,10 @@ input[type=checkbox] {
 .gender-selection {
   width: 100%;
   height: 100%;
-  border: 1px solid #E3E3E3;
-  border-radius: 4px;
-  padding-left: 10px;
-  font-size: 14px;
+  border: 1px solid #f1f1f3;
+  border-radius: 10px;
+  padding: 15px 25px;
+  font-size: 16px;
 }
 
 .checkbox {
@@ -11848,27 +11879,34 @@ input[type=checkbox]:checked ~ .checkmark.circle,
   top: 3px;
 }
 
-.banner-custom, .banner-commit {
+.banner-custom,
+.banner-commit {
   position: relative;
   transition: all 0.3s;
 }
-.banner-custom:hover .carousel-control-next-icon, .banner-commit:hover .carousel-control-next-icon {
+.banner-custom:hover .carousel-control-next-icon,
+.banner-commit:hover .carousel-control-next-icon {
   opacity: 1;
 }
-.banner-custom:hover .carousel-control-prev-icon, .banner-commit:hover .carousel-control-prev-icon {
+.banner-custom:hover .carousel-control-prev-icon,
+.banner-commit:hover .carousel-control-prev-icon {
   opacity: 1;
 }
-.banner-custom .carousel-inner, .banner-commit .carousel-inner {
+.banner-custom .carousel-inner,
+.banner-commit .carousel-inner {
   max-height: 391px;
 }
-.banner-custom .carousel-inner .carousel-item, .banner-commit .carousel-inner .carousel-item {
+.banner-custom .carousel-inner .carousel-item,
+.banner-commit .carousel-inner .carousel-item {
   max-height: 391px;
 }
-.banner-custom .carousel-inner .carousel-item img, .banner-commit .carousel-inner .carousel-item img {
+.banner-custom .carousel-inner .carousel-item img,
+.banner-commit .carousel-inner .carousel-item img {
   max-height: 391px;
   width: 100%;
 }
-.banner-custom .carousel-inner .carousel-item img:before, .banner-commit .carousel-inner .carousel-item img:before {
+.banner-custom .carousel-inner .carousel-item img:before,
+.banner-commit .carousel-inner .carousel-item img:before {
   content: "";
   position: absolute;
   top: 0;
@@ -11878,25 +11916,32 @@ input[type=checkbox]:checked ~ .checkmark.circle,
   background-color: rgba(0, 0, 0, 0.1);
   z-index: 2;
 }
-.banner-custom .carousel-control-next-icon, .banner-custom .carousel-control-prev-icon, .banner-commit .carousel-control-next-icon, .banner-commit .carousel-control-prev-icon {
+.banner-custom .carousel-control-next-icon,
+.banner-custom .carousel-control-prev-icon,
+.banner-commit .carousel-control-next-icon,
+.banner-commit .carousel-control-prev-icon {
   border: 1px solid #fff;
   border-radius: 50%;
   height: 36px;
   width: 36px;
   z-index: 3;
 }
-.banner-custom .carousel-control-next-icon, .banner-commit .carousel-control-next-icon {
+.banner-custom .carousel-control-next-icon,
+.banner-commit .carousel-control-next-icon {
   opacity: 0;
   background: url(../images/icon-arrow-right-white.svg) no-repeat center center;
 }
-.banner-custom .carousel-control-next-icon:hover, .banner-commit .carousel-control-next-icon:hover {
+.banner-custom .carousel-control-next-icon:hover,
+.banner-commit .carousel-control-next-icon:hover {
   background: #5fcf80 url(../images/icon-arrow-right-white.svg) no-repeat center center;
 }
-.banner-custom .carousel-control-prev-icon, .banner-commit .carousel-control-prev-icon {
+.banner-custom .carousel-control-prev-icon,
+.banner-commit .carousel-control-prev-icon {
   opacity: 0;
   background: url(../images/icon-arrow-left-white.svg) no-repeat center center;
 }
-.banner-custom .carousel-control-prev-icon:hover, .banner-commit .carousel-control-prev-icon:hover {
+.banner-custom .carousel-control-prev-icon:hover,
+.banner-commit .carousel-control-prev-icon:hover {
   background: #5fcf80 url(../images/icon-arrow-left-white.svg) no-repeat center center;
 }
 
@@ -12033,25 +12078,32 @@ input[type=checkbox]:checked ~ .checkmark.circle,
   display: flex;
   flex-direction: column;
   border: 0;
+  row-gap: 15px;
 }
 .nav-custom .nav-link {
   border: 0;
-  border-radius: unset;
+  border-radius: 10px;
   font-size: 18px;
+  text-decoration: none;
 }
 .nav-custom .nav-link:hover {
-  background: #d1d1d1;
-  color: #5fcf80;
+  background-color: #5fcf80;
+  color: white;
 }
-.nav-custom .nav-link.active:hover {
-  background: #fff;
-  color: #000;
+.nav-custom .nav-link.active {
+  background-color: #5fcf80;
+  color: white;
 }
 @media (max-width: 991.98px) {
   .nav-custom {
     flex-direction: row;
     width: 100%;
   }
+}
+
+.sub-title {
+  color: #808191;
+  font-size: 14px;
 }
 
 .box-account-course {
@@ -12206,73 +12258,6 @@ ul.list-style > li:hover > a {
   background: unset !important;
 }
 
-.table-custom {
-  width: calc(100% - 1px);
-}
-.table-custom thead {
-  padding: 15px 20px;
-  background-color: #475F7C;
-  color: #fff;
-  width: 100%;
-}
-.table-custom thead th {
-  padding: 15px 20px;
-}
-.table-custom thead th:first-child {
-  border-top-left-radius: 6px;
-}
-.table-custom thead th:last-child {
-  border-top-right-radius: 6px;
-}
-.table-custom tbody tr {
-  border-bottom: 1px solid #E3E3E3;
-  border-left: 1px solid #E3E3E3;
-  border-right: 1px solid #E3E3E3;
-}
-.table-custom tbody tr td {
-  padding: 15px 20px;
-}
-.table-custom tbody tr:nth-child(even) {
-  background-color: rgba(71, 95, 124, 0.1);
-}
-@media (max-width: 991.98px) {
-  .table-custom tbody tr {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow: hidden;
-  }
-  .table-custom tbody tr:last-child {
-    border-radius: 0 0 6px 6px;
-  }
-  .table-custom tbody tr:first-child {
-    border-radius: 6px 6px 0 0;
-    border-top: 1px solid #E3E3E3;
-  }
-  .table-custom tbody tr td {
-    width: 100%;
-    padding: 10px 15px 10px 50%;
-  }
-  .table-custom tbody tr td::before {
-    content: attr(data-title);
-    color: #9F9F9F;
-    font-weight: 600;
-    position: absolute;
-    left: 15px;
-  }
-  .table-custom tbody tr .td-image-custom {
-    padding-left: 15px !important;
-  }
-  .table-custom tbody tr .td-image-custom::before {
-    display: none;
-  }
-}
-@media (max-width: 991.98px) {
-  .table-custom thead {
-    display: none;
-  }
-}
-
 .border-table {
   border-radius: 6px;
   overflow: hidden;
@@ -12319,7 +12304,8 @@ ul.list-style > li:hover > a {
   margin-top: 20px;
 }
 
-.form_wrapper {
+.form_wrapper,
+.form_change {
   position: relative;
   width: 100%;
   padding: 100px 10px;
@@ -12327,7 +12313,8 @@ ul.list-style > li:hover > a {
   min-height: 50vh;
   background-color: #fcfcfd;
 }
-.form_wrapper .form_login {
+.form_wrapper .form_login,
+.form_change .form_login {
   background-color: white;
   width: 100%;
   max-width: 556px;
@@ -12336,70 +12323,88 @@ ul.list-style > li:hover > a {
   border-radius: 10px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
-.form_wrapper form {
+.form_wrapper form,
+.form_change form {
   margin-top: 20px;
 }
-.form_wrapper h2 {
+.form_wrapper h2,
+.form_change h2 {
   text-align: center;
   font-size: 20px;
   font-weight: 600;
 }
-.form_wrapper p {
+.form_wrapper p,
+.form_change p {
   text-align: center;
   font-size: 14px;
   color: #808191;
 }
-.form_wrapper a {
+.form_wrapper a,
+.form_change a {
   color: #5fcf80;
   text-decoration: underline;
   font-size: 14px;
 }
-.form_wrapper label {
+.form_wrapper label,
+.form_change label {
   color: #808191;
 }
-.form_wrapper .input_wrapper {
+.form_wrapper .input_wrapper,
+.form_change .input_wrapper {
   display: flex;
   flex-direction: column;
   gap: 12px;
   margin-bottom: 20px;
 }
-.form_wrapper .input_wrapper input {
+.form_wrapper .input_wrapper input,
+.form_change .input_wrapper input {
   padding: 15px 25px;
   border: 1px solid #f1f1f3;
   border-radius: 10px;
 }
-.form_wrapper .input_wrapper input.has-error {
+.form_wrapper .input_wrapper input.has-error,
+.form_change .input_wrapper input.has-error {
   border-color: #eb5757;
 }
 .form_wrapper .input_wrapper input:focus,
-.form_wrapper .input_wrapper input:focus-visible {
+.form_wrapper .input_wrapper input:focus-visible,
+.form_change .input_wrapper input:focus,
+.form_change .input_wrapper input:focus-visible {
   outline: unset;
 }
-.form_wrapper .input_wrapper .text-error {
+.form_wrapper .input_wrapper .text-error,
+.form_change .input_wrapper .text-error {
   color: #eb5757;
 }
-.form_wrapper ._input--pasword {
+.form_wrapper ._input--pasword,
+.form_change ._input--pasword {
   position: relative;
 }
-.form_wrapper ._input--pasword .toggle-pass {
+.form_wrapper ._input--pasword .toggle-pass,
+.form_change ._input--pasword .toggle-pass {
   position: absolute;
   top: 50%;
   right: 10px;
   cursor: pointer;
 }
-.form_wrapper ._input--pasword .toggle-pass ._hide-password {
+.form_wrapper ._input--pasword .toggle-pass ._hide-password,
+.form_change ._input--pasword .toggle-pass ._hide-password {
   display: none;
 }
-.form_wrapper ._input--pasword input {
+.form_wrapper ._input--pasword input,
+.form_change ._input--pasword input {
   padding-right: 50px;
 }
-.form_wrapper ._input--pasword.active .toggle-pass ._show-password {
+.form_wrapper ._input--pasword.active .toggle-pass ._show-password,
+.form_change ._input--pasword.active .toggle-pass ._show-password {
   display: none;
 }
-.form_wrapper ._input--pasword.active .toggle-pass ._hide-password {
+.form_wrapper ._input--pasword.active .toggle-pass ._hide-password,
+.form_change ._input--pasword.active .toggle-pass ._hide-password {
   display: block;
 }
-.form_wrapper button {
+.form_wrapper button,
+.form_change button {
   padding: 13px;
   border-radius: 10px;
   text-align: center;
@@ -12410,8 +12415,28 @@ ul.list-style > li:hover > a {
   width: 100%;
   transition: 0.2s;
 }
-.form_wrapper button:hover {
+.form_wrapper button:hover,
+.form_change button:hover {
   background-color: #3ac162;
+}
+@media (max-width: 767px) {
+  .form_wrapper .form_login,
+  .form_change .form_login {
+    padding: 20px;
+  }
+}
+
+.form_change {
+  background-color: transparent;
+  width: 50%;
+  padding: 20px;
+  isolation: unset;
+  min-height: unset;
+}
+@media (max-width: 767px) {
+  .form_change {
+    width: 100%;
+  }
 }
 
 .videoCourse_wrapper {
@@ -12446,7 +12471,7 @@ ul.list-style > li:hover > a {
 }
 .videoCourse_wrapper .videoCourse_content .videoCourse_video {
   width: 80%;
-  min-height: 35rem;
+  height: 50rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12467,7 +12492,7 @@ ul.list-style > li:hover > a {
   display: flex;
   align-items: center;
   font-size: 16px;
-  background-color: white;
+  background-color: rgb(219, 219, 219);
   justify-content: space-between;
 }
 .videoCourse_wrapper .videoCourse_content .videoCourse_rightSidebar-top h2 {
@@ -12492,6 +12517,17 @@ ul.list-style > li:hover > a {
 }
 .videoCourse_wrapper .videoCourse_content .videoCourse_collapsibleContent {
   border-bottom: 1px solid #e0e0e0;
+  height: 45rem;
+  overflow-y: auto;
+}
+.videoCourse_wrapper .videoCourse_content .videoCourse_collapsibleContent::-webkit-scrollbar {
+  width: 5px;
+}
+.videoCourse_wrapper .videoCourse_content .videoCourse_collapsibleContent::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+}
+.videoCourse_wrapper .videoCourse_content .videoCourse_collapsibleContent::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
 }
 .videoCourse_wrapper .videoCourse_content .videoCourse_contentRight {
   max-height: 0;
@@ -12501,12 +12537,34 @@ ul.list-style > li:hover > a {
 .videoCourse_wrapper .videoCourse_content .contentRight-item a {
   display: block;
   padding: 1rem;
+  padding-left: 1.75rem;
   transition: all 0.1s ease;
   font-size: 14px;
+  position: relative;
 }
-.videoCourse_wrapper .videoCourse_content .contentRight-item a:hover, .videoCourse_wrapper .videoCourse_content .contentRight-item a.active {
+.videoCourse_wrapper .videoCourse_content .contentRight-item a::after {
+  position: absolute;
+  left: -1px;
+  top: 0;
+  height: 100%;
+  width: 0;
+  content: "";
+  transition: all 0.2s linear;
   background-color: #5fcf80;
-  color: white;
+}
+.videoCourse_wrapper .videoCourse_content .contentRight-item a:hover {
+  color: #5fcf80;
+  padding-left: calc(1.75rem + 5px);
+}
+.videoCourse_wrapper .videoCourse_content .contentRight-item a:hover::after {
+  width: 5px;
+}
+.videoCourse_wrapper .videoCourse_content .contentRight-item.active a {
+  color: #5fcf80;
+  padding-left: calc(1.75rem + 5px);
+}
+.videoCourse_wrapper .videoCourse_content .contentRight-item.active a::after {
+  width: 5px;
 }
 @media (max-width: 992px) {
   .videoCourse_wrapper .videoCourse_content {
@@ -12515,10 +12573,33 @@ ul.list-style > li:hover > a {
   }
   .videoCourse_wrapper .videoCourse_content .videoCourse_video {
     width: 100%;
+    height: 15rem;
   }
   .videoCourse_wrapper .videoCourse_content .videoCourse_rightSidebar {
     width: 100%;
     margin-top: 20px;
+  }
+}
+
+.modal-custom {
+  min-width: 500px;
+}
+.modal-custom .modal-header {
+  position: relative;
+  justify-content: center;
+}
+.modal-custom .close {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-25%);
+}
+.modal-custom p {
+  text-align: center;
+}
+@media (max-width: 550px) {
+  .modal-custom {
+    min-width: 360px;
   }
 }
 
@@ -12878,6 +12959,48 @@ input, input:before, input:after {
 #header .mobile-nav-toggle.bi-x {
   color: #fff;
 }
+#header .wrapper-info--account {
+  padding: 0 20px;
+  position: relative;
+  max-width: 70px;
+  width: 100%;
+}
+#header .info-account {
+  display: inline-block;
+  font-size: 30px;
+}
+#header .info-account:hover,
+#header .info-account.active {
+  color: #5fcf80;
+}
+#header .popup-account {
+  position: absolute;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #5fcf80;
+  padding: 10px 20px;
+  right: 0;
+  width: max-content;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(30px);
+  transition: all 0.2s;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+#header .popup-account a {
+  display: block;
+  padding: 10px 0;
+}
+#header .popup-account a:hover,
+#header .popup-account a:active {
+  color: #5fcf80;
+}
+#header .popup-account.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0px);
+}
 
 .qr-block {
   position: fixed;
@@ -12886,7 +13009,7 @@ input, input:before, input:after {
   height: 50px;
   width: 50px;
   border-radius: 50%;
-  background-color: #66abf6;
+  background-color: #5fcf80;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13282,7 +13405,7 @@ main {
   border-radius: 6px;
 }
 .select2-container.select2 {
-  border: 1px solid #DDD;
+  border: 1px solid #ddd;
 }
 .select2-container .select2-selection__arrow b {
   width: 14px !important;
@@ -13357,15 +13480,22 @@ main {
   display: none;
 }
 
-.form-selection .select2.select2-container, .form-select-number .select2.select2-container {
-  position: relative !important;
-  height: 40px;
+.form-selection,
+.form-select-number {
+  height: 55px !important;
+  border-radius: 10px !important;
 }
-.form-selection .select2-container .select2-selection__arrow b, .form-select-number .select2-container .select2-selection__arrow b {
+.form-selection .select2.select2-container,
+.form-select-number .select2.select2-container {
+  position: relative !important;
+}
+.form-selection .select2-container .select2-selection__arrow b,
+.form-select-number .select2-container .select2-selection__arrow b {
   background-repeat: no-repeat;
 }
-.form-selection .select2-container--default .select2-selection--single .select2-selection__rendered, .form-select-number .select2-container--default .select2-selection--single .select2-selection__rendered {
-  font-size: 14px !important;
+.form-selection .select2-container--default .select2-selection--single .select2-selection__rendered,
+.form-select-number .select2-container--default .select2-selection--single .select2-selection__rendered {
+  font-size: 16px !important;
 }
 
 .form-select-number {
@@ -13373,13 +13503,13 @@ main {
   width: 140px;
 }
 .form-select-number .select2-container--default .select2-selection--single .select2-selection__placeholder {
-  color: #9F9F9F;
+  color: #9f9f9f;
 }
 
 .form-select-status .select2.select2-container {
   position: relative;
   border: unset;
-  background-color: #475F7C;
+  background-color: #475f7c;
   color: #fff;
 }
 .form-select-status .select2-container--default .select2-selection--single .select2-selection__rendered {
@@ -13410,6 +13540,7 @@ main {
   border-radius: 5px;
   overflow: hidden;
   margin-bottom: 30px;
+  width: 100%;
 }
 .infoCourse_item .infoCourse_img {
   height: 50%;
@@ -13421,6 +13552,9 @@ main {
 }
 .infoCourse_item .infoCourse_content {
   padding: 15px;
+  height: 50%;
+  display: grid;
+  grid-template-rows: minmax(40px, max-content) minmax(85px, max-content) minmax(67px, max-content) minmax(42px, max-content);
 }
 .infoCourse_item .infoCourse_content h4 {
   background-color: #5fcf80;
@@ -13429,25 +13563,37 @@ main {
   color: white;
   border-radius: 2px;
   margin-bottom: 0;
+  grid-row: 1;
 }
 .infoCourse_item .infoCourse_content h3 {
   font-weight: bold;
   margin-bottom: 20px;
+  grid-row: 2;
 }
 .infoCourse_item .infoCourse_content h3 a {
   transition: all 0.3s;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
 }
 .infoCourse_item .infoCourse_content h3 a:hover {
   color: #5fcf80;
 }
 .infoCourse_item .infoCourse_content p {
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-word;
   margin-bottom: 20px;
+  grid-row: 3;
+}
+.infoCourse_item .infoCourse_content .infoCourse_rank {
+  grid-row: 4;
 }
 .infoCourse_item .infoCourse_content .trainer-rank {
   font-size: 18px;
@@ -13460,12 +13606,13 @@ main {
 }
 
 #course-details .course-details-img {
-  height: 350px;
+  margin-bottom: 10px;
 }
 #course-details .course-details-img img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: top;
 }
 #course-details h3 {
   font-size: 24px;
@@ -13500,9 +13647,24 @@ main {
   font-size: 16px;
 }
 
+@media (max-width: 767px) {
+  .infoCourse_item .infoCourse_content {
+    grid-template-rows: minmax(40px, max-content) minmax(85px, max-content) minmax(70px, max-content) minmax(42px, max-content);
+  }
+  #course-details .course-details-img {
+    min-height: 100px;
+  }
+  .course-right {
+    order: 1;
+    margin-bottom: 20px;
+  }
+  .course-left {
+    order: 2;
+  }
+}
 #hero {
   width: 100%;
-  height: 40vh;
+  min-height: 40vh;
   position: relative;
   background-color: white;
   margin-bottom: 40px;
@@ -13551,9 +13713,19 @@ main {
   border-radius: 5px;
   overflow: hidden;
   margin-bottom: 30px;
+  width: 100%;
+  display: block;
+  transition: all 0.2s linear;
+  cursor: pointer;
+}
+.course-item:hover {
+  border-color: #5fcf80;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  transform: translate(-5px, -5px);
 }
 .course-item .course-img {
-  height: 40%;
+  height: 100%;
+  max-height: 195px;
 }
 .course-item .course-img img {
   width: 100%;
@@ -13561,8 +13733,11 @@ main {
   object-fit: cover;
 }
 .course-item .course-content {
+  background-color: white;
   padding: 15px;
   height: 60%;
+  display: grid;
+  grid-template-rows: minmax(40px, max-content) minmax(85px, max-content) minmax(50px, max-content) minmax(42px, max-content);
 }
 .course-item .course-content h4 {
   background-color: #5fcf80;
@@ -13578,13 +13753,19 @@ main {
 }
 .course-item .course-content h3 a {
   transition: all 0.3s;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
 }
 .course-item .course-content h3 a:hover {
   color: #5fcf80;
 }
 .course-item .course-content p {
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -13601,6 +13782,18 @@ main {
 }
 .course-item .course-content .trainer-rank i {
   font-size: 30px;
+}
+.course-item .course-label {
+  grid-row: 1;
+}
+.course-item .course-title {
+  grid-row: 2;
+}
+.course-item .course-text {
+  grid-row: 3;
+}
+.course-item .course-info {
+  grid-row: 4;
 }
 
 .slick-dots {
@@ -13652,9 +13845,45 @@ main {
   color: #37423b;
 }
 
+.table-custom {
+  min-width: 1208px;
+  transition: all 0.2s linear;
+}
+.table-custom .thead-light th {
+  color: white;
+  background-color: #5fcf80;
+  border-right: 1px solid white;
+}
+.table-custom .thead-light th:last-child {
+  border-right: unset;
+}
+.table-custom tbody tr td {
+  border-right: 1px solid #dee2e6;
+}
+.table-custom tbody tr td:first-child {
+  border-left: 1px solid #dee2e6;
+}
+.table-custom tbody tr td {
+  border-bottom: 1px solid #dee2e6;
+}
+.table-custom:hover {
+  transform: translate(-5px, -5px);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
 @media (max-width: 767px) {
+  .course-item .course-img {
+    max-height: 150px;
+    height: 100%;
+  }
+  .ui_kit-table {
+    overflow: auto;
+  }
+  .table-custom {
+    overflow: hidden;
+  }
   #hero {
-    height: 25vh;
+    min-height: 10vh;
   }
   .course-item {
     margin-bottom: 15px;

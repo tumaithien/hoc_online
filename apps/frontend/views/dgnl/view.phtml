@@ -1,0 +1,100 @@
+<?php
+/**
+ * @var $auth;
+ * @var $parent_keyword;
+ * @var $type;
+ * @var $class_id;
+ * @var $subject_id;
+ * @var \Learncom\Models\LearnVideo[] $lessons
+ * @var \Learncom\Models\LearnVideo[] $listLessons
+ * @var \Learncom\Models\LearnGroup[] $listChapters
+ */
+?>
+<main class="videoCourse_wrapper">
+    <div class="videoCourse_top">
+        <a href="/" title="home" class="videoCourse_back"><i class="bx bx-chevron-left"></i>Home</a>
+        <h1 class="videoCourse_title">
+            <?= $title_name ?>
+        </h1>
+    </div>
+    <div class="videoCourse_content">
+        <div class="videoCourse_video">
+            <?php if (strpos($link, "vimeo") || strpos($link, "video") || strpos($link, "youtube")): ?>
+                <iframe src="<?= $link ?>" allowfullscreen></iframe>
+            <?php else: ?>
+                <iframe src="<?= $link ?>" type="application/pdf" height="100%" width="100%"></iframe>
+            <?php endif ?>
+        </div>
+        <div class="videoCourse_rightSidebar">
+            <div class="videoCourse_rightSidebar-top">
+                <h2>Nội dung bài học</h2>
+            </div>
+            <div class="videoCourse_collapsibleContent">
+                <?php foreach ($chapters as $chapter):
+                    ?>
+                    <div class="videoCourse_collapsible <?= $chapter['active'] ?>">
+                        <?= $chapter['name'] ?> <i class='bx bxs-chevron-down'></i>
+                    </div>
+                    <div class="videoCourse_contentRight">
+                        <?php foreach ($lessons[$chapter['id']] as $lesson):
+                            ?>
+                            <div class="contentRight-item <?= $lesson['active'] ?>">
+                                <a href="<?= $lesson['href'] ?>">
+                                    <?= $lesson['name'] ?>
+                                </a>
+                            </div>
+
+                        <?php endforeach ?>
+                    </div>
+                <?php endforeach ?>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script type="text/javascript">
+    commands.push(function () {
+        // var link = window.location.href;
+        // var href = link.split('#')[1];
+        // var group_id = href.split('-')[0];
+        // var video_id = href.split('-')[1];
+        // $("#tab1-" + group_id).click();
+        // $("#" + href).click();
+        // $src = "<?= $lesson_link ?>";
+        // try {
+        //     $(".courses-detail iframe").attr("src", src);
+        // } catch (err) {
+        //     console.log(err);
+        // }
+
+        $(function () {
+            $(".collapse").on("click", function (e) {
+                e.stopPropagation();
+            });
+            // $(".item-style:not(.item-menu)").on("click", function(e) {
+            //     $(".item-style.active").removeClass("active");
+            //     let parent = this.parentElement;
+            //     let src = "";
+            //     $(parent).find(".item-menu[aria-expanded='true']").click();
+            //     $(this).addClass("active");
+            //     src = this.dataset.srcIframe;
+            //     if (!src) return;
+            //     try {
+            //         $(".courses-detail iframe").attr("src", src);
+            //     } catch (err) {
+            //         console.log(err);
+            //     }
+            // });
+            $(".item-menu").on("click", function (e) {
+                $(".item-menu").each((ind, ele) => {
+                    if (ele !== this) {
+                        let target = $(ele).data("target");
+                        $(target).collapse("hide");
+                    }
+                });
+                let parent = this.parentElement;
+                $(parent).children(".item-style.active").removeClass('active');
+            })
+        });
+    })
+</script>

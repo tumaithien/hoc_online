@@ -56,6 +56,9 @@ class ArticleController extends ControllerBase
             $messages = array();
             $data = array(
                 'article_name' => $this->request->getPost("txtName", array('string', 'trim')),
+                'article_content_left' => trim($this->request->getPost("txtContentLeft")),
+                'article_content_show' => $this->request->getPost("txtContentShow", array('string', 'trim')),
+                'article_time' => $this->request->getPost("txtTime", array('string', 'trim')),
                 'article_icon' => $this->request->getPost("txtIcon", array('string', 'trim')),
                 'article_order' => $this->request->getPost("txtOrder", array('string', 'trim')),
                 'article_content' => trim($this->request->getPost("txtContent")),
@@ -81,9 +84,11 @@ class ArticleController extends ControllerBase
             if ($this->request->hasFiles() == true) {
                 Upload::uploadFile($uploadFiles, $messagesUpload);
             }
-            var_dump($messagesUpload,$uploadFiles);exit;
-            $this->view->message = $messages;
+            
             $this->view->uploadFiles = $uploadFiles;
+            if (!empty($uploadFiles)) {
+                $data['article_content'] = $uploadFiles[0]['file_url'];
+            }
             if (count($messages) == 0) {
                 $msg_result = array();
                 $new_device = new LearnArticle();
@@ -130,6 +135,9 @@ class ArticleController extends ControllerBase
                 'article_order' => $this->request->getPost("txtOrder", array('string', 'trim')),
                 'article_keyword' => $this->request->getPost("txtKeyword", array('string', 'trim')),
                 'article_summary' => trim($this->request->getPost("txtSummary")),
+                'article_content_left' => trim($this->request->getPost("txtContentLeft")),
+                'article_content_show' => $this->request->getPost("txtContentShow", array('string', 'trim')),
+                'article_time' => $this->request->getPost("txtTime", array('string', 'trim')),
             );
 
             if (empty($data['article_name'])) {

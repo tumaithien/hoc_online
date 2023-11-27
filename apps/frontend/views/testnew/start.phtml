@@ -6,7 +6,7 @@ $test_string = "learncom\Models\LearnTest";
 $score_string = "learncom\Models\LearnScore";
 
 ?>
-<main>
+<main class="videoCourse_wrapper">
     <div class="padding-block p-20">
         <div class="row list-courses-wrap list-courses-custom">
             <div class="w-50 mx-auto px-lg-90">
@@ -23,34 +23,40 @@ $score_string = "learncom\Models\LearnScore";
                     $continew = false;
                     ?>
                     <?php foreach ($arrScore as $score) {
-                        if (($score->$test_string->getTestId() == $test->getTestId() || $score->$test_string->getTestParentId() == $test->getTestId()
-                        || $score->$test_string->getTestId() == $test->getTestParentId()) && $test->getTestOnlyOne() == "Y") {
+                        if (
+                            ($score->$test_string->getTestId() == $test->getTestId() || $score->$test_string->getTestParentId() == $test->getTestId()
+                                || $score->$test_string->getTestId() == $test->getTestParentId()) && $test->getTestOnlyOne() == "Y"
+                        ) {
                             $continew = true;
                         }
                         ?>
-                        <?php }
+                    <?php }
 
-                        if ($continew) {
-                            continue;
-                        }
-                    $t ++;
+                    if ($continew) {
+                        continue;
+                    }
+                    $t++;
                     if ($t == 1) {
                         ?>
                         <h3 class="text-blue-dark">BÀI THI :</h3>
-<?php } ?>
+                    <?php } ?>
 
 
-                        <p id ="txtTime" class="d-flex justify-content-between"><span class="text-medium">Bài Kiểm Tra: <?= $test->getTestName()?></span>
+                    <p id="txtTime" class="d-flex justify-content-between"><span class="text-medium">Bài Kiểm Tra:
+                            <?= $test->getTestName() ?>
+                        </span>
                         <span>
-                            <?php if ($test->getTestStatus() =="P") { ?>
-                            <a type="button" class="btn btn-outline-primary" href="bat-dau?id=<?=$test->getTestId() ?>">Bắt đầu làm</a>
+                            <?php if ($test->getTestStatus() == "P") { ?>
+                                <a type="button" class="btn btn-outline-primary" href="bat-dau?id=<?= $test->getTestId() ?>">Bắt
+                                    đầu làm</a>
                             <?php } else { ?>
-                            <a type="button" class="btn btn-outline-primary" href="dap-an?id=<?=$test->getTestId() ?>">Xem đáp án</a>
+                                <a type="button" class="btn btn-outline-primary" href="dap-an?id=<?= $test->getTestId() ?>">Xem
+                                    đáp án</a>
                             <?php } ?>
                         </span>
 
                     </p>
-<hr>
+                    <hr>
                 <?php } ?>
                 <?php if ($t == 0) { ?>
                     <h3 class="text-green">HIỆN TẠI KHÔNG CÓ BÀI THI</h3>
@@ -58,35 +64,38 @@ $score_string = "learncom\Models\LearnScore";
 
                 <?php } ?>
                 <?php if (count($arrScore) > 0) { ?>
-                <h3 class="text-blue-dark">BÀI ĐÃ LÀM :</h3>
-                <hr>
-                <?php
-                foreach ($arrScore as $score) {
-                    ?>
-                    <p id ="txtTime" class="d-flex justify-content-between">
-                        <a href="ket-thuc?testId=<?=$score->$test_string->getTestId() ?>">
-                            <span class="text-medium"><?= $this->my->formatDateTime($score->$score_string->getScoreInsertTime()) ?> - Đáp án bài: <?= $score->$test_string->getTestName()?>
-                            </span>
-                        </a>
-
-                        <span class="pr-10">
-                          <?php if ($score->$test_string->test_is_public_answer == "Y")  {?>
-                            <a type="button" class="btn btn-outline-primary " href="dap-an?id=<?=$score->$test_string->getTestId() ?>">Xem Đáp Án</a>
-                                                <?php } ?>
-                        </span>
-                    </p>
-
-
+                    <h3 class="text-blue-dark">BÀI ĐÃ LÀM :</h3>
                     <hr>
-                <?php } ?>
+                    <?php
+                    foreach ($arrScore as $score) {
+                        ?>
+                        <p id="txtTime" class="d-flex justify-content-between">
+                            <a href="ket-thuc?testId=<?= $score->$test_string->getTestId() ?>">
+                                <span class="text-medium">
+                                    <?= $this->my->formatDateTime($score->$score_string->getScoreInsertTime()) ?> - Đáp án bài:
+                                    <?= $score->$test_string->getTestName() ?>
+                                </span>
+                            </a>
+
+                            <span class="pr-10">
+                                <?php if ($score->$test_string->test_is_public_answer == "Y") { ?>
+                                    <a type="button" class="btn btn-outline-primary "
+                                        href="dap-an?id=<?= $score->$test_string->getTestId() ?>">Xem Đáp Án</a>
+                                <?php } ?>
+                            </span>
+                        </p>
+
+
+                        <hr>
+                    <?php } ?>
                 <?php } ?>
             </div>
         </div>
     </div>
 </main>
 <script>
-    commands.push(function(){
-        window.onload = function() {
+    commands.push(function () {
+        window.onload = function () {
             var reloading = sessionStorage.getItem("reloading");
             if (reloading) {
                 sessionStorage.removeItem("reloading");

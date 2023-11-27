@@ -15,7 +15,7 @@ class BlogController extends ControllerBase
         $count_sql = "SELECT COUNT(*) AS count ";
         $table_sql = " FROM \Learncom\Models\LearnArticle   
                       WHERE article_active = 'Y'                  
-                      ORDER BY article_order ASC
+                      ORDER BY article_insert_time DESC
 	                  ";
         $select_sql = " SELECT * ";
         $count_query = $this->modelsManager->executeQuery($count_sql.$table_sql);
@@ -47,7 +47,7 @@ class BlogController extends ControllerBase
         }
         $paginator->setMaxPagesToShow(6);
         $this->view->setVars([
-            'articles' => $articles,
+            'articles' => $articles->toArray(),
             'parent_keyword' => $parent_keyword,
             'htmlPaginator' => $paginator->toHtmlFrontend(),
         ]);
