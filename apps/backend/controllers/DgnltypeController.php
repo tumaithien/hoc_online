@@ -89,7 +89,6 @@ class DgnltypeController extends ControllerBase
                 Upload::uploadFile($uploadFilesType, $messagesUpload, 'fileUpload-1');
                 Upload::uploadFile($uploadFilesTeacher, $messagesUpload, 'fileUpload-2');
             }
-        
 
             $this->view->uploadFiles = $uploadFilesType;
             if (!empty($uploadFilesType)) {
@@ -180,7 +179,9 @@ class DgnltypeController extends ControllerBase
             if (!empty($uploadFilesTeacher)) {
                 $data['type_icon'] = $uploadFilesTeacher[0]['file_url'];
             }
-            if (count($messages) == 0) {
+
+            if (count($messages) == 0 && empty($messagesUpload)) {
+
                 $msg_result = array();
                 $result = $gateway_model->save($data);
                 if ($result === true) {
@@ -199,7 +200,6 @@ class DgnltypeController extends ControllerBase
                 return $this->response->redirect("/dashboard/list-type-dgnl");
             }
         }
-
         $messages["status"] = "border-red";
         $data['mode'] = 'Tạo';
         $this->view->setVars([

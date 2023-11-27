@@ -37,7 +37,6 @@ class IndexController extends ControllerBase
         //môn toán subject_id = 5
         $videos = Video::findHomeVideo($this->allSubject,$this->allClass);
         $arrClassId = array_unique(array_column($videos,"video_class_id"));
-
         $this->view->setVars([
             'video_intro' => $video[0]['banner_image'] ?? "",
             'banners' => $banner,

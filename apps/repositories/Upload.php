@@ -16,11 +16,12 @@ class Upload extends Component
             $error = array();
             $target_dir = __DIR__ . "/../../public/frontend/upload/images/";
             $type_file = pathinfo($_FILES[$name_upload]['name'], PATHINFO_EXTENSION);
-            $file_name = self::convertkeyword($_FILES[$name_upload]['name']) . time() . ".$type_file";
+
+            $file_name = self::convertkeyword($_FILES[$name_upload]['name']).time().".$type_file";
             $target_file = $target_dir . basename($file_name);
 
 
-            $type_fileAllow = array('png', 'jpg', 'jpeg', 'gif', 'mp4');
+            $type_fileAllow = array('png', 'jpg', 'jpeg', 'gif');
             if (!in_array(strtolower($type_file), $type_fileAllow)) {
                 $error[$name_upload] = "File bạn vừa chọn hệ thống không hỗ trợ, bạn vui lòng chọn hình ảnh";
             }

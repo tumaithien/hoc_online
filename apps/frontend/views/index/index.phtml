@@ -67,6 +67,7 @@
     }
 </style>
 <main style="background-color: #fafafa main-content">
+
     <section id="hero">
         <img src="./././frontend/imagesbanner-he.jpg" alt="Banner">
     </section>
@@ -93,6 +94,7 @@
                                 <tr>
                                     <td rowspan="1"><a href="<?= $this->url->get("/blogs/" . $blog['article_keyword']) ?>"
                                             class="text-primary"><?= $blog['article_name'] ?></td>
+
                                     <td>
                                         <?= $blog['article_icon'] ?>
                                     </td>
@@ -116,25 +118,21 @@
         <div class="container">
             <div class="row counters" data-aos="zoom-in">
                 <div class="col-lg-3 col-6 text-center">
-                    <span data-purecounter-start="0" data-purecounter-end="<?= $total_user ?>"
-                        data-purecounter-duration="1" class="purecounter"></span>
+                    <span data-purecounter-start="0" data-purecounter-end="<?= $total_user ?>" data-purecounter-duration="1" class="purecounter"></span>
                     <p>Học sinh</p>
                 </div>
                 <div class="col-lg-3 col-6 text-center">
-                    <span data-purecounter-start="0" data-purecounter-end="<?= $total_video ?>"
-                        data-purecounter-duration="1" class="purecounter"></span>
+                    <span data-purecounter-start="0" data-purecounter-end="<?= $total_video ?>" data-purecounter-duration="1" class="purecounter"></span>
                     <p>Bài Giảng</p>
                 </div>
 
                 <div class="col-lg-3 col-6 text-center">
-                    <span data-purecounter-start="0" data-purecounter-end="<?= $total_document ?>"
-                        data-purecounter-duration="1" class="purecounter"></span>
+                    <span data-purecounter-start="0" data-purecounter-end="<?= $total_document ?>" data-purecounter-duration="1" class="purecounter"></span>
                     <p>Tài Liệu</p>
                 </div>
 
                 <div class="col-lg-3 col-6 text-center">
-                    <span data-purecounter-start="0" data-purecounter-end="3" data-purecounter-duration="1"
-                        class="purecounter"></span>
+                    <span data-purecounter-start="0" data-purecounter-end="3" data-purecounter-duration="1" class="purecounter"></span>
                     <p>Giáo viên</p>
                 </div>
             </div>
@@ -144,6 +142,7 @@
     foreach ($arrSubject as $subject):
 
         ?>
+
         <section class="section container">
             <div class="section-title" data-aos="fade-up">
                 <p>Các Bài Giảng Mới Nhất
@@ -157,6 +156,7 @@
                 $total_video = 0;
                 $col = 12 / count($videos[$subject['subject_id']]);
                 foreach ($videos[$subject['subject_id']] as $key => $video):
+
                     $class_id = (int) $video['video_class_id'];
                     $class_name = "";
 
@@ -171,6 +171,7 @@
                     $href_video = "/khoahoc?classId={$class_id}&subjectId={$video['video_subject_id']}&group={$video['video_group_id']}&lesson={$video['video_id']}";
 
                     ?>
+
                     <div class="col-lg-<?= $col ?> col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
                         <a href="<?= $this->url->get($href_video) ?>">
                             <div class="course-item">
@@ -205,6 +206,7 @@
             </div>
         </section>
     <?php endforeach ?>
+
 
     <?php if ($video_intro) : ?>
 
