@@ -1,0 +1,48 @@
+<div class="carousel-item justify-content-center<?= ($key - 1) == count($arrScore) ? ' active' : '' ?>">
+    <div class="row">
+        <div class="col-3 text-20 font-weight-bold pl-30 pl-xs-0 text-blue-test">Câu
+            <?php echo $key ?> :
+        </div>
+        <?php
+        if (isset($arrAnswer[$key])) { ?>
+            <div class="check-answer-circle col-7 pull-right">
+                <label for="A_<?= $key ?>" class="item-answer">
+                    <input type="radio" id="A_<?= $key ?>" <?= isset($arrScore[$key]) && $arrScore[$key] == "A" ? "checked" : "" ?> data-browse="<?= $key ?>" class="is_choose choose_<?= $key ?>" value="A"
+                        name="question[<?= $key ?>]">
+                    <span class="checkmark-circle">A</span>
+                </label>
+                <label for="B_<?= $key ?>" class="item-answer">
+                    <input type="radio" id="B_<?= $key ?>" <?= isset($arrScore[$key]) && $arrScore[$key] == "B" ? "checked" : "" ?> data-browse="<?= $key ?>" class="is_choose choose_<?= $key ?>" value="B"
+                        name="question[<?= $key ?>]">
+                    <span class=" checkmark-circle">B</span>
+                </label>
+                <label for="C_<?= $key ?>" class="item-answer">
+                    <input type="radio" id="C_<?= $key ?>" <?= isset($arrScore[$key]) && $arrScore[$key] == "C" ? "checked" : "" ?> data-browse="<?= $key ?>" class="is_choose choose_<?= $key ?>" value="C"
+                        name="question[<?= $key ?>]">
+                    <span class=" checkmark-circle">C</span>
+                </label>
+                <label for="D_<?= $key ?>" class="item-answer">
+                    <input type="radio" id="D_<?= $key ?>" <?= isset($arrScore[$key]) && $arrScore[$key] == "D" ? "checked" : "" ?> data-browse="<?= $key ?>" class="is_choose choose_<?= $key ?>" value="D"
+                        name="question[<?= $key ?>]">
+                    <span class=" checkmark-circle text-center">D</span>
+                </label>
+            </div>
+        <?php } ?>
+    </div>
+
+    <?php
+    if ($folder && $folder->getFolderLink()) {
+        ?>
+        <img src="<?= $folder->getFolderLink() ?>" title="<?php echo $test_model->getTestName() ?>"
+            alt="<?php echo $test_model->getTestName() ?>">
+        <?php
+        if ($folder->getFolderColor() && isset($arrColorReturn[$folder->getFolderColor()])) {
+            ?>
+            <script>
+                var color = "<?= $arrColorReturn[$folder->getFolderColor()] ?>";
+                var key = "<?= (intval($key) - 1) ?>";
+                $('#question_' + key).attr('style', "background-color:" + color + " !important");
+            </script>
+        <?php } ?>
+    <?php } ?>
+</div>

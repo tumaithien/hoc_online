@@ -119,7 +119,7 @@ if (strlen($this->dispatcher->getParam("slcChapter")) > 0) {
                         <?php echo \Learncom\Repositories\ClassSubject::getNameByClassAndSubject($item->getTestClassId(),$item->getTestSubjectId()) ?>
                     </td>
                     <td  style="text-align:left;" class="center">
-                        <?php echo \Learncom\Repositories\Group::getNameById($item->getTestGroupId()); ?>
+                        <?php echo \Learncom\Repositories\Chapter::getNameById($item->getTestGroupId()); ?>
                     </td>
                     <td style="text-align:left;" class="center">
                         <?php
